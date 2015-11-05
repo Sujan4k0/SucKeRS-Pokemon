@@ -4,14 +4,11 @@ import java.awt.image.BufferedImage;
 
 public class Legendary extends Pokemon {
 
-    public Legendary(String n, BufferedImage[] i, PokemonType t, double cp, double rp) {
-        super(n, i, t, cp, rp);
+    public Legendary(String n, BufferedImage[] i, PokemonType t) {
+        super(n, i, t);
+        catchPercentage = 5;
+        runPercentage = 3; 
         // TODO Auto-generated constructor stub
-    }
-
-    public void respond(TrainerAction action) {
-        
-        
     }
     
     @Override
