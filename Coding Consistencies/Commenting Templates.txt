@@ -1,0 +1,86 @@
+>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>
+Notes for users:
+For templates a description or example of the fields is given in the first one and then a blank one is given for easy copying and pasting after. 
+
+========================================================
+
+****CHANGE THIS SETTING IF YOU PLAN ON USING AUTO-FORMAT!!!
+	- Eclipse tends to mangle comments and this can include header comments, so if you use auto format please do this: Eclipse -> Preferences -> Java -> Code Style -> Formatter. Under Active Profile click New and use the profile you’ve been using as your starting point. The top switch to “Comments” and three settings down where it says “Enable line comment formatting” uncheck the indented one below it “Format line comments on first column.”
+
+=========================================================
+
+Also please align these with the thing they’re describing. 
+
+=========================================================
+
+Extra clarifications as asked or thought of will be here:
+
+>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>
+
+1. HEADER TEMPLATE: Copying and pasting header is second: For the Pokemon project I have filled out all the logistic information, all that will need to be filled out by you is the name of the class next to the Assignment field and the description of the class.
+
+These always go at the very top of each file before anything else (even imports).  
+
+*=========================================================================== 
+ | Assignment: FINAL PROJECT: [ClassNameGoesHere] 
+ | 
+ | Authors:    [Sujan Patel  (sujan4k0@email.arizona.edu)] 
+ |	       [Keith Smith  (browningsmith@email.arizona.edu)]
+ |	       [Ryan Kaye    (kayeryan1@email.arizona.edu)]
+ |             [Sarina White (sarinarw@email.arizona.edu)]
+ | 
+ | Course: 335 
+ | Instructor: Mercer
+ | Project Manager/Section Leader: Jeremy Mowery 
+ | Due Date: [12.7.15] 
+ | 
+ | Description: Describe the class here. *===========================================================================*/
+
+*=========================================================================== 
+ | Assignment: FINAL PROJECT: [] 
+ | 
+ | Authors:    [Sujan Patel  (sujan4k0@email.arizona.edu)] 
+ |	       [Keith Smith  (browningsmith@email.arizona.edu)]
+ |	       [Ryan Kaye    (kayeryan1@email.arizona.edu)]
+ |             [Sarina White (sarinarw@email.arizona.edu)]
+ | 
+ | Course: 335 
+ | Instructor: Mercer
+ | Project Manager/Section Leader: Jeremy Mowery 
+ | Due Date: [12.7.15] 
+ | 
+ | Description:  *===========================================================================*/
+
+
+2. METHOD TEMPLATE: if you do not need one of the fields DO NOT delete the field (i.e. if method returns void, just put void, or if there are no parameters put NONE). Use the same thing for getters and setters (obviously a bunch gets cut out and only a few words are needed). 
+
+/*---------------------------------------------------------------------
+ |  Method name:    [TODO]
+ |  Purpose:  	    [What is this method used for?]
+ |  Parameters:     [List each of them and explain what they are/will be used for]
+ |  Returns:  	    [What will be returned by the method and what does it represent?]
+ *---------------------------------------------------------------------*/
+
+/*---------------------------------------------------------------------
+ |  Method name:    []
+ |  Purpose:  	    []
+ |  Parameters:     []
+ |  Returns:  	    []
+ *---------------------------------------------------------------------*/
+
+3. PRIVATE CLASS (I use these for all the smaller things within like
+blah blah implements ActionListener and just explain that it’s used
+to get X action for X button(s).) 
+
+Also yes, if you use a method inside a private class please also put
+the above method template onto that.
+/*---------------------------------------------------------------------
+ |  Class name:     [TODO]
+ |  Purpose:        [Description]
+ *---------------------------------------------------------------------*/ 
+
+/*---------------------------------------------------------------------
+ |  Class name:     []
+ |  Purpose:        []
+ *---------------------------------------------------------------------*/ 
+
