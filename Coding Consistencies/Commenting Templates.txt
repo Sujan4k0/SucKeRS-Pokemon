@@ -21,7 +21,7 @@ Extra clarifications as asked or thought of will be here:
 
 These always go at the very top of each file before anything else (even imports).  
 
-*=========================================================================== 
+/*=========================================================================== 
  | Assignment: FINAL PROJECT: [ClassNameGoesHere] 
  | 
  | Authors:    [Sujan Patel  (sujan4k0@email.arizona.edu)] 
@@ -34,9 +34,10 @@ These always go at the very top of each file before anything else (even imports)
  | Project Manager/Section Leader: Jeremy Mowery 
  | Due Date: [12.7.15] 
  | 
- | Description: Describe the class here. *===========================================================================*/
+ | Description: Describe the class here. 
+ *===========================================================================*/
 
-*=========================================================================== 
+/*=========================================================================== 
  | Assignment: FINAL PROJECT: [] 
  | 
  | Authors:    [Sujan Patel  (sujan4k0@email.arizona.edu)] 
@@ -49,7 +50,8 @@ These always go at the very top of each file before anything else (even imports)
  | Project Manager/Section Leader: Jeremy Mowery 
  | Due Date: [12.7.15] 
  | 
- | Description:  *===========================================================================*/
+ | Description:  
+ *==========================================================================*/
 
 
 2. METHOD TEMPLATE: if you do not need one of the fields DO NOT delete the field (i.e. if method returns void, just put void, or if there are no parameters put NONE). Use the same thing for getters and setters (obviously a bunch gets cut out and only a few words are needed). 
