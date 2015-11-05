@@ -6,11 +6,10 @@ public class Legendary extends Pokemon {
 
     public Legendary(String n, BufferedImage[] i, PokemonType t) {
         super(n, i, t);
-        catchPercentage = 5;
-        runPercentage = 3; 
+        catchPercentage = 30;
+        runPercentage = 40;
         // TODO Auto-generated constructor stub
-    }
-    
+    }    
     @Override
     public void adjustCatch(TrainerAction action) {
         // TODO Auto-generated method stub

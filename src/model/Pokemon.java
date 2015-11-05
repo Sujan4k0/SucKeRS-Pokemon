@@ -43,8 +43,6 @@ public abstract class Pokemon {
         this.name = n;
         this.sprite = i;
         this.type = t;
-        //this.catchPercentage = cp;
-        //this.runPercentage = rp;
     }
     
     public abstract void adjustCatch(TrainerAction action);
