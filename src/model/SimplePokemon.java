@@ -3,7 +3,7 @@
  * Not needed for actual game and should be deleted.
  */
 
-package pokemon;
+package model;
 
 import java.awt.image.BufferedImage;
 

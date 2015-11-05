@@ -1,5 +1,7 @@
 package pokemon;
 
+import model.SimplePokemon;
+
 public class RepoTest {
     
     public static void main (String[] args) {
