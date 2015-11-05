@@ -26,7 +26,7 @@ These always go at the very top of each file before anything else (even imports)
  | 
  | Authors:    [Sujan Patel  (sujan4k0@email.arizona.edu)] 
  |	       [Keith Smith  (browningsmith@email.arizona.edu)]
- |	       [Ryan Kaye    (kayeryan1@email.arizona.edu)]
+ |	       [Ryan Kaye    (rkaye@email.arizona.edu)]
  |             [Sarina White (sarinarw@email.arizona.edu)]
  | 
  | Course: 335 
@@ -42,7 +42,7 @@ These always go at the very top of each file before anything else (even imports)
  | 
  | Authors:    [Sujan Patel  (sujan4k0@email.arizona.edu)] 
  |	       [Keith Smith  (browningsmith@email.arizona.edu)]
- |	       [Ryan Kaye    (kayeryan1@email.arizona.edu)]
+ |	       [Ryan Kaye    (rkaye@email.arizona.edu)]
  |             [Sarina White (sarinarw@email.arizona.edu)]
  | 
  | Course: 335 
