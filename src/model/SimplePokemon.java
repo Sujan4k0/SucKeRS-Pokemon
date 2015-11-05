@@ -3,10 +3,9 @@
  * Not needed for actual game and should be deleted.
  */
 
-package pokemon;
+package model;
 
 import java.awt.image.BufferedImage;
-import model.Pokemon;
 
 public class SimplePokemon extends Pokemon {
 
