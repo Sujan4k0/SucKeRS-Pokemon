@@ -1,4 +1,4 @@
-package model.Mapping;
+package model.MapModel;
 
 import java.awt.Graphics;
 import java.awt.Graphics2D;
