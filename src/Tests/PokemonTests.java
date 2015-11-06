@@ -6,6 +6,7 @@ import org.junit.Test;
 
 import model.Common;
 import model.Legendary;
+import model.Pokemon;
 import model.PokemonResponse;
 import model.PokemonType;
 import model.TrainerAction;
@@ -14,59 +15,83 @@ import model.Uncommon;
 public class PokemonTests {
 
     @Test
-    public void CommonPokemonResponses() {
-        
-        Common testMon = new Common("Pikachu", null, PokemonType.ELECTRIC);
-        assertEquals(testMon.getState(), PokemonResponse.STAND_GROUND); // start default state
-        
-        /* Seed 5 generates: true for taking the bait, 41 for deciding in the range, 
-        * 14 for run adjust and 4 for catch adjust
-        * 
-        * Based on default run and catch percentages
-        * takeBait = true, decider = 41, runPercentage = 44, catchPercentage = 54
-        */
-        testMon.setSeed(5);         
-        assertEquals(testMon.respond(TrainerAction.GIVE_BAIT), PokemonResponse.ACCEPTS_BAIT);
-        
-        testMon = new Common("Pikachu", null, PokemonType.ELECTRIC); // reset to initial pokemon
-        testMon.setSeed(5);
-        assertEquals(testMon.respond(TrainerAction.THROW_BALL), PokemonResponse.GET_CAUGHT);
-        
-        testMon = new Common("Pikachu", null, PokemonType.ELECTRIC); // reset to inital pokemon
-        testMon.setSeed(5);
-        assertEquals(testMon.respond(TrainerAction.THROW_ROCK), PokemonResponse.RUN_AWAY);
-    }
-    
-    @Test 
-    public void LegendaryResponses() {
-        
-        // legendary has more of a chance to qualify for running and not catching or vice versa
-        // so we're gonna do those here
-        
-        Legendary testMon = new Legendary("Saryathjan", null, PokemonType.FIRE);
-        
-        /* Seed 59057 generates: false for taking the bait, 62 for deciding in the range,
-         * 9 for run adjustment, -19 for catch adjustment.
+    public void PokemonResponses() {
+
+        // common pokemon start with these chances: run - 30, catch - 70
+        Pokemon testMon = new Common("Pikachu", null, PokemonType.ELECTRIC);
+        assertEquals(testMon.getState(), PokemonResponse.STAND_GROUND); // REALLY LONG COMMENT JFOIEJFOEJFOIEJFIOEJFIOJEF
+
+        testMon.setSeed(1); // decider will be 97
+
+        /*
+         * throwing bait at a pokemon increases run chance by a fixed percentage
+         * and decreases catch chance by a fixed percentage.
          * 
-         * Based on default catch and run percentages
-         * takeBait = false, decider = 41, runPercentage = 12, catchPercentage = 0
+         * So if we throw the bait, run chance will be 40 and catch chance will
+         * be 60. With the decider at 97, the Pokemon will continue to stand its
+         * ground
+         * 
          */
-        testMon.setSeed(59062);
-        testMon.respond(TrainerAction.GIVE_BAIT);
-        
-//        int seed = 0;
-//        
-//        while (true) {
-//                       
-//            boolean found = false;
-//            
-//            testMon = new Legendary("Saryathjan", null, PokemonType.FIRE);
-//            testMon.setSeed(seed);
-//            System.out.println(seed);
-//            testMon.getAdjustments();
-//            
-//            seed++;
-//        }
+        assertEquals(testMon.respond(TrainerAction.THROW_BAIT), PokemonResponse.STAND_GROUND);
+
+        // reset
+        testMon = new Common("Pikachu", null, PokemonType.ELECTRIC);
+
+        testMon.setSeed(1); // decider will be 97
+
+        /*
+         * throwing a rock at a pokemon decreases run chance by a fixed constant
+         * and increases run chance by a fixed constant
+         * 
+         * So if we throw the rock, run chance will be 20 and catch chance will
+         * be 80. With the decider at 97, the Pokemon will continue to stand its
+         * ground.
+         */
+        assertEquals(testMon.respond(TrainerAction.THROW_ROCK), PokemonResponse.STAND_GROUND);
+
+        testMon = new Common("Pikachu", null, PokemonType.ELECTRIC);
+        testMon.setSeed(1);
+
+        /*
+         * throwing a pokeball simply evaluates the current state of the Pokemon
+         * in this case since the decider is 97, the Pokemon will not be caught
+         * since its at its original catch percentage of 70.
+         */
+        assertEquals(testMon.respond(TrainerAction.THROW_BALL), PokemonResponse.STAND_GROUND);
+
+        // uncommon pokemon start with these chances - run: 50 catch: 50
+        Pokemon testMon2 = new Uncommon("Cyndaquil", null, PokemonType.FIRE);
+
+        /*
+         * throwing bait at a pokemon increases run chance by a fixed percentage
+         * and decreases catch chance by a fixed percentage.
+         * 
+         * So if we throw the bait, run chance will be 40 and catch chance will
+         * be 60. With the decider at 97, the Pokemon will continue to stand its
+         * ground
+         * 
+         */
+
+        /*
+         * throwing a rock at a pokemon decreases run chance by a fixed constant
+         * and increases run chance by a fixed constant
+         * 
+         * So if we throw the rock, run chance will be 20 and catch chance will
+         * be 80. With the decider at 97, the Pokemon will continue to stand its
+         * ground.
+         */
+
+        /*
+         * throwing a pokeball simply evaluates the current state of the Pokemon
+         * in this case since the decider is 97, the Pokemon will not be caught
+         * since its at its original catch percentage of 70.
+         */
+
+    }
+
+    @Test
+    public void LegendaryResponses() {
+
     }
 
 }

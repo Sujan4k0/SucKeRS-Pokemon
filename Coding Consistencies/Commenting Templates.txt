@@ -5,7 +5,7 @@ For templates a description or example of the fields is given in the first one a
 ========================================================
 
 ****CHANGE THIS SETTING IF YOU PLAN ON USING AUTO-FORMAT!!!
-	- Eclipse tends to mangle comments and this can include header comments, so if you use auto format please do this: Eclipse -> Preferences -> Java -> Code Style -> Formatter. Under Active Profile click New and use the profile you’ve been using as your starting point. The top switch to “Comments” and three settings down where it says “Enable line comment formatting” uncheck the indented one below it “Format line comments on first column.”
+	- Eclipse tends to mangle comments and this can include header comments, so if you use auto format please do this: Eclipse -> Preferences -> Java -> Code Style -> Formatter. Under Active Profile click New and use the profile you’ve been using as your starting point. The top switch to “Comments” and three settings down where it says “Enable line comment formatting” uncheck this and the indented one below it “Format line comments on first column.”
 
 =========================================================
 

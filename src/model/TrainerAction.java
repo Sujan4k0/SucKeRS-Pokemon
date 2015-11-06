@@ -18,6 +18,6 @@ package model;
 
 public enum TrainerAction {
     
-    THROW_BALL, THROW_ROCK, GIVE_BAIT, RUN_AWAY;
+    THROW_BALL, THROW_ROCK, THROW_BAIT, RUN_AWAY;
 
 }

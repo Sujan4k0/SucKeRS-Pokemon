@@ -1,5 +1,5 @@
 /*=========================================================================== 
- | Assignment: FINAL PROJECT: [] 
+ | Assignment: FINAL PROJECT: [Pokemon] 
  | 
  | Authors:    [Sujan Patel  (sujan4k0@email.arizona.edu)] 
  |         [Keith Smith  (browningsmith@email.arizona.edu)]
@@ -33,61 +33,63 @@ public abstract class Pokemon {
     
     protected boolean takeBait = false;
     protected int decider = 0;
-    protected int runAdjust = 0;
-    protected int catchAdjust = 0;
+    protected int RUN_ADJUST;
+    protected int CATCH_ADJUST;
 
-    
+
+    /*---------------------------------------------------------------------
+    |  Method name:    [Pokemon]
+    |  Purpose:        [Constructor]
+    |  Parameters:     []
+    *---------------------------------------------------------------------*/
     public Pokemon(String n, BufferedImage[] i, PokemonType t) {
         
         // store all of the given parameters
         this.name = n;
         this.sprite = i;
         this.type = t;
+        
+        RUN_ADJUST = 0;
+        CATCH_ADJUST = 0;
     }
     
-    public abstract void adjustCatch(TrainerAction action);
-    
-    public abstract void adjustRun(TrainerAction action);
-    
+    /*---------------------------------------------------------------------
+    |  Method name:    []
+    |  Purpose:        []
+    |  Parameters:     []
+    |  Returns:        []
+    *---------------------------------------------------------------------*/
     public PokemonResponse respond(TrainerAction action) {
         
         // generic body, if other types (common) do not write their
         // own, this one gets used.
+
+
+        getDecider();
         
-        pokemonState = PokemonResponse.STAND_GROUND;
-                
-        getAdjustments();
-        
-        // hard-coding action impact for now, will want to use random in the future
         switch (action) {
-            case GIVE_BAIT:
+            case THROW_BAIT:
                                 
-                if (takeBait) {
+                runPercentage = Math.max(0, runPercentage + RUN_ADJUST);
+                catchPercentage = Math.max(0, catchPercentage - CATCH_ADJUST);
                 
-                    catchPercentage = Math.max(0, catchPercentage + catchAdjust);
-                    pokemonState = PokemonResponse.ACCEPTS_BAIT;
-                }
-                
-                else {
+                if (decider <= runPercentage && decider > 0) {
                     
-                    runPercentage = Math.max(0, runPercentage + runAdjust);
+                    pokemonState = PokemonResponse.RUN_AWAY;
                 }
                 
                 break;
 
             case THROW_BALL:
                
-                runPercentage = Math.max(0, runPercentage + runAdjust);
-                catchPercentage = Math.max(0, catchPercentage + catchAdjust);
-                
                 // evaluate and set pokemonState
                 
-                if (decider <= catchPercentage) {
+                if (decider <= catchPercentage && decider > 0) {
                     
                     pokemonState = PokemonResponse.GET_CAUGHT;
                 }
                 
-                else if (decider <= runPercentage) {
+                else if (decider <= runPercentage && decider > 0) {
                     
                     pokemonState = PokemonResponse.RUN_AWAY;
                 }
@@ -95,10 +97,11 @@ public abstract class Pokemon {
                 break;
                 
             case THROW_ROCK:
-                runPercentage = Math.max(0, runPercentage + runAdjust);
-                catchPercentage = Math.max(0, catchPercentage + catchAdjust);
+ 
+                runPercentage = Math.max(0, runPercentage - RUN_ADJUST);
+                catchPercentage = Math.max(0, catchPercentage + CATCH_ADJUST);
                 
-                if (decider <= runPercentage) {
+                if (decider <= runPercentage && decider > 0) {
                     
                     pokemonState = PokemonResponse.RUN_AWAY;
                 }
@@ -108,6 +111,8 @@ public abstract class Pokemon {
             default:
                 break;  
         }
+        
+        System.out.println(runPercentage + " " + catchPercentage);
         
         return pokemonState;
     }
@@ -124,45 +129,15 @@ public abstract class Pokemon {
         
         return pokemonState;
     }
-    
-    public void getAdjustments() {
         
-        takeBait = gen.nextBoolean();
-        decider = gen.nextInt(101);
-        runAdjust = gen.nextInt(40) - 20;
-        catchAdjust = gen.nextInt(40) - 20;
-        
-        System.out.println(takeBait + " d" + decider + " r" + runAdjust + " c" + catchAdjust);
-    }
-    
     public void setSeed(int seed) {
         
-        gen = new Random(seed);     
-        
-     
+        gen = new Random(seed);      
     }
     
-    public void findSeed() {
+    public int getDecider() {
         
-        int seed = 0;
-        
-        boolean found = false;
-        
-        while (!found) {
-            
-            boolean test = gen.nextBoolean();
-            
-            if (test == false) {
-                
-                System.out.println(seed);
-                found = true;
-                
-            }
-            
-            else {
-                
-                seed++;
-            }
-        }
+        decider = gen.nextInt(101);
+        return decider;
     }
 }
