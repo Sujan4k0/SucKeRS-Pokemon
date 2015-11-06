@@ -14,7 +14,7 @@
  | Description: Enum to define the different actions a Trainer is capable of
  |              during the Pokemon game. 
  *==========================================================================*/
-package model;
+package model.TrainerModel;
 
 public enum TrainerAction {
     

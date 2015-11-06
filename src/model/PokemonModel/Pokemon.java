@@ -14,10 +14,16 @@
  | Description: The superclass for defining different Pokemon. 
  *==========================================================================*/
 
-package model;
+package model.PokemonModel;
 
+import java.awt.event.ActionEvent;
+import java.awt.event.ActionListener;
 import java.awt.image.BufferedImage;
 import java.util.Random;
+
+import javax.swing.Timer;
+
+import model.TrainerModel.TrainerAction;
 
 public abstract class Pokemon {
 
@@ -34,7 +40,7 @@ public abstract class Pokemon {
     protected int decider; // determines percentage location for run and catch
     protected int RUN_ADJUST; // fixed constant of run incrementation/decrementation
     protected int CATCH_ADJUST; // fixed constant of catch incrementation/decerementation
-    
+        
     /*---------------------------------------------------------------------
     |  Method name:    [Pokemon]
     |  Purpose:        [Constructor]
@@ -117,7 +123,80 @@ public abstract class Pokemon {
                 break;  
         }
         
+        System.out.println(RUN_ADJUST + " " + CATCH_ADJUST);
+        
         return pokemonState; // give back the determined response
+    }
+    
+    /*---------------------------------------------------------------------
+    |  Method name:    [getDecider]
+    |  Purpose:        [Generates a random number between 1 and 100 which
+    |                   is used to determine where it falls in the 
+    |                   percentages for run and or catch in the 
+    |                   respond method. This returns just for testing
+    |                   purposes.]
+    |  Returns:        [int decider used for testing]
+    *---------------------------------------------------------------------*/
+    public int getDecider() {
+        
+        decider = gen.nextInt(100) + 1;
+        return decider;
+    }
+    
+    /*---------------------------------------------------------------------
+    |  Method name:    [getState]
+    |  Purpose:        [Gets the current state of the Pokemon]
+    |  Returns:        [PokemonResponse - what the Pokemon is doing]
+    *---------------------------------------------------------------------*/
+    public PokemonResponse getState() {
+        
+        return pokemonState;
+    }
+
+    public void startEncounter() {
+             
+        Ticker ticker = new Ticker();
+        ticker.start();
+      
+    }
+    
+    private class Ticker {
+        
+        private int MAX_TICS;
+        private int tic;
+        private Timer timer;
+        private boolean inBattle;
+        
+        public Ticker() {
+            
+            MAX_TICS = 60;
+            tic = 0;
+            timer = new Timer(0, new TimerListener());
+        }
+        
+        public void start() {
+            
+            timer.start();
+        }
+        
+        private class TimerListener implements ActionListener {
+
+            @Override
+            public void actionPerformed(ActionEvent e) {
+
+                if (tic <= MAX_TICS) {
+                    
+                    tic++;
+                }
+                
+                else {
+                    
+                    pokemonState = PokemonResponse.RUN_AWAY;
+                    timer.stop();
+                }             
+            }       
+        }
+        
     }
     
     /*---------------------------------------------------------------------
@@ -143,17 +222,7 @@ public abstract class Pokemon {
         
         return name + type;
     }
-    
-    /*---------------------------------------------------------------------
-    |  Method name:    [getState]
-    |  Purpose:        [Gets the current state of the Pokemon]
-    |  Returns:        [PokemonResponse - what the Pokemon is doing]
-    *---------------------------------------------------------------------*/
-    public PokemonResponse getState() {
-        
-        return pokemonState;
-    }
-     
+         
     /*---------------------------------------------------------------------
     |  Method name:    [setSeed]
     |  Purpose:        [TESTING METHOD: set the seed for the Random]
@@ -162,20 +231,5 @@ public abstract class Pokemon {
     public void setSeed(int seed) {
         
         gen = new Random(seed); // set random to be this one    
-    }
-    
-    /*---------------------------------------------------------------------
-    |  Method name:    [getDecider]
-    |  Purpose:        [Generates a random number between 1 and 100 which
-    |                   is used to determine where it falls in the 
-    |                   percentages for run and or catch in the 
-    |                   respond method. This returns just for testing
-    |                   purposes.]
-    |  Returns:        [int decider used for testing]
-    *---------------------------------------------------------------------*/
-    public int getDecider() {
-        
-        decider = gen.nextInt(100) + 1;
-        return decider;
     }
 }

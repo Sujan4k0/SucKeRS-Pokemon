@@ -19,13 +19,13 @@ import static org.junit.Assert.*;
 
 import org.junit.Test;
 
-import model.Common;
-import model.Legendary;
-import model.Pokemon;
-import model.PokemonResponse;
-import model.PokemonType;
-import model.TrainerAction;
-import model.Uncommon;
+import model.PokemonModel.Common;
+import model.PokemonModel.Legendary;
+import model.PokemonModel.Pokemon;
+import model.PokemonModel.PokemonResponse;
+import model.PokemonModel.PokemonType;
+import model.PokemonModel.Uncommon;
+import model.TrainerModel.TrainerAction;
 
 public class PokemonTests { 
 
@@ -120,7 +120,7 @@ public class PokemonTests {
         // the decider is 3, so it'll bypass the run when we throw a ball
 
         testMon3.respond(TrainerAction.THROW_BAIT); // this shoot drain catch to set up run
-        testMon3.setSeed(20); // decider of 3
+        testMon3.setSeed(22); // decider of 3
 
         assertEquals(testMon3.respond(TrainerAction.THROW_BALL), PokemonResponse.RUN_AWAY);
     }
@@ -133,4 +133,5 @@ public class PokemonTests {
         
         assertEquals(testMon.getName(), "SARRYATHJAN");
     }
+        
 }

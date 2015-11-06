@@ -1,9 +1,9 @@
 /*=========================================================================== 
- | Assignment: FINAL PROJECT: [Uncommon] 
+ | Assignment: FINAL PROJECT: [Common] 
  | 
  | Authors:    [Sujan Patel  (sujan4k0@email.arizona.edu)] 
- |         [Keith Smith  (browningsmith@email.arizona.edu)]
- |         [Ryan Kaye    (rkaye@email.arizona.edu)]
+ |             [Keith Smith  (browningsmith@email.arizona.edu)]
+ |             [Ryan Kaye    (rkaye@email.arizona.edu)]
  |             [Sarina White (sarinarw@email.arizona.edu)]
  | 
  | Course: 335 
@@ -12,25 +12,26 @@
  | Due Date: [12.7.15] 
  | 
  | Description: Subclass of Pokemon that controls the small variations that
- |              Uncommon pokemon has. 
+ |              Common pokemon has.  
  *==========================================================================*/
-package model;
+package model.PokemonModel;
 
 import java.awt.image.BufferedImage;
 
-public class Uncommon extends Pokemon {
-
+public class Common extends Pokemon {
+        
     /*---------------------------------------------------------------------
-    |  Method name:    [Uncommon]
+    |  Method name:    [Common]
     |  Purpose:        [Constructor]
     *---------------------------------------------------------------------*/
-    public Uncommon(String n, BufferedImage[] i, PokemonType t) {
+    public Common(String n, BufferedImage[] i, PokemonType t) {
         super(n, i, t);
-        catchPercentage = 50;
-        runPercentage = 50;
+        catchPercentage = 70;
+        runPercentage = 30;
         
-        // constant adjustments for uncommon pokemon
-        RUN_ADJUST = 5;
-        CATCH_ADJUST = 5;
+        // constant adjustments for common pokemon
+        RUN_ADJUST = 10;
+        CATCH_ADJUST = 10;
     }
+
 }

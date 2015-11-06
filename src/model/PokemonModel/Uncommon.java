@@ -1,5 +1,5 @@
 /*=========================================================================== 
- | Assignment: FINAL PROJECT: [Legendary] 
+ | Assignment: FINAL PROJECT: [Uncommon] 
  | 
  | Authors:    [Sujan Patel  (sujan4k0@email.arizona.edu)] 
  |         [Keith Smith  (browningsmith@email.arizona.edu)]
@@ -12,25 +12,25 @@
  | Due Date: [12.7.15] 
  | 
  | Description: Subclass of Pokemon that controls the small variations that
- |              Lgendary pokemon has. 
+ |              Uncommon pokemon has. 
  *==========================================================================*/
-package model;
+package model.PokemonModel;
 
 import java.awt.image.BufferedImage;
 
-public class Legendary extends Pokemon {
-    
+public class Uncommon extends Pokemon {
+
     /*---------------------------------------------------------------------
-    |  Method name:    [Legendary]
+    |  Method name:    [Uncommon]
     |  Purpose:        [Constructor]
     *---------------------------------------------------------------------*/
-    public Legendary(String n, BufferedImage[] i, PokemonType t) {
+    public Uncommon(String n, BufferedImage[] i, PokemonType t) {
         super(n, i, t);
-        catchPercentage = 5;
-        runPercentage = 3;
+        catchPercentage = 50;
+        runPercentage = 50;
         
-        // constant values for legendary adjustments
-        RUN_ADJUST = 1;
-        CATCH_ADJUST = 5; 
-    }    
+        // constant adjustments for uncommon pokemon
+        RUN_ADJUST = 5;
+        CATCH_ADJUST = 5;
+    }
 }
