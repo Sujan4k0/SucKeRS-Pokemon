@@ -13,7 +13,7 @@
  | 
  | Description:  
  *==========================================================================*/
-package Tests;
+package test;
 
 import static org.junit.Assert.*;
 
