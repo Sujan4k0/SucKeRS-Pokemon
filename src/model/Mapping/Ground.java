@@ -1,4 +1,5 @@
-package model;
+package model.Mapping;
+
 
 public enum Ground implements Tile {
 	

@@ -17,6 +17,7 @@
 package controller;
 
 import model.*;
+import model.Mapping.Map;
 
 public class GameMode {
 

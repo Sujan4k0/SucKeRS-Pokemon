@@ -1,4 +1,4 @@
-package model;
+package model.Mapping;
 
 public enum TerrainType {
 	

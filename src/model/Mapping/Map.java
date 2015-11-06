@@ -1,8 +1,12 @@
-package model;
+package model.Mapping;
 
 public class Map {
 	
-	static int MAP_DIM = 100;
+	// Map will be MAP_DIM by MAP_DIM tiles
+	static int MAP_DIM = 10;
+	
+	// Map will have width and height of TILE_DIM * MAP_DIM
+	static int MAP_SIZE = MAP_DIM * Tile.TILE_DIM;
 	
 	private Tile[][] board;
 	
