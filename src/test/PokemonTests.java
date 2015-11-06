@@ -132,6 +132,5 @@ public class PokemonTests {
         assertEquals(testMon.toString(), "Name: SARRYATHJAN" + "\n" + "Type: ELECTRIC" + "\n");       
         
         assertEquals(testMon.getName(), "SARRYATHJAN");
-    }
-        
+    }      
 }
