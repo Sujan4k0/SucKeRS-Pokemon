@@ -153,6 +153,11 @@ public abstract class Pokemon {
         return pokemonState;
     }
 
+    /*---------------------------------------------------------------------
+    |  Method name:    [startEncounter]
+    |  Purpose:        [This will start the timer of the encounter with
+    |                   this Pokemon when the Trainer encounters it.]
+    *---------------------------------------------------------------------*/
     public void startEncounter() {
              
         Ticker ticker = new Ticker();
@@ -162,41 +167,52 @@ public abstract class Pokemon {
     
     private class Ticker {
         
-        private int MAX_TICS;
-        private int tic;
+        private int MAX_TICS; // how long the Ticker will go on
+        private int tic; // current second we're on
         private Timer timer;
-        private boolean inBattle;
         
+        /*---------------------------------------------------------------------
+        |  Method name:    [Ticker]
+        |  Purpose:        [Constructor]
+        *---------------------------------------------------------------------*/
         public Ticker() {
             
-            MAX_TICS = 60;
-            tic = 0;
-            timer = new Timer(0, new TimerListener());
+            MAX_TICS = 60; // 60 second encounters
+            tic = 0; // start at 0 seconds
+            timer = new Timer(0, new TimerListener()); // ActionListener for timer
         }
         
+        /*---------------------------------------------------------------------
+        |  Method name:    [start]
+        |  Purpose:        [Starts the timer]
+        *---------------------------------------------------------------------*/
         public void start() {
             
             timer.start();
         }
         
+        /*---------------------------------------------------------------------
+        |  Class name:     [TimerListener]
+        |  Purpose:        [Allows for the timer to countdown once the Pokemon
+        |                   is encountered.]
+        *---------------------------------------------------------------------*/ 
         private class TimerListener implements ActionListener {
 
             @Override
             public void actionPerformed(ActionEvent e) {
 
-                if (tic <= MAX_TICS) {
+                if (tic <= MAX_TICS) { // 60 seconds has not passed
                     
                     tic++;
                 }
                 
-                else {
+                else { // time is up
                     
-                    pokemonState = PokemonResponse.RUN_AWAY;
-                    timer.stop();
+                    pokemonState = PokemonResponse.RUN_AWAY; // time is up so the Pokemon will run
+                    timer.stop(); // stop the timer
                 }             
             }       
-        }
-        
+        }        
     }
     
     /*---------------------------------------------------------------------
