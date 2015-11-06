@@ -7,10 +7,8 @@ import javax.imageio.ImageIO;
 
 public enum Obstacle implements Tile{
 	
-	ICE_1(TerrainType.ICE), ICE_2(TerrainType.ICE), ICE_3(TerrainType.ICE),
-	ICE_4(TerrainType.ICE), ICE_5(TerrainType.ICE),
-	CAVE_1(TerrainType.CAVE), CAVE_2(TerrainType.CAVE), CAVE_3(TerrainType.CAVE),
-	CAVE_4(TerrainType.CAVE), CAVE_5(TerrainType.CAVE);
+	ROCK_1(TerrainType.GENERIC), ROCK_2(TerrainType.FOREST), ROCK_3(TerrainType.CAVE), 
+	ROCK_4(TerrainType.GENERIC);
 	
 	private TerrainType terrainType;
 	
@@ -27,6 +25,11 @@ public enum Obstacle implements Tile{
 	@Override
 	public TerrainType getTerrainType() {
 		return terrainType;
+	}
+
+	@Override
+	public int getIndex() {
+		return this.ordinal();
 	}
 
 }
