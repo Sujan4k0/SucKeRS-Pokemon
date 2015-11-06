@@ -122,9 +122,7 @@ public abstract class Pokemon {
                 // should never get here
                 break;  
         }
-        
-        System.out.println(RUN_ADJUST + " " + CATCH_ADJUST);
-        
+                
         return pokemonState; // give back the determined response
     }
     
