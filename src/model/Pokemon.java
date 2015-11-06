@@ -112,6 +112,7 @@ public abstract class Pokemon {
                 break;  
         }
         
+        System.out.println(RUN_ADJUST + " " + CATCH_ADJUST);
         System.out.println(runPercentage + " " + catchPercentage);
         
         return pokemonState;
