@@ -2,16 +2,26 @@ package model;
 
 public class Map {
 	
+	static int MAP_DIM = 100;
+	
 	private Tile[][] board;
+	
+	public Map() {
+		
+		createMap();
+		
+	}
 	
 	private void createMap() {
 		
-		//TODO: Create a new two dimensional board of tiles and put that in 'this.board'
+		board = new Tile[MAP_DIM][MAP_DIM];
+		
+		//TODO: Fill board[][] with Tiles
 	}
 	
-	public Tile[][] map() {
+	public Tile[][] getBoard() {
 		
-		return this.board;
+		return board;
 		
 	}
 

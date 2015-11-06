@@ -1,11 +1,11 @@
 package model;
 
-import java.awt.image.BufferedImage;
+public interface Tile {
+	
+	public static int TILE_DIM = 30;
 
-public abstract class Tile {
-	
-	private BufferedImage sprite;
-	
-	public abstract void effect();
+	public void interactWithTrainer();
+
+	public TerrainType getTerrainType();
 
 }
