@@ -2,8 +2,8 @@
  | Assignment: FINAL PROJECT: [Pokemon] 
  | 
  | Authors:    [Sujan Patel  (sujan4k0@email.arizona.edu)] 
- |         [Keith Smith  (browningsmith@email.arizona.edu)]
- |         [Ryan Kaye    (kayeryan1@email.arizona.edu)]
+ |             [Keith Smith  (browningsmith@email.arizona.edu)]
+ |             [Ryan Kaye    (rkaye@email.arizona.edu)]
  |             [Sarina White (sarinarw@email.arizona.edu)]
  | 
  | Course: 335 
@@ -29,18 +29,18 @@ public abstract class Pokemon {
     protected double runPercentage; // likelihood of running away
     
     protected PokemonResponse pokemonState = PokemonResponse.STAND_GROUND;
-    protected Random gen = new Random();
+    protected Random gen;
     
-    protected boolean takeBait = false;
-    protected int decider = 0;
-    protected int RUN_ADJUST;
-    protected int CATCH_ADJUST;
-
-
+    protected int decider; // determines percentage location for run and catch
+    protected int RUN_ADJUST; // fixed constant of run incrementation/decrementation
+    protected int CATCH_ADJUST; // fixed constant of catch incrementation/decerementation
+    
     /*---------------------------------------------------------------------
     |  Method name:    [Pokemon]
     |  Purpose:        [Constructor]
-    |  Parameters:     []
+    |  Parameters:     [String that is the name, BufferedImage[] that
+    |                   contains all perspectives of this Pokemon, and
+    |                   the type of the Pokemon.]
     *---------------------------------------------------------------------*/
     public Pokemon(String n, BufferedImage[] i, PokemonType t) {
         
@@ -49,41 +49,46 @@ public abstract class Pokemon {
         this.sprite = i;
         this.type = t;
         
+        // default the RUN_ADJUST and CATCH_ADJUST for no rarity pokemon
+        // this should never actually be used
         RUN_ADJUST = 0;
         CATCH_ADJUST = 0;
+        
+        gen = new Random(); // start random here for non-testing
+        decider = 0; // default decision to 0, so nothing would happen
     }
     
     /*---------------------------------------------------------------------
-    |  Method name:    []
-    |  Purpose:        []
-    |  Parameters:     []
-    |  Returns:        []
+    |  Method name:    [respond]
+    |  Purpose:        [Determines the response of a Pokemon and adjusts
+    |                   the probablistic componenets of this Pokemon.]
+    |  Parameters:     [TrainerAction - what the trainer did to the
+    |                   Pokemon]
+    |  Returns:        [PokemonResponse - how the Pokemon reacted to the
+    |                   trainer.]
     *---------------------------------------------------------------------*/
     public PokemonResponse respond(TrainerAction action) {
         
-        // generic body, if other types (common) do not write their
-        // own, this one gets used.
-
-
-        getDecider();
+        getDecider(); // get the percentage decider which will determine if the pokemon is to take a certain action
         
+        // go through all possible trainer actions
         switch (action) {
+        
             case THROW_BAIT:
                                 
-                runPercentage = Math.max(0, runPercentage + RUN_ADJUST);
-                catchPercentage = Math.max(0, catchPercentage - CATCH_ADJUST);
+                runPercentage = Math.min(100, runPercentage + RUN_ADJUST); // increase run
+                catchPercentage = Math.max(0, catchPercentage - CATCH_ADJUST); // decrease catch
                 
+                // evaluate with the decider if the Pokemon will run
                 if (decider <= runPercentage && decider > 0) {
                     
                     pokemonState = PokemonResponse.RUN_AWAY;
                 }
-                
                 break;
 
             case THROW_BALL:
                
-                // evaluate and set pokemonState
-                
+                // evaluate and set pokemonState, catching gets precedence
                 if (decider <= catchPercentage && decider > 0) {
                     
                     pokemonState = PokemonResponse.GET_CAUGHT;
@@ -92,53 +97,85 @@ public abstract class Pokemon {
                 else if (decider <= runPercentage && decider > 0) {
                     
                     pokemonState = PokemonResponse.RUN_AWAY;
-                }
-                
+                }             
                 break;
                 
             case THROW_ROCK:
  
-                runPercentage = Math.max(0, runPercentage - RUN_ADJUST);
-                catchPercentage = Math.max(0, catchPercentage + CATCH_ADJUST);
+                runPercentage = Math.max(0, runPercentage - RUN_ADJUST); // decrease run
+                catchPercentage = Math.min(100, catchPercentage + CATCH_ADJUST); // increase catch
                 
+                // check if the pokemon runs based on the current percentage and decider
                 if (decider <= runPercentage && decider > 0) {
                     
                     pokemonState = PokemonResponse.RUN_AWAY;
-                }
-                
+                }            
                 break;
                 
             default:
+                // should never get here
                 break;  
         }
         
-        System.out.println(RUN_ADJUST + " " + CATCH_ADJUST);
-        System.out.println(runPercentage + " " + catchPercentage);
-        
-        return pokemonState;
+        return pokemonState; // give back the determined response
     }
     
+    /*---------------------------------------------------------------------
+    |  Method name:    [getName]
+    |  Purpose:        [Get the name of the Pokemon]
+    |  Returns:        [String - Pokemon's name]
+    *---------------------------------------------------------------------*/
     public String getName() {
-        return this.name;
+        
+        return this.name.toUpperCase(); 
     }
     
+    /*---------------------------------------------------------------------
+    |  Method name:    [toString]
+    |  Purpose:        [Get formatted information for this Pokemon]
+    |  Returns:        [String - formatted Pokemon info]
+    *---------------------------------------------------------------------*/
     public String toString() {
-        return this.name;
+        
+        // uppercase of both info types
+        String name = "Name: " + this.name.toUpperCase() + "\n";
+        String type = "Type: " + this.type + "\n";
+        
+        return name + type;
     }
     
+    /*---------------------------------------------------------------------
+    |  Method name:    [getState]
+    |  Purpose:        [Gets the current state of the Pokemon]
+    |  Returns:        [PokemonResponse - what the Pokemon is doing]
+    *---------------------------------------------------------------------*/
     public PokemonResponse getState() {
         
         return pokemonState;
     }
-        
+     
+    /*---------------------------------------------------------------------
+    |  Method name:    [setSeed]
+    |  Purpose:        [TESTING METHOD: set the seed for the Random]
+    |  Parameters:     [int - the seed we're forcing]
+    *---------------------------------------------------------------------*/
     public void setSeed(int seed) {
         
-        gen = new Random(seed);      
+        gen = new Random(seed); // set random to be this one    
     }
     
+    /*---------------------------------------------------------------------
+    |  Method name:    [getDecider]
+    |  Purpose:        [Generates a random number between 1 and 100 which
+    |                   is used to determine where it falls in the 
+    |                   percentages for run and or catch in the 
+    |                   respond method. This returns just for testing
+    |                   purposes.]
+    |  Returns:        [int decider used for testing]
+    *---------------------------------------------------------------------*/
     public int getDecider() {
         
-        decider = gen.nextInt(101);
+        decider = gen.nextInt(100) + 1;
         return decider;
     }
 }
