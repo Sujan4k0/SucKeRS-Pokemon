@@ -32,8 +32,6 @@ public class PoopingOnPie_TestGUI extends JFrame {
 
 	public PoopingOnPie_TestGUI() {
 
-		map = new Map(MapType.MAZE);
-
 		layoutGUI();
 		registerListeners();
 
@@ -43,46 +41,25 @@ public class PoopingOnPie_TestGUI extends JFrame {
 		//TODO add components of GUI
 		this.setLocation(0, 0);
 
-		PeeMuffinPanel pimp = new PeeMuffinPanel();
+		map = new Map(MapType.MAZE);
+		
+		map.addKeyListener(new OurKeyListener());
+		map.setFocusable(true);
 
-		pimp.addKeyListener(new OurKeyListener());
-		pimp.setFocusable(true);
-
-		this.add(pimp, BorderLayout.CENTER);
+		this.add(map, BorderLayout.CENTER);
 		//this.add(pimp2, BorderLayout.EAST);
 
 		// fits this JFrame's size to its Components
 		this.pack();
 
-		// paints the JPanel
-		pimp.repaint();
+		// paints the map JPanel
+		map.repaint();
 
 	}
 
 	private void registerListeners() {
 		//TODO add necessary Listeners
-
-	}
-
-	private class PeeMuffinPanel extends JPanel {
-
-		private static final long serialVersionUID = 1L;
-
-		public PeeMuffinPanel() {
-
-			int prefw = Map.WIDTH * Tile.SIZE;
-			int prefh = Map.HEIGHT * Tile.SIZE;
-
-			this.setPreferredSize(new Dimension(prefw, prefh));
-
-		}
-
-		public void paintComponent(Graphics g) {
-
-			// draws the map
-			map.drawMap(g);
-
-		}
+		
 	}
 
 	private class OurKeyListener implements KeyListener {
@@ -94,7 +71,7 @@ public class PoopingOnPie_TestGUI extends JFrame {
 
 		@Override
 		public void keyPressed(KeyEvent e) {
-			System.out.println("Key pressed: " + e.getKeyText(e.getKeyCode()));
+			System.out.println("Key pressed: " + KeyEvent.getKeyText(e.getKeyCode()));
 			if (e.getKeyCode() == KeyEvent.VK_UP) {
 				map.moveUp();
 			}

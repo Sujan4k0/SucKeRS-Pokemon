@@ -1,5 +1,6 @@
 package model.MapModel;
 
+import java.awt.Dimension;
 import java.awt.Graphics;
 import java.awt.Image;
 import java.awt.Point;
@@ -11,7 +12,9 @@ import java.util.Random;
 import javax.imageio.ImageIO;
 import javax.swing.JPanel;
 
-public class Map {
+public class Map extends JPanel {
+
+	private static final long serialVersionUID = 1L;
 
 	// visible Map is WIDTH by HEIGHT tiles
 	public static int WIDTH = 15, HEIGHT = 10;
@@ -51,6 +54,17 @@ public class Map {
 		if (type == MapType.CEA)
 			createCEA();
 
+		int prefw = Map.WIDTH * Tile.SIZE;
+		int prefh = Map.HEIGHT * Tile.SIZE;
+
+		this.setPreferredSize(new Dimension(prefw, prefh));
+
+	}
+
+	public void paintComponent(Graphics g) {
+
+		drawMap(g);
+
 	}
 
 	private void createCEA() {
@@ -79,19 +93,16 @@ public class Map {
 			}
 		}
 
-		
-
-		
 		//TODO: Fill obstacleTiles[][] with Obstacles
 		for (int i = 0; i < Map.MAZE_HEIGHT; i++) {
 			for (int j = 0; j < Map.MAZE_WIDTH; j++) {
 				obstacleTiles[i][j] = Obstacle.ROCK_1;
 			}
 		}
-		
+
 		int start = new Random().nextInt(MAZE_HEIGHT - 2) + 1;
 		obstacleTiles[start][0] = null; //starting spot
-		
+
 		obstacleTiles = new MazeGenerator(new Point(start, 1), obstacleTiles)
 				.generateMaze();
 
@@ -210,10 +221,10 @@ class MazeGenerator {
 			// get last added Point from list
 			if (pt == null || !pt.equals(mazeList.get(mazeList.size() - 1))) {
 				pt = mazeList.get(mazeList.size() - 1);
-				System.out.println("Generating Maze at Point: " + pt.toString());
+				System.out
+						.println("Generating Maze at Point: " + pt.toString());
 			}
 
-			count++;
 			int count2 = 0;
 
 			// see how many direction have already been moved
@@ -229,41 +240,38 @@ class MazeGenerator {
 
 			// remove point from list when no other directions can
 			// be moved to
-			if ((pt.equals(new Point(1, 1)) 
+			if ((pt.equals(new Point(1, 1))
 					|| pt.equals(new Point(1, Map.MAZE_WIDTH - 2))
-					|| pt.equals(new Point(Map.MAZE_HEIGHT - 2, 1)) 
-					|| pt.equals(new Point(Map.MAZE_HEIGHT - 2, Map.MAZE_WIDTH - 2))) 
+					|| pt.equals(new Point(Map.MAZE_HEIGHT - 2, 1)) || pt
+						.equals(new Point(Map.MAZE_HEIGHT - 2,
+								Map.MAZE_WIDTH - 2)))
 					&& count2 == 2)
 				mazeList.remove(pt);
-			
-			else if ((pt.x == 1 || pt.y == 1
-					|| pt.x == Map.MAZE_HEIGHT - 2
-					|| pt.y == Map.MAZE_WIDTH - 2)
-					&& count == 3)
-				mazeList.remove(pt);
-			else if (count == 4)  mazeList.remove(pt);
 
-			if (count == 300)
-				break;
+			else if ((pt.x == 1 || pt.y == 1 || pt.x == Map.MAZE_HEIGHT - 2 || pt.y == Map.MAZE_WIDTH - 2)
+					&& count2 == 3)
+				mazeList.remove(pt);
+			else if (count2 == 4)
+				mazeList.remove(pt);
 
 			int randomDir = new Random().nextInt(4);
-
+			count++;
 			switch (randomDir) {
 
 			case 0:
-				if (pt.x - Map.MAZE_HEIGHT/4 > 0)
+				if (pt.x - Map.MAZE_HEIGHT / 4 > 0)
 					generateUp();
 				break;
 			case 1:
-				if (pt.x + Map.MAZE_HEIGHT/4 < obstacles.length - 1)
+				if (pt.x + Map.MAZE_HEIGHT / 4 < obstacles.length - 1)
 					generateDown();
 				break;
 			case 2:
-				if (pt.y - Map.MAZE_WIDTH/4 > 0)
+				if (pt.y - Map.MAZE_WIDTH / 4 > 0)
 					generateLeft();
 				break;
 			case 3:
-				if (pt.y + Map.MAZE_WIDTH/4 < obstacles[0].length - 1)
+				if (pt.y + Map.MAZE_WIDTH / 4 < obstacles[0].length - 1)
 					generateRight();
 				break;
 			default:
@@ -271,17 +279,17 @@ class MazeGenerator {
 
 			}
 		}
-		
-		for (int i = Map.MAZE_HEIGHT - 1; i > 0; i++)
-			for (int j = Map.MAZE_WIDTH - 1; j > 0; j++) {
-				
-				if (obstacles[i][j] == null) {
-					
-					
+
+		for (int i = Map.MAZE_WIDTH - 1; i > 0; i--)
+			for (int j = Map.MAZE_HEIGHT - 1; j > 0; j--) {
+
+				if (obstacles[j][i] == null) {
+					for (int x = i; x < Map.MAZE_HEIGHT; x++)
+						obstacles[j][x] = null;
+					return obstacles;
 				}
-				
+
 			}
-				
 
 		return obstacles;
 
@@ -289,18 +297,17 @@ class MazeGenerator {
 
 	private void generateDown() {
 
-		int move = new Random().nextInt(Map.MAZE_HEIGHT/4 - 1) + 2;
+		int move = new Random().nextInt(Map.MAZE_HEIGHT / 4 - 1) + 2;
 
 		// keep generating a new random movement num until one works yo
 		while (pt.x + move > (Map.MAZE_HEIGHT - 2)) {
-			move = new Random().nextInt(Map.MAZE_HEIGHT/4 - 1) + 2;
-}
-		
+			move = new Random().nextInt(Map.MAZE_HEIGHT / 4 - 1) + 2;
+		}
+
 		// clear path
 		for (int i = 0; i <= move; i++) {
 			obstacles[pt.x + i][pt.y] = null;
 		}
-
 
 		Point newP = new Point(pt.x + move, pt.y);
 
@@ -313,14 +320,14 @@ class MazeGenerator {
 
 	private void generateUp() {
 
-		int move = new Random().nextInt(Map.MAZE_HEIGHT/4 - 1) + 2;
+		int move = new Random().nextInt(Map.MAZE_HEIGHT / 4 - 1) + 2;
 
 		// keep generating a new random movement num until one works yo
 		while (pt.x - move < 1) {
-			move = new Random().nextInt(Map.MAZE_HEIGHT/4 - 1) + 2;
+			move = new Random().nextInt(Map.MAZE_HEIGHT / 4 - 1) + 2;
 
 		}
-		
+
 		// clear path
 		for (int i = 0; i <= move; i++) {
 			obstacles[pt.x - i][pt.y] = null;
@@ -336,13 +343,13 @@ class MazeGenerator {
 
 	private void generateLeft() {
 
-		int move = new Random().nextInt(Map.MAZE_WIDTH/4 - 1) + 2;
+		int move = new Random().nextInt(Map.MAZE_WIDTH / 4 - 1) + 2;
 
 		// keep generating a new random movement num until one works yo
 		while (pt.y - move < 1) {
-			move = new Random().nextInt(Map.MAZE_WIDTH/4 - 1) + 2;
+			move = new Random().nextInt(Map.MAZE_WIDTH / 4 - 1) + 2;
 		}
-		
+
 		// clear path
 		for (int i = 0; i <= move; i++) {
 			obstacles[pt.x][pt.y - i] = null;
@@ -358,13 +365,13 @@ class MazeGenerator {
 
 	private void generateRight() {
 
-		int move = new Random().nextInt(Map.MAZE_WIDTH/4 - 1) + 2;
+		int move = new Random().nextInt(Map.MAZE_WIDTH / 4 - 1) + 2;
 
 		// keep generating a new random movement num until one works yo
 		while (pt.y + move > (Map.MAZE_WIDTH - 2)) {
-			move = new Random().nextInt(Map.MAZE_WIDTH/4 - 1) + 2;
+			move = new Random().nextInt(Map.MAZE_WIDTH / 4 - 1) + 2;
 		}
-		
+
 		// clear path
 		for (int i = 0; i <= move; i++) {
 			obstacles[pt.x][pt.y + i] = null;
