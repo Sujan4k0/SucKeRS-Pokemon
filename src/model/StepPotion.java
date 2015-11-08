@@ -1,5 +1,5 @@
 /*=========================================================================== 
- | Assignment: FINAL PROJECT: [Item] 
+ | Assignment: FINAL PROJECT: [StepPotion] 
  | 
  | Authors:    [Sujan Patel  (sujan4k0@email.arizona.edu)] 
  |	       [Keith Smith  (browningsmith@email.arizona.edu)]
@@ -11,24 +11,32 @@
  | Project Manager/Section Leader: Jeremy Mowery 
  | Due Date: [12.7.15] 
  | 
- | Description: Creates an abstract class for items to be extended by various types of items. All Items will have a name attribute. 
+ | Description:  An item that adds steps to a trainer's remaining step count
  *==========================================================================*/
 package model;
 
-public abstract class Item {
-	protected String name;
-	
-	
-	public Item(){
-	}
-	
+import java.util.Random;
+
+public class StepPotion extends Item{
+	int stepBonus;
+
 	/*---------------------------------------------------------------------
-	 |  Method name:    [getName]
-	 |  Purpose:  	    [return the name of an item]
-	 |  Parameters:     []
-	 |  Returns:  	    [A string representing the name of an item]
+	 |  Purpose:  	    [Constructor, determines the step value of the potion]
 	 *---------------------------------------------------------------------*/
-	public String getName(){
-		return this.name;
+	public StepPotion(){
+		Random r = new Random();
+		int random = r.nextInt(10);
+		if (random<6){
+			stepBonus=10;
+			super.name="Basic Step Potion";
+		}
+		else if (random<9){
+			stepBonus=25;
+			super.name="Super Step Potion";		
+		}
+		else {
+			stepBonus=50;
+			super.name="Hyper Step Potion";
+		}
 	}
 }

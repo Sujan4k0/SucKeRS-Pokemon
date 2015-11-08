@@ -1,5 +1,5 @@
 /*=========================================================================== 
- | Assignment: FINAL PROJECT: [Item] 
+ | Assignment: FINAL PROJECT: [FatiguePotion] 
  | 
  | Authors:    [Sujan Patel  (sujan4k0@email.arizona.edu)] 
  |	       [Keith Smith  (browningsmith@email.arizona.edu)]
@@ -11,24 +11,16 @@
  | Project Manager/Section Leader: Jeremy Mowery 
  | Due Date: [12.7.15] 
  | 
- | Description: Creates an abstract class for items to be extended by various types of items. All Items will have a name attribute. 
+ | Description: An item which recovers a trainer from the fatigue status condition 
  *==========================================================================*/
 package model;
 
-public abstract class Item {
-	protected String name;
-	
-	
-	public Item(){
-	}
+public class FatiguePotion extends Item{
 	
 	/*---------------------------------------------------------------------
-	 |  Method name:    [getName]
-	 |  Purpose:  	    [return the name of an item]
-	 |  Parameters:     []
-	 |  Returns:  	    [A string representing the name of an item]
+	 |  Purpose:  	    [Constructor]
 	 *---------------------------------------------------------------------*/
-	public String getName(){
-		return this.name;
+	public FatiguePotion(){
+		super.name="Fatigue Potion";
 	}
 }
