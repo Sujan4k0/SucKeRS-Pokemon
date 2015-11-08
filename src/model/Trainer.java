@@ -2,6 +2,8 @@ package model;
 
 import java.util.ArrayList;
 
+import model.ItemModel.Item;
+
 public class Trainer {
 	
 	private int steps; //Number of steps the trainer has left to take
