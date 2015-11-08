@@ -1,5 +1,6 @@
+package model.PokemonModel;
 /*=========================================================================== 
- | Assignment: FINAL PROJECT: [TrainerAction] 
+ | Assignment: FINAL PROJECT: [PokemonType] 
  | 
  | Authors:    [Sujan Patel  (sujan4k0@email.arizona.edu)] 
  |         [Keith Smith  (browningsmith@email.arizona.edu)]
@@ -11,13 +12,11 @@
  | Project Manager/Section Leader: Jeremy Mowery 
  | Due Date: [12.7.15] 
  | 
- | Description: Enum to define the different actions a Trainer is capable of
- |              during the Pokemon game. 
+ | Description: Defining the types of Pokemon available. 
  *==========================================================================*/
-package model;
 
-public enum TrainerAction {
-    
-    THROW_BALL, THROW_ROCK, THROW_BAIT, RUN_AWAY;
+// put in temporary values for now
+public enum PokemonType {
 
+    ELECTRIC, FIRE, WATER, MYSTERY;
 }
