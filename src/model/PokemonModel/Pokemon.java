@@ -163,6 +163,12 @@ public abstract class Pokemon {
       
     }
     
+    /*---------------------------------------------------------------------
+    |  Class name:     [Ticker]
+    |  Purpose:        [Timer that times the encounter of a Trainer and
+    |                   Pokemon. Once time is up, the Pokemon will
+    |                   run away.]
+    *---------------------------------------------------------------------*/ 
     private class Ticker {
         
         private int MAX_TICS; // how long the Ticker will go on
