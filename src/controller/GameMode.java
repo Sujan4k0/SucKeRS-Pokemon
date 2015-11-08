@@ -18,6 +18,7 @@ package controller;
 
 import model.*;
 import model.MapModel.Map;
+import model.MapModel.MapType;
 
 public class GameMode {
 
@@ -27,9 +28,11 @@ public class GameMode {
 	/*---------------------------------------------------------------------
 	 |  Method name:    [GameMode]
 	 |  Purpose:  	    [Constructs a GameMode in order to play some POKEMON!!!]
-	 |  Parameters:     [int: determines the type of Map that this GameMode will be using]
+	 |  Parameters:     [MapType: determines the type of Map that this GameMode will be using]
 	 *---------------------------------------------------------------------*/
-	public GameMode(int mode) {
+	public GameMode(MapType gameType) {
+		
+		map = new Map(gameType);
 
 	}
 

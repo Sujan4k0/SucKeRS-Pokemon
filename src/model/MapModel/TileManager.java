@@ -18,7 +18,7 @@ public class TileManager {
 		int tsY = tile.ordinal() / TILESET_DIM;
 
 		// get the Tile dimensions
-		int td = Tile.TILE_DIM;
+		int td = Tile.SIZE;
 
 		// draw the tile at the provided (x,y) location
 		g2.drawImage(tileSet, x, y, x + td, y + td, tsX * td, tsY * td,
@@ -36,7 +36,7 @@ public class TileManager {
 		int tsY = tile.ordinal() / TILESET_DIM;
 
 		// get the Tile dimensions
-		int td = Tile.TILE_DIM;
+		int td = Tile.SIZE;
 
 		// draw the tile at the provided (x,y) location
 		g2.drawImage(tileSet, x, y, x + td, y + td, tsX * td, tsY * td,
