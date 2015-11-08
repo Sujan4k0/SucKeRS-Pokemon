@@ -13,7 +13,7 @@
  | 
  | Description: Creates an abstract class for items to be extended by various types of items. All Items will have a name attribute. 
  *==========================================================================*/
-package model;
+package model.ItemModel;
 
 public abstract class Item {
 	protected String name;

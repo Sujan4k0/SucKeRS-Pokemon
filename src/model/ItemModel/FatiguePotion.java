@@ -13,7 +13,8 @@
  | 
  | Description: An item which recovers a trainer from the fatigue status condition 
  *==========================================================================*/
-package model;
+package model.ItemModel;
+
 
 public class FatiguePotion extends Item{
 	

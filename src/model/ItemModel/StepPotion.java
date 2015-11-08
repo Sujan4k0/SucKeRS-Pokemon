@@ -13,7 +13,7 @@
  | 
  | Description:  An item that adds steps to a trainer's remaining step count
  *==========================================================================*/
-package model;
+package model.ItemModel;
 
 import java.util.Random;
 

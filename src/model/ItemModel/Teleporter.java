@@ -15,7 +15,7 @@
  				 use of the teleporter and then return to that point on the 2nd
  				 use. 
  *==========================================================================*/
-package model;
+package model.ItemModel;
 
 import java.awt.Point;
 
