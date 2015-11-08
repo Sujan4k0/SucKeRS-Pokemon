@@ -100,10 +100,10 @@ public class Map extends JPanel {
 			}
 		}
 
-		int start = new Random().nextInt(MAZE_HEIGHT - 2) + 1;
-		obstacleTiles[start][0] = null; //starting spot
+		int randX = new Random().nextInt(MAZE_HEIGHT - 2) + 1;
+		int randY = new Random().nextInt(MAZE_WIDTH - 2) + 1;
 
-		obstacleTiles = new MazeGenerator(new Point(start, 1), obstacleTiles)
+		obstacleTiles = new MazeGenerator(new Point(randX, randY), obstacleTiles)
 				.generateMaze();
 
 	}
@@ -247,7 +247,6 @@ class MazeGenerator {
 								Map.MAZE_WIDTH - 2)))
 					&& count2 == 2)
 				mazeList.remove(pt);
-
 			else if ((pt.x == 1 || pt.y == 1 || pt.x == Map.MAZE_HEIGHT - 2 || pt.y == Map.MAZE_WIDTH - 2)
 					&& count2 == 3)
 				mazeList.remove(pt);

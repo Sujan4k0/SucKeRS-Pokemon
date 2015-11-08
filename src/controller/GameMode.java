@@ -35,6 +35,12 @@ public class GameMode {
 		map = new Map(gameType);
 
 	}
+	
+	public Map getMap() {
+		
+		return map;
+		
+	}
 
 	/*--------------------------------------------------------------------
 	 |  Method name:    [trainerCanMove]
