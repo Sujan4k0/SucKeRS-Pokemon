@@ -18,7 +18,7 @@ package model.ItemModel;
 import java.util.Random;
 
 public class StepPotion extends Item{
-	int stepBonus;
+	private int stepBonus;
 
 	/*---------------------------------------------------------------------
 	 |  Purpose:  	    [Constructor, determines the step value of the potion]
@@ -27,16 +27,24 @@ public class StepPotion extends Item{
 		Random r = new Random();
 		int random = r.nextInt(10);
 		if (random<6){
-			stepBonus=10;
-			super.name="Basic Step Potion";
+			setStepBonus(10);
+			super.setName("Basic Step Potion");
 		}
 		else if (random<9){
-			stepBonus=25;
-			super.name="Super Step Potion";		
+			setStepBonus(25);
+			super.setName("Super Step Potion");		
 		}
 		else {
-			stepBonus=50;
-			super.name="Hyper Step Potion";
+			setStepBonus(50);
+			super.setName("Hyper Step Potion");
 		}
+	}
+
+	public int getStepBonus() {
+		return stepBonus;
+	}
+
+	public void setStepBonus(int stepBonus) {
+		this.stepBonus = stepBonus;
 	}
 }

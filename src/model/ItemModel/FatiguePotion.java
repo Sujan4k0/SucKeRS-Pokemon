@@ -22,6 +22,6 @@ public class FatiguePotion extends Item{
 	 |  Purpose:  	    [Constructor]
 	 *---------------------------------------------------------------------*/
 	public FatiguePotion(){
-		super.name="Fatigue Potion";
+		super.setName("Fatigue Potion");
 	}
 }

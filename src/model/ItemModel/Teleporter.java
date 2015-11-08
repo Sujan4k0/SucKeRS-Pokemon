@@ -27,7 +27,7 @@ public class Teleporter extends Item{
 	 |  Purpose:  	    [Constructor]
 	 *---------------------------------------------------------------------*/
 	public Teleporter(){
-		super.name="Teleporter";
+		super.setName("Teleporter");
 	}
    	
 	/*---------------------------------------------------------------------

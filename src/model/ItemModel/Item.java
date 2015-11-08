@@ -16,7 +16,7 @@
 package model.ItemModel;
 
 public abstract class Item {
-	protected String name;
+	protected static String name;
 	
 	
 	public Item(){
@@ -29,6 +29,9 @@ public abstract class Item {
 	 |  Returns:  	    [A string representing the name of an item]
 	 *---------------------------------------------------------------------*/
 	public String getName(){
-		return this.name;
+		return name;
+	}
+	public void setName(String n){
+		name= n;
 	}
 }
