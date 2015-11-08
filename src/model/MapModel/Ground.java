@@ -16,7 +16,9 @@ public enum Ground implements Tile {
 
 	@Override
 	public void interactWithTrainer() {
-		// TODO Sound effect on walking on
+		// TODO Sound effect when trainer walking on
+		
+		// play terrainType.getSound();
 	}
 
 	@Override

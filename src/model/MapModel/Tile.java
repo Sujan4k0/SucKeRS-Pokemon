@@ -2,7 +2,7 @@ package model.MapModel;
 
 public interface Tile {
 	
-	public static int TILE_DIM = 50;
+	public static int SIZE = 50;
 
 	public void interactWithTrainer();
 
