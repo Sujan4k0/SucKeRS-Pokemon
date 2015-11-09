@@ -6,6 +6,7 @@ import java.util.ArrayList;
 import model.ItemModel.Item;
 import model.ItemModel.StepPotion;
 import model.ItemModel.Teleporter;
+import model.MapModel.Map.Direction;
 
 public class Trainer {
 
@@ -95,6 +96,18 @@ public class Trainer {
 	public void setPoint(Point p) {
 
 		trainerPosition = new Point(p);
+	}
+	
+	public boolean isFatigued() {
+		
+		return fatigued;
+	}
+	
+	public void decreaseSteps() {
+		
+		if (isFatigued()) steps -= 2;
+		else steps -= 1;
+		
 	}
 
 }

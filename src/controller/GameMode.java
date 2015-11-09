@@ -164,8 +164,10 @@ public class GameMode {
 
 		if (trainerCanMove(e))
 			trainer.getPoint().translate(dx, dy);
+			trainer.decreaseSteps();
 		
 		map.setTrainerDir(dir);
+		
 	}
 
 	/*---------------------------------------------------------------------
