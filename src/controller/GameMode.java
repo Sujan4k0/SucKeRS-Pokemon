@@ -54,12 +54,22 @@ public class GameMode {
 
 	}
 
+	/*---------------------------------------------------------------------
+	 |  Method name:    [getMap]
+	 |  Purpose:  	    [Getter for Map instance variable]
+	 |  Returns:        [Map]
+	 *---------------------------------------------------------------------*/
 	public Map getMap() {
 
 		return map;
 
 	}
 
+	/*---------------------------------------------------------------------
+	 |  Method name:    [newMap]
+	 |  Purpose:  	    [Resets Map to a new Map object: for getting a new map or changing type]
+	 |  Parameters:     [MapType: determines the type of Map to re-instantiate]
+	 *---------------------------------------------------------------------*/
 	public void newMap(MapType mapType) {
 		map = new Map(mapType);
 	}
@@ -69,7 +79,15 @@ public class GameMode {
 	 |  Purpose:  	    [To know if the Trainer can move]
 	 |  Returns:  	    [boolean: true if Trainer can move, false if Trainer can't]
 	 *---------------------------------------------------------------------*/
-	private boolean trainerCanMove() {
+	private boolean trainerCanMove(KeyEvent e) {
+		// get all obstacles from the map to check collision
+		Obstacle[][] obsts = map.getObstacleTiles();
+		// get the point the trainer is currently at
+		Point prev = trainer.getPoint();
+
+		if (e.getKeyCode() == KeyEvent.VK_UP
+				&& obsts[prev.x - 1][prev.y] == null)
+			return true;
 
 		return false;
 	}
@@ -80,6 +98,20 @@ public class GameMode {
 	 |  Returns:  	    [boolean: true if user has won, false if user has not]
 	 *---------------------------------------------------------------------*/
 	public boolean isGameWon() {
+
+		Obstacle[][] obstacle = map.getObstacleTiles();
+
+		// if this is a Maze game, then the player wins if they are standing on
+		// the only null obstacle tile on the right-most side of the map
+		if (gameType == MapType.MAZE) {
+			for (int i = 0; i < Map.MAZE_HEIGHT; i++) {
+				if (obstacle[i][Map.MAZE_WIDTH - 1] == null) {
+					if (trainer.getPoint().equals(
+							new Point(i, Map.MAZE_WIDTH - 1)))
+						return true;
+				}
+			}
+		}
 
 		return false;
 	}
@@ -94,6 +126,52 @@ public class GameMode {
 		return false;
 	}
 
+	public void moveTrainer(KeyEvent e) {
+
+		int dx = 0, dy = 0;
+		int kc = e.getKeyCode();
+		Map.Direction dir = Map.Direction.RIGHT;
+
+		switch (kc) {
+		case KeyEvent.VK_UP:
+			dx = -1;
+			dir = Map.Direction.UP;
+			if ((trainer.getPoint().x + dx) % Map.HEIGHT == Map.HEIGHT - 1)
+				map.moveUp();
+			break;
+		case KeyEvent.VK_DOWN:
+			dx = 1;
+			dir = Map.Direction.DOWN_1; // DOWN isn't working :(
+			if ((trainer.getPoint().x  + dx) % Map.HEIGHT == 0)
+				map.moveDown();
+			break;
+		case KeyEvent.VK_RIGHT:
+			dy = 1;
+			dir = Map.Direction.RIGHT;
+			if ((trainer.getPoint().y + dy) / Map.WIDTH != 0
+					&& trainer.getPoint().y % Map.WIDTH == 0)
+				map.moveRight();
+			break;
+		case KeyEvent.VK_LEFT:
+			dy = -1;
+			dir = Map.Direction.LEFT;
+			if ((trainer.getPoint().y + dy) % Map.WIDTH == Map.WIDTH - 1)
+				map.moveLeft();
+			break;
+		default:
+			break;
+		}
+
+		if (trainerCanMove(e))
+			trainer.getPoint().translate(dx, dy);
+		
+		map.setTrainerDir(dir);
+	}
+
+	/*---------------------------------------------------------------------
+	 |  Class name:     [OurKeyListener]
+	 |  Purpose:        [Used to move trainer around the map]
+	 *---------------------------------------------------------------------*/
 	private class OurKeyListener implements KeyListener {
 
 		@Override
@@ -101,50 +179,19 @@ public class GameMode {
 
 		}
 
+		/*---------------------------------------------------------------------
+		 |  Method name:    [keyPressed]
+		 |  Purpose:  	    [handles KeyEvents on key press]
+		 |  Parameters:     [KeyEvent]
+		 *---------------------------------------------------------------------*/
 		@Override
 		public void keyPressed(KeyEvent e) {
-			Point prev = trainer.getPoint();
+
+			// set sprite direction and try to move trainer
+			moveTrainer(e);
 			
-			Obstacle[][] obsts = map.getObstacleTiles();
-
-			// System.out.println("Key pressed: " + KeyEvent.getKeyText(e.getKeyCode()));
-			if (e.getKeyCode() == KeyEvent.VK_UP) {
-				if (obsts[prev.x - 1][prev.y] == null) {
-					trainer.getPoint().translate(-1, 0);
-					map.setTrainerDir(Map.Direction.UP);
-					if (trainer.getPoint().x % Map.HEIGHT == Map.HEIGHT - 1)
-						map.moveUp();
-				}
-			}
-			if (e.getKeyCode() == KeyEvent.VK_DOWN) {
-				if (obsts[prev.x + 1][prev.y] == null) {
-					trainer.getPoint().translate(1, 0);
-					map.setTrainerDir(Map.Direction.DOWN_1);
-					if (trainer.getPoint().x % Map.HEIGHT == 0)
-						map.moveDown();
-				}
-			}
-			if (e.getKeyCode() == KeyEvent.VK_RIGHT) {
-				if (obsts[prev.x][prev.y + 1] == null) {
-					trainer.getPoint().translate(0, 1);
-					map.setTrainerDir(Map.Direction.RIGHT);
-					if (trainer.getPoint().y/ Map.WIDTH != 0
-							&& trainer.getPoint().y % Map.WIDTH == 0)
-						map.moveRight();
-				}
-			}
-			if (e.getKeyCode() == KeyEvent.VK_LEFT) {
-				if (obsts[prev.x][prev.y - 1] == null) {
-					trainer.getPoint().translate(0, -1);
-					map.setTrainerDir(Map.Direction.LEFT);
-					if (trainer.getPoint().y % Map.WIDTH == Map.WIDTH - 1)
-						map.moveLeft();
-				}
-			}
-
-			System.out.println("Trainer point: " + trainer.getPoint());
+			// set trainer's sprite location in map to trainer's current loc
 			map.setTrainerStart(trainer.getPoint());
-			System.out.println("On Map point: " + map.getTrainerStart());
 			map.repaint();
 		}
 
@@ -154,5 +201,4 @@ public class GameMode {
 		}
 
 	}
-
 }

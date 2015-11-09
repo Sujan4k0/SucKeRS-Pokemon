@@ -27,9 +27,4 @@ public enum Obstacle implements Tile{
 		return terrainType;
 	}
 
-	@Override
-	public int getIndex() {
-		return this.ordinal();
-	}
-
 }

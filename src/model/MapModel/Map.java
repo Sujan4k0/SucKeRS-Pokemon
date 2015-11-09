@@ -1,3 +1,21 @@
+/*=========================================================================== 
+ | Assignment: FINAL PROJECT: [GameMode] 
+ | 
+ | Authors:    [Sujan Patel  (sujan4k0@email.arizona.edu)] 
+ |	     	   [Keith Smith  (browningsmith@email.arizona.edu)]
+ |	     	   [Ryan Kaye    (rkaye@email.arizona.edu)]
+ |             [Sarina White (sarinarw@email.arizona.edu)]
+ | 
+ | Course: 335 
+ | Instructor: Mercer
+ | Project Manager/Section Leader: Jeremy Mowery 
+ | Due Date: [12.7.15] 
+ | 
+ | Description: This class extends JPanel creates the visual game map. Calling
+ | drawMap(Graphics) draws all the necessary components to this JPanel: ground,
+ | obstacles, and trainer. Depending on the MapType passed to the constructor,
+ | a specific map is generated.
+ *===========================================================================*/
 package model.MapModel;
 
 import java.awt.Dimension;
@@ -134,6 +152,12 @@ public class Map extends JPanel {
 			if (obstacleTiles[i][0] == null)
 				setTrainerStart(new Point(i, 0));
 		}
+		
+		for (int i = 0; i < MAZE_HEIGHT; i++) {
+			if (obstacleTiles[i][MAZE_WIDTH - 1] == null)
+				groundTiles[i][MAZE_WIDTH - 1] = Ground.ICE_1;
+		}
+
 
 		System.out.println("Start Point : " + trainerStart.toString());
 
@@ -248,6 +272,11 @@ public class Map extends JPanel {
 
 }
 
+/*---------------------------------------------------------------------
+|  Class name:     [MazeGenerator]
+|  Purpose:        [Randomly generates a maze given a starting Point and 
+|				    2D array of Obstacles]
+*---------------------------------------------------------------------*/ 
 class MazeGenerator {
 
 	private Obstacle[][] obstacles;

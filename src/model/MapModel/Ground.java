@@ -1,3 +1,19 @@
+/*=========================================================================== 
+ | Assignment: FINAL PROJECT: [GameMode] 
+ | 
+ | Authors:    [Sujan Patel  (sujan4k0@email.arizona.edu)] 
+ |	     	   [Keith Smith  (browningsmith@email.arizona.edu)]
+ |	     	   [Ryan Kaye    (rkaye@email.arizona.edu)]
+ |             [Sarina White (sarinarw@email.arizona.edu)]
+ | 
+ | Course: 335 
+ | Instructor: Mercer
+ | Project Manager/Section Leader: Jeremy Mowery 
+ | Due Date: [12.7.15] 
+ | 
+ | Description: This enum holds the different type of Ground Tiles that can be
+ | placed onto the ground in the game for aesthetic, and later auditory, purposes.
+ *===========================================================================*/
 package model.MapModel;
 
 
@@ -14,6 +30,12 @@ public enum Ground implements Tile {
 		terrainType = tt;
 	}
 
+	/*---------------------------------------------------------------------
+	 |  Method name:    []
+	 |  Purpose:  	    []
+	 |  Parameters:     []
+	 |  Returns:  	    []
+	 *---------------------------------------------------------------------*/
 	@Override
 	public void interactWithTrainer() {
 		// TODO Sound effect when trainer walking on
@@ -21,14 +43,16 @@ public enum Ground implements Tile {
 		// play terrainType.getSound();
 	}
 
+	/*---------------------------------------------------------------------
+	 |  Method name:    []
+	 |  Purpose:  	    []
+	 |  Parameters:     []
+	 |  Returns:  	    []
+	 *---------------------------------------------------------------------*/
 	@Override
 	public TerrainType getTerrainType() {
 		return terrainType;
 	}
 
-	@Override
-	public int getIndex() {
-		return this.ordinal();
-	}
 
 }
