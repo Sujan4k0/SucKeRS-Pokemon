@@ -2,8 +2,11 @@ package model.MapModel;
 
 import java.awt.Dimension;
 import java.awt.Graphics;
+import java.awt.Graphics2D;
 import java.awt.Image;
 import java.awt.Point;
+import java.awt.event.KeyEvent;
+import java.awt.event.KeyListener;
 import java.io.File;
 import java.io.IOException;
 import java.util.ArrayList;
@@ -11,6 +14,8 @@ import java.util.Random;
 
 import javax.imageio.ImageIO;
 import javax.swing.JPanel;
+
+import model.Trainer;
 
 public class Map extends JPanel {
 
@@ -32,9 +37,28 @@ public class Map extends JPanel {
 
 	private MapType type;
 
+	// Point to initialize then continuously draw trainer
+	private Point trainerStart;
+	
+	public static enum Direction {
+		UP, RIGHT, UP_1, LEFT, RIGHT_1, DOWN_1, LEFT_1, RIGHT_2, DOWN, LEFT_2, UP_2, DOWN_2
+	}
+	
+	private Direction dir = Direction.RIGHT;
+
+	Image testTrainerSheet;
+
 	private int startX = 0, startY = 0;
 
 	public Map(MapType type) {
+
+		try {
+			testTrainerSheet = ImageIO.read(new File(
+					"./images/SucKeRS_TrainerSpriteSheet_Test.png"));
+		} catch (IOException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
 
 		this.type = type;
 
@@ -83,13 +107,6 @@ public class Map extends JPanel {
 
 				// fills all ground with just these cave tiles
 				groundTiles[i][j] = Ground.CAVE_1;
-
-				/*
-				 * This code generates ice tiles with a border if (i == 0 || i
-				 * == Map.MAP_HEIGHT - 1 || j == Map.MAP_WIDTH - 1 || j == 0)
-				 * groundTiles[i][j] = Ground.ICE_3; else groundTiles[i][j] =
-				 * Ground.ICE_1;
-				 */
 			}
 		}
 
@@ -101,8 +118,7 @@ public class Map extends JPanel {
 		}
 
 		int randX = new Random().nextInt(MAZE_HEIGHT - 2) + 1;
-		// int randY = new Random().nextInt(MAZE_WIDTH - 2) + 1;
-		
+
 		// makes randX have to be an odd integer so that there is
 		// only a single border of obstacles around the edges :D
 		if (randX % 2 == 0 && randX < MAZE_HEIGHT - 3)
@@ -111,27 +127,36 @@ public class Map extends JPanel {
 			randX -= 1;
 
 		// generates the maze tiles
-		obstacleTiles = new MazeGenerator(new Point(randX, 1),
-				obstacleTiles).generateMaze();
+		obstacleTiles = new MazeGenerator(new Point(randX, 1), obstacleTiles)
+				.generateMaze();
+
+		for (int i = 0; i < MAZE_HEIGHT; i++) {
+			if (obstacleTiles[i][0] == null)
+				setTrainerStart(new Point(i, 0));
+		}
+
+		System.out.println("Start Point : " + trainerStart.toString());
+
+		if (trainerStart.x >= HEIGHT)
+			moveDown();
+		if (trainerStart.x >= 2 * HEIGHT)
+			moveDown();
 
 	}
 
 	public Ground[][] getGroundTiles() {
-
 		return groundTiles;
-
 	}
 
 	public Obstacle[][] getObstacleTiles() {
-
 		return obstacleTiles;
-
 	}
 
 	public void drawMap(Graphics g) {
 
 		int x = 0, y = 0;
 
+		// draw ground tiles
 		for (int i = startX; i < startX + Map.HEIGHT; i++) {
 			y = (i - startX) * Tile.SIZE;
 			for (int j = startY; j < startY + Map.WIDTH; j++) {
@@ -141,6 +166,7 @@ public class Map extends JPanel {
 
 		}
 
+		// draw obstacle tiles
 		for (int i = startX; i < startX + Map.HEIGHT; i++) {
 			y = (i - startX) * Tile.SIZE;
 			for (int j = startY; j < startY + Map.WIDTH; j++) {
@@ -151,6 +177,10 @@ public class Map extends JPanel {
 			}
 
 		}
+		
+		// draw trainer sprite
+		TileManager.drawTile(g, dir, testTrainerSheet,
+				(trainerStart.y % Map.WIDTH) * Tile.SIZE, (trainerStart.x % Map.HEIGHT) * Tile.SIZE);
 
 	}
 
@@ -164,7 +194,7 @@ public class Map extends JPanel {
 			restraint = Map.CEA_HEIGHT;
 
 		if (startX + Map.HEIGHT < restraint) {
-			System.out.println("Moving up");
+			System.out.println("moving down");
 			startX += Map.HEIGHT;
 		}
 
@@ -173,7 +203,7 @@ public class Map extends JPanel {
 	public void moveUp() {
 
 		if (startX - Map.HEIGHT >= 0) {
-			System.out.println("Moving down");
+			System.out.println("moving up");
 			startX -= Map.HEIGHT;
 		}
 
@@ -203,6 +233,18 @@ public class Map extends JPanel {
 		}
 
 	}
+	
+	public void setTrainerDir(Direction d) {
+		dir = d;
+	}
+
+	public Point getTrainerStart() {
+		return trainerStart;
+	}
+
+	public void setTrainerStart(Point trainerStart) {
+		this.trainerStart = new Point(trainerStart);
+	}
 
 }
 
@@ -221,9 +263,8 @@ class MazeGenerator {
 	}
 
 	public Obstacle[][] generateMaze() {
-		
-		boolean right = false, left = false, 
-				up = false, down = false;
+
+		boolean right = false, left = false, up = false, down = false;
 
 		while (!mazeList.isEmpty()) {
 
@@ -250,8 +291,7 @@ class MazeGenerator {
 			switch (randomDir) {
 
 			case 0:
-				if (pt.x - 2 > 0 
-						&& obstacles[pt.x - 1][pt.y] != null
+				if (pt.x - 2 > 0 && obstacles[pt.x - 1][pt.y] != null
 						&& obstacles[pt.x - 2][pt.y] != null) {
 					generateUp(m);
 				}
@@ -265,8 +305,7 @@ class MazeGenerator {
 				down = true;
 				break;
 			case 2:
-				if (pt.y - 2 > 0
-						&& obstacles[pt.x][pt.y - 1] != null
+				if (pt.y - 2 > 0 && obstacles[pt.x][pt.y - 1] != null
 						&& obstacles[pt.x][pt.y - 2] != null)
 					generateLeft(m);
 				left = true;
@@ -285,18 +324,19 @@ class MazeGenerator {
 		}
 
 		boolean startPlaced = false, endPlaced = false;
-		
-		while (!startPlaced) {			
+
+		while (!startPlaced) {
 			int rand = new Random().nextInt(Map.MAZE_HEIGHT);
-			
+
 			if (obstacles[rand][1] == null) {
 				obstacles[rand][0] = null;
 				startPlaced = true;
 			}
 		}
-		while (!endPlaced) {			
+
+		while (!endPlaced) {
 			int rand = new Random().nextInt(Map.MAZE_HEIGHT);
-			
+
 			if (obstacles[rand][Map.MAZE_WIDTH - 2] == null) {
 				obstacles[rand][Map.MAZE_WIDTH - 1] = null;
 				endPlaced = true;

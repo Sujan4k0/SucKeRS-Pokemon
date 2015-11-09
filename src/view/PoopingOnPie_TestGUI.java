@@ -12,6 +12,7 @@ import java.io.IOException;
 import javax.imageio.ImageIO;
 import javax.swing.*;
 
+import controller.GameMode;
 import model.MapModel.Ground;
 import model.MapModel.Map;
 import model.MapModel.MapType;
@@ -22,16 +23,14 @@ public class PoopingOnPie_TestGUI extends JFrame {
 
 	private static final long serialVersionUID = 1L;
 
-	private Map map;
+	GameMode game;
 
 	public static void main(String[] args) {
-
 		new PoopingOnPie_TestGUI().setVisible(true);
-
 	}
 
 	public PoopingOnPie_TestGUI() {
-
+		game = new GameMode(MapType.MAZE);
 		layoutGUI();
 		registerListeners();
 
@@ -41,19 +40,14 @@ public class PoopingOnPie_TestGUI extends JFrame {
 		//TODO add components of GUI
 		this.setLocation(0, 0);
 
-		map = new Map(MapType.MAZE);
-		
-		map.addKeyListener(new OurKeyListener());
-		map.setFocusable(true);
-
-		this.add(map, BorderLayout.CENTER);
+		this.add(game.getMap(), BorderLayout.CENTER);
 		//this.add(pimp2, BorderLayout.EAST);
 
 		// fits this JFrame's size to its Components
 		this.pack();
 
 		// paints the map JPanel
-		map.repaint();
+		game.getMap().repaint();
 
 	}
 
@@ -62,37 +56,6 @@ public class PoopingOnPie_TestGUI extends JFrame {
 		
 	}
 
-	private class OurKeyListener implements KeyListener {
-
-		@Override
-		public void keyTyped(KeyEvent e) {
-
-		}
-
-		@Override
-		public void keyPressed(KeyEvent e) {
-			System.out.println("Key pressed: " + KeyEvent.getKeyText(e.getKeyCode()));
-			if (e.getKeyCode() == KeyEvent.VK_UP) {
-				map.moveUp();
-			}
-			if (e.getKeyCode() == KeyEvent.VK_DOWN) {
-				map.moveDown();
-			}
-			if (e.getKeyCode() == KeyEvent.VK_RIGHT) {
-				map.moveRight();
-			}
-			if (e.getKeyCode() == KeyEvent.VK_LEFT) {
-				map.moveLeft();
-			}
-
-			repaint();
-		}
-
-		@Override
-		public void keyReleased(KeyEvent e) {
-
-		}
-
-	}
+	
 
 }
