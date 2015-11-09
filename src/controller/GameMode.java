@@ -29,6 +29,7 @@ import model.*;
 import model.MapModel.Map;
 import model.MapModel.MapType;
 import model.MapModel.Obstacle;
+import model.TrainerModel.Trainer;
 
 public class GameMode {
 

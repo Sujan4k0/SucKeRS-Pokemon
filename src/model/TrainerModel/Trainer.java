@@ -1,4 +1,4 @@
-package model;
+package model.TrainerModel;
 
 import java.awt.Point;
 import java.util.ArrayList;
@@ -12,6 +12,8 @@ public class Trainer {
 
 	private int steps; //Number of steps the trainer has left to take
 	private ArrayList<Item> items; //trainer's inventory of items
+	private ArrayList<Pokemon> capturedPokemon; //trainer's collection of pokemon
+	private int currentPokeballs;
 	private boolean fatigued;
 	private Point trainerPosition;
 
@@ -107,6 +109,25 @@ public class Trainer {
 		
 		if (isFatigued()) steps -= 2;
 		else steps -= 1;
+		
+	}
+	
+	public void throwRock() {
+		
+	}
+	
+	public void giveBait() {
+		
+		
+	}
+	
+	public void throwPokeball() {
+		
+		
+	}
+	
+	public void runAway() {
+		
 		
 	}
 

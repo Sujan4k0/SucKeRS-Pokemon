@@ -33,7 +33,7 @@ import java.util.Random;
 import javax.imageio.ImageIO;
 import javax.swing.JPanel;
 
-import model.Trainer;
+import model.TrainerModel.Trainer;
 
 public class Map extends JPanel {
 
