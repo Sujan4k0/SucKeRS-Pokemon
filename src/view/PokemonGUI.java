@@ -19,6 +19,8 @@ import model.MapModel.MapType;
 public class PokemonGUI extends JFrame {
     
     private JFrame startScreen;
+    private JPanel map;
+    private GameMode mode;
     
     public static void main(String[] args) {
         
@@ -68,8 +70,14 @@ public class PokemonGUI extends JFrame {
 //	    JPanel descriptors = new JPanel();
 //	    JButton descriptions = new JButton("Game Mode Descriptions");
 //	    descriptors.add(descriptions);
-//	    startScreen.add(descriptors, BorderLayout.SOUTH);
+//	    startScreen.add(descriptors, BorderLayout.SOUTH);	    
+	}
+	
+	private void mapFrame() {
 	    
+	    this.setVisible(true);
+	    this.setSize(500, 500);
+	    this.add(mode.getMap(), BorderLayout.CENTER);
 	}
 	
 	private class GameMode1Selected implements ActionListener {
@@ -78,10 +86,9 @@ public class PokemonGUI extends JFrame {
         public void actionPerformed(ActionEvent e) {
             
             // communicate with GameMode
-            GameMode mode = new GameMode(MapType.CEA);
-            
-            startScreen.setVisible(false);
-            
+            mode = new GameMode(MapType.CEA);      
+            startScreen.setVisible(false);    
+            mapFrame();
         }   
 	}
 	
@@ -91,13 +98,12 @@ public class PokemonGUI extends JFrame {
         public void actionPerformed(ActionEvent e) {
             
             // communicate with GameMode
-            GameMode mode = new GameMode(MapType.MAZE);
+            mode = new GameMode(MapType.MAZE);
             
             startScreen.setVisible(false);
             
         }   
     }
-
 	
 	private void registerListeners() {
 
