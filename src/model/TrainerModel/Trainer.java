@@ -7,6 +7,7 @@ import model.ItemModel.Item;
 import model.ItemModel.StepPotion;
 import model.ItemModel.Teleporter;
 import model.MapModel.Map.Direction;
+import model.PokemonModel.Pokemon;
 
 public class Trainer {
 
