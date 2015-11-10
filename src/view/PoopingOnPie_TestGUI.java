@@ -1,23 +1,11 @@
 package view;
 
 import java.awt.BorderLayout;
-import java.awt.Dimension;
-import java.awt.Graphics;
-import java.awt.Image;
-import java.awt.event.KeyEvent;
-import java.awt.event.KeyListener;
-import java.io.File;
-import java.io.IOException;
-
-import javax.imageio.ImageIO;
 import javax.swing.*;
 
 import controller.GameMode;
-import model.MapModel.Ground;
-import model.MapModel.MapOld;
-import model.MapModel.MapType;
-import model.MapModel.Tile;
-import model.MapModel.TileManager;
+import controller.MazeGame;
+import model.MapModel.MazeMap;
 import model.TrainerModel.Trainer;
 
 public class PoopingOnPie_TestGUI extends JFrame {
@@ -31,7 +19,7 @@ public class PoopingOnPie_TestGUI extends JFrame {
 	}
 
 	public PoopingOnPie_TestGUI() {
-		game = new GameMode(new MapOld(MapType.MAZE), new Trainer());
+		game = new MazeGame(new MazeMap(), new Trainer());
 		layoutGUI();
 		registerListeners();
 
