@@ -4,8 +4,8 @@ import java.awt.BorderLayout;
 import javax.swing.*;
 
 import controller.GameMode;
-import controller.MazeGame;
-import model.MapModel.MazeMap;
+//import controller.MazeGame;
+//import model.MapModel.MazeMap;
 import model.TrainerModel.Trainer;
 
 public class PoopingOnPie_TestGUI extends JFrame {
@@ -19,7 +19,7 @@ public class PoopingOnPie_TestGUI extends JFrame {
 	}
 
 	public PoopingOnPie_TestGUI() {
-		game = new MazeGame(new MazeMap(), new Trainer());
+	//	game = new MazeGame(new MazeMap(), new Trainer());
 		layoutGUI();
 		registerListeners();
 
