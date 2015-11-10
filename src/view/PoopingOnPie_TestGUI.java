@@ -14,10 +14,11 @@ import javax.swing.*;
 
 import controller.GameMode;
 import model.MapModel.Ground;
-import model.MapModel.Map;
+import model.MapModel.MapOld;
 import model.MapModel.MapType;
 import model.MapModel.Tile;
 import model.MapModel.TileManager;
+import model.TrainerModel.Trainer;
 
 public class PoopingOnPie_TestGUI extends JFrame {
 
@@ -30,7 +31,7 @@ public class PoopingOnPie_TestGUI extends JFrame {
 	}
 
 	public PoopingOnPie_TestGUI() {
-		game = new GameMode(MapType.MAZE);
+		game = new GameMode(new MapOld(MapType.MAZE), new Trainer());
 		layoutGUI();
 		registerListeners();
 

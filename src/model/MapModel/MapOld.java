@@ -35,7 +35,7 @@ import javax.swing.JPanel;
 
 import model.TrainerModel.Trainer;
 
-public class Map extends JPanel {
+public class MapOld extends JPanel {
 
 	private static final long serialVersionUID = 1L;
 
@@ -68,7 +68,7 @@ public class Map extends JPanel {
 
 	private int startX = 0, startY = 0;
 
-	public Map(MapType type) {
+	public MapOld(MapType type) {
 
 		try {
 			testTrainerSheet = ImageIO.read(new File(
@@ -96,8 +96,8 @@ public class Map extends JPanel {
 		if (type == MapType.CEA)
 			createCEA();
 
-		int prefw = Map.WIDTH * Tile.SIZE;
-		int prefh = Map.HEIGHT * Tile.SIZE;
+		int prefw = MapOld.WIDTH * Tile.SIZE;
+		int prefh = MapOld.HEIGHT * Tile.SIZE;
 
 		this.setPreferredSize(new Dimension(prefw, prefh));
 
@@ -120,8 +120,8 @@ public class Map extends JPanel {
 		obstacleTiles = new Obstacle[MAZE_HEIGHT][MAZE_WIDTH];
 
 		//TODO: Fill groundTiles[][] with Ground
-		for (int i = 0; i < Map.MAZE_HEIGHT; i++) {
-			for (int j = 0; j < Map.MAZE_WIDTH; j++) {
+		for (int i = 0; i < MapOld.MAZE_HEIGHT; i++) {
+			for (int j = 0; j < MapOld.MAZE_WIDTH; j++) {
 
 				// fills all ground with just these cave tiles
 				groundTiles[i][j] = Ground.CAVE_1;
@@ -129,8 +129,8 @@ public class Map extends JPanel {
 		}
 
 		//TODO: Fill obstacleTiles[][] with Obstacles
-		for (int i = 0; i < Map.MAZE_HEIGHT; i++) {
-			for (int j = 0; j < Map.MAZE_WIDTH; j++) {
+		for (int i = 0; i < MapOld.MAZE_HEIGHT; i++) {
+			for (int j = 0; j < MapOld.MAZE_WIDTH; j++) {
 				obstacleTiles[i][j] = Obstacle.ROCK_1;
 			}
 		}
@@ -181,9 +181,9 @@ public class Map extends JPanel {
 		int x = 0, y = 0;
 
 		// draw ground tiles
-		for (int i = startX; i < startX + Map.HEIGHT; i++) {
+		for (int i = startX; i < startX + MapOld.HEIGHT; i++) {
 			y = (i - startX) * Tile.SIZE;
-			for (int j = startY; j < startY + Map.WIDTH; j++) {
+			for (int j = startY; j < startY + MapOld.WIDTH; j++) {
 				x = (j - startY) * Tile.SIZE;
 				TileManager.drawTile(g, groundTiles[i][j], groundTileSet, x, y);
 			}
@@ -191,9 +191,9 @@ public class Map extends JPanel {
 		}
 
 		// draw obstacle tiles
-		for (int i = startX; i < startX + Map.HEIGHT; i++) {
+		for (int i = startX; i < startX + MapOld.HEIGHT; i++) {
 			y = (i - startX) * Tile.SIZE;
-			for (int j = startY; j < startY + Map.WIDTH; j++) {
+			for (int j = startY; j < startY + MapOld.WIDTH; j++) {
 				x = (j - startY) * Tile.SIZE;
 				if (obstacleTiles[i][j] != null)
 					TileManager.drawTile(g, obstacleTiles[i][j],
@@ -204,7 +204,7 @@ public class Map extends JPanel {
 		
 		// draw trainer sprite
 		TileManager.drawTile(g, dir, testTrainerSheet,
-				(trainerStart.y % Map.WIDTH) * Tile.SIZE, (trainerStart.x % Map.HEIGHT) * Tile.SIZE);
+				(trainerStart.y % MapOld.WIDTH) * Tile.SIZE, (trainerStart.x % MapOld.HEIGHT) * Tile.SIZE);
 
 	}
 
@@ -213,22 +213,22 @@ public class Map extends JPanel {
 		int restraint = 0;
 
 		if (type == MapType.MAZE)
-			restraint = Map.MAZE_HEIGHT;
+			restraint = MapOld.MAZE_HEIGHT;
 		if (type == MapType.CEA)
-			restraint = Map.CEA_HEIGHT;
+			restraint = MapOld.CEA_HEIGHT;
 
-		if (startX + Map.HEIGHT < restraint) {
+		if (startX + MapOld.HEIGHT < restraint) {
 			System.out.println("moving down");
-			startX += Map.HEIGHT;
+			startX += MapOld.HEIGHT;
 		}
 
 	}
 
 	public void moveUp() {
 
-		if (startX - Map.HEIGHT >= 0) {
+		if (startX - MapOld.HEIGHT >= 0) {
 			System.out.println("moving up");
-			startX -= Map.HEIGHT;
+			startX -= MapOld.HEIGHT;
 		}
 
 	}
@@ -238,22 +238,22 @@ public class Map extends JPanel {
 		int restraint = 0;
 
 		if (type == MapType.MAZE)
-			restraint = Map.MAZE_WIDTH;
+			restraint = MapOld.MAZE_WIDTH;
 		if (type == MapType.CEA)
-			restraint = Map.CEA_WIDTH;
+			restraint = MapOld.CEA_WIDTH;
 
-		if (startY + Map.WIDTH < restraint) {
+		if (startY + MapOld.WIDTH < restraint) {
 			System.out.println("Moving right");
-			startY += Map.WIDTH;
+			startY += MapOld.WIDTH;
 		}
 
 	}
 
 	public void moveLeft() {
 
-		if (startY - Map.WIDTH >= 0) {
+		if (startY - MapOld.WIDTH >= 0) {
 			System.out.println("Moving left");
-			startY -= Map.WIDTH;
+			startY -= MapOld.WIDTH;
 		}
 
 	}
@@ -268,6 +268,11 @@ public class Map extends JPanel {
 
 	public void setTrainerStart(Point trainerStart) {
 		this.trainerStart = new Point(trainerStart);
+	}
+
+	public MapType getType() {
+		// TODO Auto-generated method stub
+		return type;
 	}
 
 }
@@ -355,7 +360,7 @@ class MazeGenerator {
 		boolean startPlaced = false, endPlaced = false;
 
 		while (!startPlaced) {
-			int rand = new Random().nextInt(Map.MAZE_HEIGHT);
+			int rand = new Random().nextInt(MapOld.MAZE_HEIGHT);
 
 			if (obstacles[rand][1] == null) {
 				obstacles[rand][0] = null;
@@ -364,10 +369,10 @@ class MazeGenerator {
 		}
 
 		while (!endPlaced) {
-			int rand = new Random().nextInt(Map.MAZE_HEIGHT);
+			int rand = new Random().nextInt(MapOld.MAZE_HEIGHT);
 
-			if (obstacles[rand][Map.MAZE_WIDTH - 2] == null) {
-				obstacles[rand][Map.MAZE_WIDTH - 1] = null;
+			if (obstacles[rand][MapOld.MAZE_WIDTH - 2] == null) {
+				obstacles[rand][MapOld.MAZE_WIDTH - 1] = null;
 				endPlaced = true;
 			}
 		}

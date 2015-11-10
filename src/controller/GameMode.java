@@ -26,7 +26,7 @@ import java.io.IOException;
 import javax.imageio.ImageIO;
 
 import model.*;
-import model.MapModel.Map;
+import model.MapModel.MapOld;
 import model.MapModel.MapType;
 import model.MapModel.Obstacle;
 import model.TrainerModel.Trainer;
@@ -34,7 +34,7 @@ import model.TrainerModel.Trainer;
 public class GameMode {
 
 	Trainer trainer;
-	Map map;
+	MapOld map;
 	MapType gameType;
 
 	/*---------------------------------------------------------------------
@@ -42,12 +42,12 @@ public class GameMode {
 	 |  Purpose:  	    [Constructs a GameMode in order to play some POKEMON!!!]
 	 |  Parameters:     [MapType: determines the type of Map that this GameMode will be using]
 	 *---------------------------------------------------------------------*/
-	public GameMode(MapType mapType) {
+	public GameMode(MapOld m, Trainer t) {
 
-		gameType = mapType;
-
-		map = new Map(mapType);
-		trainer = new Trainer();
+		map = m;
+		gameType = m.getType();
+		
+		trainer = t;
 		trainer.setPoint(new Point(map.getTrainerStart()));
 
 		map.addKeyListener(new OurKeyListener());
@@ -60,7 +60,7 @@ public class GameMode {
 	 |  Purpose:  	    [Getter for Map instance variable]
 	 |  Returns:        [Map]
 	 *---------------------------------------------------------------------*/
-	public Map getMap() {
+	public MapOld getMap() {
 
 		return map;
 
@@ -72,7 +72,7 @@ public class GameMode {
 	 |  Parameters:     [MapType: determines the type of Map to re-instantiate]
 	 *---------------------------------------------------------------------*/
 	public void newMap(MapType mapType) {
-		map = new Map(mapType);
+		map = new MapOld(mapType);
 	}
 
 	/*--------------------------------------------------------------------
@@ -85,9 +85,27 @@ public class GameMode {
 		Obstacle[][] obsts = map.getObstacleTiles();
 		// get the point the trainer is currently at
 		Point prev = trainer.getPoint();
+		
+		// System.out.println("Keycode: " + e.getKeyCode() + " Point: " + prev);
 
 		if (e.getKeyCode() == KeyEvent.VK_UP
+				&& prev.x - 1 >= 0
 				&& obsts[prev.x - 1][prev.y] == null)
+			return true;
+		
+		if (e.getKeyCode() == KeyEvent.VK_DOWN
+				&& prev.x + 1 < obsts.length
+				&& obsts[prev.x + 1][prev.y] == null)
+			return true;
+		
+		if (e.getKeyCode() == KeyEvent.VK_LEFT
+				&& prev.y - 1 >= 0
+				&& obsts[prev.x][prev.y - 1] == null)
+			return true;
+		
+		if (e.getKeyCode() == KeyEvent.VK_RIGHT
+				&& prev.y + 1 < obsts[0].length
+				&& obsts[prev.x][prev.y + 1] == null)
 			return true;
 
 		return false;
@@ -105,10 +123,10 @@ public class GameMode {
 		// if this is a Maze game, then the player wins if they are standing on
 		// the only null obstacle tile on the right-most side of the map
 		if (gameType == MapType.MAZE) {
-			for (int i = 0; i < Map.MAZE_HEIGHT; i++) {
-				if (obstacle[i][Map.MAZE_WIDTH - 1] == null) {
+			for (int i = 0; i < MapOld.MAZE_HEIGHT; i++) {
+				if (obstacle[i][MapOld.MAZE_WIDTH - 1] == null) {
 					if (trainer.getPoint().equals(
-							new Point(i, Map.MAZE_WIDTH - 1)))
+							new Point(i, MapOld.MAZE_WIDTH - 1)))
 						return true;
 				}
 			}
@@ -127,42 +145,52 @@ public class GameMode {
 		return false;
 	}
 
+	/*---------------------------------------------------------------------
+	 |  Method name:    [moveTrainer]
+	 |  Purpose:  	    [To change trainer sprite and then attempt to move the trainer]
+	 |  Parameters:  	[KeyEvent: direction in which trainer is trying to move]
+	 *---------------------------------------------------------------------*/
 	public void moveTrainer(KeyEvent e) {
 
 		int dx = 0, dy = 0;
 		int kc = e.getKeyCode();
-		Map.Direction dir = Map.Direction.RIGHT;
+		MapOld.Direction dir = MapOld.Direction.RIGHT;
 
 		switch (kc) {
 		case KeyEvent.VK_UP:
 			dx = -1;
-			dir = Map.Direction.UP;
-			if ((trainer.getPoint().x + dx) % Map.HEIGHT == Map.HEIGHT - 1)
+			dir = MapOld.Direction.UP;
+			if (trainerCanMove(e)
+					&& (trainer.getPoint().x + dx) % MapOld.HEIGHT == MapOld.HEIGHT - 1)
 				map.moveUp();
 			break;
 		case KeyEvent.VK_DOWN:
 			dx = 1;
-			dir = Map.Direction.DOWN_1; // DOWN isn't working :(
-			if ((trainer.getPoint().x  + dx) % Map.HEIGHT == 0)
+			dir = MapOld.Direction.DOWN_1; // DOWN isn't working :(
+			if (trainerCanMove(e)
+					&& (trainer.getPoint().x  + dx) % MapOld.HEIGHT == 0)
 				map.moveDown();
 			break;
 		case KeyEvent.VK_RIGHT:
 			dy = 1;
-			dir = Map.Direction.RIGHT;
-			if ((trainer.getPoint().y + dy) / Map.WIDTH != 0
-					&& trainer.getPoint().y % Map.WIDTH == 0)
+			dir = MapOld.Direction.RIGHT;
+			if (trainerCanMove(e)
+					&& (trainer.getPoint().y + dy )% MapOld.WIDTH == 0)
 				map.moveRight();
 			break;
 		case KeyEvent.VK_LEFT:
 			dy = -1;
-			dir = Map.Direction.LEFT;
-			if ((trainer.getPoint().y + dy) % Map.WIDTH == Map.WIDTH - 1)
+			dir = MapOld.Direction.LEFT;
+			if (trainerCanMove(e)
+					&& (trainer.getPoint().y + dy) % MapOld.WIDTH == MapOld.WIDTH - 1)
 				map.moveLeft();
 			break;
 		default:
 			break;
 		}
 
+		// System.out.println("Trainer can move: " + trainerCanMove(e));;
+		
 		if (trainerCanMove(e))
 			trainer.getPoint().translate(dx, dy);
 			trainer.decreaseSteps();
