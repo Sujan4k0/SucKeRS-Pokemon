@@ -39,14 +39,12 @@ public class Trainer {
 	private TrainerAction trainerAction;
 	private Point trainerPosition;
 
-	//private ? pokeball   //Not sure what this instance variable is atm
-
-	/***************************************
-	 * public Trainer:
-	 * 
-	 * Creates a new instance of a Trainer with default of 500 steps and an
-	 * empty items inventory
-	 ***************************************/
+	/*-----------------------------------------------------------------------------
+	 |  Method name:    [Trainer]
+	 |  Purpose:  	    [Create a new Trainer with default 500 steps 30 pokeballs]
+	 |  Parameters:     [none]
+	 |  Returns:  	    [N/A]
+	 *-----------------------------------------------------------------------------*/
 
 	public Trainer() {
 
@@ -59,12 +57,13 @@ public class Trainer {
 		trainerPosition = null;
 	}
 
-	/***************************************
-	 * public Trainer(int s):
-	 * 
-	 * Creates a new instance of a Trainer with s steps steps and an empty items
-	 * inventory
-	 ***************************************/
+	/*-----------------------------------------------------------------------------
+	 |  Method name:    [Trainer]
+	 |  Purpose:  	    [Create a new Trainer with 's' steps 'p' pokeballs]
+	 |  Parameters:     [int s: Number of steps to start the trainer with]
+	 |                  [int p: Number of pokeballs to start the trainer with]
+	 |  Returns:  	    [N/A]
+	 *-----------------------------------------------------------------------------*/
 
 	public Trainer(int s, int p) {
 
@@ -121,16 +120,37 @@ public class Trainer {
 			//update observers for inventory
 		}
 	}
+	
+	/*---------------------------------------------------------------------
+	 |  Method name:    [getPoint]
+	 |  Purpose:  	    [Returns the current Point of the trainer]
+	 |  Parameters:     [none]
+	 |  Returns:  	    [Point]
+	 *---------------------------------------------------------------------*/
 
 	public Point getPoint() {
 
 		return trainerPosition;
 	}
+	
+	/*---------------------------------------------------------------------
+	 |  Method name:    [setPoint]
+	 |  Purpose:  	    [Sets a new Point representing the trainer's position]
+	 |  Parameters:     [Point p: The trainer's new position]
+	 |  Returns:  	    [none]
+	 *---------------------------------------------------------------------*/
 
 	public void setPoint(Point p) {
 
 		trainerPosition = new Point(p);
 	}
+	
+	/*---------------------------------------------------------------------
+	 |  Method name:    [isFatigued]
+	 |  Purpose:  	    [Sets a new Point representing the trainer's position]
+	 |  Parameters:     [Point p: The trainer's new position]
+	 |  Returns:  	    [none]
+	 *---------------------------------------------------------------------*/
 	
 	public boolean isFatigued() {
 		
