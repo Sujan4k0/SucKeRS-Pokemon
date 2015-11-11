@@ -132,5 +132,12 @@ public class PokemonTests {
         assertEquals(testMon.toString(), "Name: SARRYATHJAN" + "\n" + "Type: ELECTRIC" + "\n");       
         
         assertEquals(testMon.getName(), "SARRYATHJAN");
-    }      
+    }  
+    
+    @Test
+    public void timerTest() {
+        
+        Pokemon testMon = new Common("Sarryathjan", null, PokemonType.ELECTRIC);
+        testMon.startEncounter();
+    }
 }
