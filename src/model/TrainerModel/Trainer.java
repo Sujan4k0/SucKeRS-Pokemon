@@ -36,7 +36,6 @@ public class Trainer {
 	private ArrayList<Pokemon> capturedPokemon; //trainer's collection of pokemon
 	private int currentPokeballs;
 	private boolean fatigued;
-	private TrainerAction trainerAction;
 	private Point trainerPosition;
 
 	/*-----------------------------------------------------------------------------
@@ -53,7 +52,6 @@ public class Trainer {
 		capturedPokemon = new ArrayList<Pokemon>();
 		currentPokeballs = 30;
 		fatigued = false;
-		trainerAction = TrainerAction.STAND_GROUND;
 		trainerPosition = null;
 	}
 
@@ -72,7 +70,6 @@ public class Trainer {
 		capturedPokemon = new ArrayList<Pokemon>();
 		currentPokeballs = p;
 		fatigued = false;
-		trainerAction = TrainerAction.STAND_GROUND;
 		trainerPosition = null;
 	}
 	
@@ -158,10 +155,46 @@ public class Trainer {
 	}
 	
 	/*---------------------------------------------------------------------
-	 |  Method name:    [getPoint]
-	 |  Purpose:  	    [Returns the current Point of the trainer]
+	 |  Method name:    [getPokemon]
+	 |  Purpose:  	    [Returns the list of Pokemon]
 	 |  Parameters:     [none]
-	 |  Returns:  	    [Point]
+	 |  Returns:  	    [ArrayList<Pokemon>]
+	 *---------------------------------------------------------------------*/
+	
+	public ArrayList<Pokemon> getPokemon() {
+		
+		return capturedPokemon;
+	}
+	
+	/*---------------------------------------------------------------------
+	 |  Method name:    [addPokemon]
+	 |  Purpose:  	    [Adds a new Pokemon to the list of captured pokemon]
+	 |  Parameters:     [Pokemon p: the Pokemon being added]
+	 |  Returns:  	    [none]
+	 *---------------------------------------------------------------------*/
+	
+	public void addPokemon(Pokemon p) {
+		
+		capturedPokemon.add(p);
+	}
+	
+	/*---------------------------------------------------------------------
+	 |  Method name:    [getPokeballs]
+	 |  Purpose:  	    [Returns the current number of pokeballs the trainer has]
+	 |  Parameters:     [none]
+	 |  Returns:  	    [int: # of pokeballs]
+	 *---------------------------------------------------------------------*/
+	
+	public int getPokeballs() {
+		
+		return currentPokeballs;
+	}
+	
+	/*---------------------------------------------------------------------
+	 |  Method name:    [isFatigued]
+	 |  Purpose:  	    [Returns whether the trainer is fatigued]
+	 |  Parameters:     [none]
+	 |  Returns:  	    [boolean: whether the trainer is fatigued]
 	 *---------------------------------------------------------------------*/
 	
 	public boolean isFatigued() {
