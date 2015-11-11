@@ -39,6 +39,7 @@ import java.util.Random;
 
 import javax.imageio.ImageIO;
 import javax.swing.*;
+import javax.swing.border.BevelBorder;
 
 import controller.CEAGame;
 import controller.GameMode;
@@ -126,7 +127,6 @@ public class PokemonGUI {
 
         startScreen.setLocationRelativeTo(null);
         startScreen.setVisible(true);
-
     }
 
     /*---------------------------------------------------------------------
@@ -141,9 +141,10 @@ public class PokemonGUI {
         mapView = new JFrame();
         mapView.setDefaultCloseOperation(JFrame.DO_NOTHING_ON_CLOSE); // ask to save instead
         mapView.addWindowListener(new CloseGameListener()); // when close attempted, ask to save
-        
+                
         // add the map (JPanel) from the GameMode to the frame
-        mapView.add(mode.getMap(), BorderLayout.CENTER);
+        mode.getMap().setBorder(BorderFactory.createLineBorder(Color.BLACK, 5));
+        mapView.add(mode.getMap(), BorderLayout.WEST);
         mode.getMap().addKeyListener(new GameWon()); // GUI will check the status of the game when the player moves
 
         ArrayList<String> items = new ArrayList<String>();
@@ -155,7 +156,9 @@ public class PokemonGUI {
         pokemon.add("TestMon2");
 
         trainerItems = new JComboBox<Object>(items.toArray());
+        trainerItems.setFocusable(false);
         trainerPokemon = new JComboBox<Object>(pokemon.toArray());
+        trainerPokemon.setFocusable(false);
 
         // set up the side user panel for inventory
         JPanel userOptions = new JPanel(new BorderLayout());
@@ -163,8 +166,10 @@ public class PokemonGUI {
         JPanel inventory = new JPanel(new GridLayout(2, 2));
         inventory.setBackground(Color.BLACK);
         JCheckBox trainerCheck = new JCheckBox("Use on trainer");
+        trainerCheck.setFocusable(false);
         trainerCheck.setForeground(Color.WHITE);
         JCheckBox pokemonCheck = new JCheckBox("Use on Selected Pokemon");
+        pokemonCheck.setFocusable(false);
         pokemonCheck.setForeground(Color.WHITE);
         ButtonGroup buttonGroup = new ButtonGroup();
         buttonGroup.add(trainerCheck);
@@ -188,11 +193,14 @@ public class PokemonGUI {
             // TODO Auto-generated catch block
             e.printStackTrace();
         }
-
+        
         JPanel userButtons = new JPanel(new GridLayout(3, 1));
         JButton save = new JButton("Save Game");
+        save.setFocusable(false);
         JButton use = new JButton("Use Item");
+        use.setFocusable(false);
         JButton forfeit = new JButton("Forfeit");
+        forfeit.setFocusable(false);
         save.setOpaque(true);
         save.setBackground(new Color(102, 178, 255));
         use.setOpaque(true);
@@ -205,12 +213,22 @@ public class PokemonGUI {
         userButtons.setBackground(Color.BLACK);
         userOptions.add(userButtons, BorderLayout.SOUTH);
 
+        userOptions.setBorder(BorderFactory.createLineBorder(new Color(244, 220, 38), 5));
+        userOptions.setFocusable(false);
+        
         mapView.add(userOptions, BorderLayout.EAST);
-
+        
         mapView.pack();
         mapView.setLocationRelativeTo(null);
         mapView.setVisible(true);
+        
+    //    trainerFrame();
 
+    }
+    
+    private void trainerFrame() {
+        
+        
     }
 
     /*---------------------------------------------------------------------
