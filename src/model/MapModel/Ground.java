@@ -1,5 +1,5 @@
 /*=========================================================================== 
- | Assignment: FINAL PROJECT: [GameMode] 
+ | Assignment: FINAL PROJECT: [Ground] 
  | 
  | Authors:    [Sujan Patel  (sujan4k0@email.arizona.edu)] 
  |	     	   [Keith Smith  (browningsmith@email.arizona.edu)]
@@ -26,6 +26,12 @@ public enum Ground implements Tile {
 	
 	private TerrainType terrainType;
 	
+	/*---------------------------------------------------------------------
+	 |  Method name:    []
+	 |  Purpose:  	    []
+	 |  Parameters:     []
+	 |  Returns:  	    []
+	 *---------------------------------------------------------------------*/
 	Ground(TerrainType tt) {
 		terrainType = tt;
 	}

@@ -14,6 +14,9 @@ import javax.imageio.ImageIO;
 import javax.swing.*;
 
 import controller.GameMode;
+import controller.MazeGame;
+import model.MapModel.MazeMap;
+import model.TrainerModel.Trainer;
 
 public class PokemonGUI extends JFrame {
     
@@ -75,8 +78,8 @@ public class PokemonGUI extends JFrame {
 	private void mapFrame() {
 	    
 	    this.setVisible(true);
-	    this.setSize(500, 500);
 	    this.add(mode.getMap(), BorderLayout.CENTER);
+	    this.pack();
 	}
 	
 	private class GameMode1Selected implements ActionListener {
@@ -85,7 +88,7 @@ public class PokemonGUI extends JFrame {
         public void actionPerformed(ActionEvent e) {
             
             // communicate with GameMode
-      //      mode = new GameMode(MapType.CEA);      
+      //      mode = new CEAGame(MapType.CEA);      
             startScreen.setVisible(false);    
             mapFrame();
         }   
@@ -99,7 +102,9 @@ public class PokemonGUI extends JFrame {
             // communicate with GameMode
     //        mode = new GameMode(MapType.MAZE);
             
+            mode = new MazeGame();
             startScreen.setVisible(false);
+            mapFrame();
             
         }   
     }

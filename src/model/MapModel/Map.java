@@ -28,6 +28,8 @@ import java.io.IOException;
 import javax.imageio.ImageIO;
 import javax.swing.JPanel;
 
+import view.GraphicsManager;
+
 public abstract class Map extends JPanel {
 
 	private static final long serialVersionUID = 1L;
@@ -56,6 +58,12 @@ public abstract class Map extends JPanel {
 	// to start drawing from (for switching area trainer is in)
 	private int startX = 0, startY = 0;
 
+	/*---------------------------------------------------------------------
+	 |  Method name:    []
+	 |  Purpose:  	    []
+	 |  Parameters:     []
+	 |  Returns:  	    []
+	 *---------------------------------------------------------------------*/
 	public Map() {
 
 		// get test trainer sprite sheet
@@ -89,22 +97,46 @@ public abstract class Map extends JPanel {
 
 	}
 
+	/*---------------------------------------------------------------------
+	 |  Method name:    []
+	 |  Purpose:  	    []
+	 |  Parameters:     []
+	 |  Returns:  	    []
+	 *---------------------------------------------------------------------*/
 	public void paintComponent(Graphics g) {
 
 		drawMap(g);
 
 	}
 
+	/*---------------------------------------------------------------------
+	 |  Method name:    []
+	 |  Purpose:  	    []
+	 |  Parameters:     []
+	 |  Returns:  	    []
+	 *---------------------------------------------------------------------*/
 	public abstract void createMap();
 
 	public Ground[][] getGroundTiles() {
 		return groundTiles;
 	}
 
+	/*---------------------------------------------------------------------
+	 |  Method name:    []
+	 |  Purpose:  	    []
+	 |  Parameters:     []
+	 |  Returns:  	    []
+	 *---------------------------------------------------------------------*/
 	public Obstacle[][] getObstacleTiles() {
 		return obstacleTiles;
 	}
 
+	/*---------------------------------------------------------------------
+	 |  Method name:    []
+	 |  Purpose:  	    []
+	 |  Parameters:     []
+	 |  Returns:  	    []
+	 *---------------------------------------------------------------------*/
 	public void drawMap(Graphics g) {
 
 		int x = 0, y = 0;
@@ -114,7 +146,7 @@ public abstract class Map extends JPanel {
 			y = (i - startX) * Tile.SIZE;
 			for (int j = startY; j < startY + WIDTH; j++) {
 				x = (j - startY) * Tile.SIZE;
-				TileManager.drawTile(g, groundTiles[i][j], groundTileSet, x, y);
+				GraphicsManager.drawTile(g, groundTiles[i][j], groundTileSet, x, y);
 			}
 
 		}
@@ -125,18 +157,24 @@ public abstract class Map extends JPanel {
 			for (int j = startY; j < startY + WIDTH; j++) {
 				x = (j - startY) * Tile.SIZE;
 				if (obstacleTiles[i][j] != null)
-					TileManager.drawTile(g, obstacleTiles[i][j],
+					GraphicsManager.drawTile(g, obstacleTiles[i][j],
 							obstacleTileSet, x, y);
 			}
 
 		}
 
 		// draw trainer sprite
-		TileManager.drawTile(g, dir, testTrainerSheet, (trainerPoint.y % WIDTH)
+		GraphicsManager.drawTile(g, dir, testTrainerSheet, (trainerPoint.y % WIDTH)
 				* Tile.SIZE, (trainerPoint.x % HEIGHT) * Tile.SIZE);
 
 	}
 
+	/*---------------------------------------------------------------------
+	 |  Method name:    []
+	 |  Purpose:  	    []
+	 |  Parameters:     []
+	 |  Returns:  	    []
+	 *---------------------------------------------------------------------*/
 	public void moveDown() {
 
 		if (startX + HEIGHT < h) {
@@ -146,6 +184,12 @@ public abstract class Map extends JPanel {
 
 	}
 
+	/*---------------------------------------------------------------------
+	 |  Method name:    []
+	 |  Purpose:  	    []
+	 |  Parameters:     []
+	 |  Returns:  	    []
+	 *---------------------------------------------------------------------*/
 	public void moveUp() {
 
 		if (startX - HEIGHT >= 0) {
@@ -155,6 +199,12 @@ public abstract class Map extends JPanel {
 
 	}
 
+	/*---------------------------------------------------------------------
+	 |  Method name:    []
+	 |  Purpose:  	    []
+	 |  Parameters:     []
+	 |  Returns:  	    []
+	 *---------------------------------------------------------------------*/
 	public void moveRight() {
 
 		if (startY + WIDTH < w) {
@@ -164,6 +214,12 @@ public abstract class Map extends JPanel {
 
 	}
 
+	/*---------------------------------------------------------------------
+	 |  Method name:    []
+	 |  Purpose:  	    []
+	 |  Parameters:     []
+	 |  Returns:  	    []
+	 *---------------------------------------------------------------------*/
 	public void moveLeft() {
 
 		if (startY - WIDTH >= 0) {
@@ -173,16 +229,41 @@ public abstract class Map extends JPanel {
 
 	}
 
+	/*---------------------------------------------------------------------
+	 |  Method name:    []
+	 |  Purpose:  	    []
+	 |  Parameters:     []
+	 |  Returns:  	    []
+	 *---------------------------------------------------------------------*/
 	public void setTrainerDir(Direction d) {
 		dir = d;
 	}
 
+	/*---------------------------------------------------------------------
+	 |  Method name:    []
+	 |  Purpose:  	    []
+	 |  Parameters:     []
+	 |  Returns:  	    []
+	 *---------------------------------------------------------------------*/
 	public Point getTrainerPoint() {
 		return trainerPoint;
 	}
 
+	/*---------------------------------------------------------------------
+	 |  Method name:    []
+	 |  Purpose:  	    []
+	 |  Parameters:     []
+	 |  Returns:  	    []
+	 *---------------------------------------------------------------------*/
 	public void setTrainerPoint(Point pt) {
 		trainerPoint = new Point(pt);
+	}
+	
+	public Image getObstacleTileSet() {
+		return obstacleTileSet;
+	}
+	public Image getGroundTileSet() {
+		return groundTileSet;
 	}
 
 }

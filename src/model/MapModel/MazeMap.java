@@ -1,3 +1,18 @@
+/*=========================================================================== 
+ | Assignment: FINAL PROJECT: [] 
+ | 
+ | Authors:    [Sujan Patel  (sujan4k0@email.arizona.edu)] 
+ |	     	   [Keith Smith  (browningsmith@email.arizona.edu)]
+ |	     	   [Ryan Kaye    (rkaye@email.arizona.edu)]
+ |             [Sarina White (sarinarw@email.arizona.edu)]
+ | 
+ | Course: 335 
+ | Instructor: Mercer
+ | Project Manager/Section Leader: Jeremy Mowery 
+ | Due Date: [12.7.15] 
+ | 
+ | Description: 
+ *===========================================================================*/
 package model.MapModel;
 
 import java.awt.Point;
@@ -10,7 +25,14 @@ public class MazeMap extends Map {
 	// entire maze Map is 3 by 3 visible maps combined
 	public static int WIDTH = Map.WIDTH * 3, MAZE_HEIGHT = Map.HEIGHT * 3;
 
+	/*---------------------------------------------------------------------
+	 |  Method name:    []
+	 |  Purpose:  	    []
+	 |  Parameters:     []
+	 |  Returns:  	    []
+	 *---------------------------------------------------------------------*/
 	public MazeMap() {
+		
 		super();
 		
 		// these values are needed in order for the move
@@ -19,6 +41,12 @@ public class MazeMap extends Map {
 		h = HEIGHT;
 	}
 	
+	/*---------------------------------------------------------------------
+	 |  Method name:    []
+	 |  Purpose:  	    []
+	 |  Parameters:     []
+	 |  Returns:  	    []
+	 *---------------------------------------------------------------------*/
 	@Override
 	public void createMap() {
 		groundTiles = new Ground[HEIGHT][WIDTH];
@@ -70,6 +98,11 @@ public class MazeMap extends Map {
 			moveDown();
 		if (trainerPoint.x >= 2 * HEIGHT)
 			moveDown();
+	}
+
+	public Map.Direction getTrainerDir() {
+		// TODO Auto-generated method stub
+		return dir;
 	}
 
 }
