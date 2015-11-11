@@ -14,7 +14,6 @@ import javax.imageio.ImageIO;
 import javax.swing.*;
 
 import controller.GameMode;
-import model.MapModel.MapType;
 
 public class PokemonGUI extends JFrame {
     
@@ -86,7 +85,7 @@ public class PokemonGUI extends JFrame {
         public void actionPerformed(ActionEvent e) {
             
             // communicate with GameMode
-            mode = new GameMode(MapType.CEA);      
+      //      mode = new GameMode(MapType.CEA);      
             startScreen.setVisible(false);    
             mapFrame();
         }   
@@ -98,7 +97,7 @@ public class PokemonGUI extends JFrame {
         public void actionPerformed(ActionEvent e) {
             
             // communicate with GameMode
-            mode = new GameMode(MapType.MAZE);
+    //        mode = new GameMode(MapType.MAZE);
             
             startScreen.setVisible(false);
             

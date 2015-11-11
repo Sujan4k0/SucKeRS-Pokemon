@@ -26,7 +26,7 @@ import java.util.ArrayList;
 import model.ItemModel.Item;
 import model.ItemModel.StepPotion;
 import model.ItemModel.Teleporter;
-import model.MapModel.Map.Direction;
+//import model.MapModel.Map.Direction; //This was removed ?
 import model.PokemonModel.Pokemon;
 
 public class Trainer {
@@ -74,6 +74,42 @@ public class Trainer {
 		fatigued = false;
 		trainerAction = TrainerAction.STAND_GROUND;
 		trainerPosition = null;
+	}
+	
+	/*---------------------------------------------------------------------
+	 |  Method name:    [getPoint]
+	 |  Purpose:  	    [gets the trainer's position]
+	 |  Parameters:     [none]
+	 |  Returns:  	    [Point]
+	 *---------------------------------------------------------------------*/
+	
+	public Point getPoint() {
+
+		return trainerPosition;
+	}
+	
+	/*---------------------------------------------------------------------
+	 |  Method name:    [setPoint]
+	 |  Purpose:  	    [Sets a new Point representing the trainer's position]
+	 |  Parameters:     [Point p: The trainer's new position]
+	 |  Returns:  	    [none]
+	 *---------------------------------------------------------------------*/
+
+	public void setPoint(Point p) {
+
+		trainerPosition = new Point(p);
+	}
+	
+	/*---------------------------------------------------------------------
+	 |  Method name:    [getItems]
+	 |  Purpose:  	    [Returns the list of items that the trainer has]
+	 |  Parameters:     [none]
+	 |  Returns:        [ArrayList<Item>]
+	 *---------------------------------------------------------------------*/
+	
+	public ArrayList<Item> getItems() {
+		
+		return items;
 	}
 
 	/*---------------------------------------------------------------------
@@ -127,35 +163,42 @@ public class Trainer {
 	 |  Parameters:     [none]
 	 |  Returns:  	    [Point]
 	 *---------------------------------------------------------------------*/
-
-	public Point getPoint() {
-
-		return trainerPosition;
-	}
-	
-	/*---------------------------------------------------------------------
-	 |  Method name:    [setPoint]
-	 |  Purpose:  	    [Sets a new Point representing the trainer's position]
-	 |  Parameters:     [Point p: The trainer's new position]
-	 |  Returns:  	    [none]
-	 *---------------------------------------------------------------------*/
-
-	public void setPoint(Point p) {
-
-		trainerPosition = new Point(p);
-	}
-	
-	/*---------------------------------------------------------------------
-	 |  Method name:    [isFatigued]
-	 |  Purpose:  	    [Sets a new Point representing the trainer's position]
-	 |  Parameters:     [Point p: The trainer's new position]
-	 |  Returns:  	    [none]
-	 *---------------------------------------------------------------------*/
 	
 	public boolean isFatigued() {
 		
 		return fatigued;
 	}
+	
+	/*-----------------------------------------------------------------------------
+	 |  Method name:    [setFatigued]
+	 |  Purpose:  	    [Changes whether or not the trainer is fatigued]
+	 |  Parameters:     [boolean v, true to set trainer to fatigued and vice versa]
+	 |  Returns:  	    [none]
+	 *-----------------------------------------------------------------------------*/
+	
+	public void setFatigued(boolean v) {
+		
+		fatigued = v;
+	}
+	
+	/*---------------------------------------------------------------------
+	 |  Method name:    [getSteps]
+	 |  Purpose:  	    [Returns number of steps the trainer has left]
+	 |  Parameters:     [none]
+	 |  Returns:  	    [int steps]
+	 *---------------------------------------------------------------------*/
+	
+	public int getSteps() {
+		
+		return steps;
+	}
+	
+	/*---------------------------------------------------------------------
+	 |  Method name:    [decreaseSteps]
+	 |  Purpose:  	    [Decreases steps by either 1, or 2 if trainer is fatigued]
+	 |  Parameters:     [none]
+	 |  Returns:  	    [none]
+	 *---------------------------------------------------------------------*/
 	
 	public void decreaseSteps() {
 		
@@ -164,7 +207,14 @@ public class Trainer {
 		
 	}
 	
-	public void throwRock() {
+	/*---------------------------------------------------------------------
+	 |  Method name:    []
+	 |  Purpose:  	    []
+	 |  Parameters:     []
+	 |  Returns:  	    []
+	 *---------------------------------------------------------------------*/
+	
+	/*public void throwRock() {
 		
 		
 	}
@@ -182,6 +232,6 @@ public class Trainer {
 	public void runAway() {
 		
 		
-	}
+	}*/
 
 }
