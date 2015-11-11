@@ -23,8 +23,8 @@ import model.MapModel.Tile;
 
 public class GraphicsManager {
 
-	// tile sets are currently 20 by 20
-	private static final int TILESET_DIM = 20;
+	// tile sets are currently 10 by 10
+	private static final int TILESET_DIM = 10;
 	
 	// sprite sheets are currently 6 by 2
 	private static final int SPRITESHEET_WIDTH = 6, SPRITESHEET_HEIGHT = 2;

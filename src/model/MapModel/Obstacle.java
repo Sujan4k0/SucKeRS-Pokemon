@@ -18,8 +18,11 @@ package model.MapModel;
 
 public enum Obstacle implements Tile{
 	
-	ROCK_1(TerrainType.GENERIC), ROCK_2(TerrainType.FOREST), ROCK_3(TerrainType.CAVE), 
-	ROCK_4(TerrainType.GENERIC);
+	ROCK_1(TerrainType.CAVE), ROCK_2(TerrainType.FOREST), ROCK_3(TerrainType.CAVE), 
+	ROCK_4(TerrainType.GENERIC), ROCK_5(TerrainType.FOREST), ROCK_6(TerrainType.CAVE),
+	ROCK_7(TerrainType.GENERIC), ROCK_8(TerrainType.FOREST), ROCK_9(TerrainType.CAVE),
+	ROCK_10(TerrainType.GENERIC), 
+	TREE_LIGHT(TerrainType.GENERIC), TREE_DARK(TerrainType.GENERIC),;
 	
 	private TerrainType terrainType;
 	

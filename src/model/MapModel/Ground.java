@@ -22,7 +22,11 @@ public enum Ground implements Tile {
 	ICE_1(TerrainType.ICE), ICE_2(TerrainType.ICE), ICE_3(TerrainType.ICE),
 	ICE_4(TerrainType.ICE), ICE_5(TerrainType.ICE),
 	CAVE_1(TerrainType.CAVE), CAVE_2(TerrainType.CAVE), CAVE_3(TerrainType.CAVE),
-	CAVE_4(TerrainType.CAVE), CAVE_5(TerrainType.CAVE);
+	CAVE_4(TerrainType.CAVE), CAVE_5(TerrainType.CAVE),
+	T1(TerrainType.CAVE), T2(TerrainType.CAVE), T3(TerrainType.CAVE),
+	T4(TerrainType.CAVE), T5(TerrainType.CAVE),
+	GRASS_1(TerrainType.GENERIC), GRASS_2(TerrainType.CAVE), GRASS_3(TerrainType.CAVE),
+	GRASS_4(TerrainType.CAVE), GRASS_5(TerrainType.CAVE);
 	
 	private TerrainType terrainType;
 	
