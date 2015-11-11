@@ -112,6 +112,10 @@ public abstract class GameMode implements Serializable {
 		return false;
 	}
 
+	/*---------------------------------------------------------------------
+	 |  Method name:    [createMap]
+	 |  Purpose:  	    [assigns a Map to the Map instance variable]
+	 *---------------------------------------------------------------------*/
 	public abstract void createMap();
 
 	/*---------------------------------------------------------------------
@@ -190,6 +194,11 @@ public abstract class GameMode implements Serializable {
 
 	}
 
+	/*---------------------------------------------------------------------
+	 |  Method name:    [isGameActive]
+	 |  Purpose:  	    [To know if the game is active]
+	 |  Returns:  	    [boolean: true if game is active, false if game is not]
+	 *---------------------------------------------------------------------*/
 	public boolean isGameActive() {
 		if (isGameWon()) {
 			endMessage = "You Won!";
@@ -202,10 +211,20 @@ public abstract class GameMode implements Serializable {
 		return true;
 	}
 
+	/*---------------------------------------------------------------------
+	 |  Method name:    [setEndMessage]
+	 |  Purpose:  	    [Setter for endMessage variable]
+	 |  Parameters:     [String: the string to set the endMessage to]
+	 *---------------------------------------------------------------------*/
 	public void setEndMessage(String s) {
 		endMessage = s;
 	}
 
+	/*---------------------------------------------------------------------
+	 |  Method name:    [getEndMessage]
+	 |  Purpose:  	    [Getter for endMessage variable]
+	 |  Returns:  	    [String: the endMessage]
+	 *---------------------------------------------------------------------*/
 	public String getEndMessage() {
 		return endMessage;
 	}

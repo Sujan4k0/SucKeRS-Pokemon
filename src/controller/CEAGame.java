@@ -24,20 +24,18 @@ import model.TrainerModel.Trainer;
 public class CEAGame extends GameMode {
 
 	/*---------------------------------------------------------------------
-	 |  Method name:    []
-	 |  Purpose:  	    []
-	 |  Parameters:     []
-	 |  Returns:  	    []
+	 |  Method name:    [CEAGame]
+	 |  Purpose:  	    [Constructs a CEAGame (Catch 'em All)]
+	 |  Parameters:     [Random: for later random encounter/items/stuff]
 	 *---------------------------------------------------------------------*/
 	public CEAGame(Random rand) {
 		super(rand);
 	}
 
 	/*---------------------------------------------------------------------
-	 |  Method name:    []
-	 |  Purpose:  	    []
-	 |  Parameters:     []
-	 |  Returns:  	    []
+	 |  Method name:    [isGameWon]
+	 |  Purpose:  	    [To check if the user has won the game]
+	 |  Returns:  	    [boolean: true is user won, false is not]
 	 *---------------------------------------------------------------------*/
 	@Override
 	public boolean isGameWon() {
@@ -46,10 +44,9 @@ public class CEAGame extends GameMode {
 	}
 
 	/*---------------------------------------------------------------------
-	 |  Method name:    []
-	 |  Purpose:  	    []
-	 |  Parameters:     []
-	 |  Returns:  	    []
+	 |  Method name:    [isGameLost]
+	 |  Purpose:  	    [To know if the user has lost the game]
+	 |  Returns:  	    [boolean: true if the user has lost, false if the user has not]
 	 *---------------------------------------------------------------------*/
 	@Override
 	public boolean isGameLost() {
@@ -57,6 +54,11 @@ public class CEAGame extends GameMode {
 		return false;
 	}
 
+
+	/*---------------------------------------------------------------------
+	 |  Method name:    [createMap]
+	 |  Purpose:  	    [assigns a CEAMap to the Map instance variable]
+	 *---------------------------------------------------------------------*/
 	@Override
 	public void createMap() {
 		map = new CEAMap();

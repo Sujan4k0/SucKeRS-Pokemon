@@ -42,7 +42,7 @@ public abstract class Map extends JPanel {
 	Ground[][] groundTiles;
 	Obstacle[][] obstacleTiles;
 
-	Image groundTileSet, obstacleTileSet;
+	transient Image groundTileSet, obstacleTileSet;
 
 	Point trainerPoint;
 
@@ -52,7 +52,7 @@ public abstract class Map extends JPanel {
 
 	Direction dir = Direction.RIGHT;
 
-	Image testTrainerSheet;
+	transient Image testTrainerSheet;
 
 	// the X and Y positions in the Obstacle/Ground arrays
 	// to start drawing from (for switching area trainer is in)
