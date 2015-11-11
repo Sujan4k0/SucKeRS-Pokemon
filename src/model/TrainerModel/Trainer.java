@@ -76,6 +76,13 @@ public class Trainer {
 		trainerPosition = null;
 	}
 	
+	/*---------------------------------------------------------------------
+	 |  Method name:    [getPoint]
+	 |  Purpose:  	    [gets the trainer's position]
+	 |  Parameters:     [none]
+	 |  Returns:  	    [Point]
+	 *---------------------------------------------------------------------*/
+	
 	public Point getPoint() {
 
 		return trainerPosition;
