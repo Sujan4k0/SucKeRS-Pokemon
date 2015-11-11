@@ -19,33 +19,40 @@ package controller;
 import java.awt.Point;
 import java.awt.event.KeyEvent;
 import java.awt.event.KeyListener;
+import java.io.Serializable;
+import java.util.Random;
 
 import model.MapModel.Map;
 import model.MapModel.Obstacle;
 import model.TrainerModel.Trainer;
 
-public abstract class GameMode {
+public abstract class GameMode implements Serializable {
 
+	private static final long serialVersionUID = 1L;
 	Trainer trainer;
 	Map map;
+	Random r;
+	String endMessage = "";
 
 	/*---------------------------------------------------------------------
 	 |  Method name:    [GameMode]
 	 |  Purpose:  	    [Constructs a GameMode in order to play some POKEMON!!!]
 	 |  Parameters:     [MapType: determines the type of Map that this GameMode will be using]
 	 *---------------------------------------------------------------------*/
-	public GameMode() {
-		
+	public GameMode(Random rand) {
+
+		r = rand;
+
 		createMap();
-		
+
 		trainer = new Trainer();
-		
+
 		trainer.setPoint(new Point(map.getTrainerPoint()));
 
 		// add KeyListener to this Map so that the user can move the trainer
 		// and other button-y things
 		map.addKeyListener(new OurKeyListener());
-		
+
 		// set focusable so that the KeyListener works
 		map.setFocusable(true);
 
@@ -69,33 +76,33 @@ public abstract class GameMode {
 	 |  Returns:  	    [boolean: true if Trainer can move, false if Trainer can't]
 	 *---------------------------------------------------------------------*/
 	public boolean trainerCanMove(KeyEvent e) {
-		
+
 		// get all obstacles from the map to check collision
 		Obstacle[][] obsts = map.getObstacleTiles();
-		
+
 		// get the point the trainer is currently at
 		Point prev = trainer.getPoint();
-		
+
 		// System.out.println("Keycode: " + e.getKeyCode() + " Point: " + prev);
 
-		/* Depending on KeyEvent the trainer CAN move if:
-		 * 1. there is no Obstacle in that direction
-		 * and 2. moving won't make the trainer go out of bounds of the map */
-		if (e.getKeyCode() == KeyEvent.VK_UP
-				&& prev.x - 1 >= 0
+		/*
+		 * Depending on KeyEvent the trainer CAN move if: 1. there is no
+		 * Obstacle in that direction and 2. moving won't make the trainer go
+		 * out of bounds of the map
+		 */
+		if (e.getKeyCode() == KeyEvent.VK_UP && prev.x - 1 >= 0
 				&& obsts[prev.x - 1][prev.y] == null)
 			return true;
-		
+
 		else if (e.getKeyCode() == KeyEvent.VK_DOWN
 				&& prev.x + 1 < obsts.length
 				&& obsts[prev.x + 1][prev.y] == null)
 			return true;
-		
-		else if (e.getKeyCode() == KeyEvent.VK_LEFT
-				&& prev.y - 1 >= 0
+
+		else if (e.getKeyCode() == KeyEvent.VK_LEFT && prev.y - 1 >= 0
 				&& obsts[prev.x][prev.y - 1] == null)
 			return true;
-		
+
 		else if (e.getKeyCode() == KeyEvent.VK_RIGHT
 				&& prev.y + 1 < obsts[0].length
 				&& obsts[prev.x][prev.y + 1] == null)
@@ -104,7 +111,11 @@ public abstract class GameMode {
 		// if all other if() statements were false, the trainer can't move
 		return false;
 	}
-	
+
+	/*---------------------------------------------------------------------
+	 |  Method name:    [createMap]
+	 |  Purpose:  	    [assigns a Map to the Map instance variable]
+	 *---------------------------------------------------------------------*/
 	public abstract void createMap();
 
 	/*---------------------------------------------------------------------
@@ -148,14 +159,14 @@ public abstract class GameMode {
 			dx = 1;
 			dir = Map.Direction.DOWN_1; // DOWN isn't working :(
 			if (trainerCanMove(e)
-					&& (trainer.getPoint().x  + dx) % Map.HEIGHT == 0)
+					&& (trainer.getPoint().x + dx) % Map.HEIGHT == 0)
 				map.moveDown();
 			break;
 		case KeyEvent.VK_RIGHT:
 			dy = 1;
 			dir = Map.Direction.RIGHT;
 			if (trainerCanMove(e)
-					&& (trainer.getPoint().y + dy )% Map.WIDTH == 0)
+					&& (trainer.getPoint().y + dy) % Map.WIDTH == 0)
 				map.moveRight();
 			break;
 		case KeyEvent.VK_LEFT:
@@ -170,16 +181,52 @@ public abstract class GameMode {
 		}
 
 		// System.out.println("Trainer can move: " + trainerCanMove(e));;
-		
+
 		// if the trainer can move, then move the trainer and decrease steps
 		if (trainerCanMove(e)) {
 			trainer.getPoint().translate(dx, dy);
 			trainer.decreaseSteps();
+			//TODO encounters/items
 		}
-		
+
 		// set the visual direction of the trainer sprite on the Map
 		map.setTrainerDir(dir);
-		
+
+	}
+
+	/*---------------------------------------------------------------------
+	 |  Method name:    [isGameActive]
+	 |  Purpose:  	    [To know if the game is active]
+	 |  Returns:  	    [boolean: true if game is active, false if game is not]
+	 *---------------------------------------------------------------------*/
+	public boolean isGameActive() {
+		if (isGameWon()) {
+			endMessage = "You Won!";
+			return false;
+		} else if (isGameLost()) {
+			endMessage = "You LOSTTTTT >:(";
+			return false;
+		}
+
+		return true;
+	}
+
+	/*---------------------------------------------------------------------
+	 |  Method name:    [setEndMessage]
+	 |  Purpose:  	    [Setter for endMessage variable]
+	 |  Parameters:     [String: the string to set the endMessage to]
+	 *---------------------------------------------------------------------*/
+	public void setEndMessage(String s) {
+		endMessage = s;
+	}
+
+	/*---------------------------------------------------------------------
+	 |  Method name:    [getEndMessage]
+	 |  Purpose:  	    [Getter for endMessage variable]
+	 |  Returns:  	    [String: the endMessage]
+	 *---------------------------------------------------------------------*/
+	public String getEndMessage() {
+		return endMessage;
 	}
 
 	/*---------------------------------------------------------------------
@@ -201,14 +248,18 @@ public abstract class GameMode {
 		@Override
 		public void keyPressed(KeyEvent e) {
 
-			// set sprite direction and try to move trainer
-			moveTrainer(e);
-			
-			// set trainer's sprite location in map to trainer's current loc
-			map.setTrainerPoint(trainer.getPoint());
-			
-			// repaint the visual changes
-			map.repaint();
+			// if the game is not won or lost, move the trainer
+			if (!isGameWon() && !isGameLost()) {
+				// set sprite direction and try to move trainer
+				moveTrainer(e);
+
+				// set trainer's sprite location in map to trainer's current loc
+				map.setTrainerPoint(trainer.getPoint());
+
+				// repaint the visual changes
+				map.repaint();
+			}
+
 		}
 
 		@Override

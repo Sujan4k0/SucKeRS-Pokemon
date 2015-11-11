@@ -3,6 +3,7 @@ package test;
 import static org.junit.Assert.*;
 
 import java.awt.Graphics;
+import java.awt.Image;
 import java.awt.Point;
 import java.awt.image.BufferedImage;
 import java.awt.image.TileObserver;
@@ -19,7 +20,7 @@ public class MapTests {
 	public void testMazeMap() {
 
 		MazeMap map = new MazeMap();
-		
+
 		assertEquals(map.getTrainerPoint().getClass(), Point.class);
 
 		for (int i = -5; i < 6; i++) {
@@ -35,37 +36,82 @@ public class MapTests {
 			map.setTrainerDir(d);
 			assertEquals(map.getTrainerDir(), d);
 		}
-		
+
 		Ground[][] ground = map.getGroundTiles();
-		
+
 		assertEquals(ground.length, MazeMap.HEIGHT);
 		assertEquals(ground[0].length, MazeMap.WIDTH);
-		
+
 		// there should be no null Ground Tiles
 		for (int i = 0; i < ground.length; i++) {
 			for (int j = 0; j < ground[0].length; j++) {
 				assertFalse(ground[i][j] == null);
 			}
 		}
-		
-		/* Obstacle[][] obstacles = map.getObstacleTiles();
-		
+
+		Obstacle[][] obstacles = map.getObstacleTiles();
 		assertEquals(obstacles.length, MazeMap.HEIGHT);
 		assertEquals(obstacles[0].length, MazeMap.WIDTH);
+
+		// maze obstacles should only have 1 null on the left most 
+		// and also right most sides of the map
+		int nullCount = 0;
+		for (int i = 0; i < obstacles.length; i++) {
+			if (obstacles[i][0] == null)
+				nullCount++;
+			if (obstacles[i][obstacles[0].length - 1] == null)
+				nullCount++;
+		}
+		assertEquals(nullCount, 2);
+
 		
-		BufferedImage bi = new BufferedImage(Map.WIDTH * Tile.SIZE,Map.HEIGHT * Tile.SIZE, BufferedImage.TYPE_INT_ARGB);
-		Graphics g = (Graphics)bi.createGraphics();
+		int h = Map.HEIGHT * Tile.SIZE;
+		int w = Map.WIDTH * Tile.SIZE;
+		BufferedImage bi = new BufferedImage(w, h, BufferedImage.TYPE_INT_ARGB);
+		Graphics g = (Graphics) bi.createGraphics();
+
+		// make sure map draws the upper left area
+		map.moveUp();
+		map.moveUp();
+		map.moveDown();
+		map.moveRight();
+		map.moveLeft();
+		map.moveUp();
 		map.drawMap(g);
-		
-		BufferedImage bi2 = new BufferedImage(Tile.SIZE,Tile.SIZE, BufferedImage.TYPE_INT_ARGB);
-		g = (Graphics)bi2.createGraphics();
-		GraphicsManager.drawTile(g, ground[0][0], map.getObstacleTileSet(), 0, 0);
-		GraphicsManager.drawTile(g, obstacles[0][0], map.getObstacleTileSet(), 0, 0);
 
-		
+		BufferedImage bi2 = new BufferedImage(w, h, BufferedImage.TYPE_INT_ARGB);
+		g = (Graphics) bi2.createGraphics();
+		int x = 0, y = 0;
+
+		// draw groud and obstacle tiles
+		for (int i = 0; i < Map.HEIGHT; i++) {
+			y = i * Tile.SIZE;
+			for (int j = 0; j < Map.WIDTH; j++) {
+				x = j * Tile.SIZE;
+				GraphicsManager.drawTile(g, ground[i][j], map.getGroundTileSet(), x, y);
+				if (obstacles[i][j] != null)
+					GraphicsManager.drawTile(g, obstacles[i][j], map.getObstacleTileSet(), x, y);
+			}
+
+		}
+
+		// draw trainer sprite if necessary
+		Point tp = map.getTrainerPoint();
+		Map.Direction d = map.getTrainerDir();
+		Image img = map.getTrainerSheet();
+		if (tp.x < Map.HEIGHT && tp.y < Map.WIDTH) {
+			GraphicsManager.drawTile(g, d, img, tp.y * Tile.SIZE, tp.x * Tile.SIZE);
+		}
+		// these two images should be exactly the same, with all matching pixels
+		for (int i = 0; i < bi2.getHeight(); i++) {
+			for (int j = 0; j < bi2.getWidth(); j++) {
+				assertEquals(bi.getRGB(j, i), bi2.getRGB(j, i));
+			}
+		}
+
 		g.dispose();
-
-		assertEquals(bi., bi2.getData()); */
+		
+		assertEquals(Obstacle.ROCK_1.getTerrainType(), TerrainType.GENERIC);
 
 	}
 }

@@ -15,6 +15,7 @@
  *===========================================================================*/
 package model.MapModel;
 
+import java.awt.Image;
 import java.awt.Point;
 import java.util.Random;
 
@@ -103,6 +104,11 @@ public class MazeMap extends Map {
 	public Map.Direction getTrainerDir() {
 		// TODO Auto-generated method stub
 		return dir;
+	}
+
+	public Image getTrainerSheet() {
+		// TODO Auto-generated method stub
+		return testTrainerSheet;
 	}
 
 }

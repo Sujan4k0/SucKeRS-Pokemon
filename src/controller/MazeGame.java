@@ -16,6 +16,7 @@
 package controller;
 
 import java.awt.Point;
+import java.util.Random;
 
 import model.MapModel.Map;
 import model.MapModel.MazeMap;
@@ -28,20 +29,18 @@ public class MazeGame extends GameMode {
 	public static int WIDTH = Map.WIDTH * 3, HEIGHT = Map.HEIGHT * 3;
 
 	/*---------------------------------------------------------------------
-	 |  Method name:    []
-	 |  Purpose:  	    []
-	 |  Parameters:     []
-	 |  Returns:  	    []
+	 |  Method name:    [MazeGame]
+	 |  Purpose:  	    [Constructs a MazeGame]
+	 |  Parameters:     [Random: to later generate random encounters/items]
 	 *---------------------------------------------------------------------*/
-	public MazeGame() {
-		super();
+	public MazeGame(Random rand) {
+		super(rand);
 	}
 
 	/*---------------------------------------------------------------------
-	 |  Method name:    []
-	 |  Purpose:  	    []
-	 |  Parameters:     []
-	 |  Returns:  	    []
+	 |  Method name:    [isGameWon]
+	 |  Purpose:  	    [To check if the user has won the game]
+	 |  Returns:  	    [boolean: true is user won, false is not]
 	 *---------------------------------------------------------------------*/
 	public boolean isGameWon() {
 
@@ -59,10 +58,9 @@ public class MazeGame extends GameMode {
 	}
 
 	/*---------------------------------------------------------------------
-	 |  Method name:    []
-	 |  Purpose:  	    []
-	 |  Parameters:     []
-	 |  Returns:  	    []
+	 |  Method name:    [isGameLost]
+	 |  Purpose:  	    [To know if the user has lost the game]
+	 |  Returns:  	    [boolean: true if the user has lost, false if the user has not]
 	 *---------------------------------------------------------------------*/
 	@Override
 	public boolean isGameLost() {
@@ -70,11 +68,10 @@ public class MazeGame extends GameMode {
 		return false;
 	}
 	
+
 	/*---------------------------------------------------------------------
-	 |  Method name:    []
-	 |  Purpose:  	    []
-	 |  Parameters:     []
-	 |  Returns:  	    []
+	 |  Method name:    [createMap]
+	 |  Purpose:  	    [assigns a MazeMap to the Map instance variable]
 	 *---------------------------------------------------------------------*/
 	@Override
 	public void createMap() {
