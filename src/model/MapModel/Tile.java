@@ -20,15 +20,13 @@ public interface Tile {
 	public static final int SIZE = 50;
 
 	/*---------------------------------------------------------------------
-	 |  Method name:    []
-	 |  Purpose:  	    []
-	 |  Parameters:     []
-	 |  Returns:  	    []
+	 |  Method name:    [interactWithTrainer]
+	 |  Purpose:  	    [To do specific things when trainer steps on the Tile]
 	 *---------------------------------------------------------------------*/
 	public void interactWithTrainer();
 
 	/*---------------------------------------------------------------------
-	 |  Method name:    []
+	 |  Method name:    [getTerrainType]
 	 |  Purpose:  	    []
 	 |  Parameters:     []
 	 |  Returns:  	    []
