@@ -16,6 +16,7 @@
 package controller;
 
 import java.awt.Point;
+import java.util.Random;
 
 import model.MapModel.Map;
 import model.MapModel.MazeMap;
@@ -33,8 +34,8 @@ public class MazeGame extends GameMode {
 	 |  Parameters:     []
 	 |  Returns:  	    []
 	 *---------------------------------------------------------------------*/
-	public MazeGame() {
-		super();
+	public MazeGame(Random rand) {
+		super(rand);
 	}
 
 	/*---------------------------------------------------------------------

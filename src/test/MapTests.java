@@ -48,10 +48,20 @@ public class MapTests {
 			}
 		}
 		
-		/* Obstacle[][] obstacles = map.getObstacleTiles();
-		
+		Obstacle[][] obstacles = map.getObstacleTiles();
 		assertEquals(obstacles.length, MazeMap.HEIGHT);
 		assertEquals(obstacles[0].length, MazeMap.WIDTH);
+		
+		// maze obstacles should only have 1 null on the left most 
+		// and also right most sides of the map
+		int nullCount = 0;
+		for (int i = 0; i < obstacles.length; i++) {
+			if (obstacles[i][0] == null)
+				nullCount++;
+			if (obstacles[i][obstacles[0].length - 1] == null)
+				nullCount++;
+		}
+		assertEquals(nullCount, 2);
 		
 		BufferedImage bi = new BufferedImage(Map.WIDTH * Tile.SIZE,Map.HEIGHT * Tile.SIZE, BufferedImage.TYPE_INT_ARGB);
 		Graphics g = (Graphics)bi.createGraphics();
@@ -64,8 +74,6 @@ public class MapTests {
 
 		
 		g.dispose();
-
-		assertEquals(bi., bi2.getData()); */
 
 	}
 }

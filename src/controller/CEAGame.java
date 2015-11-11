@@ -15,6 +15,8 @@
  *===========================================================================*/
 package controller;
 
+import java.util.Random;
+
 import model.MapModel.CEAMap;
 import model.MapModel.Map;
 import model.TrainerModel.Trainer;
@@ -27,8 +29,8 @@ public class CEAGame extends GameMode {
 	 |  Parameters:     []
 	 |  Returns:  	    []
 	 *---------------------------------------------------------------------*/
-	public CEAGame() {
-		super();
+	public CEAGame(Random rand) {
+		super(rand);
 	}
 
 	/*---------------------------------------------------------------------
