@@ -1,3 +1,18 @@
+/*=========================================================================== 
+ | Assignment: FINAL PROJECT: [] 
+ | 
+ | Authors:    [Sujan Patel  (sujan4k0@email.arizona.edu)] 
+ |	     	   [Keith Smith  (browningsmith@email.arizona.edu)]
+ |	     	   [Ryan Kaye    (rkaye@email.arizona.edu)]
+ |             [Sarina White (sarinarw@email.arizona.edu)]
+ | 
+ | Course: 335 
+ | Instructor: Mercer
+ | Project Manager/Section Leader: Jeremy Mowery 
+ | Due Date: [12.7.15] 
+ | 
+ | Description: 
+ *===========================================================================*/
 package model.MapModel;
 
 import java.awt.Point;
@@ -16,6 +31,12 @@ public class MazeGenerator {
 	private ArrayList<Point> pointList; // list of Points to make maze
 	private Point currentPt; // the current Point being checked
 
+	/*---------------------------------------------------------------------
+	 |  Method name:    []
+	 |  Purpose:  	    []
+	 |  Parameters:     []
+	 |  Returns:  	    []
+	 *---------------------------------------------------------------------*/
 	public MazeGenerator(Point start, Obstacle[][] obsts) {
 
 		pointList = new ArrayList<Point>();
@@ -24,6 +45,12 @@ public class MazeGenerator {
 
 	}
 
+	/*---------------------------------------------------------------------
+	 |  Method name:    []
+	 |  Purpose:  	    []
+	 |  Parameters:     []
+	 |  Returns:  	    []
+	 *---------------------------------------------------------------------*/
 	public Obstacle[][] generateMaze() {
 
 		boolean right = false, left = false, up = false, down = false;
@@ -37,8 +64,7 @@ public class MazeGenerator {
 				up = false;
 				down = false;
 				currentPt = pointList.get(pointList.size() - 1);
-				System.out
-						.println("Generating Maze at Point: " + currentPt.toString());
+				// System.out.println("Generating Maze at Point: " + currentPt.toString());
 			}
 
 			// remove point from list when no other directions can
@@ -109,6 +135,12 @@ public class MazeGenerator {
 
 	}
 
+	/*---------------------------------------------------------------------
+	 |  Method name:    []
+	 |  Purpose:  	    []
+	 |  Parameters:     []
+	 |  Returns:  	    []
+	 *---------------------------------------------------------------------*/
 	private void generateDown(int move) {
 
 		// clear path
@@ -118,13 +150,19 @@ public class MazeGenerator {
 
 		Point newP = new Point(currentPt.x + move, currentPt.y);
 
-		System.out.println("New point at: " + newP.toString());
+		// System.out.println("New point at: " + newP.toString());
 
 		if (!pointList.contains(newP))
 			pointList.add(newP);
 
 	}
 
+	/*---------------------------------------------------------------------
+	 |  Method name:    []
+	 |  Purpose:  	    []
+	 |  Parameters:     []
+	 |  Returns:  	    []
+	 *---------------------------------------------------------------------*/
 	private void generateUp(int move) {
 
 		// clear path
@@ -133,13 +171,19 @@ public class MazeGenerator {
 		}
 
 		Point newP = new Point(currentPt.x - move, currentPt.y);
-		System.out.println("New point at: " + newP.toString());
+		// System.out.println("New point at: " + newP.toString());
 
 		if (!pointList.contains(newP))
 			pointList.add(newP);
 
 	}
 
+	/*---------------------------------------------------------------------
+	 |  Method name:    []
+	 |  Purpose:  	    []
+	 |  Parameters:     []
+	 |  Returns:  	    []
+	 *---------------------------------------------------------------------*/
 	private void generateLeft(int move) {
 
 		// clear path
@@ -148,13 +192,19 @@ public class MazeGenerator {
 		}
 
 		Point newP = new Point(currentPt.x, currentPt.y - move);
-		System.out.println("New point at: " + newP.toString());
+		// System.out.println("New point at: " + newP.toString());
 
 		if (!pointList.contains(newP))
 			pointList.add(newP);
 
 	}
 
+	/*---------------------------------------------------------------------
+	 |  Method name:    []
+	 |  Purpose:  	    []
+	 |  Parameters:     []
+	 |  Returns:  	    []
+	 *---------------------------------------------------------------------*/
 	private void generateRight(int move) {
 
 		// clear path
@@ -163,7 +213,7 @@ public class MazeGenerator {
 		}
 
 		Point newP = new Point(currentPt.x, currentPt.y + move);
-		System.out.println("New point at: " + newP.toString());
+		// System.out.println("New point at: " + newP.toString());
 
 		if (!pointList.contains(newP))
 			pointList.add(newP);

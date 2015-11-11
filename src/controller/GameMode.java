@@ -34,11 +34,12 @@ public abstract class GameMode {
 	 |  Purpose:  	    [Constructs a GameMode in order to play some POKEMON!!!]
 	 |  Parameters:     [MapType: determines the type of Map that this GameMode will be using]
 	 *---------------------------------------------------------------------*/
-	public GameMode(Map m, Trainer t) {
-
-		map = m;
+	public GameMode() {
 		
-		trainer = t;
+		createMap();
+		
+		trainer = new Trainer();
+		
 		trainer.setPoint(new Point(map.getTrainerPoint()));
 
 		// add KeyListener to this Map so that the user can move the trainer
@@ -103,6 +104,8 @@ public abstract class GameMode {
 		// if all other if() statements were false, the trainer can't move
 		return false;
 	}
+	
+	public abstract void createMap();
 
 	/*---------------------------------------------------------------------
 	 |  Method name:    [isGameWon]
