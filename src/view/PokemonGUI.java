@@ -1,3 +1,19 @@
+/*=========================================================================== 
+ | Assignment: FINAL PROJECT: [PokemonGUI] 
+ | 
+ | Authors:    [Sujan Patel  (sujan4k0@email.arizona.edu)] 
+ |             [Keith Smith  (browningsmith@email.arizona.edu)]
+ |             [Ryan Kaye    (rkaye@email.arizona.edu)]
+ |             [Sarina White (sarinarw@email.arizona.edu)]
+ | 
+ | Course: 335 
+ | Instructor: Mercer
+ | Project Manager/Section Leader: Jeremy Mowery 
+ | Due Date: [12.7.15] 
+ | 
+ | Description: Controls the graphical view of the game.
+ *==========================================================================*/
+
 package view;
 
 import java.awt.BorderLayout;
@@ -21,6 +37,7 @@ import java.util.Random;
 import javax.imageio.ImageIO;
 import javax.swing.*;
 
+import controller.CEAGame;
 import controller.GameMode;
 import controller.MazeGame;
 
@@ -37,26 +54,32 @@ public class PokemonGUI {
         new PokemonGUI();
     }
 
+    /*---------------------------------------------------------------------
+    |  Method name:    [PokemonGUI]
+    |  Purpose:        [Constructor]
+    *---------------------------------------------------------------------*/
     public PokemonGUI() {
 
         maze = false;
         catchEmAll = false;
-        layoutGUI();
-        registerListeners();
-    }
-
-    private void layoutGUI() {
-
         startFrame();
     }
 
+    /*---------------------------------------------------------------------
+    |  Method name:    [startFrame]
+    |  Purpose:        [Creates and displays the starting window for
+    |                   the user. Here they get to pick which mode they
+    |                   want to play.]
+    *---------------------------------------------------------------------*/
     private void startFrame() {
 
+        // create the basic frame
         startScreen = new JFrame();
         startScreen.setVisible(true);
         startScreen.setSize(600, 300);
         startScreen.setTitle("Pokemon");
 
+        // JPanel set up to show the "Pokemon" logo on the frame
         JPanel logoHeader = new JPanel();
         BufferedImage logo = null;
         try {
@@ -68,98 +91,143 @@ public class PokemonGUI {
         logoHeader.add(logoLabel);
         startScreen.add(logoHeader, BorderLayout.NORTH);
 
+        // Panel with the buttons for the game types
         JPanel startOptions = new JPanel(new FlowLayout());
         startOptions.setSize(100, 100);
         JButton gameMode1 = new JButton("Catch Em' All");
         JButton gameMode2 = new JButton("Maze Escape");
         startOptions.add(gameMode1);
         startOptions.add(gameMode2);
-        startScreen.add(startOptions, BorderLayout.CENTER);
 
-        gameMode1.addActionListener(new GameMode1Selected());
-        gameMode2.addActionListener(new GameMode2Selected());
+        // action listeners for each game selection button
+        gameMode1.addActionListener(new CatchEmAllSelected());
+        gameMode2.addActionListener(new MazeSelected());       
+        startScreen.add(startOptions, BorderLayout.CENTER);
     }
 
+    /*---------------------------------------------------------------------
+    |  Method name:    [mapFrame]
+    |  Purpose:        [Once a game is started, this is the main display
+    |                   in view. It primarily holds the map in addition to
+    |                   player options like inventory.]
+    *---------------------------------------------------------------------*/
     private void mapFrame() {
 
+        // create the basic frame
         mapView = new JFrame();
-        mapView.setDefaultCloseOperation(JFrame.DO_NOTHING_ON_CLOSE);
-        mapView.addWindowListener(new CloseGameListener());
+        mapView.setDefaultCloseOperation(JFrame.DO_NOTHING_ON_CLOSE); // ask to save instead
+        mapView.addWindowListener(new CloseGameListener()); // when close attempted, ask to save
         mapView.setVisible(true);
+       
+        // add the map (JPanel) from the GameMode to the frame
         mapView.add(mode.getMap(), BorderLayout.CENTER);
-        mode.getMap().addKeyListener(new GameWon());
+        mode.getMap().addKeyListener(new GameWon()); // GUI will check the status of the game when the player moves
+        
+        // set up the side user panel for inventory
+        JPanel userOptions = new JPanel(new BorderLayout());
+        JPanel inventory = new JPanel();
+        JButton pokemonInventory = new JButton("Pokemon");
+        JButton itemsInventory = new JButton("Items");
+        inventory.add(pokemonInventory);
+        inventory.add(itemsInventory);       
+        userOptions.add(inventory, BorderLayout.CENTER);
+        
+        // image of the trainer to put on the side
+        JLabel trainerLabel = new JLabel();
+        BufferedImage trainerFancy = null;
+        try {
+            trainerFancy = ImageIO.read(new File("./images/GenericTrainerTest.png"));
+            trainerLabel = new JLabel(new ImageIcon(trainerFancy));
+            userOptions.add(trainerLabel, BorderLayout.NORTH);
+        } catch (IOException e) {
+            // TODO Auto-generated catch block
+            e.printStackTrace();
+        }
+        mapView.add(userOptions, BorderLayout.EAST);
+        
         mapView.pack();
     }
 
-    private class GameWon implements KeyListener {
+    /*---------------------------------------------------------------------
+    |  Method name:    [saveState]
+    |  Purpose:        [Save this instance of the game]
+    *---------------------------------------------------------------------*/
+    private void saveState() {
 
-        @Override
-        public void keyTyped(KeyEvent e) {
-            // TODO Auto-generated method stub
+        if (maze) { // we're playing Maze, make a maze save 
+            try {
+                FileOutputStream fos = new FileOutputStream("PokemonMazeSave");
+                ObjectOutputStream oos = new ObjectOutputStream(fos);
+                oos.writeObject(mode); // save the object
+                fos.close(); // close file stream
+                oos.close(); // close object stream
+            } catch (Exception e1) {
 
-        }
-
-        @Override
-        public void keyPressed(KeyEvent e) {
-            // TODO Auto-generated method stub
-
-            if (!mode.isGameActive()) {
-
-                String endMessage = mode.getEndMessage();
-                System.out.println(endMessage);
-
+                e1.printStackTrace();
             }
         }
 
-        @Override
-        public void keyReleased(KeyEvent e) {
-            // TODO Auto-generated method stub
+        if (catchEmAll) { // we're playing catch 'em all, make a CEA save
 
+            try {
+                FileOutputStream fos = new FileOutputStream("PokemonCEASave");
+                ObjectOutputStream oos = new ObjectOutputStream(fos);
+                oos.writeObject(mode); // save the object
+                fos.close(); // close file stream
+                oos.close(); // close object stream
+            } catch (Exception e1) {
+
+                e1.printStackTrace();
+            }
         }
     }
-
-    private class GameMode1Selected implements ActionListener {
+    
+    /*---------------------------------------------------------------------
+    |  Class name:     [CatchEmAllSelected]
+    |  Purpose:        [Sets up the CEA game if the user wants to play this]
+    *---------------------------------------------------------------------*/ 
+    private class CatchEmAllSelected implements ActionListener {
 
         @Override
         public void actionPerformed(ActionEvent e) {
 
-            catchEmAll = true;
+            catchEmAll = true; // we are playing CEA
             
-            if (new File("PokemonCEASave").isFile()) {
+            if (new File("PokemonCEASave").isFile()) { // if a previous CEA save file exists, ask the user if they want to load
 
-                // user says no, wants to continue from a previous Jukebox save 
+                // options for loading
                 int getSave = JOptionPane.showConfirmDialog(null, "Would you like to load from a save?", null,
                         JOptionPane.YES_NO_OPTION);
 
-                if (getSave == JOptionPane.YES_OPTION) {
+                if (getSave == JOptionPane.YES_OPTION) { // user wants to load the old save
 
                     try {
-                        FileInputStream fis = new FileInputStream("PokemonCEASave"); // jukebox persistance file 
-                        ObjectInputStream ois = new ObjectInputStream(fis); // file stream contains jukeboxfile 
-                  //      mode = (CEAGame) ois.readObject(); // get a jukebox object 
+                        FileInputStream fis = new FileInputStream("PokemonCEASave");  
+                        ObjectInputStream ois = new ObjectInputStream(fis); 
+                        mode = (CEAGame) ois.readObject(); // get a CEAGAME object 
                         ois.close(); // close object stream
                         fis.close(); // close file stream
 
-                    } catch (Exception e1) {// default model
+                    } catch (Exception e1) {
                     }
                 }
 
                 else {
 
-                    mode = new MazeGame(new Random());
+                    mode = new CEAGame(new Random()); // no selected, create a new game
                 }
             }
 
             else {
 
-                mode = new MazeGame(new Random());
+                mode = new CEAGame(new Random()); // no save existed, create a new game
             }
 
-            // communicate with GameMode
-            //      mode = new CEAGame(MapType.CEA);      
+            // hide the start menu
             startScreen.setVisible(false);
-            mapFrame();
+            mapFrame(); // set up the game visibility and map
 
+            // explanatory dialog that appears for this game type
             JDialog dialog = new JDialog(mapView, "Gotta Catch 'Em All");
             JTextArea info = new JTextArea();
             info.append("Hey there noob trainer, you wanna be a master!?.\n"
@@ -175,25 +243,29 @@ public class PokemonGUI {
         }
     }
 
-    private class GameMode2Selected implements ActionListener {
+    /*---------------------------------------------------------------------
+    |  Class name:     [MazeSelected]
+    |  Purpose:        [Sets up the Maze game if the user wants to play this]
+    *---------------------------------------------------------------------*/ 
+    private class MazeSelected implements ActionListener {
 
         @Override
         public void actionPerformed(ActionEvent e) {
 
-            maze = true;
+            maze = true; // we are playing maze
 
-            if (new File("PokemonMazeSave").isFile()) {
+            if (new File("PokemonMazeSave").isFile()) { // if a save exists, ask if they would like to load it
 
-                // user says no, wants to continue from a previous Jukebox save 
+                // options for loading from a save
                 int getSave = JOptionPane.showConfirmDialog(null, "Would you like to load from a save?", null,
-                        JOptionPane.YES_NO_OPTION);
+                              JOptionPane.YES_NO_OPTION);
 
-                if (getSave == JOptionPane.YES_OPTION) {
+                if (getSave == JOptionPane.YES_OPTION) { // user wants to load from the save
 
                     try {
-                        FileInputStream fis = new FileInputStream("PokemonMazeSave"); // jukebox persistance file 
-                        ObjectInputStream ois = new ObjectInputStream(fis); // file stream contains jukeboxfile 
-                        mode = (MazeGame) ois.readObject(); // get a jukebox object 
+                        FileInputStream fis = new FileInputStream("PokemonMazeSave");
+                        ObjectInputStream ois = new ObjectInputStream(fis); 
+                        mode = (MazeGame) ois.readObject(); // get the MazeGame object
                         ois.close(); // close object stream
                         fis.close(); // close file stream
 
@@ -203,19 +275,20 @@ public class PokemonGUI {
 
                 else {
 
-                    mode = new MazeGame(new Random());
+                    mode = new MazeGame(new Random()); // no selected, create a new game
                 }
             }
 
             else {
 
-                mode = new MazeGame(new Random());
+                mode = new MazeGame(new Random()); // no save existed, create a new game
 
             }
 
-            startScreen.setVisible(false);
-            mapFrame();
+            startScreen.setVisible(false); // hide start screen
+            mapFrame(); // start the view of the map and game
 
+            // pop up dialog explaining this game mode
             JDialog dialog = new JDialog(mapView, "Welcome to the Maze");
             JTextArea info = new JTextArea();
             info.append("So you've chosen the maze? Daunting.\n"
@@ -232,36 +305,11 @@ public class PokemonGUI {
         }
     }
 
-    private void saveState() {
-
-        if (maze) {
-            try {
-                FileOutputStream fos = new FileOutputStream("PokemonMazeSave");
-                ObjectOutputStream oos = new ObjectOutputStream(fos);
-                oos.writeObject(mode); // save the object
-                fos.close(); // close file stream
-                oos.close(); // close object stream
-            } catch (Exception e1) {
-
-                e1.printStackTrace();
-            }
-        }
-
-        if (catchEmAll) {
-
-            try {
-                FileOutputStream fos = new FileOutputStream("PokemonCEASave");
-                ObjectOutputStream oos = new ObjectOutputStream(fos);
-                oos.writeObject(mode); // save the object
-                fos.close(); // close file stream
-                oos.close(); // close object stream
-            } catch (Exception e1) {
-
-                e1.printStackTrace();
-            }
-        }
-    }
-
+    /*---------------------------------------------------------------------
+    |  Class name:     [CloseGameListener]
+    |  Purpose:        [Allows the user to save the game if they just
+    |                   attempt to close the window.]
+    *---------------------------------------------------------------------*/ 
     private class CloseGameListener implements WindowListener {
 
         @Override
@@ -272,19 +320,13 @@ public class PokemonGUI {
 
         @Override
         public void windowClosing(WindowEvent e) {
-            // TODO Auto-generated method stub
             
-         // option pane for saving state
+            // option pane for saving state
             int reply = JOptionPane.showConfirmDialog(null, "Do you want to save?", null, JOptionPane.YES_NO_CANCEL_OPTION);
 
             if (reply == JOptionPane.YES_OPTION) { // yes was selected
 
-                saveState();
-            }
-
-            else if (reply == JOptionPane.CANCEL_OPTION) {
-
-                // does nothing, goes back to yes or no
+                saveState(); // save the game
             }
 
             else if (reply == JOptionPane.NO_OPTION) {
@@ -324,7 +366,35 @@ public class PokemonGUI {
         } 
     }
     
-    private void registerListeners() {
+    /*---------------------------------------------------------------------
+    |  Class name:     [GameWon]
+    |  Purpose:        [When the player is moving we check the status of
+    |                   the game to display a message that it's over.]
+    *---------------------------------------------------------------------*/ 
+    private class GameWon implements KeyListener {
 
+        @Override
+        public void keyTyped(KeyEvent e) {
+            // TODO Auto-generated method stub
+
+        }
+
+        @Override
+        public void keyPressed(KeyEvent e) {
+            // TODO Auto-generated method stub
+
+            if (!mode.isGameActive()) {
+
+                String endMessage = mode.getEndMessage();
+                System.out.println(endMessage);
+
+            }
+        }
+
+        @Override
+        public void keyReleased(KeyEvent e) {
+            // TODO Auto-generated method stub
+
+        }
     }
 }
