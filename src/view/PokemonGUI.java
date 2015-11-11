@@ -93,7 +93,6 @@ public class PokemonGUI {
 
         // create the basic frame
         startScreen = new JFrame();
-        startScreen.setVisible(true);
         startScreen.setSize(600, 300);
         startScreen.setTitle("Pokemon");
 
@@ -123,6 +122,11 @@ public class PokemonGUI {
         gameMode1.addActionListener(new CatchEmAllSelected());
         gameMode2.addActionListener(new MazeSelected());
         startScreen.add(startOptions, BorderLayout.CENTER);
+        
+
+        startScreen.setLocationRelativeTo(null);
+        startScreen.setVisible(true);
+
     }
 
     /*---------------------------------------------------------------------
@@ -137,8 +141,7 @@ public class PokemonGUI {
         mapView = new JFrame();
         mapView.setDefaultCloseOperation(JFrame.DO_NOTHING_ON_CLOSE); // ask to save instead
         mapView.addWindowListener(new CloseGameListener()); // when close attempted, ask to save
-        mapView.setVisible(true);
-
+        
         // add the map (JPanel) from the GameMode to the frame
         mapView.add(mode.getMap(), BorderLayout.CENTER);
         mode.getMap().addKeyListener(new GameWon()); // GUI will check the status of the game when the player moves
@@ -205,6 +208,9 @@ public class PokemonGUI {
         mapView.add(userOptions, BorderLayout.EAST);
 
         mapView.pack();
+        mapView.setLocationRelativeTo(null);
+        mapView.setVisible(true);
+
     }
 
     /*---------------------------------------------------------------------
@@ -298,6 +304,7 @@ public class PokemonGUI {
             info.setFont(new Font("Futura", Font.PLAIN, 15));
             dialog.add(info);
             dialog.setSize(500, 150);
+            dialog.setLocationRelativeTo(null);
             dialog.setVisible(true);
         }
     }
@@ -354,12 +361,13 @@ public class PokemonGUI {
                     + "So obviously, you gotta make it to the end of the maze. \n"
                     + "The end is denoted by an ice tile, but wait...\n"
                     + "you're a bit tired and only have 500 steps left in you.\n"
-                    + "Catching some loyal Pokemon may help push you along the way,\n"
-                    + "and there are also some goodies throughout the maze that may\n" + "help you get out of here!");
+                    + "Catching some loyal Pokemon may help push you along the way.\n"
+                    + "There are also some goodies throughout the maze that may\n" + "help you get out of here!");
             info.setEditable(false);
             info.setFont(new Font("Futura", Font.PLAIN, 15));
             dialog.add(info);
-            dialog.setSize(500, 150);
+            dialog.setSize(600, 150);
+            dialog.setLocationRelativeTo(null);
             dialog.setVisible(true);
         }
     }
