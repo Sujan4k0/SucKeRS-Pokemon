@@ -5,6 +5,9 @@ import static org.junit.Assert.*;
 import java.awt.Point;
 
 import org.junit.Test;
+
+import model.PokemonModel.*;
+import model.ItemModel.*;
 import model.TrainerModel.Trainer;
 
 public class TrainerTests {
@@ -38,6 +41,118 @@ public class TrainerTests {
 		
 		wendy.getPoint().translate(5, 10);
 		assertEquals(wendy.getPoint(), new Point(5,10));
+	}
+	
+	@Test
+	public void testAddingPokemon() {
+		
+		Trainer keith = new Trainer();
+		Pokemon pikachu = new Common("Pikachu", null, PokemonType.ELECTRIC);
+		keith.addPokemon(pikachu);
+		
+		assertEquals(keith.getPokemon().get(0).getName(), "PIKACHU");
+	}
+	
+	@Test
+	public void testSteps() {
+		
+		Trainer sarina = new Trainer();
+		assertEquals(sarina.getSteps(),500);
+		sarina.decreaseSteps();
+		assertEquals(sarina.getSteps(),499);
+		
+	}
+	
+	@Test
+	public void testFatiguedSteps() {
+		
+		Trainer sujan = new Trainer();
+		assertEquals(sujan.getSteps(),500);
+		sujan.setFatigued(true);
+		sujan.decreaseSteps();
+		assertEquals(sujan.getSteps(),498);
+	}
+	
+	@Test
+	public void testFatiguedPotion() {
+		
+		Trainer ryan = new Trainer();
+		Item fp = new FatiguePotion();
+		ryan.addItem(fp);
+		assertTrue(ryan.getItems().contains(fp));
+		
+		ryan.setFatigued(false);
+		ryan.useItem(fp);
+		assertFalse(ryan.isFatigued());
+		assertTrue(ryan.getItems().contains(fp));
+		
+		ryan.setFatigued(true);
+		assertTrue(ryan.isFatigued());
+		ryan.useItem(fp);
+		assertFalse(ryan.isFatigued());
+		assertFalse(ryan.getItems().contains(fp));
+	}
+	
+	@Test
+	public void testTeleporter() {
+		
+		Trainer mercer = new Trainer();
+		Teleporter tp = new Teleporter();
+		mercer.addItem(tp);
+		assertTrue(mercer.getItems().contains(tp));
+		
+		mercer.setPoint(new Point(50,25));
+		assertFalse(tp.isSet());
+		mercer.useItem(tp);
+		assertTrue(tp.isSet());
+		assertTrue(mercer.getItems().contains(tp));
+		assertEquals(tp.getTeleportPoint(), new Point(50,25));
+		
+		mercer.setPoint(new Point(100,100));
+		assertEquals(mercer.getPoint(), new Point(100,100));
+		mercer.useItem(tp);
+		assertFalse(mercer.getItems().contains(tp));
+		assertEquals(mercer.getPoint(), new Point(50,25));
+		
+	}
+	
+	@Test
+	public void testBasicStepPotion() {
+		
+		Trainer aang = new Trainer();
+		BasicStepPotion bsp = new BasicStepPotion();
+		aang.addItem(bsp);
+		assertTrue(aang.getItems().contains(bsp));
+		assertEquals(aang.getSteps(),500);
+		aang.useItem(bsp);
+		assertEquals(aang.getSteps(),510);
+		assertFalse(aang.getItems().contains(bsp));
+	}
+	
+	@Test
+	public void testSuperStepPotion() {
+		
+		Trainer julia = new Trainer();
+		SuperStepPotion ssp = new SuperStepPotion();
+		julia.addItem(ssp);
+		assertTrue(julia.getItems().contains(ssp));
+		assertEquals(julia.getSteps(),500);
+		julia.useItem(ssp);
+		assertEquals(julia.getSteps(),525);
+		assertFalse(julia.getItems().contains(ssp));
+	}
+	
+	@Test
+	public void testHyperStepPotion() {
+		
+		Trainer pedro = new Trainer(300,20);
+		HyperStepPotion hsp = new HyperStepPotion();
+		pedro.addItem(hsp);
+		assertTrue(pedro.getItems().contains(hsp));
+		assertEquals(pedro.getSteps(),300);
+		pedro.useItem(hsp);
+		assertEquals(pedro.getSteps(),350);
+		assertFalse(pedro.getItems().contains(hsp));
 	}
 	
 	/*@Test
