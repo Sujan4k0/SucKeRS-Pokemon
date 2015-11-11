@@ -27,33 +27,30 @@ public enum Ground implements Tile {
 	private TerrainType terrainType;
 	
 	/*---------------------------------------------------------------------
-	 |  Method name:    []
-	 |  Purpose:  	    []
-	 |  Parameters:     []
-	 |  Returns:  	    []
+	 |  Method name:    [Ground]
+	 |  Purpose:  	    [Set instance variable values based on parameter]
+	 |  Parameters:     [TerrainType: the type of terrain to associate this Ground with]
 	 *---------------------------------------------------------------------*/
 	Ground(TerrainType tt) {
 		terrainType = tt;
 	}
 
+
 	/*---------------------------------------------------------------------
-	 |  Method name:    []
-	 |  Purpose:  	    []
-	 |  Parameters:     []
-	 |  Returns:  	    []
+	 |  Method name:    [interactWithTrainer]
+	 |  Purpose:  	    [To later play a specific sound when Trainer walks on this Ground]
 	 *---------------------------------------------------------------------*/
 	@Override
 	public void interactWithTrainer() {
 		// TODO Sound effect when trainer walking on
 		
-		// play terrainType.getSound();
+		// play getTerrainType().getSound();
 	}
 
 	/*---------------------------------------------------------------------
-	 |  Method name:    []
-	 |  Purpose:  	    []
-	 |  Parameters:     []
-	 |  Returns:  	    []
+	 |  Method name:    [getTerrainType]
+	 |  Purpose:  	    [Getter for TerrainType terrainType]
+	 |  Returns:  	    [TerrainType]
 	 *---------------------------------------------------------------------*/
 	@Override
 	public TerrainType getTerrainType() {

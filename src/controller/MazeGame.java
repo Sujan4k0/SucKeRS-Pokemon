@@ -1,5 +1,5 @@
 /*=========================================================================== 
- | Assignment: FINAL PROJECT: [] 
+ | Assignment: FINAL PROJECT: [MazeGame] 
  | 
  | Authors:    [Sujan Patel  (sujan4k0@email.arizona.edu)] 
  |	     	   [Keith Smith  (browningsmith@email.arizona.edu)]
@@ -11,7 +11,9 @@
  | Project Manager/Section Leader: Jeremy Mowery 
  | Due Date: [12.7.15] 
  | 
- | Description: 
+ | Description: This class is used to create a MazeGame. The MazeGame contains
+ | a MazeMap which is a randomly generated maze that the player must get the trainer
+ | through in order to win.
  *===========================================================================*/
 package controller;
 

@@ -1,5 +1,5 @@
 /*=========================================================================== 
- | Assignment: FINAL PROJECT: [] 
+ | Assignment: FINAL PROJECT: [Tile] 
  | 
  | Authors:    [Sujan Patel  (sujan4k0@email.arizona.edu)] 
  |	     	   [Keith Smith  (browningsmith@email.arizona.edu)]
@@ -11,12 +11,15 @@
  | Project Manager/Section Leader: Jeremy Mowery 
  | Due Date: [12.7.15] 
  | 
- | Description: 
+ | Description: This interface is meant for use with enums that are a specific 
+ | type of Tile. Currently there is Ground and Obstacle - each has their own 
+ | interaction with the Trainer.
  *===========================================================================*/
 package model.MapModel;
 
 public interface Tile {
 	
+	// the width and height of each Tile in pixels
 	public static final int SIZE = 50;
 
 	/*---------------------------------------------------------------------
@@ -27,9 +30,8 @@ public interface Tile {
 
 	/*---------------------------------------------------------------------
 	 |  Method name:    [getTerrainType]
-	 |  Purpose:  	    []
-	 |  Parameters:     []
-	 |  Returns:  	    []
+	 |  Purpose:  	    [Getter for the TerrainType]
+	 |  Returns:  	    [TerrainType]
 	 *---------------------------------------------------------------------*/
 	public TerrainType getTerrainType();
 

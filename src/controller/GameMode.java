@@ -11,7 +11,9 @@
  | Project Manager/Section Leader: Jeremy Mowery 
  | Due Date: [12.7.15] 
  | 
- | Description: TODO Describe the class here. 
+ | Description: This is an abstract class that any new game mode must extend from.
+ | For example, we have a MazeGame which is a specific game mode so it extends
+ | GameMode.
  *===========================================================================*/
 
 package controller;
@@ -29,10 +31,11 @@ import model.TrainerModel.Trainer;
 public abstract class GameMode implements Serializable {
 
 	private static final long serialVersionUID = 1L;
+	
 	Trainer trainer;
-	Map map;
-	Random r;
-	String endMessage = "";
+	Map map; // the visual map of this game
+	Random r; // used for random encounters/items
+	String endMessage = ""; // the message to show on end game
 
 	/*---------------------------------------------------------------------
 	 |  Method name:    [GameMode]

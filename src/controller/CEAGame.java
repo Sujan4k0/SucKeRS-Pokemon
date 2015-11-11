@@ -1,5 +1,5 @@
 /*=========================================================================== 
- | Assignment: FINAL PROJECT: [] 
+ | Assignment: FINAL PROJECT: [CEAGame] 
  | 
  | Authors:    [Sujan Patel  (sujan4k0@email.arizona.edu)] 
  |	     	   [Keith Smith  (browningsmith@email.arizona.edu)]
@@ -11,7 +11,8 @@
  | Project Manager/Section Leader: Jeremy Mowery 
  | Due Date: [12.7.15] 
  | 
- | Description: 
+ | Description: This class is used to make a CEAGame (Catch 'em All). It has a
+ | CEAMap and its own specific win/lose conditions.
  *===========================================================================*/
 package controller;
 

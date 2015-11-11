@@ -1,5 +1,5 @@
 /*=========================================================================== 
- | Assignment: FINAL PROJECT: [] 
+ | Assignment: FINAL PROJECT: [Obstacle] 
  | 
  | Authors:    [Sujan Patel  (sujan4k0@email.arizona.edu)] 
  |	     	   [Keith Smith  (browningsmith@email.arizona.edu)]
@@ -11,7 +11,8 @@
  | Project Manager/Section Leader: Jeremy Mowery 
  | Due Date: [12.7.15] 
  | 
- | Description: 
+ | Description: The Obstacle Tiles to be used on Maps. These cannot be walked on/through
+ | and may later have an interaction with the Trainer.
  *===========================================================================*/
 package model.MapModel;
 
@@ -23,10 +24,9 @@ public enum Obstacle implements Tile{
 	private TerrainType terrainType;
 	
 	/*---------------------------------------------------------------------
-	 |  Method name:    []
-	 |  Purpose:  	    []
-	 |  Parameters:     []
-	 |  Returns:  	    []
+	 |  Method name:    [Obstacle]
+	 |  Purpose:  	    [Set instance variable values based on parameter]
+	 |  Parameters:     [TerrainType: the type of terrain to associate this Obstacle with]
 	 *---------------------------------------------------------------------*/
 	Obstacle(TerrainType tt) {
 		
@@ -34,10 +34,9 @@ public enum Obstacle implements Tile{
 	}
 
 	/*---------------------------------------------------------------------
-	 |  Method name:    []
-	 |  Purpose:  	    []
-	 |  Parameters:     []
-	 |  Returns:  	    []
+	 |  Method name:    [interactWithTrainer]
+	 |  Purpose:  	    [To do specific things when the Trainer tries to walk
+	 |					on this Obstacle]
 	 *---------------------------------------------------------------------*/
 	@Override
 	public void interactWithTrainer() {
@@ -45,10 +44,9 @@ public enum Obstacle implements Tile{
 	}
 	
 	/*---------------------------------------------------------------------
-	 |  Method name:    []
-	 |  Purpose:  	    []
-	 |  Parameters:     []
-	 |  Returns:  	    []
+	 |  Method name:    [getTerrainType]
+	 |  Purpose:  	    [Getter for TerrainType terrainType]
+	 |  Returns:  	    [TerrainType]
 	 *---------------------------------------------------------------------*/
 	@Override
 	public TerrainType getTerrainType() {

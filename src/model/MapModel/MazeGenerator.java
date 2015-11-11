@@ -86,7 +86,7 @@ public class MazeGenerator {
 				up = true;
 				break;
 			case 1:
-				if (currentPt.x + 2 < obstacles.length - 1
+				if (currentPt.x + 2 < (obstacles.length - 1)
 						&& obstacles[currentPt.x + 1][currentPt.y] != null
 						&& obstacles[currentPt.x + 2][currentPt.y] != null)
 					generateDown(m);
@@ -99,7 +99,7 @@ public class MazeGenerator {
 				left = true;
 				break;
 			case 3:
-				if (currentPt.y + 2 < obstacles[0].length - 1
+				if (currentPt.y + 2 < (obstacles[0].length - 1)
 						&& obstacles[currentPt.x][currentPt.y + 1] != null
 						&& obstacles[currentPt.x][currentPt.y + 2] != null)
 					generateRight(m);
