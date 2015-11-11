@@ -36,7 +36,7 @@ public class Teleporter extends Item{
 	 |  Parameters:     [A Point p representing the current position of the trainer]
 	 *---------------------------------------------------------------------*/
 	public void setPoint(Point p){
-		teleportPoint= new Point((int)p.getX(),(int)p.getY());
+		teleportPoint= p;
 		set=true;
 	}
 	
