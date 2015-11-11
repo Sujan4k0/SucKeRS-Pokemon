@@ -136,9 +136,10 @@ public class Trainer {
 			} else {
 				t.setPoint(trainerPosition);
 			}
-		} else if (i.getName().equals("FatiguePotion")) {
-			if (this.fatigued) {
-				fatigued = false;
+		} 
+		else if (i.getName().equals("Fatigue Potion")) {
+			if (isFatigued()) {
+				setFatigued(false);
 				items.remove(i);
 				//update observers for inventory
 
