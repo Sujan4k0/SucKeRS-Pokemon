@@ -24,21 +24,24 @@ import java.awt.Image;
 import java.awt.Point;
 import java.io.File;
 import java.io.IOException;
+import java.io.Serializable;
 
 import javax.imageio.ImageIO;
 import javax.swing.JPanel;
 
 import view.GraphicsManager;
 
-public abstract class Map extends JPanel {
+public abstract class Map extends JPanel implements Serializable {
 
 	private static final long serialVersionUID = 1L;
 
 	// visible Map is WIDTH by HEIGHT tiles
 	public static final int WIDTH = 15, HEIGHT = 11;
 
+	// the height and width, for use in
 	int h = WIDTH, w = HEIGHT;
 
+	// to hold the Ground and Obstacle Tiles to draw
 	Ground[][] groundTiles;
 	Obstacle[][] obstacleTiles;
 
@@ -178,7 +181,7 @@ public abstract class Map extends JPanel {
 	public void moveDown() {
 
 		if (startX + HEIGHT < h) {
-			System.out.println("moving down");
+			//System.out.println("moving down");
 			startX += HEIGHT;
 		}
 
@@ -193,7 +196,7 @@ public abstract class Map extends JPanel {
 	public void moveUp() {
 
 		if (startX - HEIGHT >= 0) {
-			System.out.println("moving up");
+			//System.out.println("moving up");
 			startX -= HEIGHT;
 		}
 
@@ -208,7 +211,7 @@ public abstract class Map extends JPanel {
 	public void moveRight() {
 
 		if (startY + WIDTH < w) {
-			System.out.println("Moving right");
+			//System.out.println("Moving right");
 			startY += WIDTH;
 		}
 
@@ -223,7 +226,7 @@ public abstract class Map extends JPanel {
 	public void moveLeft() {
 
 		if (startY - WIDTH >= 0) {
-			System.out.println("Moving left");
+			//System.out.println("Moving left");
 			startY -= WIDTH;
 		}
 
