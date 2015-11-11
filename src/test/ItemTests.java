@@ -54,7 +54,7 @@ public class ItemTests {
 		assertTrue(!brock.getPoint().equals(p));
 		
 		brock.useItem(teleporter);
-		assertTrue(!((Teleporter) teleporter).isSet());
+		assertTrue(((Teleporter)teleporter).isSet());
 		assertTrue(brock.getPoint().equals(p));
 		assertTrue(! brock.getItems().contains(teleporter));
 
@@ -74,7 +74,7 @@ public class ItemTests {
 		misty.setFatigued(true);
 		
 		misty.useItem(fPotion);
-		assertFalse(misty.isFatigued());
+		assertTrue(!misty.isFatigued());
 		assertFalse(misty.getItems().contains(fPotion));
 		
 	}
