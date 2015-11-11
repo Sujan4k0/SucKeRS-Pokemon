@@ -27,7 +27,7 @@ public class CEAGame extends GameMode {
 	 |  Parameters:     []
 	 |  Returns:  	    []
 	 *---------------------------------------------------------------------*/
-	public CEAGame(Map m, Trainer t) {
+	public CEAGame() {
 		super();
 	}
 

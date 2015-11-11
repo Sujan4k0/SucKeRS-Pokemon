@@ -33,7 +33,7 @@ public class MazeGame extends GameMode {
 	 |  Parameters:     []
 	 |  Returns:  	    []
 	 *---------------------------------------------------------------------*/
-	public MazeGame(Map m, Trainer t) {
+	public MazeGame() {
 		super();
 	}
 
