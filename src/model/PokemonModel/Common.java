@@ -17,6 +17,7 @@
 package model.PokemonModel;
 
 import java.awt.image.BufferedImage;
+import java.util.Random;
 
 public class Common extends Pokemon {
         
@@ -24,8 +25,8 @@ public class Common extends Pokemon {
     |  Method name:    [Common]
     |  Purpose:        [Constructor]
     *---------------------------------------------------------------------*/
-    public Common(String n, BufferedImage[] i, PokemonType t) {
-        super(n, i, t);
+    public Common(Random r, String n, BufferedImage[] i, PokemonType t) {
+        super(r, n, i, t);
         catchPercentage = 70;
         runPercentage = 30;
         

@@ -17,6 +17,7 @@
 package model.PokemonModel;
 
 import java.awt.image.BufferedImage;
+import java.util.Random;
 
 public class Uncommon extends Pokemon {
 
@@ -24,8 +25,8 @@ public class Uncommon extends Pokemon {
     |  Method name:    [Uncommon]
     |  Purpose:        [Constructor]
     *---------------------------------------------------------------------*/
-    public Uncommon(String n, BufferedImage[] i, PokemonType t) {
-        super(n, i, t);
+    public Uncommon(Random r, String n, BufferedImage[] i, PokemonType t) {
+        super(r, n, i, t);
         catchPercentage = 50;
         runPercentage = 50;
         

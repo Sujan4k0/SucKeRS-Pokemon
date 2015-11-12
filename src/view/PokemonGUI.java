@@ -44,6 +44,7 @@ import javax.swing.border.BevelBorder;
 import controller.CEAGame;
 import controller.GameMode;
 import controller.MazeGame;
+import javafx.scene.control.ProgressBar;
 
 public class PokemonGUI {
 
@@ -143,7 +144,7 @@ public class PokemonGUI {
         mapView.addWindowListener(new CloseGameListener()); // when close attempted, ask to save
                 
         // add the map (JPanel) from the GameMode to the frame
-        mode.getMap().setBorder(BorderFactory.createLineBorder(Color.BLACK, 5));
+        mode.getMap().setBorder(BorderFactory.createLineBorder(new Color(244, 220, 38), 5));
         mapView.add(mode.getMap(), BorderLayout.WEST);
         mode.getMap().addKeyListener(new GameWon()); // GUI will check the status of the game when the player moves
 
@@ -165,6 +166,7 @@ public class PokemonGUI {
 
         JPanel inventory = new JPanel(new GridLayout(2, 2));
         inventory.setBackground(Color.BLACK);
+      
         JCheckBox trainerCheck = new JCheckBox("Use on trainer");
         trainerCheck.setFocusable(false);
         trainerCheck.setForeground(Color.WHITE);
@@ -174,7 +176,7 @@ public class PokemonGUI {
         ButtonGroup buttonGroup = new ButtonGroup();
         buttonGroup.add(trainerCheck);
         buttonGroup.add(pokemonCheck);
-
+                
         inventory.add(trainerCheck);
         inventory.add(pokemonCheck);
         inventory.add(trainerPokemon);
@@ -183,16 +185,26 @@ public class PokemonGUI {
         userOptions.setBackground(Color.BLACK);
 
         // image of the trainer to put on the side
+        JPanel trainerDisplay = new JPanel(new BorderLayout());
+        trainerDisplay.setBackground(Color.BLACK);
         JLabel trainerLabel = new JLabel();
         BufferedImage trainerFancy = null;
         try {
             trainerFancy = ImageIO.read(new File("./images/GenericTrainerTest.png"));
             trainerLabel = new JLabel(new ImageIcon(trainerFancy));
-            userOptions.add(trainerLabel, BorderLayout.NORTH);
+            trainerDisplay.add(trainerLabel, BorderLayout.NORTH);
         } catch (IOException e) {
             // TODO Auto-generated catch block
             e.printStackTrace();
         }
+        
+        JProgressBar steps = new JProgressBar();
+        steps.setValue(500); // will need to replace this with steps
+        steps.setStringPainted(true);
+        steps.setString((steps.getValue() * 500) / 100 + " steps remaining");
+       // steps.setForeground(new Color(178, 102, 255));
+        trainerDisplay.add(steps, BorderLayout.SOUTH);
+        userOptions.add(trainerDisplay, BorderLayout.NORTH);
         
         JPanel userButtons = new JPanel(new GridLayout(3, 1));
         JButton save = new JButton("Save Game");
@@ -221,16 +233,8 @@ public class PokemonGUI {
         mapView.pack();
         mapView.setLocationRelativeTo(null);
         mapView.setVisible(true);
-        
-    //    trainerFrame();
-
     }
     
-    private void trainerFrame() {
-        
-        
-    }
-
     /*---------------------------------------------------------------------
     |  Method name:    [saveState]
     |  Purpose:        [Save this instance of the game]
@@ -314,14 +318,16 @@ public class PokemonGUI {
             JDialog dialog = new JDialog(mapView, "Gotta Catch 'Em All");
             JTextArea info = new JTextArea();
             info.append("Hey there noob trainer, you wanna be a master!?.\n"
-                    + "We've been hearing about some rumors in the area. \n"
-                    + "There have been some sightings of some beast Pokemon.\n"
-                    + "He seems to appear when lots of Pokemon have been caught.\n"
-                    + "Maybe if you catch all the 6 common and 4 uncommon in the\n" + "area he'll appear.\n");
+                    + "We've been hearing some strange rumors in the area. \n"
+                    + "There have been rare sightings of some beast Pokemon.\n"
+                    + "He seems to appear when lots of Pokemon have been caught.\n" 
+                    + "He must have some problem with captivity. But we're human\n"
+                    + "and we don't listen to nature, so I have a genius idea:\n"
+                    + "maybe if you catch all the 6 common and 4 uncommon in the\n" + "area he'll appear.\n");
             info.setEditable(false);
             info.setFont(new Font("Futura", Font.PLAIN, 15));
             dialog.add(info);
-            dialog.setSize(500, 150);
+            dialog.setSize(500, 200);
             dialog.setLocationRelativeTo(null);
             dialog.setVisible(true);
         }
@@ -384,7 +390,7 @@ public class PokemonGUI {
             info.setEditable(false);
             info.setFont(new Font("Futura", Font.PLAIN, 15));
             dialog.add(info);
-            dialog.setSize(600, 150);
+            dialog.setSize(500, 200);
             dialog.setLocationRelativeTo(null);
             dialog.setVisible(true);
         }

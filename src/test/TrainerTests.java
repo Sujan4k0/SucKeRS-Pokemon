@@ -3,6 +3,7 @@ package test;
 import static org.junit.Assert.*;
 
 import java.awt.Point;
+import java.util.Random;
 
 import org.junit.Test;
 
@@ -47,7 +48,7 @@ public class TrainerTests {
 	public void testAddingPokemon() {
 		
 		Trainer keith = new Trainer();
-		Pokemon pikachu = new Common("Pikachu", null, PokemonType.ELECTRIC);
+		Pokemon pikachu = new Common(new Random(), "Pikachu", null, PokemonType.ELECTRIC);
 		keith.addPokemon(pikachu);
 		
 		assertEquals(keith.getPokemon().get(0).getName(), "PIKACHU");

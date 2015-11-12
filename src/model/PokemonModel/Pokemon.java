@@ -17,14 +17,11 @@
 package model.PokemonModel;
 
 import java.awt.Image;
-import java.awt.event.ActionEvent;
-import java.awt.event.ActionListener;
 import java.awt.image.BufferedImage;
 import java.util.Random;
 
-import javax.swing.Timer;
-
 import model.TrainerModel.TrainerAction;
+import view.EncounterTimer;
 
 public abstract class Pokemon {
 
@@ -49,7 +46,7 @@ public abstract class Pokemon {
     |                   contains all perspectives of this Pokemon, and
     |                   the type of the Pokemon.]
     *---------------------------------------------------------------------*/
-    public Pokemon(String n, BufferedImage[] i, PokemonType t) {
+    public Pokemon(Random r, String n, BufferedImage[] i, PokemonType t) {
         
         // store all of the given parameters
         this.name = n;
@@ -61,7 +58,7 @@ public abstract class Pokemon {
         RUN_ADJUST = 0;
         CATCH_ADJUST = 0;
         
-        gen = new Random(); // start random here for non-testing
+        gen = r; // start random here for non-testing
         decider = 0; // default decision to 0, so nothing would happen
     }
     
@@ -87,7 +84,7 @@ public abstract class Pokemon {
                 catchPercentage = Math.max(0, catchPercentage - CATCH_ADJUST); // decrease catch
                 
                 // evaluate with the decider if the Pokemon will run
-                if (decider <= runPercentage && decider > 0) {
+                if (decider <= runPercentage) {
                     
                     pokemonState = PokemonResponse.RUN_AWAY;
                 }
@@ -96,12 +93,12 @@ public abstract class Pokemon {
             case THROW_BALL:
                
                 // evaluate and set pokemonState, catching gets precedence
-                if (decider <= catchPercentage && decider > 0) {
+                if (decider <= catchPercentage) {
                     
                     pokemonState = PokemonResponse.GET_CAUGHT;
                 }
                 
-                else if (decider <= runPercentage && decider > 0) {
+                else if (decider <= runPercentage) {
                     
                     pokemonState = PokemonResponse.RUN_AWAY;
                 }             
@@ -113,7 +110,7 @@ public abstract class Pokemon {
                 catchPercentage = Math.min(100, catchPercentage + CATCH_ADJUST); // increase catch
                 
                 // check if the pokemon runs based on the current percentage and decider
-                if (decider <= runPercentage && decider > 0) {
+                if (decider <= runPercentage) {
                     
                     pokemonState = PokemonResponse.RUN_AWAY;
                 }            
@@ -151,6 +148,16 @@ public abstract class Pokemon {
         
         return pokemonState;
     }
+    
+    /*---------------------------------------------------------------------
+    |  Method name:    [setState]
+    |  Purpose:        [Sets the current state of the Pokemon]
+    |  Returns:        [PokemonResponse - what the Pokemon is doing]
+    *---------------------------------------------------------------------*/
+    public void setState(PokemonResponse givenState) {
+        
+        pokemonState = givenState;
+    }
 
     /*---------------------------------------------------------------------
     |  Method name:    [startEncounter]
@@ -158,66 +165,8 @@ public abstract class Pokemon {
     |                   this Pokemon when the Trainer encounters it.]
     *---------------------------------------------------------------------*/
     public void startEncounter() {
-             
-        Ticker ticker = new Ticker();
-        ticker.start();
-      
-    }
-    
-    /*---------------------------------------------------------------------
-    |  Class name:     [Ticker]
-    |  Purpose:        [Timer that times the encounter of a Trainer and
-    |                   Pokemon. Once time is up, the Pokemon will
-    |                   run away.]
-    *---------------------------------------------------------------------*/ 
-    private class Ticker {
-        
-        private int MAX_TICS; // how long the Ticker will go on
-        private int tic; // current second we're on
-        private Timer timer;
-        
-        /*---------------------------------------------------------------------
-        |  Method name:    [Ticker]
-        |  Purpose:        [Constructor]
-        *---------------------------------------------------------------------*/
-        public Ticker() {
-            
-            MAX_TICS = 60; // 60 second encounters
-            tic = 0; // start at 0 seconds
-            timer = new Timer(0, new TimerListener()); // ActionListener for timer
-        }
-        
-        /*---------------------------------------------------------------------
-        |  Method name:    [start]
-        |  Purpose:        [Starts the timer]
-        *---------------------------------------------------------------------*/
-        public void start() {
-            
-            timer.start();
-        }
-        
-        /*---------------------------------------------------------------------
-        |  Class name:     [TimerListener]
-        |  Purpose:        [Allows for the timer to countdown once the Pokemon
-        |                   is encountered.]
-        *---------------------------------------------------------------------*/ 
-        private class TimerListener implements ActionListener {
 
-            @Override
-            public void actionPerformed(ActionEvent e) {
-
-                if (tic <= MAX_TICS) { // 60 seconds has not passed
-                    
-                    tic++;
-                }
-                
-                else { // time is up
-                    
-                    pokemonState = PokemonResponse.RUN_AWAY; // time is up so the Pokemon will run
-                    timer.stop(); // stop the timer
-                }             
-            }       
-        }        
+        new EncounterTimer(this).start();      
     }
     
     /*---------------------------------------------------------------------
@@ -242,15 +191,10 @@ public abstract class Pokemon {
         String type = "Type: " + this.type + "\n";
         
         return name + type;
-    }
-         
-    /*---------------------------------------------------------------------
-    |  Method name:    [setSeed]
-    |  Purpose:        [TESTING METHOD: set the seed for the Random]
-    |  Parameters:     [int - the seed we're forcing]
-    *---------------------------------------------------------------------*/
-    public void setSeed(int seed) {
+    }   
+    
+    public Image[] getSprite() {
         
-        gen = new Random(seed); // set random to be this one    
+        return sprite;
     }
 }
