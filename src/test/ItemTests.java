@@ -1,3 +1,19 @@
+/*=========================================================================== 
+ | Assignment: FINAL PROJECT: [ItemTests] 
+ | 
+ | Authors:    [Sujan Patel  (sujan4k0@email.arizona.edu)] 
+ |	           [Keith Smith  (browningsmith@email.arizona.edu)]
+ |	           [Ryan Kaye    (rkaye@email.arizona.edu)]
+ |             [Sarina White (sarinarw@email.arizona.edu)]
+ | 
+ | Course: 335 
+ | Instructor: Mercer
+ | Project Manager/Section Leader: Jeremy Mowery 
+ | Due Date: [12.7.15] 
+ | 
+ | Description: Junit tests to test Item functionality 
+ *===========================================================================*/
+
 package test;
 
 import static org.junit.Assert.*;
@@ -11,6 +27,10 @@ import org.junit.Test;
 
 public class ItemTests {
 
+	/*---------------------------------------------------------------------
+	 |  Method name:    [testStepPotion]
+	 |  Purpose:  	    [Test the functionality of step potions
+	 *---------------------------------------------------------------------*/
 	@Test
 	public void TestStepPotions() {
 		Item Super = new SuperStepPotion();
@@ -33,7 +53,11 @@ public class ItemTests {
 		assertTrue((! ash.getItems().contains(Hyper))&& (! ash.getItems().contains(Super))&& (! ash.getItems().contains(Basic)));
 
 	}
-	
+
+	/*---------------------------------------------------------------------
+	 |  Method name:    [testTeleporter]
+	 |  Purpose:  	    [Test the functionality of teleporter
+	 *---------------------------------------------------------------------*/
 	@Test
 	public void testTeleporter(){
 		Trainer brock = new Trainer();
@@ -59,6 +83,10 @@ public class ItemTests {
 		assertTrue(! brock.getItems().contains(teleporter));
 
 	}
+	/*---------------------------------------------------------------------
+	 |  Method name:    [testFatiguePotion]
+	 |  Purpose:  	    [Test the functionality of step potions
+	 *---------------------------------------------------------------------*/
 	@Test
 	public void testFatiguePotion(){
 		Trainer misty = new Trainer();
@@ -76,7 +104,5 @@ public class ItemTests {
 		misty.useItem(fPotion);
 		assertTrue(!misty.isFatigued());
 		assertFalse(misty.getItems().contains(fPotion));
-		
 	}
-
 }
