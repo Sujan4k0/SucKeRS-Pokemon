@@ -24,9 +24,10 @@ public interface Tile {
 
 	/*---------------------------------------------------------------------
 	 |  Method name:    [interactWithTrainer]
-	 |  Purpose:  	    [To do specific things when trainer steps on the Tile]
+	 |  Purpose:  	    [To do specific things when trainer steps on the Tile] 
+	 |  Returns:        [String as placeholder for testing]
 	 *---------------------------------------------------------------------*/
-	public void interactWithTrainer();
+	public String interactWithTrainer();
 
 	/*---------------------------------------------------------------------
 	 |  Method name:    [getTerrainType]

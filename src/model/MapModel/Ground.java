@@ -47,10 +47,12 @@ public enum Ground implements Tile {
 	 |  Purpose:  	    [To later play a specific sound when Trainer walks on this Ground]
 	 *---------------------------------------------------------------------*/
 	@Override
-	public void interactWithTrainer() {
+	public String interactWithTrainer() {
 		// TODO Sound effect when trainer walking on
 		
 		// play getTerrainType().getSound();
+		
+		return "successfully called";
 	}
 
 	/*---------------------------------------------------------------------

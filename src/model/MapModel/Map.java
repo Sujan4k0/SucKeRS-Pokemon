@@ -259,5 +259,25 @@ public abstract class Map extends JPanel implements Serializable {
 	public Image getGroundTileSet() {
 		return groundTileSet;
 	}
+	
+	/*---------------------------------------------------------------------
+	 |  Method name:    [getTrainerDir]
+	 |  Purpose:  	    [Getter for the Map.Direction that the trainer sprite is facing]
+	 |  Returns:  	    [Map.Direction: direction the trainer sprite is facing.
+	 |					 There are multiple directions (DOWN and DOWN_1, etc) because
+	 |					 they correspond to a section of the trainer's sprite sheet]
+	 *---------------------------------------------------------------------*/
+	public Map.Direction getTrainerDir() {
+		return dir;
+	}
+	
+	/*---------------------------------------------------------------------
+	 |  Method name:    [getTrainerSheet]
+	 |  Purpose:  	    [Getter for the trainer's sprite sheet]
+	 |  Returns:  	    [Image: the trainer's sprite sheet]
+	 *---------------------------------------------------------------------*/
+	public Image getTrainerSheet() {
+		return trainerSheet;
+	}
 
 }

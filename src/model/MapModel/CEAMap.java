@@ -206,8 +206,8 @@ public class CEAMap extends Map {
 
 		// generate 5 randomly placed cacti in left half
 		for (int i = 0; i < 5; i++) {
-			int x = (int) (Math.random() * (Map.HEIGHT - 2)) + 2 + Map.HEIGHT;
-			int y = (int) (Math.random() * (Map.WIDTH / 2 - 2)) + 2 + 2 * Map.WIDTH;
+			int x = (int) (Math.random() * (Map.HEIGHT - 4)) + 2 + Map.HEIGHT;
+			int y = (int) (Math.random() * (Map.WIDTH / 2 - 4)) + 2 + 2 * Map.WIDTH;
 
 			if (obstacleTiles[x][y] != Obstacle.CACTUS_1)
 				obstacleTiles[x][y] = Obstacle.CACTUS_1;
@@ -217,7 +217,7 @@ public class CEAMap extends Map {
 		// generate 5 randomly placed cacti in right half
 		for (int i = 0; i < 5; i++) {
 			int x = (int) (Math.random() * (Map.HEIGHT - 4)) + 2 + Map.HEIGHT;
-			int y = (int) (Math.random() * (Map.WIDTH/2 - 4)) + 2 + 2 * Map.WIDTH + Map.WIDTH/2;
+			int y = (int) (Math.random() * (Map.WIDTH / 2 - 4)) + 2 + 2 * Map.WIDTH + Map.WIDTH/2;
 
 			if (obstacleTiles[x][y] != Obstacle.CACTUS_1)
 				obstacleTiles[x][y] = Obstacle.CACTUS_1;

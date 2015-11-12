@@ -46,8 +46,9 @@ public enum Obstacle implements Tile{
 	 |					on this Obstacle]
 	 *---------------------------------------------------------------------*/
 	@Override
-	public void interactWithTrainer() {
+	public String interactWithTrainer() {
 		// TODO may or may not have interaction		
+		return "successfully called";
 	}
 	
 	/*---------------------------------------------------------------------

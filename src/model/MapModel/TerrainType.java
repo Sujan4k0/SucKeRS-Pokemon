@@ -25,7 +25,7 @@ public enum TerrainType {
 	
 	/*---------------------------------------------------------------------
 	 |  Method name:    [TerrainType]
-	 |  Purpose:  	    [(no purpose currently - may or may not have purpose)]
+	 |  Purpose:  	    [(no purpose currently - may or may not have purpose later)]
 	 *---------------------------------------------------------------------*/
 	TerrainType() {
 		
@@ -36,10 +36,10 @@ public enum TerrainType {
 	 |  Method name:    [getSound]
 	 |  Purpose:  	    [TODO: gets the sound associated with the trainer walking
 	 |					 on a tile with a specific TerrainType]
-	 |  Returns:  	    [TODO: a sound??]
+	 |  Returns:  	    [TODO: a sound?? currently a String as placeholder]
 	 *---------------------------------------------------------------------*/
-	void getSound() {
-		
+	public String getSound() {
+		return "successfully called";
 	}
 
 }
