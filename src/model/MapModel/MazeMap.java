@@ -50,10 +50,11 @@ public class MazeMap extends Map {
 		w = MazeMap.WIDTH;
 		h = MazeMap.HEIGHT;
 
+		// initialize arrays
 		groundTiles = new Ground[h][w];
 		obstacleTiles = new Obstacle[h][w];
 
-		//TODO: Fill groundTiles[][] with Ground
+		// Fill groundTiles[][] with Ground
 		for (int i = 0; i < h; i++) {
 			for (int j = 0; j < w; j++) {
 
@@ -62,13 +63,15 @@ public class MazeMap extends Map {
 			}
 		}
 
-		//TODO: Fill obstacleTiles[][] with Obstacles
+		// Fill obstacleTiles[][] with Obstacles
 		for (int i = 0; i < h; i++) {
 			for (int j = 0; j < w; j++) {
 				obstacleTiles[i][j] = Obstacle.ROCK_1;
 			}
 		}
 
+		// generates a random location along the height at width = 1
+		// to be used for the starting point of the maze generator
 		int randX = new Random().nextInt(h - 2) + 1;
 
 		// makes randX have to be an odd integer so that there is
@@ -79,21 +82,23 @@ public class MazeMap extends Map {
 			randX -= 1;
 
 		// generates the maze tiles
-		obstacleTiles = new MazeGenerator(new Point(randX, 1), obstacleTiles).generateMaze();
+		new MazeGenerator(new Point(randX, 1), obstacleTiles).generateMaze();
 
+		// find the only null Obstacle on the left-most side
+		// this is where the trainer will start
 		for (int i = 0; i < h; i++) {
 			if (obstacleTiles[i][0] == null)
 				setTrainerPoint(new Point(i, 0));
 		}
 
+		// find the only null Obstacle on the right-most side
+		// this is the exit: shown by an ice tiles
 		for (int i = 0; i < h; i++) {
 			if (obstacleTiles[i][w - 1] == null)
 				groundTiles[i][w - 1] = Ground.ICE_1;
 		}
 
-		// System.out.println("Start Point : " + trainerPoint.toString());
-
-		// move the Map to the are where the Trainer starts
+		// move the visually drawn part of Map to the area where the Trainer starts
 		if (trainerPoint.x >= Map.HEIGHT)
 			moveDown();
 		if (trainerPoint.x >= 2 * Map.HEIGHT)
@@ -108,7 +113,6 @@ public class MazeMap extends Map {
 	 |					 they correspond to a section of the trainer's sprite sheet]
 	 *---------------------------------------------------------------------*/
 	public Map.Direction getTrainerDir() {
-		// TODO Auto-generated method stub
 		return dir;
 	}
 
@@ -118,7 +122,6 @@ public class MazeMap extends Map {
 	 |  Returns:  	    [Image: the trainer's sprite sheet]
 	 *---------------------------------------------------------------------*/
 	public Image getTrainerSheet() {
-		// TODO Auto-generated method stub
 		return trainerSheet;
 	}
 

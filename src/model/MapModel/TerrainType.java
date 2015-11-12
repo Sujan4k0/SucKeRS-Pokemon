@@ -1,5 +1,5 @@
 /*=========================================================================== 
- | Assignment: FINAL PROJECT: [] 
+ | Assignment: FINAL PROJECT: [TerrainType] 
  | 
  | Authors:    [Sujan Patel  (sujan4k0@email.arizona.edu)] 
  |	     	   [Keith Smith  (browningsmith@email.arizona.edu)]
@@ -11,7 +11,9 @@
  | Project Manager/Section Leader: Jeremy Mowery 
  | Due Date: [12.7.15] 
  | 
- | Description: 
+ | Description: This will later be used for Ground in order to associate
+ | specific Pokemon with different TerrainTypes - will also be used for
+ | specific sound effects when trainer walks on a Ground Tile.
  *===========================================================================*/ 
 package model.MapModel;
 
@@ -22,10 +24,8 @@ public enum TerrainType {
 	ICE(), FOREST(), CAVE(), MYSTERY(), GENERIC(); // etc...
 	
 	/*---------------------------------------------------------------------
-	 |  Method name:    []
-	 |  Purpose:  	    []
-	 |  Parameters:     []
-	 |  Returns:  	    []
+	 |  Method name:    [TerrainType]
+	 |  Purpose:  	    [(no purpose currently - may or may not have purpose)]
 	 *---------------------------------------------------------------------*/
 	TerrainType() {
 		
@@ -33,10 +33,10 @@ public enum TerrainType {
 	}
 	
 	/*---------------------------------------------------------------------
-	 |  Method name:    []
-	 |  Purpose:  	    []
-	 |  Parameters:     []
-	 |  Returns:  	    []
+	 |  Method name:    [getSound]
+	 |  Purpose:  	    [TODO: gets the sound associated with the trainer walking
+	 |					 on a tile with a specific TerrainType]
+	 |  Returns:  	    [TODO: a sound??]
 	 *---------------------------------------------------------------------*/
 	void getSound() {
 		

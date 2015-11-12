@@ -83,12 +83,16 @@ public class CEAMap extends Map {
 
 			}
 		}
-		obstacleTiles[Map.HEIGHT + Map.HEIGHT / 2 - 2][Map.WIDTH - 1] = Obstacle.TREE_DARK;
-		obstacleTiles[Map.HEIGHT + Map.HEIGHT / 2 - 1][Map.WIDTH - 1] = null;
-		obstacleTiles[Map.HEIGHT + Map.HEIGHT / 2][Map.WIDTH - 1] = null;
-		obstacleTiles[Map.HEIGHT + Map.HEIGHT / 2 + 1][Map.WIDTH - 1] = null;
-		obstacleTiles[Map.HEIGHT + Map.HEIGHT / 2 + 2][Map.WIDTH - 1] = Obstacle.TREE_DARK;
+
+		for (int i = Map.HEIGHT + Map.HEIGHT / 2 - 1; i < Map.HEIGHT + Map.HEIGHT / 2 + 2; i++)
+			obstacleTiles[i][Map.WIDTH - 1] = null;
 		
+
+		for (int i = Map.WIDTH - 6; i < Map.WIDTH - 3; i++) 
+			for (int j = 2 * Map.HEIGHT - 5; j < 2 * Map.HEIGHT - 2; j++) {
+				obstacleTiles[j][i] = Obstacle.TREE_1;
+			}
+
 		// grassy land
 		// cave entrance w/ cave-y tiles and obstacles of cave-y cave, etc.
 		// circly enclosure 

@@ -1,5 +1,5 @@
 /*=========================================================================== 
- | Assignment: FINAL PROJECT: [] 
+ | Assignment: FINAL PROJECT: [MazeGenerator] 
  | 
  | Authors:    [Sujan Patel  (sujan4k0@email.arizona.edu)] 
  |	     	   [Keith Smith  (browningsmith@email.arizona.edu)]
@@ -11,7 +11,9 @@
  | Project Manager/Section Leader: Jeremy Mowery 
  | Due Date: [12.7.15] 
  | 
- | Description: 
+ | Description: This class takes an Obstacle[][] array and randomly generates
+ | a maze by removing Obstacles from it. The array must be completely full of
+ | Obstacles.
  *===========================================================================*/
 package model.MapModel;
 
@@ -19,12 +21,11 @@ import java.awt.Point;
 import java.util.ArrayList;
 import java.util.Random;
 
-
 /*---------------------------------------------------------------------
-|  Class name:     [MazeGenerator]
-|  Purpose:        [Randomly generates a maze given a starting Point and 
-|				    2D array of Obstacles]
-*---------------------------------------------------------------------*/ 
+ |  Class name:     [MazeGenerator]
+ |  Purpose:        [Randomly generates a maze given a starting Point and 
+ |				    2D array of Obstacles]
+ *---------------------------------------------------------------------*/
 public class MazeGenerator {
 
 	private Obstacle[][] obstacles; // array totally full of Obstacles
@@ -32,76 +33,82 @@ public class MazeGenerator {
 	private Point currentPt; // the current Point being checked
 
 	/*---------------------------------------------------------------------
-	 |  Method name:    []
-	 |  Purpose:  	    []
-	 |  Parameters:     []
-	 |  Returns:  	    []
+	 |  Method name:    [MazeGenerator]
+	 |  Purpose:  	    [Constructs a MazeGenerator]
+	 |  Parameters:     [Point: the starting point to generate the maze
+	 |					 Obstacle[][]: the array to generate the maze in]
 	 *---------------------------------------------------------------------*/
 	public MazeGenerator(Point start, Obstacle[][] obsts) {
 
+		// instantiate pointList
 		pointList = new ArrayList<Point>();
+
+		// add starting Point to list
 		pointList.add(start);
-		obstacles = obsts.clone();
+
+		// set this obstacles var to the obsts parameter
+		obstacles = obsts;
 
 	}
 
 	/*---------------------------------------------------------------------
-	 |  Method name:    []
-	 |  Purpose:  	    []
-	 |  Parameters:     []
-	 |  Returns:  	    []
+	 |  Method name:    [generateMaze]
+	 |  Purpose:  	    [Generate the maze in the Obstacle[][] array]
 	 *---------------------------------------------------------------------*/
-	public Obstacle[][] generateMaze() {
+	public void generateMaze() {
 
+		// to check all directions for each point
 		boolean right = false, left = false, up = false, down = false;
 
+		// keep generating maze while pointList contains Points
 		while (!pointList.isEmpty()) {
 
-			// get last added Point from list
+			// get last added Point from list if the currentPt is null or different than
+			// the last Point in the list
 			if (currentPt == null || !currentPt.equals(pointList.get(pointList.size() - 1))) {
 				right = false;
 				left = false;
 				up = false;
 				down = false;
 				currentPt = pointList.get(pointList.size() - 1);
-				// System.out.println("Generating Maze at Point: " + currentPt.toString());
 			}
 
-			// remove point from list when no other directions can
-			// be moved to
+			// remove point from list when all directions have been checked
 			if (left && right && up && down) {
 				pointList.remove(currentPt);
 			}
 
+			// generate a random int to represent the direction to try and move in
 			int randomDir = new Random().nextInt(4);
+
+			// the number of spaces that are moved for each direction generated
 			int m = 2;
 
+			// handles the randomDir int
 			switch (randomDir) {
 
+			// try to generate the maze up
 			case 0:
-				if (currentPt.x - 2 > 0 && obstacles[currentPt.x - 1][currentPt.y] != null
-						&& obstacles[currentPt.x - 2][currentPt.y] != null) {
+				if (currentPt.x - 2 > 0 && obstacles[currentPt.x - 1][currentPt.y] != null && obstacles[currentPt.x - 2][currentPt.y] != null) {
 					generateUp(m);
 				}
 				up = true;
 				break;
+			// try to generate the maze down
 			case 1:
-				if (currentPt.x + 2 < (obstacles.length - 1)
-						&& obstacles[currentPt.x + 1][currentPt.y] != null
-						&& obstacles[currentPt.x + 2][currentPt.y] != null)
+				if (currentPt.x + 2 < (obstacles.length - 1) && obstacles[currentPt.x + 1][currentPt.y] != null && obstacles[currentPt.x + 2][currentPt.y] != null)
 					generateDown(m);
 				down = true;
 				break;
+			// try to generate the maze left
 			case 2:
-				if (currentPt.y - 2 > 0 && obstacles[currentPt.x][currentPt.y - 1] != null
-						&& obstacles[currentPt.x][currentPt.y - 2] != null)
+				if (currentPt.y - 2 > 0 && obstacles[currentPt.x][currentPt.y - 1] != null && obstacles[currentPt.x][currentPt.y - 2] != null)
 					generateLeft(m);
 				left = true;
 				break;
+			// try to generate the maze right
 			case 3:
-				if (currentPt.y + 2 < (obstacles[0].length - 1)
-						&& obstacles[currentPt.x][currentPt.y + 1] != null
-						&& obstacles[currentPt.x][currentPt.y + 2] != null)
+				if (currentPt.y + 2 < (obstacles[0].length - 1) && obstacles[currentPt.x][currentPt.y + 1] != null && obstacles[currentPt.x][currentPt.y + 2] != null)
 					generateRight(m);
 				right = true;
 				break;
@@ -109,10 +116,13 @@ public class MazeGenerator {
 				break;
 
 			}
-		}
+		} // end of while()
 
+		// to know if the start and end of the maze have been placed
 		boolean startPlaced = false, endPlaced = false;
 
+		// find a place on the left that is connected with the maze
+		// and place the start there by removing that object
 		while (!startPlaced) {
 			int rand = new Random().nextInt(obstacles.length);
 
@@ -122,6 +132,8 @@ public class MazeGenerator {
 			}
 		}
 
+		// find a place on the right that is connected with the maze
+		// and place the end there by removing that object
 		while (!endPlaced) {
 			int rand = new Random().nextInt(obstacles.length);
 
@@ -131,15 +143,12 @@ public class MazeGenerator {
 			}
 		}
 
-		return obstacles;
-
 	}
 
 	/*---------------------------------------------------------------------
-	 |  Method name:    []
-	 |  Purpose:  	    []
-	 |  Parameters:     []
-	 |  Returns:  	    []
+	 |  Method name:    [generateDown]
+	 |  Purpose:  	    [Generate the maze downward]
+	 |  Parameters:     [int: the number of spaces to move down]
 	 *---------------------------------------------------------------------*/
 	private void generateDown(int move) {
 
@@ -148,20 +157,18 @@ public class MazeGenerator {
 			obstacles[currentPt.x + i][currentPt.y] = null;
 		}
 
+		// make a new Point and add it to the pointList if it isn't
+		// already in the list
 		Point newP = new Point(currentPt.x + move, currentPt.y);
-
-		// System.out.println("New point at: " + newP.toString());
-
 		if (!pointList.contains(newP))
 			pointList.add(newP);
 
 	}
 
 	/*---------------------------------------------------------------------
-	 |  Method name:    []
-	 |  Purpose:  	    []
-	 |  Parameters:     []
-	 |  Returns:  	    []
+	 |  Method name:    [generateUp]
+	 |  Purpose:  	    [Generate the maze upward]
+	 |  Parameters:     [int: the number of spaces to move up]
 	 *---------------------------------------------------------------------*/
 	private void generateUp(int move) {
 
@@ -170,19 +177,18 @@ public class MazeGenerator {
 			obstacles[currentPt.x - i][currentPt.y] = null;
 		}
 
+		// make a new Point and add it to the pointList if it isn't
+		// already in the list
 		Point newP = new Point(currentPt.x - move, currentPt.y);
-		// System.out.println("New point at: " + newP.toString());
-
 		if (!pointList.contains(newP))
 			pointList.add(newP);
 
 	}
 
 	/*---------------------------------------------------------------------
-	 |  Method name:    []
-	 |  Purpose:  	    []
-	 |  Parameters:     []
-	 |  Returns:  	    []
+	 |  Method name:    [generateLeft]
+	 |  Purpose:  	    [Generate the maze left]
+	 |  Parameters:     [int: the number of spaces to move left]
 	 *---------------------------------------------------------------------*/
 	private void generateLeft(int move) {
 
@@ -191,19 +197,18 @@ public class MazeGenerator {
 			obstacles[currentPt.x][currentPt.y - i] = null;
 		}
 
+		// make a new Point and add it to the pointList if it isn't
+		// already in the list
 		Point newP = new Point(currentPt.x, currentPt.y - move);
-		// System.out.println("New point at: " + newP.toString());
-
 		if (!pointList.contains(newP))
 			pointList.add(newP);
 
 	}
 
 	/*---------------------------------------------------------------------
-	 |  Method name:    []
-	 |  Purpose:  	    []
-	 |  Parameters:     []
-	 |  Returns:  	    []
+	 |  Method name:    [generateRight]
+	 |  Purpose:  	    [Generate the maze right]
+	 |  Parameters:     [int: the number of spaces to move right]
 	 *---------------------------------------------------------------------*/
 	private void generateRight(int move) {
 
@@ -212,8 +217,9 @@ public class MazeGenerator {
 			obstacles[currentPt.x][currentPt.y + i] = null;
 		}
 
+		// make a new Point and add it to the pointList if it isn't
+		// already in the list
 		Point newP = new Point(currentPt.x, currentPt.y + move);
-		// System.out.println("New point at: " + newP.toString());
 
 		if (!pointList.contains(newP))
 			pointList.add(newP);
