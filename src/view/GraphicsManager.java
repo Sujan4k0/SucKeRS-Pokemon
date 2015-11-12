@@ -1,5 +1,5 @@
 /*=========================================================================== 
- | Assignment: FINAL PROJECT: [] 
+ | Assignment: FINAL PROJECT: [Graphics Manager] 
  | 
  | Authors:    [Sujan Patel  (sujan4k0@email.arizona.edu)] 
  |	     	   [Keith Smith  (browningsmith@email.arizona.edu)]
@@ -11,7 +11,9 @@
  | Project Manager/Section Leader: Jeremy Mowery 
  | Due Date: [12.7.15] 
  | 
- | Description: 
+ | Description: This class has static methods used to draws tiles/sprite
+ | given the specific tileset/spritesheet image. Tile sets and 10 by 10 and
+ | sprite sheets are 6 by 2.
  *===========================================================================*/
 package view;
 
@@ -30,10 +32,12 @@ public class GraphicsManager {
 	private static final int SPRITESHEET_WIDTH = 6, SPRITESHEET_HEIGHT = 2;
 
 	/*---------------------------------------------------------------------
-	 |  Method name:    []
-	 |  Purpose:  	    []
-	 |  Parameters:     []
-	 |  Returns:  	    []
+	 |  Method name:    [drawTile]
+	 |  Purpose:  	    [Draws tile from tile set based on the ordinal of an enum]
+	 |  Parameters:     [Graphics: graphics to draw tile with
+	 |					 Enum<?>: an enum associated with the given tile set image]
+	 |					 int: the x-position to draw the tile
+	 |					 int: the y-position to draw the tile]
 	 *---------------------------------------------------------------------*/
 	public static void drawTile(Graphics g, Enum<?> tile, Image tileSet, int x, int y) {
 
@@ -54,10 +58,12 @@ public class GraphicsManager {
 	}
 	
 	/*---------------------------------------------------------------------
-	 |  Method name:    []
-	 |  Purpose:  	    []
-	 |  Parameters:     []
-	 |  Returns:  	    []
+	 |  Method name:    [drawSprite]
+	 |  Purpose:  	    [Draws sprite associated with an enum and sprite sheet]
+	 |  Parameters:     [Graphics: graphics to draw sprite with
+	 |					 Enum<?>: an enum associated with the given sprite sheet image]
+	 |					 int: the x-position to draw the tile
+	 |					 int: the y-position to draw the tile]
 	 *---------------------------------------------------------------------*/
 	public static void drawSprite(Graphics g, Enum<?> tile, Image tileSet, int x, int y) {
 

@@ -24,7 +24,9 @@ public enum Obstacle implements Tile{
 	ROCK_10(TerrainType.GENERIC), 
 	TREE_LIGHT(TerrainType.GENERIC), TREE_DARK(TerrainType.GENERIC), TREE_LIGHT2(TerrainType.GENERIC),
 	TREE_WEIRD(TerrainType.GENERIC), TREE_PALM(TerrainType.GENERIC), TREE_SNOWY(TerrainType.ICE),
-	TREE_1(TerrainType.GENERIC);
+	TREE_1(TerrainType.GENERIC), TREE_2(TerrainType.GENERIC), TREE_3(TerrainType.GENERIC),
+	TREE_4(TerrainType.GENERIC),
+	CACTUS_1(TerrainType.DESERT);
 	
 	private TerrainType terrainType;
 	

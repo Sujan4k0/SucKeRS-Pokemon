@@ -23,6 +23,8 @@ public class CEAMap extends Map {
 
 	private static final long serialVersionUID = 1L;
 
+	Ground grassy, deserty, icey, cavey, plainy;
+
 	// entire CEAMap is 3 by 3 Maps combined
 	public static int WIDTH = (Map.WIDTH * 3), HEIGHT = (Map.HEIGHT * 3);
 
@@ -47,54 +49,40 @@ public class CEAMap extends Map {
 		w = CEAMap.WIDTH;
 		h = CEAMap.HEIGHT;
 
+		grassy = Ground.GRASS_1;
+		deserty = Ground.SAND_2;
+		icey = Ground.ICE_1;
+		cavey = Ground.CAVE_1;
+		plainy = Ground.GRASS_2;
+
 		groundTiles = new Ground[h][w];
 		obstacleTiles = new Obstacle[h][w];
 
+		// fill all groundTiles with some Ground so game doesn't explode
 		for (int i = 0; i < groundTiles.length; i++) {
 			for (int j = 0; j < groundTiles[0].length; j++)
 				groundTiles[i][j] = Ground.CAVE_1;
 
 		}
-		// TODO get CEA Tiles and Obstacles
+
+		makePlainyLand();
+		makeGrassyLand();
+		makeDesertyLand();
+		makeIceyLand();
+		makeCaveyLand();
+		makeSuperSecretLand();
 
 		// grassy land = bush
 		// cave = rocks
 		// ice = ice blocks
 		// desert = cactus
-		// poop = toilets
 		// rocky enclosure with entrance
 		// zig-zag rocky paths?
 
 		// first area is all teleport land YO
-		// obstacles[0][0] to height - 1, width -1
-
-		moveDown();
-		// plain land
-		// 4, 14 is top 7,14 is bot of entrance/exit
-		// north, west, south all wall
-		// 3 by 3 area of trees
-		for (int i = Map.HEIGHT; i < 2 * Map.HEIGHT; i++) {
-			for (int j = 0; j < Map.WIDTH; j++) {
-				groundTiles[i][j] = Ground.GRASS_2;
-
-				// border of rocks
-				if (i == Map.HEIGHT || j == 0 || i == Map.HEIGHT * 2 - 1 || j == Map.WIDTH - 1)
-					obstacleTiles[i][j] = Obstacle.TREE_LIGHT;
-
-			}
-		}
-
-		for (int i = Map.HEIGHT + Map.HEIGHT / 2 - 1; i < Map.HEIGHT + Map.HEIGHT / 2 + 2; i++)
-			obstacleTiles[i][Map.WIDTH - 1] = null;
-		
-
-		for (int i = Map.WIDTH - 6; i < Map.WIDTH - 3; i++) 
-			for (int j = 2 * Map.HEIGHT - 5; j < 2 * Map.HEIGHT - 2; j++) {
-				obstacleTiles[j][i] = Obstacle.TREE_1;
-			}
+		// obstacles[0][0] to height - 1, width - 1
 
 		// grassy land
-		// cave entrance w/ cave-y tiles and obstacles of cave-y cave, etc.
 		// circly enclosure 
 		// obstacleTiles[Map.HEIGHT][Map.WIDTH]
 
@@ -107,7 +95,156 @@ public class CEAMap extends Map {
 		// teleport land
 		// alternating 0 1 tiles
 
+		// starts the game in the plain area
 		setTrainerPoint(new Point(Map.HEIGHT + Map.HEIGHT / 2, 2));
+		moveDown();
+
+	}
+
+	private void makeGrassyLand() {
+		for (int i = Map.HEIGHT; i < 2 * Map.HEIGHT; i++) {
+			for (int j = Map.WIDTH; j < 2 * Map.WIDTH; j++) {
+				groundTiles[i][j] = grassy;
+				if (i == Map.HEIGHT || j == Map.WIDTH || j == 2 * Map.WIDTH - 1
+						|| i == 2 * Map.HEIGHT - 1)
+					obstacleTiles[i][j] = Obstacle.TREE_PALM;
+			}
+		}
+
+		// the exit/entrance to plainy land
+		for (int i = Map.HEIGHT + Map.HEIGHT / 2 - 1; i < Map.HEIGHT + Map.HEIGHT / 2 + 2; i++) {
+			obstacleTiles[i][Map.WIDTH] = null;
+			groundTiles[i][Map.WIDTH] = plainy;
+		}
+
+		// the exit/entrance to deserty land
+		for (int i = Map.HEIGHT + Map.HEIGHT / 2 - 1; i < Map.HEIGHT + Map.HEIGHT / 2 + 2; i++) {
+			obstacleTiles[i][Map.WIDTH * 2 - 1] = null;
+			groundTiles[i][Map.WIDTH * 2 - 1] = deserty;
+		}
+
+		// the exit/entrance to cavey land
+		for (int i = Map.WIDTH + Map.WIDTH / 2 - 1; i < Map.WIDTH + Map.WIDTH / 2 + 2; i++) {
+			obstacleTiles[Map.HEIGHT][i] = null;
+			groundTiles[Map.HEIGHT][i] = cavey;
+		}
+
+		// the exit/entrance to icey land
+		for (int i = Map.WIDTH + Map.WIDTH / 2 - 1; i < Map.WIDTH + Map.WIDTH / 2 + 2; i++) {
+			obstacleTiles[Map.HEIGHT * 2 - 1][i] = null;
+			groundTiles[Map.HEIGHT * 2 - 1][i] = icey;
+		}
+	}
+
+	private void makeIceyLand() {
+
+		for (int i = Map.HEIGHT * 2; i < 3 * Map.HEIGHT; i++) {
+			for (int j = Map.WIDTH; j < 2 * Map.WIDTH; j++) {
+				groundTiles[i][j] = icey;
+				if (i == Map.HEIGHT * 2 || j == Map.WIDTH || j == 2 * Map.WIDTH - 1
+						|| i == 3 * Map.HEIGHT - 1)
+					obstacleTiles[i][j] = Obstacle.TREE_SNOWY; // placeholder
+			}
+		}
+
+		// the exit/entrance to grassy land
+		for (int i = Map.WIDTH + Map.WIDTH / 2 - 1; i < Map.WIDTH + Map.WIDTH / 2 + 2; i++) {
+			obstacleTiles[Map.HEIGHT * 2][i] = null;
+			groundTiles[Map.HEIGHT * 2][i] = grassy;
+		}
+
+	}
+
+	private void makePlainyLand() {
+
+		for (int i = Map.HEIGHT; i < 2 * Map.HEIGHT; i++) {
+			for (int j = 0; j < Map.WIDTH; j++) {
+				groundTiles[i][j] = plainy;
+
+				// border of rocks
+				if (i == Map.HEIGHT || j == 0 || i == Map.HEIGHT * 2 - 1 || j == Map.WIDTH - 1)
+					obstacleTiles[i][j] = Obstacle.TREE_LIGHT;
+
+			}
+		}
+
+		//the exit/entrance to grassy 
+		for (int i = Map.HEIGHT + Map.HEIGHT / 2 - 1; i < Map.HEIGHT + Map.HEIGHT / 2 + 2; i++) {
+			obstacleTiles[i][Map.WIDTH - 1] = null;
+			groundTiles[i][Map.WIDTH - 1] = grassy;
+		}
+
+		// the 3 by 3 patches of trees
+		for (int i = Map.WIDTH - 4; i < Map.WIDTH - 1; i++) {
+			for (int j = Map.HEIGHT + 2; j < 2 * Map.HEIGHT - 2; j++) {
+				if (j == Map.HEIGHT + 5)
+					j++;
+				obstacleTiles[j][i] = Obstacle.TREE_DARK;
+			}
+		}
+
+		// random tree
+		obstacleTiles[Map.HEIGHT + Map.HEIGHT / 2][5] = Obstacle.TREE_WEIRD;
+
+	}
+
+	private void makeDesertyLand() {
+		for (int i = Map.HEIGHT; i < 2 * Map.HEIGHT; i++) {
+			for (int j = Map.WIDTH * 2; j < 3 * Map.WIDTH; j++) {
+				groundTiles[i][j] = deserty;
+				if (i == Map.HEIGHT || j == Map.WIDTH * 2 || j == 3 * Map.WIDTH - 1
+						|| i == 2 * Map.HEIGHT - 1)
+					obstacleTiles[i][j] = Obstacle.CACTUS_1;
+			}
+		}
+
+		// the exit/entrance to grassy land
+		for (int i = Map.HEIGHT + Map.HEIGHT / 2 - 1; i < Map.HEIGHT + Map.HEIGHT / 2 + 2; i++) {
+			obstacleTiles[i][Map.WIDTH * 2] = null;
+			groundTiles[i][Map.WIDTH * 2] = grassy;
+		}
+
+		// generate 5 randomly placed cacti in left half
+		for (int i = 0; i < 5; i++) {
+			int x = (int) (Math.random() * (Map.HEIGHT - 2)) + 2 + Map.HEIGHT;
+			int y = (int) (Math.random() * (Map.WIDTH / 2 - 2)) + 2 + 2 * Map.WIDTH;
+
+			if (obstacleTiles[x][y] != Obstacle.CACTUS_1)
+				obstacleTiles[x][y] = Obstacle.CACTUS_1;
+			else
+				i--;
+		}
+		// generate 5 randomly placed cacti in right half
+		for (int i = 0; i < 5; i++) {
+			int x = (int) (Math.random() * (Map.HEIGHT - 4)) + 2 + Map.HEIGHT;
+			int y = (int) (Math.random() * (Map.WIDTH/2 - 4)) + 2 + 2 * Map.WIDTH + Map.WIDTH/2;
+
+			if (obstacleTiles[x][y] != Obstacle.CACTUS_1)
+				obstacleTiles[x][y] = Obstacle.CACTUS_1;
+			else
+				i--;
+		}
+	}
+
+	private void makeCaveyLand() {
+
+		for (int i = 0; i < Map.HEIGHT; i++) {
+			for (int j = Map.WIDTH; j < 2 * Map.WIDTH; j++) {
+				groundTiles[i][j] = cavey;
+				if (i == 0 || j == Map.WIDTH || j == 2 * Map.WIDTH - 1 || i == Map.HEIGHT - 1)
+					obstacleTiles[i][j] = Obstacle.ROCK_1;// placeholder
+			}
+		}
+
+		// the exit/entrance to grassy land
+		for (int i = Map.WIDTH + Map.WIDTH / 2 - 1; i < Map.WIDTH + Map.WIDTH / 2 + 2; i++) {
+			obstacleTiles[Map.HEIGHT - 1][i] = null;
+			groundTiles[Map.HEIGHT - 1][i] = grassy;
+		}
+
+	}
+
+	private void makeSuperSecretLand() {
 
 	}
 

@@ -21,7 +21,7 @@ public enum TerrainType {
 	
 	//TODO add walking sound effects for dif terrain types
 	
-	ICE(), FOREST(), CAVE(), MYSTERY(), GENERIC(); // etc...
+	ICE(), FOREST(), CAVE(), MYSTERY(), GENERIC(), DESERT(); // etc...
 	
 	/*---------------------------------------------------------------------
 	 |  Method name:    [TerrainType]

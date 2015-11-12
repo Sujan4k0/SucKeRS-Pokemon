@@ -26,7 +26,9 @@ public enum Ground implements Tile {
 	T1(TerrainType.CAVE), T2(TerrainType.CAVE), T3(TerrainType.CAVE),
 	T4(TerrainType.CAVE), T5(TerrainType.CAVE),
 	GRASS_1(TerrainType.GENERIC), GRASS_2(TerrainType.CAVE), GRASS_3(TerrainType.CAVE),
-	GRASS_4(TerrainType.CAVE), GRASS_5(TerrainType.CAVE);
+	GRASS_4(TerrainType.CAVE), GRASS_5(TerrainType.CAVE),
+	SAND_1(TerrainType.GENERIC), SAND_2(TerrainType.CAVE), SAND_3(TerrainType.CAVE),
+	SAND_4(TerrainType.CAVE), SAND_5(TerrainType.CAVE);
 	
 	private TerrainType terrainType;
 	
