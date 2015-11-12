@@ -36,6 +36,7 @@ public abstract class GameMode implements Serializable {
 	Map map; // the visual map of this game
 	Random r; // used for random encounters/items
 	String endMessage = ""; // the message to show on end game
+	boolean forfeited = false;
 
 	/*---------------------------------------------------------------------
 	 |  Method name:    [GameMode]
@@ -70,6 +71,12 @@ public abstract class GameMode implements Serializable {
 
 		return map;
 
+	}
+	
+	public Trainer getTrainer() {
+		
+		return trainer;
+		
 	}
 
 	/*--------------------------------------------------------------------
@@ -231,6 +238,15 @@ public abstract class GameMode implements Serializable {
 	public String getEndMessage() {
 		return endMessage;
 	}
+	
+	/*---------------------------------------------------------------------
+	 |  Method name:    [forfeitGame]
+	 |  Purpose:  	    [Forfeit the game]
+	 *---------------------------------------------------------------------*/
+	public void forfeitGame() {
+		forfeited = true;
+		endMessage = "Game Forfeited";
+	}
 
 	/*---------------------------------------------------------------------
 	 |  Class name:     [OurKeyListener]
@@ -251,8 +267,8 @@ public abstract class GameMode implements Serializable {
 		@Override
 		public void keyPressed(KeyEvent e) {
 
-			// if the game is not won or lost, move the trainer
-			if (!isGameWon() && !isGameLost()) {
+			// if the game is not won or lost or forfeited, move the trainer
+			if (!forfeited && !isGameWon() && !isGameLost()) {
 				// set sprite direction and try to move trainer
 				moveTrainer(e);
 

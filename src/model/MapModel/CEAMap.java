@@ -58,7 +58,7 @@ public class CEAMap extends Map {
 		groundTiles = new Ground[h][w];
 		obstacleTiles = new Obstacle[h][w];
 
-		// fill all groundTiles with some Ground so game doesn't explode
+		// fill all groundTiles with some Ground so game doesn't explode yoyoyoyo
 		for (int i = 0; i < groundTiles.length; i++) {
 			for (int j = 0; j < groundTiles[0].length; j++)
 				groundTiles[i][j] = Ground.CAVE_1;
@@ -70,7 +70,7 @@ public class CEAMap extends Map {
 		makeDesertyLand();
 		makeIceyLand();
 		makeCaveyLand();
-		makeSuperSecretLand();
+		makeSuperySecretyLand();
 
 		// grassy land = bush
 		// cave = rocks
@@ -244,7 +244,7 @@ public class CEAMap extends Map {
 
 	}
 
-	private void makeSuperSecretLand() {
+	private void makeSuperySecretyLand() {
 
 	}
 
