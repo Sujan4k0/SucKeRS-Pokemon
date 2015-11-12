@@ -27,9 +27,6 @@ import model.TrainerModel.Trainer;
 
 public class MazeGame extends GameMode {
 
-	// entire catch 'em all Map is the same as maze (for now)
-	public static int WIDTH = Map.WIDTH * 3, HEIGHT = Map.HEIGHT * 3;
-
 	/*---------------------------------------------------------------------
 	 |  Method name:    [MazeGame]
 	 |  Purpose:  	    [Constructs a MazeGame]
