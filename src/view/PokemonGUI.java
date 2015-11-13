@@ -251,14 +251,14 @@ public class PokemonGUI {
         
         JPanel ballImage = new JPanel(new BorderLayout());
         JLabel header = new JLabel("   TRAINER STATS");
-        header.setFont(new Font("Cracked", Font.BOLD, 30));
+        header.setFont(new Font("Chalkboard", Font.BOLD, 30));
         header.setForeground(Color.WHITE);
         ballImage.add(header, BorderLayout.NORTH);
-        ballImage.setBorder(BorderFactory.createLineBorder(new Color(244, 220, 38), 10));
+        ballImage.setBorder(BorderFactory.createLineBorder(new Color(233, 41, 41), 10));
         
         BufferedImage greatBall = null;
         try {
-            greatBall = ImageIO.read(new File("./images/pikachuClockThing.png"));
+            greatBall = ImageIO.read(new File("./images/Pokeball.png"));
             JLabel ballLabel = new JLabel(new ImageIcon(greatBall));
             ballImage.add(ballLabel, BorderLayout.SOUTH);
             ballImage.setBackground(Color.BLACK);
@@ -269,33 +269,41 @@ public class PokemonGUI {
         
         endStats.add(ballImage, BorderLayout.WEST);
         
-//        JPanel stats = new JPanel();
-//        
-//        JTextArea allInfo = new JTextArea();
-//        allInfo.setEditable(false);
-//        allInfo.append(" " + mode.getEndMessage() + " \n\n\n\n" +
-//                       " Pokemon Caught: " + mode.getTrainer().getPokemon().size() + " \n"
-//                       + "Steps Left: " + mode.getTrainer().getSteps());
-//        stats.add(allInfo);
-//        stats.setFont(new Font("Futura", Font.PLAIN, 20));
-//        stats.setBackground(Color.BLACK);
-//        stats.setForeground(Color.WHITE);
+        JPanel stats = new JPanel(new GridLayout(2, 2));
+        JPanel end = new JPanel(new BorderLayout());
+        end.setBackground(Color.BLACK);
         
-//        JLabel endMessage = new JLabel(" " + mode.getEndMessage() + " \n");
-//        endMessage.setFont(new Font("Cracked", Font.PLAIN, 15));
-//        endMessage.setForeground(Color.RED);
-//        JLabel pokemonCaught = new JLabel("    Pokemon Caught: " + mode.getTrainer().getPokemon().size());
-//        pokemonCaught.setForeground(Color.WHITE);
-//        pokemonCaught.setFont(new Font("Cracked", Font.PLAIN, 10));
-//        JLabel stepsRemaining = new JLabel("   Steps Left: " + mode.getTrainer().getSteps());
-//        stepsRemaining.setFont(new Font("Cracked", Font.PLAIN, 10));
-//        stepsRemaining.setForeground(Color.WHITE);
-//        stats.add(endMessage, BorderLayout.NORTH);
-//        stats.add(pokemonCaught, BorderLayout.CENTER);
-//        stats.add(stepsRemaining, BorderLayout.SOUTH);
-//        stats.setBackground(Color.BLACK);
+        JLabel endMessage = new JLabel(" " + mode.getEndMessage().toUpperCase() + " \n");
+        endMessage.setForeground(Color.WHITE);
+        endMessage.setFont(new Font("Chalkboard", Font.BOLD, 30));
         
-//        endStats.add(stats, BorderLayout.EAST);
+        JLabel pokemonCaught = new JLabel("   Pokemon Caught: ");
+        JLabel caughtNum = new JLabel("" + mode.getTrainer().getPokemon().size());
+        pokemonCaught.setForeground(Color.BLACK);
+        pokemonCaught.setFont(new Font("Chalkboard", Font.PLAIN, 20));
+        caughtNum.setForeground(new Color(244, 220, 38));
+        caughtNum.setFont(new Font("Chalkboard", Font.BOLD, 40));
+        
+        JLabel stepsRemaining = new JLabel("   Steps Left: ");
+        JLabel stepsNum = new JLabel("" + mode.getTrainer().getSteps());
+        stepsRemaining.setFont(new Font("Chalkboard", Font.PLAIN, 20));
+        stepsRemaining.setForeground(Color.BLACK);
+        stepsNum.setForeground(new Color(244, 220, 38));
+        stepsNum.setFont(new Font("Chalkboard", Font.BOLD, 40));
+        
+        end.setBorder(BorderFactory.createLineBorder(new Color(233, 41, 41), 10));
+        stats.setBorder(BorderFactory.createLineBorder(Color.BLACK, 10));
+        
+        end.add(endMessage, BorderLayout.NORTH);
+        stats.add(pokemonCaught);
+        stats.add(caughtNum);
+        stats.add(stepsRemaining);
+        stats.add(stepsNum);
+        end.add(stats, BorderLayout.CENTER);
+                
+        stats.setBackground(Color.WHITE);
+    
+        endStats.add(end, BorderLayout.EAST);
         endStats.pack();
     }
     
