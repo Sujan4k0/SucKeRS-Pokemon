@@ -55,6 +55,9 @@ public class PokemonGUI {
     private boolean catchEmAll;
     private JComboBox<Object> trainerItems;
     private JComboBox<Object> trainerPokemon;
+    private JCheckBox trainerCheck;
+    private JCheckBox pokemonCheck;
+    private JProgressBar steps;
 
     public static void main(String[] args) {
 
@@ -167,10 +170,10 @@ public class PokemonGUI {
         JPanel inventory = new JPanel(new GridLayout(2, 2));
         inventory.setBackground(Color.BLACK);
       
-        JCheckBox trainerCheck = new JCheckBox("Use on trainer");
+        trainerCheck = new JCheckBox("Use on trainer");
         trainerCheck.setFocusable(false);
         trainerCheck.setForeground(Color.WHITE);
-        JCheckBox pokemonCheck = new JCheckBox("Use on Selected Pokemon");
+        pokemonCheck = new JCheckBox("Use on Selected Pokemon");
         pokemonCheck.setFocusable(false);
         pokemonCheck.setForeground(Color.WHITE);
         ButtonGroup buttonGroup = new ButtonGroup();
@@ -198,11 +201,10 @@ public class PokemonGUI {
             e.printStackTrace();
         }
         
-        JProgressBar steps = new JProgressBar();
-        steps.setValue(500); // will need to replace this with steps
+        steps = new JProgressBar(0, mode.getTrainer().getSteps());
+        steps.setValue(mode.getTrainer().getSteps()); // will need to replace this with steps
         steps.setStringPainted(true);
-        steps.setString((steps.getValue() * 500) / 100 + " steps remaining");
-       // steps.setForeground(new Color(178, 102, 255));
+        steps.setString((steps.getValue())  + " steps remaining");
         trainerDisplay.add(steps, BorderLayout.SOUTH);
         userOptions.add(trainerDisplay, BorderLayout.NORTH);
         
@@ -233,6 +235,96 @@ public class PokemonGUI {
         mapView.pack();
         mapView.setLocationRelativeTo(null);
         mapView.setVisible(true);
+        
+        use.addActionListener(new ItemUser());
+        save.addActionListener(new GameSaver());
+        forfeit.addActionListener(new Forfeiter());
+    }
+    
+    public void endGameDisplay() {
+        
+        mapView.setVisible(false);
+        JFrame endStats = new JFrame();
+        endStats.setSize(500, 500);
+        endStats.setTitle("Game Over");
+        endStats.setVisible(true);
+        
+        JPanel ballImage = new JPanel(new BorderLayout());
+        JLabel header = new JLabel("   TRAINER STATS");
+        header.setFont(new Font("Cracked", Font.BOLD, 30));
+        header.setForeground(Color.WHITE);
+        ballImage.add(header, BorderLayout.NORTH);
+        ballImage.setBorder(BorderFactory.createLineBorder(new Color(244, 220, 38), 10));
+        
+        BufferedImage greatBall = null;
+        try {
+            greatBall = ImageIO.read(new File("./images/pikachuClockThing.png"));
+            JLabel ballLabel = new JLabel(new ImageIcon(greatBall));
+            ballImage.add(ballLabel, BorderLayout.SOUTH);
+            ballImage.setBackground(Color.BLACK);
+        } catch (IOException e) {
+            // TODO Auto-generated catch block
+            e.printStackTrace();
+        }
+        
+        endStats.add(ballImage, BorderLayout.WEST);
+        
+//        JPanel stats = new JPanel();
+//        
+//        JTextArea allInfo = new JTextArea();
+//        allInfo.setEditable(false);
+//        allInfo.append(" " + mode.getEndMessage() + " \n\n\n\n" +
+//                       " Pokemon Caught: " + mode.getTrainer().getPokemon().size() + " \n"
+//                       + "Steps Left: " + mode.getTrainer().getSteps());
+//        stats.add(allInfo);
+//        stats.setFont(new Font("Futura", Font.PLAIN, 20));
+//        stats.setBackground(Color.BLACK);
+//        stats.setForeground(Color.WHITE);
+        
+//        JLabel endMessage = new JLabel(" " + mode.getEndMessage() + " \n");
+//        endMessage.setFont(new Font("Cracked", Font.PLAIN, 15));
+//        endMessage.setForeground(Color.RED);
+//        JLabel pokemonCaught = new JLabel("    Pokemon Caught: " + mode.getTrainer().getPokemon().size());
+//        pokemonCaught.setForeground(Color.WHITE);
+//        pokemonCaught.setFont(new Font("Cracked", Font.PLAIN, 10));
+//        JLabel stepsRemaining = new JLabel("   Steps Left: " + mode.getTrainer().getSteps());
+//        stepsRemaining.setFont(new Font("Cracked", Font.PLAIN, 10));
+//        stepsRemaining.setForeground(Color.WHITE);
+//        stats.add(endMessage, BorderLayout.NORTH);
+//        stats.add(pokemonCaught, BorderLayout.CENTER);
+//        stats.add(stepsRemaining, BorderLayout.SOUTH);
+//        stats.setBackground(Color.BLACK);
+        
+//        endStats.add(stats, BorderLayout.EAST);
+        endStats.pack();
+    }
+    
+    private class ItemUser implements ActionListener {
+
+        @Override
+        public void actionPerformed(ActionEvent e) {
+
+            // use item here
+        }
+    }
+    
+    private class GameSaver implements ActionListener {
+
+        @Override
+        public void actionPerformed(ActionEvent e) {
+
+            saveState();
+        }        
+    }
+    
+    private class Forfeiter implements ActionListener {
+
+        @Override
+        public void actionPerformed(ActionEvent e) {
+
+            mode.forfeitGame();
+            endGameDisplay();
+        }
     }
     
     /*---------------------------------------------------------------------
@@ -477,8 +569,14 @@ public class PokemonGUI {
 
             if (!mode.isGameActive()) {
 
-                String endMessage = mode.getEndMessage();
-                System.out.println(endMessage);
+                endGameDisplay();
+            }
+            
+            else {
+                                
+                
+                steps.setValue(mode.getTrainer().getSteps());
+                steps.setString((steps.getValue()) + " steps remaining");
             }
         }
 
