@@ -18,14 +18,22 @@
 
 package controller;
 
+import java.awt.Color;
+import java.awt.Graphics;
+import java.awt.Graphics2D;
 import java.awt.Point;
 import java.awt.event.KeyEvent;
 import java.awt.event.KeyListener;
+import java.awt.image.BufferedImage;
 import java.io.Serializable;
 import java.util.Random;
 
 import model.MapModel.Map;
 import model.MapModel.Obstacle;
+import model.PokemonModel.Common;
+import model.PokemonModel.Pokemon;
+import model.PokemonModel.PokemonResponse;
+import model.PokemonModel.PokemonType;
 import model.TrainerModel.Trainer;
 
 public abstract class GameMode implements Serializable {
@@ -37,6 +45,8 @@ public abstract class GameMode implements Serializable {
 	Random r; // used for random encounters/items
 	String endMessage = ""; // the message to show on end game
 	boolean forfeited = false;
+	boolean inBattle = false;
+	Pokemon encounteredPokemon;
 
 	/*---------------------------------------------------------------------
 	 |  Method name:    [GameMode]
@@ -196,6 +206,8 @@ public abstract class GameMode implements Serializable {
 		if (trainerCanMove(e)) {
 			trainer.getPoint().translate(dx, dy);
 			trainer.decreaseSteps();
+			
+			startEncounter();
 			//TODO encounters/items
 		}
 
@@ -247,6 +259,20 @@ public abstract class GameMode implements Serializable {
 		forfeited = true;
 		endMessage = "Game Forfeited";
 	}
+	
+	public void startEncounter() {
+		
+		System.out.println("Starting Encounter");
+		encounteredPokemon = new Common(new Random(), "name", new BufferedImage[5], PokemonType.ELECTRIC);
+		encounteredPokemon.startEncounter();
+		inBattle = true;
+		
+		Graphics g2 = map.getGraphics();
+		g2.setColor(Color.WHITE);
+		g2.fillRect(0, 0, map.getWidth(), map.getHeight());
+		g2.drawRect(0, 0, map.getWidth(), map.getHeight());
+		
+	}
 
 	/*---------------------------------------------------------------------
 	 |  Class name:     [OurKeyListener]
@@ -267,14 +293,21 @@ public abstract class GameMode implements Serializable {
 		@Override
 		public void keyPressed(KeyEvent e) {
 
+			if (inBattle
+					&& encounteredPokemon.getState() != PokemonResponse.STAND_GROUND) {
+				inBattle = false;
+				// repaint the visual changes
+				map.repaint();
+			}
+			
 			// if the game is not won or lost or forfeited, move the trainer
-			if (!forfeited && !isGameWon() && !isGameLost()) {
+			if (!inBattle && !forfeited && !isGameWon() && !isGameLost()) {
 				// set sprite direction and try to move trainer
 				moveTrainer(e);
 
 				// set trainer's sprite location in map to trainer's current loc
 				map.setTrainerPoint(trainer.getPoint());
-
+				
 				// repaint the visual changes
 				map.repaint();
 			}
