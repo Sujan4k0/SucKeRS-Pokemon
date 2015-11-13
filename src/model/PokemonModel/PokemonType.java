@@ -18,5 +18,5 @@ package model.PokemonModel;
 // put in temporary values for now
 public enum PokemonType {
 
-    ELECTRIC, FIRE, WATER, MYSTERY;
+    ELECTRIC, FIRE, WATER, MYSTERY, ROCK, GROUND, GRASS, PSYCHIC;
 }
