@@ -46,7 +46,7 @@ public abstract class Pokemon {
     |                   contains all perspectives of this Pokemon, and
     |                   the type of the Pokemon.]
     *---------------------------------------------------------------------*/
-    public Pokemon(Random r, String n, BufferedImage[] i, PokemonType t) {
+    public Pokemon(Random r, String n, Image[] i, PokemonType t) {
         
         // store all of the given parameters
         this.name = n;
