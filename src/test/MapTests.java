@@ -31,7 +31,7 @@ public class MapTests {
 			}
 		}
 
-		for (Map.Direction d : Map.Direction.values()) {
+		for (Map.TrainerDirection d : Map.TrainerDirection.values()) {
 			map.setTrainerDir(d);
 			assertEquals(map.getTrainerDir(), d);
 		}
@@ -96,7 +96,7 @@ public class MapTests {
 
 		// draw trainer sprite if necessary
 		Point tp = map.getTrainerPoint();
-		Map.Direction d = map.getTrainerDir();
+		Map.TrainerDirection d = map.getTrainerDir();
 		Image img = map.getTrainerSheet();
 		if (tp.x < Map.HEIGHT && tp.y < Map.WIDTH) {
 			GraphicsManager.drawTile(g, d, img, tp.y * Tile.SIZE, tp.x * Tile.SIZE);
@@ -128,7 +128,7 @@ public class MapTests {
 			}
 		}
 
-		for (Map.Direction d : Map.Direction.values()) {
+		for (Map.TrainerDirection d : Map.TrainerDirection.values()) {
 			map.setTrainerDir(d);
 			assertEquals(map.getTrainerDir(), d);
 		}
@@ -181,7 +181,7 @@ public class MapTests {
 
 		// draw trainer sprite if necessary
 		Point tp = map.getTrainerPoint();
-		Map.Direction d = map.getTrainerDir();
+		Map.TrainerDirection d = map.getTrainerDir();
 		Image img = map.getTrainerSheet();
 		if (tp.x < Map.HEIGHT && tp.y < Map.WIDTH) {
 			GraphicsManager.drawTile(g, d, img, tp.y * Tile.SIZE, tp.x * Tile.SIZE);
