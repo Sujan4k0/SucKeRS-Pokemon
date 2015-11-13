@@ -277,7 +277,7 @@ public abstract class GameMode implements Serializable {
 		
 		try {
 			Image testImg = ImageIO.read(new File("./images/Pokemon_1.png"));
-			imgs[I] = testImg.getScaledInstance(300, 300, 0);
+			imgs[0] = testImg.getScaledInstance(300, 300, 0);
 		} catch (IOException e) {
 			// TODO Auto-generated catch block
 			e.printStackTrace();

@@ -35,6 +35,7 @@ import javax.swing.JPanel;
 import javax.swing.Timer;
 
 import model.PokemonModel.Pokemon;
+import songplayer.SongPlayer;
 import view.GraphicsManager;
 
 public abstract class Map extends JPanel implements Serializable {
@@ -308,6 +309,7 @@ public abstract class Map extends JPanel implements Serializable {
 	}
 
 	public void showEncounter(Pokemon p) {
+		SongPlayer.playFile("./sounds/Battle_Music.mp3");
 		encounteredPokemon = p;
 		Image[] imgs =
 				GraphicsManager.getImageArray(bigTrainerSheet,
@@ -320,6 +322,7 @@ public abstract class Map extends JPanel implements Serializable {
 	}
 
 	public void hideEncounter() {
+		animationTimer.stop();
 		encounteredPokemon = null;
 		encounter = false;
 	}
