@@ -18,25 +18,40 @@
 
 package controller;
 
+import java.awt.Color;
+import java.awt.Graphics;
+import java.awt.Graphics2D;
+import java.awt.Image;
 import java.awt.Point;
 import java.awt.event.KeyEvent;
 import java.awt.event.KeyListener;
+import java.awt.image.BufferedImage;
+import java.io.File;
+import java.io.IOException;
 import java.io.Serializable;
 import java.util.Random;
 
+import javax.imageio.ImageIO;
+
 import model.MapModel.Map;
 import model.MapModel.Obstacle;
+import model.PokemonModel.Common;
+import model.PokemonModel.Pokemon;
+import model.PokemonModel.PokemonResponse;
+import model.PokemonModel.PokemonType;
 import model.TrainerModel.Trainer;
 
 public abstract class GameMode implements Serializable {
 
 	private static final long serialVersionUID = 1L;
-	
+
 	Trainer trainer;
 	Map map; // the visual map of this game
 	Random r; // used for random encounters/items
 	String endMessage = ""; // the message to show on end game
 	boolean forfeited = false;
+	boolean inBattle = false;
+	Pokemon encounteredPokemon;
 
 	/*---------------------------------------------------------------------
 	 |  Method name:    [GameMode]
@@ -72,11 +87,11 @@ public abstract class GameMode implements Serializable {
 		return map;
 
 	}
-	
+
 	public Trainer getTrainer() {
-		
+
 		return trainer;
-		
+
 	}
 
 	/*--------------------------------------------------------------------
@@ -104,8 +119,7 @@ public abstract class GameMode implements Serializable {
 				&& obsts[prev.x - 1][prev.y] == null)
 			return true;
 
-		else if (e.getKeyCode() == KeyEvent.VK_DOWN
-				&& prev.x + 1 < obsts.length
+		else if (e.getKeyCode() == KeyEvent.VK_DOWN && prev.x + 1 < obsts.length
 				&& obsts[prev.x + 1][prev.y] == null)
 			return true;
 
@@ -113,8 +127,7 @@ public abstract class GameMode implements Serializable {
 				&& obsts[prev.x][prev.y - 1] == null)
 			return true;
 
-		else if (e.getKeyCode() == KeyEvent.VK_RIGHT
-				&& prev.y + 1 < obsts[0].length
+		else if (e.getKeyCode() == KeyEvent.VK_RIGHT && prev.y + 1 < obsts[0].length
 				&& obsts[prev.x][prev.y + 1] == null)
 			return true;
 
@@ -151,7 +164,7 @@ public abstract class GameMode implements Serializable {
 
 		int dx = 0, dy = 0;
 		int kc = e.getKeyCode();
-		Map.Direction dir = Map.Direction.RIGHT;
+		Map.TrainerDirection dir = Map.TrainerDirection.RIGHT;
 
 		// Depending on the KeyEvent passed in, sets the change in the x
 		// or y direction accordingly. If the trainer is able to move and
@@ -160,47 +173,55 @@ public abstract class GameMode implements Serializable {
 		switch (kc) {
 		case KeyEvent.VK_UP:
 			dx = -1;
-			dir = Map.Direction.UP;
-			if (trainerCanMove(e)
-					&& (trainer.getPoint().x + dx) % Map.HEIGHT == Map.HEIGHT - 1)
+			dir = Map.TrainerDirection.UP;
+			if (trainerCanMove(e) && (trainer.getPoint().x + dx) % Map.HEIGHT == Map.HEIGHT - 1)
 				map.moveUp();
 			break;
 		case KeyEvent.VK_DOWN:
 			dx = 1;
-			dir = Map.Direction.DOWN_1; // DOWN isn't working :(
-			if (trainerCanMove(e)
-					&& (trainer.getPoint().x + dx) % Map.HEIGHT == 0)
+			dir = Map.TrainerDirection.DOWN_1; // DOWN isn't working :(
+			if (trainerCanMove(e) && (trainer.getPoint().x + dx) % Map.HEIGHT == 0)
 				map.moveDown();
 			break;
 		case KeyEvent.VK_RIGHT:
 			dy = 1;
-			dir = Map.Direction.RIGHT;
-			if (trainerCanMove(e)
-					&& (trainer.getPoint().y + dy) % Map.WIDTH == 0)
+			dir = Map.TrainerDirection.RIGHT;
+			if (trainerCanMove(e) && (trainer.getPoint().y + dy) % Map.WIDTH == 0)
 				map.moveRight();
 			break;
 		case KeyEvent.VK_LEFT:
 			dy = -1;
-			dir = Map.Direction.LEFT;
-			if (trainerCanMove(e)
-					&& (trainer.getPoint().y + dy) % Map.WIDTH == Map.WIDTH - 1)
+			dir = Map.TrainerDirection.LEFT;
+			if (trainerCanMove(e) && (trainer.getPoint().y + dy) % Map.WIDTH == Map.WIDTH - 1)
 				map.moveLeft();
 			break;
 		default:
 			break;
 		}
 
-		// System.out.println("Trainer can move: " + trainerCanMove(e));;
+		// set the visual direction of the trainer sprite on the Map
+		map.setTrainerDir(dir);
 
 		// if the trainer can move, then move the trainer and decrease steps
 		if (trainerCanMove(e)) {
+			// change trainer object point
 			trainer.getPoint().translate(dx, dy);
+
+			// decrease steps
 			trainer.decreaseSteps();
+
+			// set trainer's sprite location in map to trainer's current loc
+			map.setTrainerPoint(trainer.getPoint());
+
+			// repaint the visual changes
+			map.repaint();
+
+			// start an encounter
+			if (new Random().nextInt(5) == 1)
+				startEncounter();
+			
 			//TODO encounters/items
 		}
-
-		// set the visual direction of the trainer sprite on the Map
-		map.setTrainerDir(dir);
 
 	}
 
@@ -238,7 +259,7 @@ public abstract class GameMode implements Serializable {
 	public String getEndMessage() {
 		return endMessage;
 	}
-	
+
 	/*---------------------------------------------------------------------
 	 |  Method name:    [forfeitGame]
 	 |  Purpose:  	    [Forfeit the game]
@@ -246,6 +267,28 @@ public abstract class GameMode implements Serializable {
 	public void forfeitGame() {
 		forfeited = true;
 		endMessage = "Game Forfeited";
+	}
+
+	public void startEncounter() {
+
+		System.out.println("Starting Encounter");
+		
+		Image[] imgs = new Image[1];
+		
+		try {
+			Image testImg = ImageIO.read(new File("./images/Pokemon_1.png"));
+			imgs[I] = testImg.getScaledInstance(300, 300, 0);
+		} catch (IOException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+		encounteredPokemon =
+				new Common(new Random(), "name", imgs, PokemonType.ELECTRIC);
+		inBattle = true;
+
+		encounteredPokemon.startEncounter();
+		map.showEncounter(encounteredPokemon);
+
 	}
 
 	/*---------------------------------------------------------------------
@@ -267,16 +310,19 @@ public abstract class GameMode implements Serializable {
 		@Override
 		public void keyPressed(KeyEvent e) {
 
-			// if the game is not won or lost or forfeited, move the trainer
-			if (!forfeited && !isGameWon() && !isGameLost()) {
-				// set sprite direction and try to move trainer
-				moveTrainer(e);
-
-				// set trainer's sprite location in map to trainer's current loc
-				map.setTrainerPoint(trainer.getPoint());
-
+			// PROMPT USER TO PRESS "ENTER" AFTER BATTLE ENDS TO UPDATE THE MAP!!!! >:OOO
+			if (e.getKeyCode() == KeyEvent.VK_ENTER && inBattle
+					&& encounteredPokemon.getState() != PokemonResponse.STAND_GROUND) {
+				inBattle = false;
+				map.hideEncounter();
 				// repaint the visual changes
 				map.repaint();
+			}
+
+			// else if the game is not won or lost or forfeited, move the trainer
+			else if (!inBattle && !forfeited && !isGameWon() && !isGameLost()) {
+				// set sprite direction and try to move trainer
+				moveTrainer(e);
 			}
 
 		}

@@ -16,7 +16,7 @@
  *==========================================================================*/
 package model.PokemonModel;
 
-import java.awt.image.BufferedImage;
+import java.awt.Image;
 import java.util.Random;
 
 
@@ -26,7 +26,7 @@ public class Legendary extends Pokemon {
     |  Method name:    [Legendary]
     |  Purpose:        [Constructor]
     *---------------------------------------------------------------------*/
-    public Legendary(Random r, String n, BufferedImage[] i, PokemonType t) {
+    public Legendary(Random r, String n, Image[] i, PokemonType t) {
         super(r, n, i, t);
         catchPercentage = 5;
         runPercentage = 3;
