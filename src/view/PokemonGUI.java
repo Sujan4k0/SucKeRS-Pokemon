@@ -241,21 +241,28 @@ public class PokemonGUI {
         forfeit.addActionListener(new Forfeiter());
     }
     
+    /*---------------------------------------------------------------------
+    |  Method name:    [endGameDisplay]
+    |  Purpose:        [Creates the final stats view for the Trainer when
+    |                   the game has ended.]
+    *---------------------------------------------------------------------*/
     public void endGameDisplay() {
         
-        mapView.setVisible(false);
+        mapView.dispose(); // get rid of the game
+        
+        // new frame to display all the player stats
         JFrame endStats = new JFrame();
         endStats.setSize(500, 500);
         endStats.setTitle("Game Over");
         endStats.setVisible(true);
         
+        // left Panel with image and TRAINER STATS title
         JPanel ballImage = new JPanel(new BorderLayout());
         JLabel header = new JLabel("   TRAINER STATS");
         header.setFont(new Font("Chalkboard", Font.BOLD, 30));
         header.setForeground(Color.WHITE);
         ballImage.add(header, BorderLayout.NORTH);
-        ballImage.setBorder(BorderFactory.createLineBorder(new Color(233, 41, 41), 10));
-        
+        ballImage.setBorder(BorderFactory.createLineBorder(new Color(233, 41, 41), 10));      
         BufferedImage greatBall = null;
         try {
             greatBall = ImageIO.read(new File("./images/Pokeball.png"));
@@ -263,20 +270,27 @@ public class PokemonGUI {
             ballImage.add(ballLabel, BorderLayout.SOUTH);
             ballImage.setBackground(Color.BLACK);
         } catch (IOException e) {
-            // TODO Auto-generated catch block
             e.printStackTrace();
         }
         
         endStats.add(ballImage, BorderLayout.WEST);
         
-        JPanel stats = new JPanel(new GridLayout(2, 2));
+        // panel will hold end message and all stats from the stats panel
         JPanel end = new JPanel(new BorderLayout());
         end.setBackground(Color.BLACK);
+        end.setBorder(BorderFactory.createLineBorder(new Color(233, 41, 41), 10));
         
-        JLabel endMessage = new JLabel(" " + mode.getEndMessage().toUpperCase() + " \n");
+        JLabel endMessage = new JLabel(" " + mode.getEndMessage().toUpperCase() + " \n"); 
         endMessage.setForeground(Color.WHITE);
         endMessage.setFont(new Font("Chalkboard", Font.BOLD, 30));
+        end.add(endMessage, BorderLayout.NORTH);
         
+        // panel for all the stats
+        JPanel stats = new JPanel(new GridLayout(2, 2));
+        stats.setBackground(Color.WHITE);
+        stats.setBorder(BorderFactory.createLineBorder(Color.BLACK, 10));
+        
+        // pokemon caught
         JLabel pokemonCaught = new JLabel("   Pokemon Caught: ");
         JLabel caughtNum = new JLabel("" + mode.getTrainer().getPokemon().size());
         pokemonCaught.setForeground(Color.BLACK);
@@ -284,6 +298,7 @@ public class PokemonGUI {
         caughtNum.setForeground(new Color(244, 220, 38));
         caughtNum.setFont(new Font("Chalkboard", Font.BOLD, 40));
         
+        // remaining steps
         JLabel stepsRemaining = new JLabel("   Steps Left: ");
         JLabel stepsNum = new JLabel("" + mode.getTrainer().getSteps());
         stepsRemaining.setFont(new Font("Chalkboard", Font.PLAIN, 20));
@@ -291,50 +306,22 @@ public class PokemonGUI {
         stepsNum.setForeground(new Color(244, 220, 38));
         stepsNum.setFont(new Font("Chalkboard", Font.BOLD, 40));
         
-        end.setBorder(BorderFactory.createLineBorder(new Color(233, 41, 41), 10));
-        stats.setBorder(BorderFactory.createLineBorder(Color.BLACK, 10));
-        
-        end.add(endMessage, BorderLayout.NORTH);
+        // add stats labels and fields to stats panel
         stats.add(pokemonCaught);
         stats.add(caughtNum);
         stats.add(stepsRemaining);
         stats.add(stepsNum);
-        end.add(stats, BorderLayout.CENTER);
-                
-        stats.setBackground(Color.WHITE);
+        
+        end.add(stats, BorderLayout.CENTER); // add the panel to the entire end right pane            
     
+        // add it all to the frame
         endStats.add(end, BorderLayout.EAST);
         endStats.pack();
+        
+        endStats.addWindowListener(new CloseStatsListener());
     }
     
-    private class ItemUser implements ActionListener {
-
-        @Override
-        public void actionPerformed(ActionEvent e) {
-
-            // use item here
-        }
-    }
-    
-    private class GameSaver implements ActionListener {
-
-        @Override
-        public void actionPerformed(ActionEvent e) {
-
-            saveState();
-        }        
-    }
-    
-    private class Forfeiter implements ActionListener {
-
-        @Override
-        public void actionPerformed(ActionEvent e) {
-
-            mode.forfeitGame();
-            endGameDisplay();
-        }
-    }
-    
+        
     /*---------------------------------------------------------------------
     |  Method name:    [saveState]
     |  Purpose:        [Save this instance of the game]
@@ -495,6 +482,46 @@ public class PokemonGUI {
             dialog.setVisible(true);
         }
     }
+    
+    /*---------------------------------------------------------------------
+    |  Class name:     [ItemUser]
+    |  Purpose:        [When user selects to use an item do this]
+    *---------------------------------------------------------------------*/ 
+    private class ItemUser implements ActionListener {
+
+        @Override
+        public void actionPerformed(ActionEvent e) {
+
+            // use item here
+        }
+    }
+    
+    /*---------------------------------------------------------------------
+    |  Class name:     [GameSaver]
+    |  Purpose:        [When user clicks save game do this]
+    *---------------------------------------------------------------------*/ 
+    private class GameSaver implements ActionListener {
+
+        @Override
+        public void actionPerformed(ActionEvent e) {
+
+            saveState();
+        }        
+    }
+    
+    /*---------------------------------------------------------------------
+    |  Class name:     [Forfeiter]
+    |  Purpose:        [When user clicks forfeit do this]
+    *---------------------------------------------------------------------*/ 
+    private class Forfeiter implements ActionListener {
+
+        @Override
+        public void actionPerformed(ActionEvent e) {
+
+            mode.forfeitGame();
+            endGameDisplay();
+        }
+    }
 
     /*---------------------------------------------------------------------
     |  Class name:     [CloseGameListener]
@@ -558,6 +585,58 @@ public class PokemonGUI {
         }
     }
 
+    /*---------------------------------------------------------------------
+    |  Class name:     [CloseStatsListener]
+    |  Purpose:        [When the user exits the end game stats the 
+    |                   start screen should appear.]
+    *---------------------------------------------------------------------*/
+    private class CloseStatsListener implements WindowListener {
+
+        @Override
+        public void windowOpened(WindowEvent e) {
+            // TODO Auto-generated method stub
+            
+        }
+
+        @Override
+        public void windowClosing(WindowEvent e) {
+            // TODO Auto-generated method stub
+            
+            startScreen.setVisible(true);
+            
+        }
+
+        @Override
+        public void windowClosed(WindowEvent e) {
+            // TODO Auto-generated method stub
+            
+        }
+
+        @Override
+        public void windowIconified(WindowEvent e) {
+            // TODO Auto-generated method stub
+            
+        }
+
+        @Override
+        public void windowDeiconified(WindowEvent e) {
+            // TODO Auto-generated method stub
+            
+        }
+
+        @Override
+        public void windowActivated(WindowEvent e) {
+            // TODO Auto-generated method stub
+            
+        }
+
+        @Override
+        public void windowDeactivated(WindowEvent e) {
+            // TODO Auto-generated method stub
+            
+        }  
+    }
+    
     /*---------------------------------------------------------------------
     |  Class name:     [GameWon]
     |  Purpose:        [When the player is moving we check the status of
