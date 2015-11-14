@@ -49,6 +49,7 @@ import javafx.scene.control.ProgressBar;
 public class PokemonGUI {
 
     private JFrame startScreen;
+    private JFrame encounterFrame;
     private GameMode mode;
     private JFrame mapView;
     private boolean maze;
@@ -319,6 +320,18 @@ public class PokemonGUI {
         endStats.pack();
         
         endStats.addWindowListener(new CloseStatsListener());
+    }
+    
+    private void battlePanel() {
+        
+        mapView.setVisible(false);
+        encounterFrame = new JFrame();
+        encounterFrame.setTitle("Battle");
+        encounterFrame.setVisible(true);
+        encounterFrame.add(mode.getEncounterPanel(), BorderLayout.WEST);
+        encounterFrame.revalidate();
+        encounterFrame.add(new JLabel("Why u no appear"), BorderLayout.EAST);
+        encounterFrame.setSize(1000, 1000);
     }
     
         
@@ -659,9 +672,14 @@ public class PokemonGUI {
                 endGameDisplay();
             }
             
-            else {
-                                
+            else if (mode.trainerInBattle()) {
                 
+                battlePanel();
+                System.out.println("Starting battle sequence");
+            }
+            
+            else {
+                                               
                 steps.setValue(mode.getTrainer().getSteps());
                 steps.setString((steps.getValue()) + " steps remaining");
             }
