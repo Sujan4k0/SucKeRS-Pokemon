@@ -197,4 +197,8 @@ public abstract class Pokemon {
         
         return sprite;
     }
+    
+    public PokemonType getType() {
+    	return type;
+    }
 }

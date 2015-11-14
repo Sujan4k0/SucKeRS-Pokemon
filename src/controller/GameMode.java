@@ -18,14 +18,10 @@
 
 package controller;
 
-import java.awt.Color;
-import java.awt.Graphics;
-import java.awt.Graphics2D;
 import java.awt.Image;
 import java.awt.Point;
 import java.awt.event.KeyEvent;
 import java.awt.event.KeyListener;
-import java.awt.image.BufferedImage;
 import java.io.File;
 import java.io.IOException;
 import java.io.Serializable;
@@ -33,6 +29,8 @@ import java.util.Random;
 
 import javax.imageio.ImageIO;
 
+import soundplayer.SoundPlayer;
+import view.EncounterPanel;
 import model.MapModel.Map;
 import model.MapModel.Obstacle;
 import model.PokemonModel.Common;
@@ -40,6 +38,7 @@ import model.PokemonModel.Pokemon;
 import model.PokemonModel.PokemonResponse;
 import model.PokemonModel.PokemonType;
 import model.TrainerModel.Trainer;
+import model.TrainerModel.TrainerAction;
 
 public abstract class GameMode implements Serializable {
 
@@ -47,11 +46,18 @@ public abstract class GameMode implements Serializable {
 
 	Trainer trainer;
 	Map map; // the visual map of this game
+	EncounterPanel encounter;
 	Random r; // used for random encounters/items
 	String endMessage = ""; // the message to show on end game
 	boolean forfeited = false;
 	boolean inBattle = false;
 	Pokemon encounteredPokemon;
+
+	// Plays bg sounds :D
+	SoundPlayer bgPlayer = new SoundPlayer();
+
+	// Plays sfx :D
+	SoundPlayer sfxPlayer = new SoundPlayer();
 
 	/*---------------------------------------------------------------------
 	 |  Method name:    [GameMode]
@@ -219,7 +225,7 @@ public abstract class GameMode implements Serializable {
 			// start an encounter
 			if (new Random().nextInt(5) == 1)
 				startEncounter();
-			
+
 			//TODO encounters/items
 		}
 
@@ -271,24 +277,52 @@ public abstract class GameMode implements Serializable {
 
 	public void startEncounter() {
 
-		System.out.println("Starting Encounter");
-		
+		bgPlayer.playSound("./sounds/Pokemon_BattleMusic_1.mp3");
+
 		Image[] imgs = new Image[1];
-		
+
 		try {
 			Image testImg = ImageIO.read(new File("./images/Pokemon_1.png"));
 			imgs[0] = testImg.getScaledInstance(300, 300, 0);
 		} catch (IOException e) {
-			// TODO Auto-generated catch block
 			e.printStackTrace();
 		}
-		encounteredPokemon =
-				new Common(new Random(), "name", imgs, PokemonType.ELECTRIC);
+
+		encounteredPokemon = new Common(new Random(), "name", imgs, PokemonType.ELECTRIC);
 		inBattle = true;
 
 		encounteredPokemon.startEncounter();
-		map.showEncounter(encounteredPokemon);
 
+	}
+
+	public void doTrainerAction(TrainerAction action) {
+
+		switch (action) {
+
+		case THROW_BALL:
+			//trainer use ball
+			break;
+		case RUN_AWAY:
+			break;
+		case THROW_BAIT:
+			break;
+		case THROW_ROCK:
+			break;
+		default:
+			break;
+
+		}
+		
+		encounter.animateTrainer();
+		
+	}
+	
+	public boolean trainerInBattle() {
+		return inBattle;
+	}
+	
+	public EncounterPanel getEncounterPanel() {
+		return encounter;
 	}
 
 	/*---------------------------------------------------------------------
@@ -314,7 +348,6 @@ public abstract class GameMode implements Serializable {
 			if (e.getKeyCode() == KeyEvent.VK_ENTER && inBattle
 					&& encounteredPokemon.getState() != PokemonResponse.STAND_GROUND) {
 				inBattle = false;
-				map.hideEncounter();
 				// repaint the visual changes
 				map.repaint();
 			}

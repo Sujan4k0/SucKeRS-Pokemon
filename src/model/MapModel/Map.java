@@ -18,24 +18,17 @@
 
 package model.MapModel;
 
-import java.awt.Color;
 import java.awt.Dimension;
 import java.awt.Graphics;
-import java.awt.Graphics2D;
 import java.awt.Image;
 import java.awt.Point;
-import java.awt.event.ActionEvent;
-import java.awt.event.ActionListener;
 import java.io.File;
 import java.io.IOException;
 import java.io.Serializable;
 
 import javax.imageio.ImageIO;
 import javax.swing.JPanel;
-import javax.swing.Timer;
 
-import model.PokemonModel.Pokemon;
-import songplayer.SongPlayer;
 import view.GraphicsManager;
 
 public abstract class Map extends JPanel implements Serializable {
@@ -58,32 +51,21 @@ public abstract class Map extends JPanel implements Serializable {
 	// the Point the trainer is visually at
 	Point trainerPoint;
 
-	// if there has been a Pokemon encounter!!!
-	boolean encounter = false;
-
 	// the directions associated with the trainer's sprite sheet
 	public static enum TrainerDirection {
 		UP, RIGHT, UP_1, LEFT, RIGHT_1, DOWN_1, LEFT_1, RIGHT_2, DOWN, LEFT_2, UP_2, DOWN_2
 	}
 
-	// the current image of the trainer during an encounter
-	Image trainerEncounterImg;
-
 	// the direction the trainer sprite currently is facing/using
 	TrainerDirection dir = TrainerDirection.RIGHT;
 
 	// the Trainer's sprite sheet
-	transient Image trainerSheet, bigTrainerSheet;
+	transient Image trainerSheet;
 
 	// the X and Y positions in the Obstacle/Ground arrays
 	// to start drawing from (for switching area trainer is in)
 	private int startX = 0, startY = 0;
-
-	// currently encountered Pokemon to draw to jpanel
-	Pokemon encounteredPokemon;
-
-	// Timer for animations
-	Timer animationTimer;
+	
 
 	/*---------------------------------------------------------------------
 	 |  Method name:    [Map]
@@ -96,8 +78,6 @@ public abstract class Map extends JPanel implements Serializable {
 			trainerSheet = ImageIO.read(new File("./images/SucKeRS_TrainerSpriteSheet_Test.png"));
 			groundTileSet = ImageIO.read(new File("./images/SucKeRS_PokemonTileSet.png"));
 			obstacleTileSet = ImageIO.read(new File("./images/SucKeRS_PokemonObstacleTileSet.png"));
-			bigTrainerSheet =
-					ImageIO.read(new File("./images/SucKeRS_LargeTrainerSpriteSheet_1.png"));
 		} catch (IOException e) {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
@@ -124,12 +104,7 @@ public abstract class Map extends JPanel implements Serializable {
 	 *---------------------------------------------------------------------*/
 	public void paintComponent(Graphics g) {
 
-		System.out.println("Painting; Encounter = " + encounter);
-
-		if (!encounter)
-			drawMap(g);
-		else
-			drawEncounter(g);
+		drawMap(g);
 
 	}
 
@@ -298,72 +273,9 @@ public abstract class Map extends JPanel implements Serializable {
 	public Image getTrainerSheet() {
 		return trainerSheet;
 	}
-
-	/*---------------------------------------------------------------------
-	 |  Method name:    [getBigTrainerSheet]
-	 |  Purpose:  	    [Getter for the trainer's big sprite sheet, used in encounters]
-	 |  Returns:  	    [Image: the trainer's big sprite sheet]
-	 *---------------------------------------------------------------------*/
-	public Image getBigTrainerSheet() {
-		return bigTrainerSheet;
-	}
-
-	public void showEncounter(Pokemon p) {
-		SongPlayer.playFile("./sounds/Battle_Music.mp3");
-		encounteredPokemon = p;
-		Image[] imgs =
-				GraphicsManager.getImageArray(bigTrainerSheet,
-						GraphicsManager.BIGSPRITESHEET_WIDTH,
-						GraphicsManager.BIGSPRITESHEET_HEIGHT, 400);
-
-		animationTimer = new Timer(1000 / 10, new AnimationListener(imgs));
-		animationTimer.start();
-		encounter = true;
-	}
-
-	public void hideEncounter() {
-		animationTimer.stop();
-		encounteredPokemon = null;
-		encounter = false;
-	}
-
-	public void drawEncounter(Graphics g) {
-
-		Graphics2D g2 = (Graphics2D) g;
-
-		g2.setColor(Color.WHITE);
-		g2.fillRect(0, 0, this.getWidth(), this.getHeight());
-		g2.drawRect(0, 0, this.getWidth(), this.getHeight());
-
-		g2.drawImage(encounteredPokemon.getSprite()[0], this.getWidth() - 400, 0, 400, 400, null);
-		if (trainerEncounterImg != null)
-			g2.drawImage(trainerEncounterImg, 0,
-					this.getHeight() - trainerEncounterImg.getHeight(null), 400, 400, null);
-
-	}
-
-	private class AnimationListener implements ActionListener {
-
-		int tic = 0;
-		Image[] images;
-
-		public AnimationListener(Image[] i) {
-			images = i;
-		}
-
-		@Override
-		public void actionPerformed(ActionEvent e) {
-
-			if (tic < images.length) {
-
-				trainerEncounterImg = images[tic];
-				repaint();
-				tic++;
-
-			} else tic = 0;
-
-		}
-
-	}
+	
+	
+	
+	
 
 }
