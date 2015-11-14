@@ -45,6 +45,7 @@ import controller.CEAGame;
 import controller.GameMode;
 import controller.MazeGame;
 import javafx.scene.control.ProgressBar;
+import model.TrainerModel.TrainerAction;
 
 public class PokemonGUI {
 
@@ -64,7 +65,7 @@ public class PokemonGUI {
 
         try {
             // Set cross-platform Java L&F (also called "Metal")
-            UIManager.setLookAndFeel("javax.swing.plaf.nimbus.NimbusLookAndFeel"); 
+            UIManager.setLookAndFeel("javax.swing.plaf.nimbus.NimbusLookAndFeel");
         } catch (UnsupportedLookAndFeelException e) {
             // handle exception
         } catch (ClassNotFoundException e) {
@@ -128,7 +129,6 @@ public class PokemonGUI {
         gameMode1.addActionListener(new CatchEmAllSelected());
         gameMode2.addActionListener(new MazeSelected());
         startScreen.add(startOptions, BorderLayout.CENTER);
-        
 
         startScreen.setLocationRelativeTo(null);
         startScreen.setVisible(true);
@@ -146,7 +146,7 @@ public class PokemonGUI {
         mapView = new JFrame();
         mapView.setDefaultCloseOperation(JFrame.DO_NOTHING_ON_CLOSE); // ask to save instead
         mapView.addWindowListener(new CloseGameListener()); // when close attempted, ask to save
-                
+
         // add the map (JPanel) from the GameMode to the frame
         mode.getMap().setBorder(BorderFactory.createLineBorder(new Color(244, 220, 38), 5));
         mapView.add(mode.getMap(), BorderLayout.WEST);
@@ -170,7 +170,7 @@ public class PokemonGUI {
 
         JPanel inventory = new JPanel(new GridLayout(2, 2));
         inventory.setBackground(Color.BLACK);
-      
+
         trainerCheck = new JCheckBox("Use on trainer");
         trainerCheck.setFocusable(false);
         trainerCheck.setForeground(Color.WHITE);
@@ -180,7 +180,7 @@ public class PokemonGUI {
         ButtonGroup buttonGroup = new ButtonGroup();
         buttonGroup.add(trainerCheck);
         buttonGroup.add(pokemonCheck);
-                
+
         inventory.add(trainerCheck);
         inventory.add(pokemonCheck);
         inventory.add(trainerPokemon);
@@ -201,14 +201,14 @@ public class PokemonGUI {
             // TODO Auto-generated catch block
             e.printStackTrace();
         }
-        
+
         steps = new JProgressBar(0, mode.getTrainer().getSteps());
         steps.setValue(mode.getTrainer().getSteps()); // will need to replace this with steps
         steps.setStringPainted(true);
-        steps.setString((steps.getValue())  + " steps remaining");
+        steps.setString((steps.getValue()) + " steps remaining");
         trainerDisplay.add(steps, BorderLayout.SOUTH);
         userOptions.add(trainerDisplay, BorderLayout.NORTH);
-        
+
         JPanel userButtons = new JPanel(new GridLayout(3, 1));
         JButton save = new JButton("Save Game");
         save.setFocusable(false);
@@ -230,40 +230,40 @@ public class PokemonGUI {
 
         userOptions.setBorder(BorderFactory.createLineBorder(new Color(244, 220, 38), 5));
         userOptions.setFocusable(false);
-        
+
         mapView.add(userOptions, BorderLayout.EAST);
-        
+
         mapView.pack();
         mapView.setLocationRelativeTo(null);
         mapView.setVisible(true);
-        
+
         use.addActionListener(new ItemUser());
         save.addActionListener(new GameSaver());
         forfeit.addActionListener(new Forfeiter());
     }
-    
+
     /*---------------------------------------------------------------------
     |  Method name:    [endGameDisplay]
     |  Purpose:        [Creates the final stats view for the Trainer when
     |                   the game has ended.]
     *---------------------------------------------------------------------*/
     public void endGameDisplay() {
-        
+
         mapView.dispose(); // get rid of the game
-        
+
         // new frame to display all the player stats
         JFrame endStats = new JFrame();
         endStats.setSize(500, 500);
         endStats.setTitle("Game Over");
         endStats.setVisible(true);
-        
+
         // left Panel with image and TRAINER STATS title
         JPanel ballImage = new JPanel(new BorderLayout());
         JLabel header = new JLabel("   TRAINER STATS");
         header.setFont(new Font("Chalkboard", Font.BOLD, 30));
         header.setForeground(Color.WHITE);
         ballImage.add(header, BorderLayout.NORTH);
-        ballImage.setBorder(BorderFactory.createLineBorder(new Color(233, 41, 41), 10));      
+        ballImage.setBorder(BorderFactory.createLineBorder(new Color(233, 41, 41), 10));
         BufferedImage greatBall = null;
         try {
             greatBall = ImageIO.read(new File("./images/Pokeball.png"));
@@ -273,24 +273,24 @@ public class PokemonGUI {
         } catch (IOException e) {
             e.printStackTrace();
         }
-        
+
         endStats.add(ballImage, BorderLayout.WEST);
-        
+
         // panel will hold end message and all stats from the stats panel
         JPanel end = new JPanel(new BorderLayout());
         end.setBackground(Color.BLACK);
         end.setBorder(BorderFactory.createLineBorder(new Color(233, 41, 41), 10));
-        
-        JLabel endMessage = new JLabel(" " + mode.getEndMessage().toUpperCase() + " \n"); 
+
+        JLabel endMessage = new JLabel(" " + mode.getEndMessage().toUpperCase() + " \n");
         endMessage.setForeground(Color.WHITE);
         endMessage.setFont(new Font("Chalkboard", Font.BOLD, 30));
         end.add(endMessage, BorderLayout.NORTH);
-        
+
         // panel for all the stats
         JPanel stats = new JPanel(new GridLayout(2, 2));
         stats.setBackground(Color.WHITE);
         stats.setBorder(BorderFactory.createLineBorder(Color.BLACK, 10));
-        
+
         // pokemon caught
         JLabel pokemonCaught = new JLabel("   Pokemon Caught: ");
         JLabel caughtNum = new JLabel("" + mode.getTrainer().getPokemon().size());
@@ -298,7 +298,7 @@ public class PokemonGUI {
         pokemonCaught.setFont(new Font("Chalkboard", Font.PLAIN, 20));
         caughtNum.setForeground(new Color(244, 220, 38));
         caughtNum.setFont(new Font("Chalkboard", Font.BOLD, 40));
-        
+
         // remaining steps
         JLabel stepsRemaining = new JLabel("   Steps Left: ");
         JLabel stepsNum = new JLabel("" + mode.getTrainer().getSteps());
@@ -306,35 +306,85 @@ public class PokemonGUI {
         stepsRemaining.setForeground(Color.BLACK);
         stepsNum.setForeground(new Color(244, 220, 38));
         stepsNum.setFont(new Font("Chalkboard", Font.BOLD, 40));
-        
+
         // add stats labels and fields to stats panel
         stats.add(pokemonCaught);
         stats.add(caughtNum);
         stats.add(stepsRemaining);
         stats.add(stepsNum);
-        
+
         end.add(stats, BorderLayout.CENTER); // add the panel to the entire end right pane            
-    
+
         // add it all to the frame
         endStats.add(end, BorderLayout.EAST);
         endStats.pack();
-        
+
         endStats.addWindowListener(new CloseStatsListener());
     }
-    
+
     private void battlePanel() {
-        
+
         mapView.setVisible(false);
         encounterFrame = new JFrame();
         encounterFrame.setTitle("Battle");
         encounterFrame.setVisible(true);
-        encounterFrame.add(mode.getEncounterPanel(), BorderLayout.WEST);
+        encounterFrame.add(mode.getEncounterPanel(), BorderLayout.CENTER);
         encounterFrame.revalidate();
-        encounterFrame.add(new JLabel("Why u no appear"), BorderLayout.EAST);
-        encounterFrame.setSize(1000, 1000);
+        encounterFrame.setSize(700, 700);
+
+        JPanel trainerControls = new JPanel(new GridLayout(2, 2));
+
+        JButton throwRock = new JButton("Throw Rock");
+        JButton throwBait = new JButton("Throw Bait");
+        JButton runAway = new JButton("Run");
+        JButton throwBall = new JButton("Throw Pokeball");
+
+        throwRock.addActionListener(new TrainerActionButtons());
+        throwBait.addActionListener(new TrainerActionButtons());
+        runAway.addActionListener(new TrainerActionButtons());
+        throwBall.addActionListener(new TrainerActionButtons());
+
+        trainerControls.add(throwRock);
+        trainerControls.add(throwBait);
+        trainerControls.add(runAway);
+        trainerControls.add(throwBall);
+
+        encounterFrame.add(trainerControls, BorderLayout.SOUTH);
+
     }
-    
-        
+
+    private class TrainerActionButtons implements ActionListener {
+
+        @Override
+        public void actionPerformed(ActionEvent e) {
+            // TODO Auto-generated method stub
+            System.out.println(e.getActionCommand());
+
+            switch (e.getActionCommand()) {
+
+            case "Throw Rock":
+                mode.doTrainerAction(TrainerAction.THROW_ROCK);
+                break;
+
+            case "Throw Bait":
+                mode.doTrainerAction(TrainerAction.THROW_BAIT);
+                break;
+
+            case "Throw Pokeball":
+                mode.doTrainerAction(TrainerAction.THROW_BALL);
+                break;
+
+            case "Run":
+                mode.doTrainerAction(TrainerAction.RUN_AWAY);
+                break;
+            default:
+                break;
+            }
+
+        }
+
+    }
+
     /*---------------------------------------------------------------------
     |  Method name:    [saveState]
     |  Purpose:        [Save this instance of the game]
@@ -420,7 +470,7 @@ public class PokemonGUI {
             info.append("Hey there noob trainer, you wanna be a master!?.\n"
                     + "We've been hearing some strange rumors in the area. \n"
                     + "There have been rare sightings of some beast Pokemon.\n"
-                    + "He seems to appear when lots of Pokemon have been caught.\n" 
+                    + "He seems to appear when lots of Pokemon have been caught.\n"
                     + "He must have some problem with captivity. But we're human\n"
                     + "and we don't listen to nature, so I have a genius idea:\n"
                     + "maybe if you catch all the 6 common and 4 uncommon in the\n" + "area he'll appear.\n");
@@ -495,11 +545,11 @@ public class PokemonGUI {
             dialog.setVisible(true);
         }
     }
-    
+
     /*---------------------------------------------------------------------
     |  Class name:     [ItemUser]
     |  Purpose:        [When user selects to use an item do this]
-    *---------------------------------------------------------------------*/ 
+    *---------------------------------------------------------------------*/
     private class ItemUser implements ActionListener {
 
         @Override
@@ -508,24 +558,24 @@ public class PokemonGUI {
             // use item here
         }
     }
-    
+
     /*---------------------------------------------------------------------
     |  Class name:     [GameSaver]
     |  Purpose:        [When user clicks save game do this]
-    *---------------------------------------------------------------------*/ 
+    *---------------------------------------------------------------------*/
     private class GameSaver implements ActionListener {
 
         @Override
         public void actionPerformed(ActionEvent e) {
 
             saveState();
-        }        
+        }
     }
-    
+
     /*---------------------------------------------------------------------
     |  Class name:     [Forfeiter]
     |  Purpose:        [When user clicks forfeit do this]
-    *---------------------------------------------------------------------*/ 
+    *---------------------------------------------------------------------*/
     private class Forfeiter implements ActionListener {
 
         @Override
@@ -608,48 +658,48 @@ public class PokemonGUI {
         @Override
         public void windowOpened(WindowEvent e) {
             // TODO Auto-generated method stub
-            
+
         }
 
         @Override
         public void windowClosing(WindowEvent e) {
             // TODO Auto-generated method stub
-            
+
             startScreen.setVisible(true);
-            
+
         }
 
         @Override
         public void windowClosed(WindowEvent e) {
             // TODO Auto-generated method stub
-            
+
         }
 
         @Override
         public void windowIconified(WindowEvent e) {
             // TODO Auto-generated method stub
-            
+
         }
 
         @Override
         public void windowDeiconified(WindowEvent e) {
             // TODO Auto-generated method stub
-            
+
         }
 
         @Override
         public void windowActivated(WindowEvent e) {
             // TODO Auto-generated method stub
-            
+
         }
 
         @Override
         public void windowDeactivated(WindowEvent e) {
             // TODO Auto-generated method stub
-            
-        }  
+
+        }
     }
-    
+
     /*---------------------------------------------------------------------
     |  Class name:     [GameWon]
     |  Purpose:        [When the player is moving we check the status of
@@ -671,15 +721,15 @@ public class PokemonGUI {
 
                 endGameDisplay();
             }
-            
+
             else if (mode.trainerInBattle()) {
-                
+
                 battlePanel();
                 System.out.println("Starting battle sequence");
             }
-            
+
             else {
-                                               
+
                 steps.setValue(mode.getTrainer().getSteps());
                 steps.setString((steps.getValue()) + " steps remaining");
             }
