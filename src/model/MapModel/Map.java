@@ -134,7 +134,7 @@ public abstract class Map extends JPanel implements Serializable {
 	 |  Parameters:     [Graphics: the Graphics Object to use to draw]
 	 *---------------------------------------------------------------------*/
 	public void drawMap(Graphics g) {
-
+		
 		int x = 0, y = 0;
 
 		// draw ground and obstacle tiles
@@ -272,6 +272,11 @@ public abstract class Map extends JPanel implements Serializable {
 	 *---------------------------------------------------------------------*/
 	public Image getTrainerSheet() {
 		return trainerSheet;
+	}
+
+	public TerrainType getCurrentTerrain() {
+		// TODO Auto-generated method stub
+		return groundTiles[trainerPoint.x][trainerPoint.y].getTerrainType();
 	}
 	
 	

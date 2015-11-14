@@ -173,27 +173,50 @@ public class PokemonDatabase {
 
 	public Pokemon getRandomCommon(TerrainType tt) {
 
-		int rand = new Random().nextInt(allCommon.size());
-		Pokemon currPokemon = allCommon.get(rand);
-		
-		while (true){
-			switch (tt) {
-				case DESERT:
-					if (currPokemon.getType() == PokemonType.WATER)
-						return currPokemon;
-					break;
-			
-			
-			}
-		}
+		return randomHelper(allCommon, tt);
 		
 	}
 
 	public Pokemon getRandomUncommon(TerrainType tt) {
 
-		int rand = new Random().nextInt(allUncommon.size());
+		return randomHelper(allUncommon, tt);
 
-		return allUncommon.get(rand);
+	}
 
+	private Pokemon randomHelper(ArrayList<Pokemon> pokemonz, TerrainType tt) {
+		
+		int rand = new Random().nextInt(pokemonz.size());
+		Pokemon currPokemon = pokemonz.get(rand);
+		PokemonType type = currPokemon.getType();
+
+		while (true) {
+
+			switch (tt) {
+			case GENERIC:
+				return currPokemon;
+			case DESERT:
+				if (currPokemon.getType() == PokemonType.WATER)
+					return currPokemon;
+				break;
+			/*case ICE:
+				if (type == PokemonType.ROCK || type == PokemonType.GROUND)
+					return currPokemon;
+				break;
+			case CAVE:
+				if (type == PokemonType.GRASS || type == PokemonType.ELECTRIC)
+					return currPokemon;
+				break;
+			case FOREST:
+				if (type == PokemonType.FIRE || type == PokemonType.PSYCHIC)
+					return currPokemon;
+				break;*/
+			default:
+				return currPokemon;
+			}
+
+			rand = new Random().nextInt(allCommon.size());
+			currPokemon = allCommon.get(rand);
+
+		}
 	}
 }

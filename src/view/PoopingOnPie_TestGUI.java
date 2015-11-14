@@ -1,10 +1,13 @@
 package view;
 
 import java.awt.BorderLayout;
+import java.awt.event.KeyEvent;
+import java.awt.event.KeyListener;
 import java.util.Random;
 
 import javax.swing.*;
 
+import controller.CEAGame;
 import controller.GameMode;
 import controller.MazeGame;
 //import controller.MazeGame;
@@ -22,7 +25,7 @@ public class PoopingOnPie_TestGUI extends JFrame {
 	}
 
 	public PoopingOnPie_TestGUI() {
-	 	game = new MazeGame(new Random());
+	 	game = new CEAGame(new Random());
 		layoutGUI();
 		registerListeners();
 
@@ -33,6 +36,7 @@ public class PoopingOnPie_TestGUI extends JFrame {
 		this.setLocation(0, 0);
 
 		this.add(game.getMap(), BorderLayout.CENTER);
+		
 		//this.add(pimp2, BorderLayout.EAST);
 
 		// fits this JFrame's size to its Components
@@ -45,9 +49,52 @@ public class PoopingOnPie_TestGUI extends JFrame {
 
 	private void registerListeners() {
 		//TODO add necessary Listeners
+		game.getMap().addKeyListener((new GameWon()));
+		game.getEncounterPanel().addKeyListener((new GameWon()));
 		
 	}
 
+	private class GameWon implements KeyListener {
+		
+		boolean battleShown = false, mapShown = true;
+
+        @Override
+        public void keyTyped(KeyEvent e) {
+            // TODO Auto-generated method stub
+        }
+
+        @Override
+        public void keyPressed(KeyEvent e) {
+            // TODO Auto-generated method stub
+        	System.out.println("GameWon listener");
+
+            if (!battleShown && game.trainerInBattle()) {
+            	remove(game.getMap());
+            	add(game.getEncounterPanel(), BorderLayout.CENTER);
+            	revalidate();
+            	game.getEncounterPanel().requestFocusInWindow();
+            	battleShown = true;
+            	mapShown = false;
+            	System.out.println("Showing Battle");
+            } else if (!mapShown && !game.trainerInBattle()){
+            	remove(game.getEncounterPanel());
+            	add(game.getMap(), BorderLayout.CENTER);
+            	game.getMap().repaint();
+            	game.getEncounterPanel().hideEncounter();
+            	revalidate();
+            	game.getMap().requestFocusInWindow();
+            	mapShown = true;
+            	battleShown = false;
+            	System.out.println("Showing Map");
+            }
+        }
+
+        @Override
+        public void keyReleased(KeyEvent e) {
+            // TODO Auto-generated method stub
+
+        }
+    }
 	
 
 }

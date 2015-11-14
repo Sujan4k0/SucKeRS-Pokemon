@@ -31,6 +31,7 @@ import javax.imageio.ImageIO;
 
 import soundplayer.SoundPlayer;
 import view.EncounterPanel;
+import view.PokemonDatabase;
 import model.MapModel.Map;
 import model.MapModel.Obstacle;
 import model.PokemonModel.Common;
@@ -59,6 +60,9 @@ public abstract class GameMode implements Serializable {
 	// Plays sfx :D
 	SoundPlayer sfxPlayer = new SoundPlayer();
 
+	// database of Pokemon
+	PokemonDatabase database;
+
 	/*---------------------------------------------------------------------
 	 |  Method name:    [GameMode]
 	 |  Purpose:  	    [Constructs a GameMode in order to play some POKEMON!!!]
@@ -70,6 +74,10 @@ public abstract class GameMode implements Serializable {
 
 		createMap();
 
+		encounter = new EncounterPanel();
+
+		database = new PokemonDatabase();
+
 		trainer = new Trainer();
 
 		trainer.setPoint(new Point(map.getTrainerPoint()));
@@ -77,6 +85,7 @@ public abstract class GameMode implements Serializable {
 		// add KeyListener to this Map so that the user can move the trainer
 		// and other button-y things
 		map.addKeyListener(new OurKeyListener());
+		encounter.addKeyListener(new BattleKeyListener());
 
 		// set focusable so that the KeyListener works
 		map.setFocusable(true);
@@ -209,6 +218,7 @@ public abstract class GameMode implements Serializable {
 		map.setTrainerDir(dir);
 
 		// if the trainer can move, then move the trainer and decrease steps
+		// and check for random encounter and stuff
 		if (trainerCanMove(e)) {
 			// change trainer object point
 			trainer.getPoint().translate(dx, dy);
@@ -238,7 +248,7 @@ public abstract class GameMode implements Serializable {
 	 *---------------------------------------------------------------------*/
 	public boolean isGameActive() {
 		if (isGameWon()) {
-			endMessage = "You Won!";
+			endMessage = "You Won!!!!!!!!";
 			return false;
 		} else if (isGameLost()) {
 			endMessage = "You LOSTTTTT >:(";
@@ -277,21 +287,22 @@ public abstract class GameMode implements Serializable {
 
 	public void startEncounter() {
 
-		bgPlayer.playSound("./sounds/Pokemon_BattleMusic_1.mp3");
+		int rand = new Random().nextInt(30);
 
-		Image[] imgs = new Image[1];
-
-		try {
-			Image testImg = ImageIO.read(new File("./images/Pokemon_1.png"));
-			imgs[0] = testImg.getScaledInstance(300, 300, 0);
-		} catch (IOException e) {
-			e.printStackTrace();
+		if (rand == 29)
+			encounteredPokemon = database.getMew();
+		else {
+			rand = new Random().nextInt(15);
+			if (rand == 9)
+				encounteredPokemon = database.getRandomUncommon(map.getCurrentTerrain());
+			else {
+				encounteredPokemon = database.getRandomCommon(map.getCurrentTerrain());
+			}
 		}
 
-		encounteredPokemon = new Common(new Random(), "name", imgs, PokemonType.ELECTRIC);
 		inBattle = true;
-
 		encounteredPokemon.startEncounter();
+		encounter.showEncounter(encounteredPokemon);
 
 	}
 
@@ -312,15 +323,15 @@ public abstract class GameMode implements Serializable {
 			break;
 
 		}
-		
+
 		encounter.animateTrainer();
-		
+
 	}
-	
+
 	public boolean trainerInBattle() {
 		return inBattle;
 	}
-	
+
 	public EncounterPanel getEncounterPanel() {
 		return encounter;
 	}
@@ -343,21 +354,48 @@ public abstract class GameMode implements Serializable {
 		 *---------------------------------------------------------------------*/
 		@Override
 		public void keyPressed(KeyEvent e) {
+			
+			System.out.println("Our GameMode Listener");
 
-			// PROMPT USER TO PRESS "ENTER" AFTER BATTLE ENDS TO UPDATE THE MAP!!!! >:OOO
-			if (e.getKeyCode() == KeyEvent.VK_ENTER && inBattle
-					&& encounteredPokemon.getState() != PokemonResponse.STAND_GROUND) {
-				inBattle = false;
-				// repaint the visual changes
-				map.repaint();
-			}
-
-			// else if the game is not won or lost or forfeited, move the trainer
-			else if (!inBattle && !forfeited && !isGameWon() && !isGameLost()) {
+			// if the game is not won or lost or forfeited, move the trainer
+			if (!inBattle && !forfeited && !isGameWon() && !isGameLost()) {
 				// set sprite direction and try to move trainer
 				moveTrainer(e);
 			}
 
+		}
+
+		@Override
+		public void keyReleased(KeyEvent e) {
+
+		}
+
+	}
+
+	/*---------------------------------------------------------------------
+	 |  Class name:     [OurKeyListener]
+	 |  Purpose:        [Used to move trainer around the map]
+	 *---------------------------------------------------------------------*/
+	private class BattleKeyListener implements KeyListener {
+
+		@Override
+		public void keyTyped(KeyEvent e) {
+
+		}
+
+		/*---------------------------------------------------------------------
+		 |  Method name:    [keyPressed]
+		 |  Purpose:  	    [handles KeyEvents on key press]
+		 |  Parameters:     [KeyEvent]
+		 *---------------------------------------------------------------------*/
+		@Override
+		public void keyPressed(KeyEvent e) {
+			System.out.println("GameMode Battle Listener");
+			// PROMPT USER TO PRESS "ENTER" AFTER BATTLE ENDS TO UPDATE THE MAP!!!! >:OOO
+			if (e.getKeyCode() == KeyEvent.VK_ENTER && inBattle
+					&& encounteredPokemon.getState() != PokemonResponse.STAND_GROUND) {
+				inBattle = false;
+			}
 		}
 
 		@Override
