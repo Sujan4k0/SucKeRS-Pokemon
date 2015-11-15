@@ -76,7 +76,7 @@ public class GraphicsManager {
 		// (x,y) coordinates of the associated sprite
 		// in the tileset image
 		int tsX = tile.ordinal() % SPRITESHEET_WIDTH;
-		int tsY = tile.ordinal() / SPRITESHEET_HEIGHT;
+		int tsY = tile.ordinal() / SPRITESHEET_WIDTH;
 
 		// get the Tile dimensions
 		int td = Tile.SIZE;
@@ -101,10 +101,7 @@ public class GraphicsManager {
 		// (x,y) coordinates of the associated sprite
 		// in the tileset image
 		int tsX = tile.ordinal() % BIGSPRITESHEET_WIDTH;
-		int tsY = tile.ordinal() / BIGSPRITESHEET_HEIGHT;
-
-		if (BIGSPRITESHEET_HEIGHT == 1)
-			tsY = 0;
+		int tsY = tile.ordinal() / BIGSPRITESHEET_WIDTH;
 
 		// get the Tile dimensions
 		int td = Tile.SIZE * 8;
