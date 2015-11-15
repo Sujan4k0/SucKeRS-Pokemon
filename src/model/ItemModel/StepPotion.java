@@ -22,8 +22,6 @@ public abstract class StepPotion extends Item{
 	 |  Purpose:  	    [Constructor]
 	 *---------------------------------------------------------------------*/
 	public StepPotion(){
-		super.setForPokemon(false);
-		super.setForTrainer(true);
 	}
 
 	/*---------------------------------------------------------------------

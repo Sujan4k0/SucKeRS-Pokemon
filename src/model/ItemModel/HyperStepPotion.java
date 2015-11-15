@@ -20,7 +20,8 @@ public class HyperStepPotion extends StepPotion{
 	 |  Purpose:  	    [Constructor]
 	 *---------------------------------------------------------------------*/
 	public HyperStepPotion(){
-		super();
+		super.setForPokemon(false);
+		super.setForTrainer(true);
 		setStepBonus(50);
 		super.setName("Hyper Step Potion");	
 	}

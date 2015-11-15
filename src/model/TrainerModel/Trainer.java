@@ -59,7 +59,7 @@ public class Trainer implements Serializable {
 		fatigued = false;
 		trainerPosition = null;
 		for (int i=0; i<30; i++){
-			items.add(new PokeBall());
+			addItem(new PokeBall());
 		}
 	}
 
@@ -163,7 +163,7 @@ public class Trainer implements Serializable {
 			} else {
 				t.setPoint(trainerPosition);
 			}
-		} 
+		}
 		else if (i.getName().equals("Fatigue Potion")) {
 			if (isFatigued()) {
 				setFatigued(false);
@@ -174,20 +174,25 @@ public class Trainer implements Serializable {
 			} else {
 				System.out.println("You don't need that now.");//just for testing, will later update view to display this message
 			}
-		} else if (i.getName().equals("Basic Step Potion")
-				|| i.getName().equals("Super Step Potion")
+		} 
+		else if (i.getName().equals("Basic Step Potion") 
+				|| i.getName().equals("Super Step Potion") 
 				|| i.getName().equals("Hyper Step Potion")) {
 			this.steps += ((StepPotion) i).getStepBonus();
 			items.remove(i);
 			itemQuantities.put(i.getName(), (itemQuantities.get(i.getName())-1));
 			//update observers for inventory
-		} else if (i.getName().equals("PokeBall")){
+		}
+		else if (i.getName().equals("PokeBall")){
 			items.remove(i);
 			itemQuantities.put(i.getName(), (itemQuantities.get(i.getName())-1));
 		}
 		else if (i.getName().equals("Harmonica")){
 			items.remove(i);
 			itemQuantities.put(i.getName(), (itemQuantities.get(i.getName())-1));
+		}
+		else {
+			System.out.println("name not recognized");
 		}
 	}
 	
