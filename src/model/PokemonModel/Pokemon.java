@@ -214,4 +214,6 @@ public abstract class Pokemon {
     public PokemonType getType() {
     	return type;
     }
+    
+    public abstract String rarityString();
 }

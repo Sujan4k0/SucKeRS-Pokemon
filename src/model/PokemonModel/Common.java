@@ -22,6 +22,7 @@ import java.util.Random;
 public class Common extends Pokemon {
     
     protected int APPEARANCE_CHANCE;
+    protected String RARITY;
     
     /*---------------------------------------------------------------------
     |  Method name:    [Common]
@@ -36,5 +37,12 @@ public class Common extends Pokemon {
         RUN_ADJUST = 10;
         CATCH_ADJUST = 10;
         APPEARANCE_CHANCE = 60;
+        RARITY = "(C)";
+    }
+    
+    @Override
+    public String rarityString() {
+        // TODO Auto-generated method stub
+        return RARITY;
     }
 }

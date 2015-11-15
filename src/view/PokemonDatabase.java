@@ -33,21 +33,21 @@ import model.PokemonModel.Uncommon;
 public class PokemonDatabase {
 
 	// uncommon
-	private Pokemon magikarp;
-	private Pokemon cyndaquil;
-	private Pokemon rhydon;
-	private Pokemon diglett;
-	private Pokemon simisage;
-	private Pokemon luvdisc;
+	private Common magikarp;
+	private Common cyndaquil;
+	private Common rhydon;
+	private Common diglett;
+	private Common simisage;
+	private Common luvdisc;
 
 	// common
-	private Pokemon pikachu;
-	private Pokemon steelix;
-	private Pokemon exeggutor;
-	private Pokemon gyrados;
+	private Uncommon pikachu;
+	private Uncommon steelix;
+	private Uncommon exeggutor;
+	private Uncommon gyrados;
 
 	// legendary
-	private Pokemon mew;
+	private Legendary mew;
 
 	// all the Common Pokemon and Uncommon
 	private ArrayList<Pokemon> allCommon, allUncommon;

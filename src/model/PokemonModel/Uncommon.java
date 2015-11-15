@@ -22,6 +22,7 @@ import java.util.Random;
 public class Uncommon extends Pokemon {
     
     private final int APPEARANCE_CHANCE;
+    protected String RARITY;
 
     /*---------------------------------------------------------------------
     |  Method name:    [Uncommon]
@@ -36,5 +37,12 @@ public class Uncommon extends Pokemon {
         RUN_ADJUST = 5;
         CATCH_ADJUST = 5;
         APPEARANCE_CHANCE = 35;
+        RARITY = "(U)";
+    }
+
+    @Override
+    public String rarityString() {
+
+        return RARITY;
     }
 }

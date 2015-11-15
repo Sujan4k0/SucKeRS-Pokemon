@@ -730,7 +730,9 @@ public class PokemonGUI {
                 
                 for (int p = 0; p < mode.getTrainer().getPokemon().size(); p++) {
                 
-                    trainerPokemon.addItem(mode.getTrainer().getPokemon().get(p).getName());
+                    Pokemon mon = mode.getTrainer().getPokemon().get(p);
+                    
+                    trainerPokemon.addItem(mon.getName() + " " + mon.rarityString());
                 }
 
                 mapView.revalidate();
@@ -776,7 +778,9 @@ public class PokemonGUI {
                 
                 for (int p = 0; p < mode.getTrainer().getPokemon().size(); p++) {
                 
-                    trainerPokemon.addItem(mode.getTrainer().getPokemon().get(p).getName());
+                    Pokemon mon = mode.getTrainer().getPokemon().get(p);
+                    
+                    trainerPokemon.addItem(mon.getName() + " " + mon.rarityString());
                 }
 
                 mapView.revalidate();

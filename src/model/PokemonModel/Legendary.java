@@ -23,6 +23,7 @@ import java.util.Random;
 public class Legendary extends Pokemon {
     
     protected int APPEARANCE_CHANCE;
+    protected String RARITY;
     
     /*---------------------------------------------------------------------
     |  Method name:    [Legendary]
@@ -37,6 +38,13 @@ public class Legendary extends Pokemon {
         RUN_ADJUST = 1;
         CATCH_ADJUST = 5; 
         APPEARANCE_CHANCE = 5;
+        RARITY = "(L)";
+    }
+
+    @Override
+    public String rarityString() {
+        // TODO Auto-generated method stub
+        return RARITY;
     }
 
 }
