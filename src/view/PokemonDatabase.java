@@ -18,6 +18,7 @@ package view;
 import java.awt.Image;
 import java.io.File;
 import java.io.IOException;
+import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.Random;
 
@@ -30,7 +31,7 @@ import model.PokemonModel.Pokemon;
 import model.PokemonModel.PokemonType;
 import model.PokemonModel.Uncommon;
 
-public class PokemonDatabase {
+public class PokemonDatabase implements Serializable{
 
 	// uncommon
 	private Common magikarp;

@@ -21,13 +21,13 @@ import java.awt.Color;
 import java.awt.FlowLayout;
 import java.awt.Font;
 import java.awt.GridLayout;
+import java.awt.Image;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.awt.event.KeyEvent;
 import java.awt.event.KeyListener;
 import java.awt.event.WindowEvent;
 import java.awt.event.WindowListener;
-import java.awt.image.BufferedImage;
 import java.io.File;
 import java.io.FileInputStream;
 import java.io.FileOutputStream;
@@ -109,7 +109,7 @@ public class PokemonGUI {
         // JPanel set up to show the "Pokemon" logo on the frame
         JPanel logoHeader = new JPanel();
         logoHeader.setBackground(Color.BLACK);
-        BufferedImage logo = null;
+        Image logo = null;
         try {
             logo = ImageIO.read(new File("./images/PokemonLogo.png"));
         } catch (IOException e) {
@@ -162,10 +162,17 @@ public class PokemonGUI {
         trainerPokemon = new JComboBox<Object>();
         for (int p = 0; p < mode.getTrainer().getPokemon().size(); p++) {
         
-            trainerPokemon.addItem(mode.getTrainer().getPokemon().get(p).getName());
+            Pokemon mon = mode.getTrainer().getPokemon().get(p);
+            
+            trainerPokemon.addItem(mon.getName() + " " + mon.rarityString());
         }
 
-        trainerItems = new JComboBox<Object>(items.toArray());
+        trainerItems = new JComboBox<Object>();  
+//        for (String s : mode.getTrainer().getItemQuantities().keySet()) {
+//            
+//            trainerItems.addItem(s + " " + mode.getTrainer().getItemQuantities().get(s));
+//        }
+                
         trainerItems.setFocusable(false);
         trainerPokemon.setFocusable(false);
 
@@ -196,7 +203,7 @@ public class PokemonGUI {
         JPanel trainerDisplay = new JPanel(new BorderLayout());
         trainerDisplay.setBackground(Color.BLACK);
         JLabel trainerLabel = new JLabel();
-        BufferedImage trainerFancy = null;
+        Image trainerFancy = null;
         try {
             trainerFancy = ImageIO.read(new File("./images/GenericTrainerTest.png"));
             trainerLabel = new JLabel(new ImageIcon(trainerFancy));
@@ -244,6 +251,9 @@ public class PokemonGUI {
         use.addActionListener(new ItemUser());
         save.addActionListener(new GameSaver());
         forfeit.addActionListener(new Forfeiter());
+        
+       // mode.
+        mapView.repaint();
     }
 
     /*---------------------------------------------------------------------
@@ -268,7 +278,7 @@ public class PokemonGUI {
         header.setForeground(Color.WHITE);
         ballImage.add(header, BorderLayout.NORTH);
         ballImage.setBorder(BorderFactory.createLineBorder(new Color(233, 41, 41), 10));
-        BufferedImage greatBall = null;
+        Image greatBall = null;
         try {
             greatBall = ImageIO.read(new File("./images/Pokeball.png"));
             JLabel ballLabel = new JLabel(new ImageIcon(greatBall));
@@ -598,11 +608,13 @@ public class PokemonGUI {
 
                 saveState(); // save the game
             }
+            
+            System.exit(0);
 
-            else if (reply == JOptionPane.NO_OPTION) {
-
-                System.exit(0); // quit program don't do anything
-            }
+//            else if (reply == JOptionPane.NO_OPTION) {
+//
+//                System.exit(0); // quit program don't do anything
+//            }
         }
 
         @Override
@@ -782,6 +794,14 @@ public class PokemonGUI {
                     
                     trainerPokemon.addItem(mon.getName() + " " + mon.rarityString());
                 }
+                
+                trainerItems.removeAllItems();
+                
+                for (String s : mode.getTrainer().getItemQuantities().keySet()) {
+                    
+                    trainerItems.addItem(s + " " + mode.getTrainer().getItemQuantities().get(s));
+                }
+
 
                 mapView.revalidate();
             }
