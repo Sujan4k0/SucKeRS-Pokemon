@@ -22,6 +22,8 @@ import java.util.Random;
 
 public class Legendary extends Pokemon {
     
+    protected int APPEARANCE_CHANCE;
+    
     /*---------------------------------------------------------------------
     |  Method name:    [Legendary]
     |  Purpose:        [Constructor]
@@ -34,5 +36,7 @@ public class Legendary extends Pokemon {
         // constant values for legendary adjustments
         RUN_ADJUST = 1;
         CATCH_ADJUST = 5; 
-    }    
+        APPEARANCE_CHANCE = 5;
+    }
+
 }

@@ -20,7 +20,9 @@ import java.awt.Image;
 import java.util.Random;
 
 public class Common extends Pokemon {
-        
+    
+    protected int APPEARANCE_CHANCE;
+    
     /*---------------------------------------------------------------------
     |  Method name:    [Common]
     |  Purpose:        [Constructor]
@@ -33,6 +35,6 @@ public class Common extends Pokemon {
         // constant adjustments for common pokemon
         RUN_ADJUST = 10;
         CATCH_ADJUST = 10;
+        APPEARANCE_CHANCE = 60;
     }
-
 }

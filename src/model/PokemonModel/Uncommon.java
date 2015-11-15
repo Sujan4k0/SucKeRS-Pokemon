@@ -20,6 +20,8 @@ import java.awt.Image;
 import java.util.Random;
 
 public class Uncommon extends Pokemon {
+    
+    private final int APPEARANCE_CHANCE;
 
     /*---------------------------------------------------------------------
     |  Method name:    [Uncommon]
@@ -33,5 +35,6 @@ public class Uncommon extends Pokemon {
         // constant adjustments for uncommon pokemon
         RUN_ADJUST = 5;
         CATCH_ADJUST = 5;
+        APPEARANCE_CHANCE = 35;
     }
 }

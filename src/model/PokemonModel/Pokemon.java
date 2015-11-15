@@ -38,6 +38,7 @@ public abstract class Pokemon {
     protected int decider; // determines percentage location for run and catch
     protected int RUN_ADJUST; // fixed constant of run incrementation/decrementation
     protected int CATCH_ADJUST; // fixed constant of catch incrementation/decerementation
+    protected int APPEARANCE_CHANCE;
         
     /*---------------------------------------------------------------------
     |  Method name:    [Pokemon]
@@ -57,6 +58,7 @@ public abstract class Pokemon {
         // this should never actually be used
         RUN_ADJUST = 0;
         CATCH_ADJUST = 0;
+        APPEARANCE_CHANCE = 10;
         
         gen = r; // start random here for non-testing
         decider = 0; // default decision to 0, so nothing would happen
@@ -167,6 +169,17 @@ public abstract class Pokemon {
     public void startEncounter() {
 
         new EncounterTimer(this).start();      
+    }
+    
+    /*---------------------------------------------------------------------
+    |  Method name:    [getEncounterChance]
+    |  Purpose:        [Indicates the chance of appearance for this
+    |                   rarity of Pokemon.]
+    |  Returns:        [int - chance of appearance]
+    *---------------------------------------------------------------------*/
+    public int getEncounterChance() {
+        
+        return APPEARANCE_CHANCE;
     }
     
     /*---------------------------------------------------------------------
