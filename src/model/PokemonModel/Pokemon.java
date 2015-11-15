@@ -27,7 +27,7 @@ import view.EncounterTimer;
 public abstract class Pokemon implements Serializable{
 
     private String name; // name of this Pokemon
-    private Image[] sprite; // different graphical views for this Pokemon
+    private transient Image[] sprite; // different graphical views for this Pokemon
     
     private PokemonType type; // element mastery of the Pokemon
     protected double catchPercentage; // likelihood of being caught (adjustable)
