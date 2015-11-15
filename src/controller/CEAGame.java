@@ -16,9 +16,11 @@
  *===========================================================================*/
 package controller;
 
+import java.util.ArrayList;
 import java.util.Random;
 
 import view.*;
+import model.PokemonModel.Pokemon;
 import model.TrainerModel.Trainer;
 
 public class CEAGame extends GameMode {
@@ -41,7 +43,14 @@ public class CEAGame extends GameMode {
 	 *---------------------------------------------------------------------*/
 	@Override
 	public boolean isGameWon() {
-		// TODO add winning condition
+		
+		ArrayList<Pokemon> capturedPokemon = trainer.getPokemon();
+		
+		for (Pokemon p : capturedPokemon) {
+			
+			System.out.println(p);
+		}
+		
 		return false;
 	}
 
