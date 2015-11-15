@@ -105,7 +105,7 @@ public class PokemonDatabase {
 		Image pic = null;
 
 		try {
-			pic = ImageIO.read(new File("./images/" + name + ".png"));
+			pic = ImageIO.read(new File("./images/pokemonImages/" + name + ".png"));
 			image[0] = pic;
 		} catch (IOException e) {
 			e.printStackTrace();
