@@ -38,13 +38,13 @@ public class EncounterPanel extends JPanel implements Serializable {
 
 	// the current image of the trainer during an encounter
 	// and BG image
-	Image trainerEncounterImage, bgImage;
+	transient Image trainerEncounterImage, bgImage;
 
 	// the Trainer's sprite sheet with bigger sprites mmmhmms
-	Image bigTrainerSheet;
+	transient Image bigTrainerSheet;
 
 	// array of images for trainer animation
-	Image[] trainerImages;
+	transient Image[] trainerImages;
 
 	// so that the trainer animation can't be spammed
 	boolean animating = false;
