@@ -22,12 +22,15 @@ import java.awt.Dimension;
 import java.awt.Graphics;
 import java.awt.Image;
 import java.awt.Point;
+import java.awt.event.ActionEvent;
+import java.awt.event.ActionListener;
 import java.io.File;
 import java.io.IOException;
 import java.io.Serializable;
 
 import javax.imageio.ImageIO;
 import javax.swing.JPanel;
+import javax.swing.Timer;
 
 import soundplayer.SoundPlayer;
 import view.GraphicsManager;
@@ -36,6 +39,8 @@ import model.MapModel.*;
 public abstract class Map extends JPanel implements Serializable {
 
 	private static final long serialVersionUID = 1L;
+	
+	private static int MOVEMENT_SPEED = 7;
 
 	// visible Map is WIDTH by HEIGHT tiles
 	public static final int WIDTH = 15, HEIGHT = 11;
@@ -52,6 +57,15 @@ public abstract class Map extends JPanel implements Serializable {
 
 	// the Point the trainer is visually at
 	Point trainerPoint;
+	
+	// timer to animate trainer movement
+	Timer movementTimer;
+	
+	// if the trainer movement is being animated
+	boolean animating = false;
+	
+	// offsets for trainer animation
+	int xOffset = 0, yOffset = 0;
 
 	// the directions associated with the trainer's sprite sheet
 	public static enum TrainerDirection {
@@ -94,6 +108,9 @@ public abstract class Map extends JPanel implements Serializable {
 		int prefh = HEIGHT * Tile.SIZE;
 
 		this.setPreferredSize(new Dimension(prefw, prefh));
+		
+		// make animation timer for Trainer movement
+		movementTimer = new Timer(MOVEMENT_SPEED, new MovementTimerListener());
 
 	}
 
@@ -151,8 +168,8 @@ public abstract class Map extends JPanel implements Serializable {
 		}
 
 		// draw trainer sprite
-		GraphicsManager.drawTile(g, dir, trainerSheet, (trainerPoint.y % WIDTH) * Tile.SIZE,
-				(trainerPoint.x % HEIGHT) * Tile.SIZE);
+		GraphicsManager.drawSprite(g, dir, trainerSheet, (trainerPoint.y % WIDTH) * Tile.SIZE - yOffset,
+				(trainerPoint.x % HEIGHT) * Tile.SIZE - xOffset);
 
 	}
 
@@ -279,5 +296,65 @@ public abstract class Map extends JPanel implements Serializable {
 		// TODO Auto-generated method stub
 		return groundTiles[trainerPoint.x][trainerPoint.y].getTerrainType();
 	}
+	
+	public boolean isAnimating() {
+		return animating;
+	}
+	
+	public void setStartOffsets(int x, int y) {
+		xOffset = x;
+		yOffset = y;
+	}
+	
+	public void startTrainerMovement() {
+		movementTimer.start();
+	}
 
+	//animates the hunter's image for movement
+		private class MovementTimerListener implements ActionListener {
+
+			int MOVE = 2, moveAmount = 0;
+			int tic = 0;
+
+			@Override
+			public void actionPerformed(ActionEvent e) {
+
+				animating = true;
+				
+				if (xOffset > 0 || yOffset > 0)
+					moveAmount = -MOVE;
+				else moveAmount = MOVE;
+				
+				if (tic < Math.abs(Tile.SIZE / moveAmount)) {
+
+					// determine which direction to move in
+					switch (dir) {
+
+					case UP:
+						xOffset += moveAmount;
+						break;
+					case DOWN:
+						xOffset += moveAmount;
+						break;
+					case LEFT:
+						yOffset += moveAmount;
+						break;
+					case RIGHT:
+						yOffset += moveAmount;
+						break;
+					default:
+						break;
+
+					}
+
+					tic++;
+				} else {
+					movementTimer.stop();
+					tic = 0;
+					animating = false;
+				}
+				repaint();
+			}
+
+		}
 }

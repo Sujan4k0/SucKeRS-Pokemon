@@ -51,6 +51,7 @@ public abstract class GameMode implements Serializable {
 	boolean forfeited = false;
 	boolean inBattle = false;
 	Pokemon encounteredPokemon;
+	Map.TrainerDirection dir = Map.TrainerDirection.RIGHT;
 
 	// Plays bg sounds :D
 	SoundPlayer bgPlayer = new SoundPlayer();
@@ -177,75 +178,86 @@ public abstract class GameMode implements Serializable {
 	 |  Parameters:  	[KeyEvent: direction in which trainer is trying to move]
 	 *---------------------------------------------------------------------*/
 	public void moveTrainer(KeyEvent e) {
+		if (!map.isAnimating()) {
 
-		int dx = 0, dy = 0;
-		int kc = e.getKeyCode();
-		Map.TrainerDirection dir = Map.TrainerDirection.RIGHT;
+			int dx = 0, dy = 0;
+			int kc = e.getKeyCode();
 
-		// Depending on the KeyEvent passed in, sets the change in the x
-		// or y direction accordingly. If the trainer is able to move and
-		// the trainer is moving to the next part of the Map, the Map 'moves'
-		// so that the new area is shown
-		switch (kc) {
-		case KeyEvent.VK_UP:
-			dx = -1;
-			dir = Map.TrainerDirection.UP;
-			if (trainerCanMove(e) && (trainer.getPoint().x + dx) % Map.HEIGHT == Map.HEIGHT - 1)
-				map.moveUp();
-			break;
-		case KeyEvent.VK_DOWN:
-			dx = 1;
-			dir = Map.TrainerDirection.DOWN_1; // DOWN isn't working :(
-			if (trainerCanMove(e) && (trainer.getPoint().x + dx) % Map.HEIGHT == 0)
-				map.moveDown();
-			break;
-		case KeyEvent.VK_RIGHT:
-			dy = 1;
-			dir = Map.TrainerDirection.RIGHT;
-			if (trainerCanMove(e) && (trainer.getPoint().y + dy) % Map.WIDTH == 0)
-				map.moveRight();
-			break;
-		case KeyEvent.VK_LEFT:
-			dy = -1;
-			dir = Map.TrainerDirection.LEFT;
-			if (trainerCanMove(e) && (trainer.getPoint().y + dy) % Map.WIDTH == Map.WIDTH - 1)
-				map.moveLeft();
-			break;
-		default:
-			break;
-		}
+			// Depending on the KeyEvent passed in, sets the change in the x
+			// or y direction accordingly. If the trainer is able to move and
+			// the trainer is moving to the next part of the Map, the Map 'moves'
+			// so that the new area is shown
+			switch (kc) {
+			case KeyEvent.VK_UP:
+				dx = -1;
+				dir = Map.TrainerDirection.UP;
+				map.setStartOffsets(-50, 0);
+				if (trainerCanMove(e) && (trainer.getPoint().x + dx) % Map.HEIGHT == Map.HEIGHT - 1)
+					map.moveUp();
+				break;
+			case KeyEvent.VK_DOWN:
+				dx = 1;
+				dir = Map.TrainerDirection.DOWN;
+				map.setStartOffsets(50, 0);
+				if (trainerCanMove(e) && (trainer.getPoint().x + dx) % Map.HEIGHT == 0)
+					map.moveDown();
+				break;
+			case KeyEvent.VK_RIGHT:
+				dy = 1;
+				dir = Map.TrainerDirection.RIGHT;
+				map.setStartOffsets(0, 50);
+				if (trainerCanMove(e) && (trainer.getPoint().y + dy) % Map.WIDTH == 0)
+					map.moveRight();
+				break;
+			case KeyEvent.VK_LEFT:
+				dy = -1;
+				dir = Map.TrainerDirection.LEFT;
+				map.setStartOffsets(0, -50);
+				if (trainerCanMove(e) && (trainer.getPoint().y + dy) % Map.WIDTH == Map.WIDTH - 1)
+					map.moveLeft();
+				break;
+			default:
+				break;
+			}
 
-		// set the visual direction of the trainer sprite on the Map
-		map.setTrainerDir(dir);
+			// set the visual direction of the trainer sprite on the Map
+			map.setTrainerDir(dir);
 
-		// if the trainer can move, then move the trainer and decrease steps
-		// and check for random encounter and stuff
-		if (trainerCanMove(e)) {
-			// change trainer object point
-			trainer.getPoint().translate(dx, dy);
+			// if the trainer can move, then move the trainer and decrease steps
+			// and check for random encounter and stuff
+			if (trainerCanMove(e)) {
 
-			// interact with the new tile
-			map.getGroundTiles()[trainer.getPoint().x][trainer.getPoint().y].interactWithTrainer();
+				// change trainer object point
+				trainer.getPoint().translate(dx, dy);
 
-			setEncounterBG(map.getGroundTiles()[trainer.getPoint().x][trainer.getPoint().y]
-					.getTerrainType());
+				// set trainer's sprite location in map to trainer's current loc
+				map.setTrainerPoint(trainer.getPoint());
 
-			// decrease steps
-			trainer.decreaseSteps();
+				// animate the movement
+				map.startTrainerMovement();
 
-			// set trainer's sprite location in map to trainer's current loc
-			map.setTrainerPoint(trainer.getPoint());
+				// interact with the new tile
+				map.getGroundTiles()[trainer.getPoint().x][trainer.getPoint().y]
+						.interactWithTrainer();
 
+				setEncounterBG(map.getGroundTiles()[trainer.getPoint().x][trainer.getPoint().y]
+						.getTerrainType());
+
+				// decrease steps
+				trainer.decreaseSteps();
+
+				
+
+				// start an encounter
+				if (new Random().nextInt(10) == 9)
+					startEncounter();
+
+				//TODO encounters/items
+			}
+			
 			// repaint the visual changes
 			map.repaint();
-
-			// start an encounter
-			if (new Random().nextInt(10) == 9)
-				startEncounter();
-
-			//TODO encounters/items
 		}
-
 	}
 
 	/*---------------------------------------------------------------------
@@ -282,7 +294,7 @@ public abstract class GameMode implements Serializable {
 	public String getEndMessage() {
 		return endMessage;
 	}
-	
+
 	public String getBatteMessage() {
 		return battleMessage;
 	}
@@ -335,9 +347,8 @@ public abstract class GameMode implements Serializable {
 	public void doTrainerAction(TrainerAction action) {
 
 		String pName = encounteredPokemon.getName();
-		
-		if (action != TrainerAction.RUN_AWAY)
-			encounter.animateTrainer();
+
+		boolean doAnimation = true;
 
 		if (encounteredPokemon.respond(action) == PokemonResponse.RUN_AWAY) {
 			battleMessage = pName + " ran away T_T";
@@ -347,13 +358,16 @@ public abstract class GameMode implements Serializable {
 		switch (action) {
 
 		case THROW_BALL:
-			//trainer use ball
-			//trainer.useItem(new Pokeball());
-			if (encounteredPokemon.getState() == PokemonResponse.GET_CAUGHT) {
+			if (trainer.getItemQuantities().get("PokeBall") == 0) {
+				battleMessage = "You have no pokeballs left bitch";
+				doAnimation = false;
+			} else if (encounteredPokemon.getState() == PokemonResponse.GET_CAUGHT) {
 				battleMessage = "You successfully caught " + pName + "!";
+				trainer.useItem(new PokeBall());
 				trainer.addPokemon(encounteredPokemon);
 				endEncounter();
-			} else battleMessage = "You threw a PokeBall!! But it failed... :(";
+			} else
+				battleMessage = "You threw a PokeBall!! But it failed... :(";
 			break;
 		case RUN_AWAY:
 			battleMessage = "You ran away! U little bitch... -.-";
@@ -370,18 +384,25 @@ public abstract class GameMode implements Serializable {
 
 		}
 
+		if (action != TrainerAction.RUN_AWAY && doAnimation)
+			encounter.animateTrainer();
+
 	}
-	
-	public void useItem(Item i) {
-		
+
+	public void useItemOnPokemon(Item i, String pName) {
+
 		trainer.useItem(i);
-	
+
 		if (i.getName().equals("Harmonica")) {
 			stopBGMusic();
-			bgPath = ((Harmonica) i).getSongFilePath(database.getCyndaquil()); //placeholder
-			startBGMusic();
-		} 
-		
+			//bgPath = ((Harmonica) i).getSongFilePath(database.getPokemonByName(pName));
+			//startBGMusic(); 
+		}
+
+	}
+
+	public void useItem(Item i) {
+		trainer.useItem(i);
 	}
 
 	private void endEncounter() {
@@ -409,6 +430,7 @@ public abstract class GameMode implements Serializable {
 	public void setBGMusicPath(String s) {
 		bgPath = s;
 	}
+
 	/*---------------------------------------------------------------------
 	 |  Class name:     [OurKeyListener]
 	 |  Purpose:        [Used to move trainer around the map]
