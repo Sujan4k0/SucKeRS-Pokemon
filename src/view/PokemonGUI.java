@@ -322,17 +322,24 @@ public class PokemonGUI {
         endStats.addWindowListener(new CloseStatsListener());
     }
 
-    private void battlePanel() {
+    /*---------------------------------------------------------------------
+    |  Method name:    [battleFrame]
+    |  Purpose:        [Creates the frame for a Trainer encounter with a
+    |                   Pokemon.]
+    *---------------------------------------------------------------------*/
+    private void battleFrame() {
 
         mapView.setVisible(false);
         encounterFrame = new JFrame();
         encounterFrame.setTitle("Battle");
         encounterFrame.setVisible(true);
         encounterFrame.add(mode.getEncounterPanel(), BorderLayout.CENTER);
+        mode.getEncounterPanel().setBorder(BorderFactory.createLineBorder(new Color(76,176,159), 5));
         encounterFrame.revalidate();
-        encounterFrame.setSize(700, 700);
 
         JPanel trainerControls = new JPanel(new GridLayout(2, 2));
+        trainerControls.setBackground(new Color(76,176,159));
+        trainerControls.setBorder(BorderFactory.createLineBorder(new Color(163, 116, 179), 5));
 
         JButton throwRock = new JButton("Throw Rock");
         JButton throwBait = new JButton("Throw Bait");
@@ -343,6 +350,11 @@ public class PokemonGUI {
         throwBait.addActionListener(new TrainerActionButtons());
         runAway.addActionListener(new TrainerActionButtons());
         throwBall.addActionListener(new TrainerActionButtons());
+        
+        throwRock.setBackground(new Color(255, 199, 229));
+        throwBait.setBackground(new Color (232, 170, 0));
+        runAway.setBackground(new Color(16, 160, 222));
+        throwBall.setBackground(new Color(54, 191, 27));
 
         trainerControls.add(throwRock);
         trainerControls.add(throwBait);
@@ -350,39 +362,9 @@ public class PokemonGUI {
         trainerControls.add(throwBall);
 
         encounterFrame.add(trainerControls, BorderLayout.SOUTH);
-
-    }
-
-    private class TrainerActionButtons implements ActionListener {
-
-        @Override
-        public void actionPerformed(ActionEvent e) {
-            // TODO Auto-generated method stub
-            System.out.println(e.getActionCommand());
-
-            switch (e.getActionCommand()) {
-
-            case "Throw Rock":
-                mode.doTrainerAction(TrainerAction.THROW_ROCK);
-                break;
-
-            case "Throw Bait":
-                mode.doTrainerAction(TrainerAction.THROW_BAIT);
-                break;
-
-            case "Throw Pokeball":
-                mode.doTrainerAction(TrainerAction.THROW_BALL);
-                break;
-
-            case "Run":
-                mode.doTrainerAction(TrainerAction.RUN_AWAY);
-                break;
-            default:
-                break;
-            }
-
-        }
-
+        
+        encounterFrame.setSize(800, 550);
+        encounterFrame.setLocationRelativeTo(null);
     }
 
     /*---------------------------------------------------------------------
@@ -699,6 +681,47 @@ public class PokemonGUI {
 
         }
     }
+    
+    /*---------------------------------------------------------------------
+    |  Class name:     [TrainerActionButtons]
+    |  Purpose:        [When in battle mode, these are the controls and
+    |                   their corresponding actions.]
+    *---------------------------------------------------------------------*/
+    private class TrainerActionButtons implements ActionListener {
+
+        @Override
+        public void actionPerformed(ActionEvent e) {
+
+            // go through available actions and do the corresponding TrainerAction
+            switch (e.getActionCommand()) {
+
+            case "Throw Rock":
+                mode.doTrainerAction(TrainerAction.THROW_ROCK);
+                break;
+
+            case "Throw Bait":
+                mode.doTrainerAction(TrainerAction.THROW_BAIT);
+                break;
+
+            case "Throw Pokeball":
+                mode.doTrainerAction(TrainerAction.THROW_BALL);
+                break;
+
+            case "Run":
+                mode.doTrainerAction(TrainerAction.RUN_AWAY);
+                break;
+            default:
+                break;
+            }
+            
+            // previous action ended the battle
+            if (!mode.trainerInBattle()) {
+                
+                encounterFrame.dispose();
+                mapView.setVisible(true);
+            }
+        }
+    }
 
     /*---------------------------------------------------------------------
     |  Class name:     [GameWon]
@@ -724,7 +747,7 @@ public class PokemonGUI {
 
             else if (mode.trainerInBattle()) {
 
-                battlePanel();
+                battleFrame();
                 System.out.println("Starting battle sequence");
             }
 
