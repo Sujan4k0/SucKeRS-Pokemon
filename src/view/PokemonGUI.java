@@ -45,10 +45,12 @@ import controller.CEAGame;
 import controller.GameMode;
 import controller.MazeGame;
 import javafx.scene.control.ProgressBar;
+import model.PokemonModel.Pokemon;
 import model.TrainerModel.TrainerAction;
 
 public class PokemonGUI {
 
+    private static final String encoutnerFrame = null;
     private JFrame startScreen;
     private JFrame encounterFrame;
     private GameMode mode;
@@ -102,6 +104,7 @@ public class PokemonGUI {
         startScreen = new JFrame();
         startScreen.setSize(600, 300);
         startScreen.setTitle("Pokemon");
+        startScreen.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 
         // JPanel set up to show the "Pokemon" logo on the frame
         JPanel logoHeader = new JPanel();
@@ -155,14 +158,15 @@ public class PokemonGUI {
         ArrayList<String> items = new ArrayList<String>();
         items.add("TestPotion1");
         items.add("TestPotion2");
-
-        ArrayList<String> pokemon = new ArrayList<String>();
-        pokemon.add("TestMon1");
-        pokemon.add("TestMon2");
+        
+        trainerPokemon = new JComboBox<Object>();
+        for (int p = 0; p < mode.getTrainer().getPokemon().size(); p++) {
+        
+            trainerPokemon.addItem(mode.getTrainer().getPokemon().get(p).getName());
+        }
 
         trainerItems = new JComboBox<Object>(items.toArray());
         trainerItems.setFocusable(false);
-        trainerPokemon = new JComboBox<Object>(pokemon.toArray());
         trainerPokemon.setFocusable(false);
 
         // set up the side user panel for inventory
@@ -319,6 +323,7 @@ public class PokemonGUI {
         endStats.add(end, BorderLayout.EAST);
         endStats.pack();
 
+        endStats.setLocationRelativeTo(null);
         endStats.addWindowListener(new CloseStatsListener());
     }
 
@@ -333,6 +338,7 @@ public class PokemonGUI {
         encounterFrame = new JFrame();
         encounterFrame.setTitle("Battle");
         encounterFrame.setVisible(true);
+        encounterFrame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
         encounterFrame.add(mode.getEncounterPanel(), BorderLayout.CENTER);
         mode.getEncounterPanel().setBorder(BorderFactory.createLineBorder(new Color(76,176,159), 5));
         encounterFrame.revalidate();
@@ -719,6 +725,16 @@ public class PokemonGUI {
                 
                 encounterFrame.dispose();
                 mapView.setVisible(true);
+                
+                trainerPokemon.removeAllItems();
+                
+                for (int p = 0; p < mode.getTrainer().getPokemon().size(); p++) {
+                
+                    trainerPokemon.addItem(mode.getTrainer().getPokemon().get(p).getName());
+                }
+
+                mapView.revalidate();
+
             }
         }
     }
@@ -755,6 +771,15 @@ public class PokemonGUI {
 
                 steps.setValue(mode.getTrainer().getSteps());
                 steps.setString((steps.getValue()) + " steps remaining");
+                
+                trainerPokemon.removeAllItems();
+                
+                for (int p = 0; p < mode.getTrainer().getPokemon().size(); p++) {
+                
+                    trainerPokemon.addItem(mode.getTrainer().getPokemon().get(p).getName());
+                }
+
+                mapView.revalidate();
             }
         }
 
