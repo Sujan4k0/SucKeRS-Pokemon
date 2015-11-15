@@ -12,7 +12,7 @@ public class SoundPlayer implements Serializable {
 
 	private static final long serialVersionUID = 1L;
 	
-	MediaPlayer mediaPlayer;
+	transient MediaPlayer mediaPlayer;
 
 	public SoundPlayer() {
 		JFXPanel fxPanel = new JFXPanel(); // necessary to play songs
