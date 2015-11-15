@@ -30,6 +30,7 @@ public class CEAGame extends GameMode {
 	 *---------------------------------------------------------------------*/
 	public CEAGame(Random rand) {
 		super(rand);
+		bgPath = "./sounds/Ruby_Sapphire_SafariZone.mp3";
 		startBGMusic();
 	}
 
@@ -52,6 +53,9 @@ public class CEAGame extends GameMode {
 	@Override
 	public boolean isGameLost() {
 		// TODO add losing conditions
+		if (trainer.getSteps() == 0)
+			return true;
+		
 		return false;
 	}
 
@@ -62,11 +66,6 @@ public class CEAGame extends GameMode {
 	@Override
 	public void createMap() {
 		map = new CEAMap();
-	}
-
-	@Override
-	public void startBGMusic() {
-		bgPlayer.loopSound("./sounds/Ruby_Sapphire_SafariZone.mp3");		
 	}
 
 }

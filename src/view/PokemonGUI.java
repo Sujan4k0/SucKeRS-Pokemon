@@ -465,7 +465,7 @@ public class PokemonGUI {
             info.setEditable(false);
             info.setFont(new Font("Futura", Font.PLAIN, 15));
             dialog.add(info);
-            dialog.setSize(500, 200);
+            dialog.setSize(500, 300);
             dialog.setLocationRelativeTo(null);
             dialog.setVisible(true);
         }
@@ -528,7 +528,7 @@ public class PokemonGUI {
             info.setEditable(false);
             info.setFont(new Font("Futura", Font.PLAIN, 15));
             dialog.add(info);
-            dialog.setSize(500, 200);
+            dialog.setSize(500, 300);
             dialog.setLocationRelativeTo(null);
             dialog.setVisible(true);
         }
@@ -730,7 +730,9 @@ public class PokemonGUI {
                 
                 for (int p = 0; p < mode.getTrainer().getPokemon().size(); p++) {
                 
-                    trainerPokemon.addItem(mode.getTrainer().getPokemon().get(p).getName());
+                    Pokemon mon = mode.getTrainer().getPokemon().get(p);
+                    
+                    trainerPokemon.addItem(mon.getName() + " " + mon.rarityString());
                 }
 
                 mapView.revalidate();
@@ -776,7 +778,9 @@ public class PokemonGUI {
                 
                 for (int p = 0; p < mode.getTrainer().getPokemon().size(); p++) {
                 
-                    trainerPokemon.addItem(mode.getTrainer().getPokemon().get(p).getName());
+                    Pokemon mon = mode.getTrainer().getPokemon().get(p);
+                    
+                    trainerPokemon.addItem(mon.getName() + " " + mon.rarityString());
                 }
 
                 mapView.revalidate();

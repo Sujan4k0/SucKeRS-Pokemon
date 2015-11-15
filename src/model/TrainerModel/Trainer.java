@@ -21,6 +21,7 @@
 package model.TrainerModel;
 
 import java.awt.Point;
+import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.HashMap;
 
@@ -31,7 +32,7 @@ import model.ItemModel.Teleporter;
 //import model.MapModel.Map.Direction; //This was removed ?
 import model.PokemonModel.Pokemon;
 
-public class Trainer {
+public class Trainer implements Serializable {
 
 	private int steps; //Number of steps the trainer has left to take
 	private HashMap<String, Integer> itemQuantities; //trainer's inventory of items

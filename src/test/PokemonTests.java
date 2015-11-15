@@ -124,9 +124,9 @@ public class PokemonTests {
     @Test
     public void toStringTest() {
 
-        Pokemon testMon = new Common(new Random(), "Sarryathjan", null, PokemonType.ELECTRIC);
+        Common testMon = new Common(new Random(), "Sarryathjan", null, PokemonType.ELECTRIC);
         assertEquals(testMon.toString(), "Name: SARRYATHJAN" + "\n" + "Type: ELECTRIC" + "\n");
-        assertEquals(testMon.getName(), "SARRYATHJAN");
+        assertEquals(testMon.getName(), "SARRYATHJAN");        
     }
 
     @Test

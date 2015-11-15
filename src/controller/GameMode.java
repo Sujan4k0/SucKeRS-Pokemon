@@ -31,6 +31,7 @@ import javax.imageio.ImageIO;
 
 import soundplayer.SoundPlayer;
 import view.*;
+import model.ItemModel.*;
 import model.MapModel.Obstacle;
 import model.MapModel.TerrainType;
 import model.PokemonModel.Pokemon;
@@ -46,7 +47,7 @@ public abstract class GameMode implements Serializable {
 	Map map; // the visual map of this game
 	EncounterPanel encounter;
 	Random r; // used for random encounters/items
-	String endMessage = ""; // the message to show on end game
+	String endMessage = "", bgPath = "", battleMessage = ""; // the message to show on end game
 	boolean forfeited = false;
 	boolean inBattle = false;
 	Pokemon encounteredPokemon;
@@ -59,6 +60,9 @@ public abstract class GameMode implements Serializable {
 
 	// database of Pokemon
 	PokemonDatabase database;
+
+	// count number of steps Trainer takes so that encounters aren't every
+	// one freaking step
 
 	/*---------------------------------------------------------------------
 	 |  Method name:    [GameMode]
@@ -278,6 +282,10 @@ public abstract class GameMode implements Serializable {
 	public String getEndMessage() {
 		return endMessage;
 	}
+	
+	public String getBatteMessage() {
+		return battleMessage;
+	}
 
 	/*---------------------------------------------------------------------
 	 |  Method name:    [forfeitGame]
@@ -299,9 +307,8 @@ public abstract class GameMode implements Serializable {
 			rand = new Random().nextInt(15);
 			if (rand == 9)
 				encounteredPokemon = database.getRandomUncommon(map.getCurrentTerrain());
-			else {
+			else
 				encounteredPokemon = database.getRandomCommon(map.getCurrentTerrain());
-			}
 		}
 
 		inBattle = true;
@@ -327,11 +334,15 @@ public abstract class GameMode implements Serializable {
 
 	public void doTrainerAction(TrainerAction action) {
 
+		String pName = encounteredPokemon.getName();
+		
 		if (action != TrainerAction.RUN_AWAY)
 			encounter.animateTrainer();
 
-		if (encounteredPokemon.respond(action) == PokemonResponse.RUN_AWAY)
+		if (encounteredPokemon.respond(action) == PokemonResponse.RUN_AWAY) {
+			battleMessage = pName + " ran away T_T";
 			endEncounter();
+		}
 
 		switch (action) {
 
@@ -339,22 +350,38 @@ public abstract class GameMode implements Serializable {
 			//trainer use ball
 			//trainer.useItem(new Pokeball());
 			if (encounteredPokemon.getState() == PokemonResponse.GET_CAUGHT) {
+				battleMessage = "You successfully caught " + pName + "!";
 				trainer.addPokemon(encounteredPokemon);
 				endEncounter();
-			}
+			} else battleMessage = "You threw a PokeBall!! But it failed... :(";
 			break;
 		case RUN_AWAY:
+			battleMessage = "You ran away! U little bitch... -.-";
 			endEncounter();
 			break;
 		case THROW_BAIT:
+			battleMessage = "You threw bait to" + pName + "!";
 			break;
 		case THROW_ROCK:
+			battleMessage = "You threw a rock at " + pName + "!";
 			break;
 		default:
 			break;
 
 		}
 
+	}
+	
+	public void useItem(Item i) {
+		
+		trainer.useItem(i);
+	
+		if (i.getName().equals("Harmonica")) {
+			stopBGMusic();
+			bgPath = ((Harmonica) i).getSongFilePath(database.getCyndaquil()); //placeholder
+			startBGMusic();
+		} 
+		
 	}
 
 	private void endEncounter() {
@@ -371,12 +398,17 @@ public abstract class GameMode implements Serializable {
 		return encounter;
 	}
 
-	public abstract void startBGMusic();
+	public void startBGMusic() {
+		bgPlayer.loopSound(bgPath);
+	}
 
 	public void stopBGMusic() {
 		bgPlayer.stopSound();
 	}
 
+	public void setBGMusicPath(String s) {
+		bgPath = s;
+	}
 	/*---------------------------------------------------------------------
 	 |  Class name:     [OurKeyListener]
 	 |  Purpose:        [Used to move trainer around the map]
