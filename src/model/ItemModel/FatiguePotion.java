@@ -23,5 +23,7 @@ public class FatiguePotion extends Item{
 	 *---------------------------------------------------------------------*/
 	public FatiguePotion(){
 		super.setName("Fatigue Potion");
+		super.setForPokemon(false);
+		super.setForTrainer(true);
 	}
 }

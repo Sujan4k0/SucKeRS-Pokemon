@@ -17,6 +17,8 @@ package model.ItemModel;
 
 public abstract class Item {
 	protected static String name;
+	private boolean forTrainer;
+	private boolean forPokemon;
 	
 	
 	public Item(){
@@ -33,5 +35,21 @@ public abstract class Item {
 	}
 	public void setName(String n){
 		name= n;
+	}
+
+	public boolean isForPokemon() {
+		return forPokemon;
+	}
+
+	public void setForPokemon(boolean forPokemon) {
+		this.forPokemon = forPokemon;
+	}
+
+	public boolean isForTrainer() {
+		return forTrainer;
+	}
+
+	public void setForTrainer(boolean forTrainer) {
+		this.forTrainer = forTrainer;
 	}
 }

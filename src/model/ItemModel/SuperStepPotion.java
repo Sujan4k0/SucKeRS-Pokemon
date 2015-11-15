@@ -20,6 +20,7 @@ public class SuperStepPotion extends StepPotion{
 	 |  Purpose:  	    [Constructor]
 	 *---------------------------------------------------------------------*/
 	public SuperStepPotion(){
+		super();
 		setStepBonus(25);
 		super.setName("Super Step Potion");	
 	}

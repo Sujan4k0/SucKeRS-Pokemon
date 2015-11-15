@@ -28,6 +28,8 @@ public class Teleporter extends Item{
 	 *---------------------------------------------------------------------*/
 	public Teleporter(){
 		super.setName("Teleporter");
+		super.setForPokemon(false);
+		super.setForTrainer(true);
 	}
    	
 	/*---------------------------------------------------------------------

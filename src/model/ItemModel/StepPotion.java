@@ -15,13 +15,15 @@
  *==========================================================================*/
 package model.ItemModel;
 
-public class StepPotion extends Item{
+public abstract class StepPotion extends Item{
 	private int stepBonus;
 
 	/*---------------------------------------------------------------------
 	 |  Purpose:  	    [Constructor]
 	 *---------------------------------------------------------------------*/
-	public StepPotion(){	
+	public StepPotion(){
+		super.setForPokemon(false);
+		super.setForTrainer(true);
 	}
 
 	/*---------------------------------------------------------------------
