@@ -1,19 +1,21 @@
 package soundplayer;
 
 import java.io.File;
-import java.util.Map;
+import java.io.Serializable;
 
 import javafx.embed.swing.JFXPanel;
 import javafx.scene.media.Media;
 import javafx.scene.media.MediaPlayer;
 import javafx.util.Duration;
 
-public class SoundPlayer {
+public class SoundPlayer implements Serializable {
 
+	private static final long serialVersionUID = 1L;
+	
 	MediaPlayer mediaPlayer;
 
 	public SoundPlayer() {
-		JFXPanel fxPanel = new JFXPanel();
+		JFXPanel fxPanel = new JFXPanel(); // necessary to play songs
 	}
 
 	public void playSound(String filePath) {

@@ -53,13 +53,13 @@ public abstract class GameMode implements Serializable {
 	Pokemon encounteredPokemon;
 
 	// Plays bg sounds :D
-	transient SoundPlayer bgPlayer = new SoundPlayer();
+	SoundPlayer bgPlayer = new SoundPlayer();
 
 	// Plays sfx :D
-	transient SoundPlayer sfxPlayer = new SoundPlayer();
+	SoundPlayer sfxPlayer = new SoundPlayer();
 
 	// database of Pokemon
-	transient PokemonDatabase database;
+	PokemonDatabase database;
 
 	// count number of steps Trainer takes so that encounters aren't every
 	// one freaking step
