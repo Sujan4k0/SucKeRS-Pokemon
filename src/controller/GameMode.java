@@ -224,7 +224,7 @@ public abstract class GameMode implements Serializable {
 			map.repaint();
 
 			// start an encounter
-			if (new Random().nextInt(5) == 1)
+			if (new Random().nextInt(10) == 9)
 				startEncounter();
 
 			//TODO encounters/items
@@ -301,21 +301,22 @@ public abstract class GameMode implements Serializable {
 
 		if (action != TrainerAction.RUN_AWAY)
 			encounter.animateTrainer();
-		
-		encounteredPokemon.respond(action);
-		
+
+		if (encounteredPokemon.respond(action) == PokemonResponse.RUN_AWAY)
+			endEncounter();
+
 		switch (action) {
 
 		case THROW_BALL:
 			//trainer use ball
 			//trainer.useItem(new Pokeball());
-			if (encounteredPokemon.getState() == PokemonResponse.GET_CAUGHT)
+			if (encounteredPokemon.getState() == PokemonResponse.GET_CAUGHT) {
 				trainer.addPokemon(encounteredPokemon);
+				endEncounter();
+			}
 			break;
 		case RUN_AWAY:
-			inBattle = false;
-			encounter.stopEncounter();
-			// startBGMusic();
+			endEncounter();
 			break;
 		case THROW_BAIT:
 			break;
@@ -326,8 +327,12 @@ public abstract class GameMode implements Serializable {
 
 		}
 
-		
+	}
 
+	private void endEncounter() {
+		inBattle = false;
+		encounter.stopEncounter();
+		startBGMusic();
 	}
 
 	public boolean trainerInBattle() {
@@ -337,9 +342,9 @@ public abstract class GameMode implements Serializable {
 	public EncounterPanel getEncounterPanel() {
 		return encounter;
 	}
-	
+
 	public abstract void startBGMusic();
-	
+
 	public void stopBGMusic() {
 		bgPlayer.stopSound();
 	}
@@ -362,14 +367,17 @@ public abstract class GameMode implements Serializable {
 		 *---------------------------------------------------------------------*/
 		@Override
 		public void keyPressed(KeyEvent e) {
-			
-			System.out.println("Our GameMode Listener");
+
+			// System.out.println("Our GameMode Listener");
 
 			// if the game is not won or lost or forfeited, move the trainer
 			if (!inBattle && !forfeited && !isGameWon() && !isGameLost()) {
 				// set sprite direction and try to move trainer
 				moveTrainer(e);
 			}
+
+			if (!isGameActive())
+				stopBGMusic();
 
 		}
 
@@ -398,13 +406,8 @@ public abstract class GameMode implements Serializable {
 		 *---------------------------------------------------------------------*/
 		@Override
 		public void keyPressed(KeyEvent e) {
-			System.out.println("GameMode Battle Listener");
+			// System.out.println("GameMode Battle Listener");
 			// PROMPT USER TO PRESS "ENTER" AFTER BATTLE ENDS TO UPDATE THE MAP!!!! >:OOO
-			if (e.getKeyCode() == KeyEvent.VK_ENTER && inBattle
-					&& encounteredPokemon.getState() != PokemonResponse.STAND_GROUND) {
-				inBattle = false;
-				startBGMusic();
-			}
 		}
 
 		@Override
