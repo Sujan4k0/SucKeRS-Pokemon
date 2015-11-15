@@ -32,6 +32,7 @@ import javax.imageio.ImageIO;
 import soundplayer.SoundPlayer;
 import view.*;
 import model.MapModel.Obstacle;
+import model.MapModel.TerrainType;
 import model.PokemonModel.Pokemon;
 import model.PokemonModel.PokemonResponse;
 import model.TrainerModel.Trainer;
@@ -221,7 +222,10 @@ public abstract class GameMode implements Serializable {
 
 			// interact with the new tile
 			map.getGroundTiles()[trainer.getPoint().x][trainer.getPoint().y].interactWithTrainer();
-			
+
+			setEncounterBG(map.getGroundTiles()[trainer.getPoint().x][trainer.getPoint().y]
+					.getTerrainType());
+
 			// decrease steps
 			trainer.decreaseSteps();
 
@@ -305,17 +309,20 @@ public abstract class GameMode implements Serializable {
 		stopBGMusic();
 
 	}
-	
-	protected void setEncounterBG(String filePath) {
+
+	protected void setEncounterBG(TerrainType tt) {
+
+		String path = "./images/bgImages/" + tt.name().toLowerCase() + "BattleBackground.png";
+
 		Image i;
 		try {
-			i = ImageIO.read(new File(filePath));
+			i = ImageIO.read(new File(path));
 			encounter.setBGImage(i);
 		} catch (IOException e) {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
 		}
-		
+
 	}
 
 	public void doTrainerAction(TrainerAction action) {
@@ -427,7 +434,7 @@ public abstract class GameMode implements Serializable {
 		 *---------------------------------------------------------------------*/
 		@Override
 		public void keyPressed(KeyEvent e) {
-			
+
 		}
 
 		@Override

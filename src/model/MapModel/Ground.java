@@ -50,7 +50,7 @@ public enum Ground implements Tile {
 	 *---------------------------------------------------------------------*/
 	@Override
 	public String interactWithTrainer() {
-		if (getTerrainType().getSound1().equals("")) {
+		if (!getTerrainType().getSound1().equals("")) {
 			if (!sound) {
 				player.playSound(getTerrainType().getSound1());
 				sound = true;

@@ -22,6 +22,7 @@ public enum TerrainType {
 	//TODO add walking sound effects for dif terrain types
 	
 	ICE("",""), GRASS("./sounds/Grass_Step_1.wav", "./sounds/Grass_Step_2.wav"), 
+	FOREST("./sounds/Grass_Step_1.wav", "./sounds/Grass_Step_2.wav"),
 	CAVE("",""), MYSTERY("",""), GENERIC("",""), DESERT("",""); // etc...
 	
 	
