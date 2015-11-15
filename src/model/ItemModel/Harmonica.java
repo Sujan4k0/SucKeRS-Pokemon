@@ -11,7 +11,8 @@ public class Harmonica extends Item{
 	}
 	
 	public String getSongFilePath(Pokemon poke){
-		return "./sounds/test_song.wav" ;
+		String str = "./sounds/"+poke.getName().toLowerCase()+"_song.wav";
+		return str;
 		
 	}
 

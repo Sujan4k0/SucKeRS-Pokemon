@@ -15,10 +15,14 @@
  *==========================================================================*/
 package model.ItemModel;
 
-public abstract class Item {
+import java.awt.Image;
+import java.io.Serializable;
+
+public abstract class Item implements Serializable{
 	protected static String name;
 	private boolean forTrainer;
 	private boolean forPokemon;
+	protected transient Image image;
 	
 	
 	public Item(){
