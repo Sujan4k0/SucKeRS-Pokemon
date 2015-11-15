@@ -22,8 +22,10 @@ package model.TrainerModel;
 
 import java.awt.Point;
 import java.util.ArrayList;
+import java.util.HashMap;
 
 import model.ItemModel.Item;
+import model.ItemModel.PokeBall;
 import model.ItemModel.StepPotion;
 import model.ItemModel.Teleporter;
 //import model.MapModel.Map.Direction; //This was removed ?
@@ -32,7 +34,8 @@ import model.PokemonModel.Pokemon;
 public class Trainer {
 
 	private int steps; //Number of steps the trainer has left to take
-	private ArrayList<Item> items; //trainer's inventory of items
+	private HashMap<String, Integer> itemQuantities; //trainer's inventory of items
+	private ArrayList<Item> items;
 	private ArrayList<Pokemon> capturedPokemon; //trainer's collection of pokemon
 	private int currentPokeballs;
 	private boolean fatigued;
@@ -53,6 +56,9 @@ public class Trainer {
 		currentPokeballs = 30;
 		fatigued = false;
 		trainerPosition = null;
+		for (int i=0; i<30; i++){
+			items.add(new PokeBall());
+		}
 	}
 
 	/*-----------------------------------------------------------------------------
@@ -71,6 +77,9 @@ public class Trainer {
 		currentPokeballs = p;
 		fatigued = false;
 		trainerPosition = null;
+		for (int i=0; i<p; i++){
+			items.add(new PokeBall());
+		}
 	}
 	
 	/*---------------------------------------------------------------------
@@ -98,24 +107,39 @@ public class Trainer {
 	}
 	
 	/*---------------------------------------------------------------------
+	 |  Method name:    [getItemQuantities]
+	 |  Purpose:  	    [Returns the list of the quantity of each item that the trainer has]
+	 |  Parameters:     [none]
+	 |  Returns:        [HashMap<String, Integer>]
+	 *---------------------------------------------------------------------*/
+	public HashMap<String, Integer> getItemQuantities() {
+		
+		return itemQuantities;
+	}
+	/*---------------------------------------------------------------------
 	 |  Method name:    [getItems]
 	 |  Purpose:  	    [Returns the list of items that the trainer has]
 	 |  Parameters:     [none]
 	 |  Returns:        [ArrayList<Item>]
 	 *---------------------------------------------------------------------*/
-	
-	public ArrayList<Item> getItems() {
-		
+	public ArrayList<Item> getItems(){
 		return items;
 	}
 
 	/*---------------------------------------------------------------------
 	 |  Method name:    [addItem]
-	 |  Purpose:  	    [puts a found item in the trainer's inventory]
+	 |  Purpose:  	    [puts a found item in the trainer's inventory and
+	 |						increments the amount of that item in the hash table]
 	 |  Parameters:     [an Item i]
 	 *---------------------------------------------------------------------*/
 	public void addItem(Item i) {
 		items.add(i);
+		if (!itemQuantities.containsKey(i.getName())){
+			itemQuantities.put(i.getName(), 1);
+		}
+		else{
+			itemQuantities.put(i.getName(), (itemQuantities.get(i.getName())+1));
+		}
 		//notifyObservers
 	}
 
@@ -132,6 +156,7 @@ public class Trainer {
 				trainerPosition = new Point((int) t.getTeleportPoint().getX(),
 						(int) t.getTeleportPoint().getY());
 				items.remove(i);
+				itemQuantities.put(i.getName(), (itemQuantities.get(i.getName())-1));
 				//update observers for inventory
 			} else {
 				t.setPoint(trainerPosition);
@@ -141,6 +166,7 @@ public class Trainer {
 			if (isFatigued()) {
 				setFatigued(false);
 				items.remove(i);
+				itemQuantities.put(i.getName(), (itemQuantities.get(i.getName())-1));
 				//update observers for inventory
 
 			} else {
@@ -151,7 +177,15 @@ public class Trainer {
 				|| i.getName().equals("Hyper Step Potion")) {
 			this.steps += ((StepPotion) i).getStepBonus();
 			items.remove(i);
+			itemQuantities.put(i.getName(), (itemQuantities.get(i.getName())-1));
 			//update observers for inventory
+		} else if (i.getName().equals("PokeBall")){
+			items.remove(i);
+			itemQuantities.put(i.getName(), (itemQuantities.get(i.getName())-1));
+		}
+		else if (i.getName().equals("Harmonica")){
+			items.remove(i);
+			itemQuantities.put(i.getName(), (itemQuantities.get(i.getName())-1));
 		}
 	}
 	
