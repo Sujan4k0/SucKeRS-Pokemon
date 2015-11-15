@@ -20,7 +20,8 @@ public class SuperStepPotion extends StepPotion{
 	 |  Purpose:  	    [Constructor]
 	 *---------------------------------------------------------------------*/
 	public SuperStepPotion(){
-		super();
+		super.setForPokemon(false);
+		super.setForTrainer(true);
 		setStepBonus(25);
 		super.setName("Super Step Potion");	
 	}

@@ -33,23 +33,29 @@ public class ItemTests {
 	 *---------------------------------------------------------------------*/
 	@Test
 	public void TestStepPotions() {
-		Item Super = new SuperStepPotion();
-		Item Basic = new BasicStepPotion();
-		Item Hyper = new HyperStepPotion();
+		SuperStepPotion Super = new SuperStepPotion();
+		BasicStepPotion Basic = new BasicStepPotion();
+		HyperStepPotion Hyper = new HyperStepPotion();
 		Trainer ash = new Trainer();
 		
 		ash.addItem(Basic);
 		assertTrue(ash.getItems().contains(Basic));
+		assertTrue(ash.getItemQuantities().get(Basic.getName())==1);
 		ash.addItem(Super);
 		assertTrue(ash.getItems().contains(Super));
+		assertTrue(ash.getItemQuantities().get(Super.getName())==1);
 		ash.addItem(Hyper);
 		assertTrue(ash.getItems().contains(Hyper));
+		assertTrue(ash.getItemQuantities().get(Hyper.getName())==1);
 		ash.useItem(Basic);
 		assertTrue(ash.getSteps()==510);
+		assertTrue(ash.getItemQuantities().get(Basic.getName())==0);
 		ash.useItem(Super);
 		assertTrue(ash.getSteps()==535);
+		assertTrue(ash.getItemQuantities().get(Super.getName())==0);
 		ash.useItem(Hyper);
 		assertTrue(ash.getSteps()==585);
+		assertTrue(ash.getItemQuantities().get(Hyper.getName())==0);
 		assertTrue((! ash.getItems().contains(Hyper))&& (! ash.getItems().contains(Super))&& (! ash.getItems().contains(Basic)));
 
 	}
@@ -68,11 +74,13 @@ public class ItemTests {
 		
 		brock.addItem(teleporter);
 		assertTrue(brock.getItems().contains(teleporter));
+		assertTrue(brock.getItemQuantities().get(teleporter.getName())==1);
 		
 		brock.useItem(teleporter);
 		assertTrue(brock.getItems().contains(teleporter));
 		assertTrue(((Teleporter) teleporter).isSet());
 		assertTrue(((Teleporter) teleporter).getTeleportPoint().equals(p));
+		assertTrue(brock.getItemQuantities().get(teleporter.getName())==1);
 
 		brock.setPoint(newPoint);
 		assertTrue(!brock.getPoint().equals(p));
@@ -81,6 +89,7 @@ public class ItemTests {
 		assertTrue(((Teleporter)teleporter).isSet());
 		assertTrue(brock.getPoint().equals(p));
 		assertTrue(! brock.getItems().contains(teleporter));
+		assertTrue(brock.getItemQuantities().get(teleporter.getName())==0);
 
 	}
 	/*---------------------------------------------------------------------
@@ -94,9 +103,11 @@ public class ItemTests {
 		
 		misty.addItem(fPotion);
 		assertTrue(misty.getItems().contains(fPotion));
+		assertTrue(misty.getItemQuantities().get(fPotion.getName())==1);
 		
 		misty.useItem(fPotion);
 		assertTrue(misty.getItems().contains(fPotion));
+		assertTrue(misty.getItemQuantities().get(fPotion.getName())==1);
 		assertTrue(!misty.isFatigued());
 		
 		misty.setFatigued(true);
@@ -104,5 +115,6 @@ public class ItemTests {
 		misty.useItem(fPotion);
 		assertTrue(!misty.isFatigued());
 		assertFalse(misty.getItems().contains(fPotion));
+		assertTrue(misty.getItemQuantities().get(fPotion.getName())==0);
 	}
 }
