@@ -52,7 +52,7 @@ public class CEAMap extends Map {
 		w = CEAMap.WIDTH;
 		h = CEAMap.HEIGHT;
 
-		grassy = Ground.GRASS_1;
+		grassy = Ground.FOREST_1;
 		deserty = Ground.SAND_2;
 		icey = Ground.ICE_1;
 		cavey = Ground.CAVE_1;
