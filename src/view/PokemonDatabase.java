@@ -30,6 +30,7 @@ import model.PokemonModel.Legendary;
 import model.PokemonModel.Pokemon;
 import model.PokemonModel.PokemonType;
 import model.PokemonModel.Uncommon;
+import model.TrainerModel.Trainer;
 
 public class PokemonDatabase implements Serializable{
 
@@ -183,6 +184,37 @@ public class PokemonDatabase implements Serializable{
 		return randomHelper(allUncommon, tt);
 
 	}
+	
+	public Pokemon getPokemonByName(String name) {
+		
+		switch (name.toUpperCase()) {
+		case "MAGIKARP":
+			return magikarp;
+		case "CYNDAQUIL":
+			return cyndaquil;
+		case "RHYDON":
+			return rhydon;
+		case "DIGLETT":
+			return diglett;
+		case "SIMISAGE":
+			return simisage;
+		case "LUVDISC":
+			return luvdisc;
+		case "PIKACHU":
+			return pikachu;
+		case "STEELIX":
+			return steelix;
+		case "EXEGGUTOR":
+			return exeggutor;
+		case "GYRADOS":
+			return gyrados;
+		case "MEW":
+			return mew;
+		default:
+			System.out.println("Error: Invalid pokemon name. No worries, we'll give you a Diglett instead! ;)");
+			return diglett;
+		}
+	}
 
 	private Pokemon randomHelper(ArrayList<Pokemon> pokemonz, TerrainType tt) {
 		
@@ -219,5 +251,52 @@ public class PokemonDatabase implements Serializable{
 			currPokemon = allCommon.get(rand);
 
 		}
+	}
+	
+	public boolean caughtEmAll(Trainer trainer) {
+		
+		//Check trainer's inventory against all common pokemon
+		
+		boolean allCaught = true;		//Init allCaught to true. This will be set to false if the trainer did not catch the pokemon
+		
+		for (Pokemon i : allCommon) {	//For all the uncommon pokemon
+			
+			for (Pokemon j : trainer.getPokemon()) {		//For all the pokemon the trainer has
+				
+				if (i.getName().equals(j.getName())) {					//If the trainer has the pokemon, we can break out of the loop
+					
+					System.out.println("Trainer caught " + i.getName() + " " + j.getName());
+					break;													//Break out of the loop. allCaught should still be true		
+					
+				}
+			}
+		}
+		
+		for (Pokemon i : allUncommon) {	//For all the uncommon pokemon
+			
+			for (Pokemon j : trainer.getPokemon()) {		//For all the pokemon the trainer has
+				
+				if (i.getName().equals(j.getName())) {					//If the trainer has the pokemon, we can break out of the loop
+					
+					System.out.println("Trainer caught " + i.getName() + " " + j.getName());
+					break;													//Break out of the loop. allCaught should still be true		
+						
+				}											
+			}
+			
+			
+		}
+		
+		//check to see if the trainer caught Mew
+		
+		for (Pokemon i : trainer.getPokemon()) {
+			
+			if (i.getName().equals(mew.getName())) {					//If the trainer has caught mew
+				
+				return true;													//We caught all of the Pokemon. Break out with true status			
+			}
+		}
+		
+		return false;				//If we have reached this point, we have not caught all the pokemon. Exit with false status.
 	}
 }
