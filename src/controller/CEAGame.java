@@ -44,14 +44,7 @@ public class CEAGame extends GameMode {
 	@Override
 	public boolean isGameWon() {
 		
-		ArrayList<Pokemon> capturedPokemon = trainer.getPokemon();
-		
-		for (Pokemon p : capturedPokemon) {
-			
-			System.out.println(p);
-		}
-		
-		return false;
+		return database.caughtEmAll(trainer);
 	}
 
 	/*---------------------------------------------------------------------

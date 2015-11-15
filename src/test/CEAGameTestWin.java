@@ -10,7 +10,7 @@ import view.PokemonDatabase;
 public class CEAGameTestWin {
 
 	@Test
-	public void test() {
+	public void testWinCondition() {
 		
 		CEAGame game = new CEAGame(new Random());
 		
@@ -29,7 +29,7 @@ public class CEAGameTestWin {
 		ash.addPokemon(database.getSimisage());
 		ash.addPokemon(database.getSteelix());
 		
-		assertFalse(game.isGameWon());
+		assertTrue(game.isGameWon());
 	}
 
 }
