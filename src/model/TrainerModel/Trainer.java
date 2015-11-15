@@ -53,6 +53,7 @@ public class Trainer implements Serializable {
 
 		steps = 500;
 		items = new ArrayList<Item>();
+		itemQuantities = new HashMap<String, Integer>();
 		capturedPokemon = new ArrayList<Pokemon>();
 		currentPokeballs = 30;
 		fatigued = false;
