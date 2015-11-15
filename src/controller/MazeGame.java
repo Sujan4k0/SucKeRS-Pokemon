@@ -62,7 +62,10 @@ public class MazeGame extends GameMode {
 	 *---------------------------------------------------------------------*/
 	@Override
 	public boolean isGameLost() {
-		// TODO Add losing condition
+
+		if (trainer.getSteps() == 0)
+			return true;
+		
 		return false;
 	}
 	

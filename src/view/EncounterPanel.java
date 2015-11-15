@@ -115,7 +115,7 @@ public class EncounterPanel extends JPanel implements Serializable {
 	}
 
 	public void startEncounter(Pokemon p) {
-		bgPlayer.playSound("./sounds/Pokemon_BattleMusic_1.wav");
+		bgPlayer.loopSound("./sounds/Pokemon_BattleMusic_1.wav");
 
 		p.startEncounter();
 		trainerEncounterImage = trainerImages[0];
