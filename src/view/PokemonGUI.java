@@ -45,6 +45,7 @@ import controller.CEAGame;
 import controller.GameMode;
 import controller.MazeGame;
 import javafx.scene.control.ProgressBar;
+import model.ItemModel.Item;
 import model.PokemonModel.Pokemon;
 import model.TrainerModel.TrainerAction;
 
@@ -168,10 +169,10 @@ public class PokemonGUI {
         }
 
         trainerItems = new JComboBox<Object>();  
-//        for (String s : mode.getTrainer().getItemQuantities().keySet()) {
-//            
-//            trainerItems.addItem(s + " " + mode.getTrainer().getItemQuantities().get(s));
-//        }
+        for (String s : mode.getTrainer().getItemQuantities().keySet()) {
+            
+            trainerItems.addItem(s + " " + mode.getTrainer().getItemQuantities().get(s));
+        }
                 
         trainerItems.setFocusable(false);
         trainerPokemon.setFocusable(false);
@@ -252,7 +253,7 @@ public class PokemonGUI {
         save.addActionListener(new GameSaver());
         forfeit.addActionListener(new Forfeiter());
         
-       // mode.
+        mode.getMap().repaint();
         mapView.repaint();
     }
 
@@ -443,6 +444,11 @@ public class PokemonGUI {
                         ois.close(); // close object stream
                         fis.close(); // close file stream
 
+                        if (mode.getMap() == null) {
+                            
+                            mode.createMap();
+                        }
+                        
                     } catch (Exception e1) {
                     }
                 }
@@ -553,9 +559,64 @@ public class PokemonGUI {
         @Override
         public void actionPerformed(ActionEvent e) {
 
-            // use item here
+            String item = trainerItems.getSelectedItem().toString();
+            
+            boolean found = true;
+            int i = 0;
+            
+            while (!found) {
+                
+                if (Character.isDigit(item.charAt(i))) {
+                    
+                    found = true;
+                }
+                else {
+                    
+                    i++;
+                }
+            }
+            
+            item = item.substring(0, i - 1);
+            Item use = Item.getItemByName(item);
+
+
+            if (trainerCheck.isSelected()) {
+                                
+                if (use.isForTrainer()) {
+                    
+                    mode.useItem(use);
+                }
+                
+                else {
+
+                    JOptionPane.showMessageDialog(null, "This item is unusable on a trainer.");
+                    
+                    // yell about it
+                }
+            }
+            
+            else {
+                
+                if (use.isForPokemon()) {
+                    
+                    String pokemon = trainerPokemon.getSelectedItem().toString();
+                    pokemon = pokemon.substring(0, pokemon.indexOf(' '));
+                    
+                 //   mode.useItemOnPokemon(use, pokemon);
+                }
+                
+                else {
+                    
+                    JOptionPane.showMessageDialog(null, "This item is unusable on a pokemon.");
+
+                    
+                    // yell about it 
+                    
+                }
+            }
         }
-    }
+        
+     }
 
     /*---------------------------------------------------------------------
     |  Class name:     [GameSaver]
