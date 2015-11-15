@@ -29,6 +29,7 @@ import java.io.Serializable;
 import javax.imageio.ImageIO;
 import javax.swing.JPanel;
 
+import soundplayer.SoundPlayer;
 import view.GraphicsManager;
 
 public abstract class Map extends JPanel implements Serializable {
@@ -65,7 +66,6 @@ public abstract class Map extends JPanel implements Serializable {
 	// the X and Y positions in the Obstacle/Ground arrays
 	// to start drawing from (for switching area trainer is in)
 	private int startX = 0, startY = 0;
-	
 
 	/*---------------------------------------------------------------------
 	 |  Method name:    [Map]
@@ -134,7 +134,7 @@ public abstract class Map extends JPanel implements Serializable {
 	 |  Parameters:     [Graphics: the Graphics Object to use to draw]
 	 *---------------------------------------------------------------------*/
 	public void drawMap(Graphics g) {
-		
+
 		int x = 0, y = 0;
 
 		// draw ground and obstacle tiles
@@ -278,9 +278,5 @@ public abstract class Map extends JPanel implements Serializable {
 		// TODO Auto-generated method stub
 		return groundTiles[trainerPoint.x][trainerPoint.y].getTerrainType();
 	}
-	
-	
-	
-	
 
 }

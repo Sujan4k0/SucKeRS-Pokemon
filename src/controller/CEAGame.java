@@ -55,7 +55,6 @@ public class CEAGame extends GameMode {
 		return false;
 	}
 
-
 	/*---------------------------------------------------------------------
 	 |  Method name:    [createMap]
 	 |  Purpose:  	    [assigns a CEAMap to the Map instance variable]
@@ -63,6 +62,11 @@ public class CEAGame extends GameMode {
 	@Override
 	public void createMap() {
 		map = new CEAMap();
+	}
+
+	@Override
+	public void startBGMusic() {
+		bgPlayer.loopSound("./sounds/Ruby_Sapphire_SafariZone.mp3");		
 	}
 
 }

@@ -65,7 +65,7 @@ public class EncounterPanel extends JPanel implements Serializable {
 		int prefh = HEIGHT * Tile.SIZE;
 
 		this.setPreferredSize(new Dimension(prefw, prefh));
-		
+
 		this.addKeyListener(new ThisKeyListener());
 
 	}
@@ -96,7 +96,8 @@ public class EncounterPanel extends JPanel implements Serializable {
 				encounteredPokemon.getSprite()[0].getScaledInstance(pokemonSize, pokemonSize,
 						Image.SCALE_SMOOTH);
 
-		g2.drawImage(smaller, this.getWidth() - pokemonSize, this.getHeight()/15, pokemonSize, pokemonSize, null);
+		g2.drawImage(smaller, this.getWidth() - pokemonSize, this.getHeight() / 15, pokemonSize,
+				pokemonSize, null);
 
 		if (trainerEncounterImage != null)
 			g2.drawImage(trainerEncounterImage, 0,
@@ -124,9 +125,11 @@ public class EncounterPanel extends JPanel implements Serializable {
 	}
 
 	public void animateTrainer() {
-		animating = true;
-		animationTimer = new Timer(1000 / 10, new TrainerAnimationListener());
-		animationTimer.start();
+		if (!animating) {
+			animating = true;
+			animationTimer = new Timer(1000 / 10, new TrainerAnimationListener());
+			animationTimer.start();
+		}
 	}
 
 	private class ThisKeyListener implements KeyListener {
@@ -162,9 +165,10 @@ public class EncounterPanel extends JPanel implements Serializable {
 			animating = true;
 			if (tic < trainerImages.length + 3) {
 
-				if(tic >= trainerImages.length)
-					trainerEncounterImage = trainerImages[trainerImages.length -1];
-				else trainerEncounterImage = trainerImages[tic];
+				if (tic >= trainerImages.length)
+					trainerEncounterImage = trainerImages[trainerImages.length - 1];
+				else
+					trainerEncounterImage = trainerImages[tic];
 				tic++;
 
 			} else {

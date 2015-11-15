@@ -76,4 +76,9 @@ public class MazeGame extends GameMode {
 	public void createMap() {
 		map = new MazeMap();
 	}
+	
+	@Override
+	public void startBGMusic() {
+		bgPlayer.loopSound("./sounds/Ruby_Sapphire_Mt.Pyre.mp3");		
+	}
 }

@@ -302,6 +302,7 @@ public abstract class GameMode implements Serializable {
 
 		inBattle = true;
 		encounter.startEncounter(encounteredPokemon);
+		stopBGMusic();
 
 	}
 
@@ -333,6 +334,12 @@ public abstract class GameMode implements Serializable {
 
 	public EncounterPanel getEncounterPanel() {
 		return encounter;
+	}
+	
+	public abstract void startBGMusic();
+	
+	public void stopBGMusic() {
+		bgPlayer.stopSound();
 	}
 
 	/*---------------------------------------------------------------------
@@ -394,6 +401,7 @@ public abstract class GameMode implements Serializable {
 			if (e.getKeyCode() == KeyEvent.VK_ENTER && inBattle
 					&& encounteredPokemon.getState() != PokemonResponse.STAND_GROUND) {
 				inBattle = false;
+				startBGMusic();
 			}
 		}
 
