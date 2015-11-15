@@ -16,24 +16,25 @@
  *===========================================================================*/
 package model.MapModel;
 
+import soundplayer.SoundPlayer;
 
 public enum Ground implements Tile {
-	
-	ICE_1(TerrainType.ICE), ICE_2(TerrainType.ICE), ICE_3(TerrainType.ICE),
-	ICE_4(TerrainType.ICE), ICE_5(TerrainType.ICE),
-	CAVE_1(TerrainType.CAVE), CAVE_2(TerrainType.CAVE), CAVE_3(TerrainType.CAVE),
-	CAVE_4(TerrainType.CAVE), CAVE_5(TerrainType.CAVE),
-	WEIRD_1(TerrainType.MYSTERY), BINARY_1(TerrainType.MYSTERY), BINARY_2(TerrainType.MYSTERY),
-	BINARY_3(TerrainType.MYSTERY), T5(TerrainType.CAVE),
-	GRASS_1(TerrainType.GENERIC), GRASS_2(TerrainType.FOREST), GRASS_3(TerrainType.FOREST),
-	GRASS_4(TerrainType.FOREST), GRASS_5(TerrainType.CAVE),
-	SAND_1(TerrainType.DESERT), SAND_2(TerrainType.DESERT), SAND_3(TerrainType.DESERT),
-	SAND_4(TerrainType.DESERT), SAND_5(TerrainType.DESERT),
+
+	ICE_1(TerrainType.ICE), ICE_2(TerrainType.ICE), ICE_3(TerrainType.ICE), ICE_4(TerrainType.ICE),
+	ICE_5(TerrainType.ICE), CAVE_1(TerrainType.CAVE), CAVE_2(TerrainType.CAVE), CAVE_3(
+			TerrainType.CAVE), CAVE_4(TerrainType.CAVE), CAVE_5(TerrainType.CAVE), WEIRD_1(
+			TerrainType.MYSTERY), BINARY_1(TerrainType.MYSTERY), BINARY_2(TerrainType.MYSTERY),
+	BINARY_3(TerrainType.MYSTERY), T5(TerrainType.CAVE), GRASS_1(TerrainType.GRASS), GRASS_2(
+			TerrainType.GRASS), GRASS_3(TerrainType.GRASS), GRASS_4(TerrainType.GRASS), GRASS_5(
+			TerrainType.CAVE), SAND_1(TerrainType.DESERT), SAND_2(TerrainType.DESERT), SAND_3(
+			TerrainType.DESERT), SAND_4(TerrainType.DESERT), SAND_5(TerrainType.DESERT),
 	GRASS_1_2_HOR(TerrainType.GENERIC), GRASS_2_1_HOR(TerrainType.GENERIC), x3(TerrainType.CAVE),
 	x4(TerrainType.CAVE), x5(TerrainType.CAVE);
-	
+
 	private TerrainType terrainType;
-	
+	private SoundPlayer player = new SoundPlayer();
+	private boolean sound = false;
+
 	/*---------------------------------------------------------------------
 	 |  Method name:    [Ground]
 	 |  Purpose:  	    [Set instance variable values based on parameter]
@@ -43,17 +44,21 @@ public enum Ground implements Tile {
 		terrainType = tt;
 	}
 
-
 	/*---------------------------------------------------------------------
 	 |  Method name:    [interactWithTrainer]
 	 |  Purpose:  	    [To later play a specific sound when Trainer walks on this Ground]
 	 *---------------------------------------------------------------------*/
 	@Override
 	public String interactWithTrainer() {
-		// TODO Sound effect when trainer walking on
-		
-		// play getTerrainType().getSound();
-		
+		if (getTerrainType().getSound1().equals("")) {
+			if (!sound) {
+				player.playSound(getTerrainType().getSound1());
+				sound = true;
+			} else {
+				player.playSound(getTerrainType().getSound2());
+				sound = false;
+			}
+		}
 		return "successfully called";
 	}
 
@@ -66,6 +71,5 @@ public enum Ground implements Tile {
 	public TerrainType getTerrainType() {
 		return terrainType;
 	}
-
 
 }

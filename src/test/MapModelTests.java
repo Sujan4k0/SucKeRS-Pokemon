@@ -194,8 +194,9 @@ public class MapModelTests {
 	@Test
 	public void testTerrainType() {
 
-		assertEquals(TerrainType.CAVE.getSound(), "successfully called");
-
+		assertEquals(TerrainType.CAVE.getSound1(), "");
+		assertEquals(TerrainType.CAVE.getSound2(), "");
+		
 		for (TerrainType t : TerrainType.values()) {
 			assertEquals(t, TerrainType.valueOf(t.name()));
 		}

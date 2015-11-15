@@ -21,14 +21,18 @@ public enum TerrainType {
 	
 	//TODO add walking sound effects for dif terrain types
 	
-	ICE(), FOREST(), CAVE(), MYSTERY(), GENERIC(), DESERT(); // etc...
+	ICE("",""), GRASS("./sounds/Grass_Step_1.wav", "./sounds/Grass_Step_2.wav"), 
+	CAVE("",""), MYSTERY("",""), GENERIC("",""), DESERT("",""); // etc...
 	
+	
+	private String sfxFilePath1, sfxFilePath2;
 	/*---------------------------------------------------------------------
 	 |  Method name:    [TerrainType]
 	 |  Purpose:  	    [(no purpose currently - may or may not have purpose later)]
 	 *---------------------------------------------------------------------*/
-	TerrainType() {
-		
+	TerrainType(String s1, String s2) {
+		sfxFilePath1 = s1;
+		sfxFilePath2 = s2;
 	}
 	
 	/*---------------------------------------------------------------------
@@ -37,8 +41,12 @@ public enum TerrainType {
 	 |					 on a tile with a specific TerrainType]
 	 |  Returns:  	    [TODO: a sound?? currently a String as placeholder]
 	 *---------------------------------------------------------------------*/
-	public String getSound() {
-		return "successfully called";
+	public String getSound1() {
+		return sfxFilePath1;
+	}
+	
+	public String getSound2() {
+		return sfxFilePath2;
 	}
 
 }

@@ -32,6 +32,7 @@ public class MazeGame extends GameMode {
 	 *---------------------------------------------------------------------*/
 	public MazeGame(Random rand) {
 		super(rand);
+		setEncounterBG("./images/bgImages/X_Y_CaveBattle.png");
 		startBGMusic();
 	}
 

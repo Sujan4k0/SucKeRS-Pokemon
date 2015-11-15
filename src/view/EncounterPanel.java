@@ -37,7 +37,8 @@ public class EncounterPanel extends JPanel implements Serializable {
 	Timer animationTimer;
 
 	// the current image of the trainer during an encounter
-	Image trainerEncounterImage;
+	// and BG image
+	Image trainerEncounterImage, bgImage;
 
 	// the Trainer's sprite sheet with bigger sprites mmmhmms
 	Image bigTrainerSheet;
@@ -96,6 +97,12 @@ public class EncounterPanel extends JPanel implements Serializable {
 				encounteredPokemon.getSprite()[0].getScaledInstance(pokemonSize, pokemonSize,
 						Image.SCALE_SMOOTH);
 
+		if (bgImage != null) {
+			Image scaledBG =
+					bgImage.getScaledInstance(this.getWidth(), this.getHeight(), Image.SCALE_SMOOTH);
+			g2.drawImage(scaledBG, 0, 0, null);
+		}
+
 		g2.drawImage(smaller, this.getWidth() - pokemonSize, this.getHeight() / 15, pokemonSize,
 				pokemonSize, null);
 
@@ -123,7 +130,6 @@ public class EncounterPanel extends JPanel implements Serializable {
 		this.repaint();
 
 	}
-	
 
 	public void animateTrainer() {
 		if (!animating) {
@@ -132,7 +138,7 @@ public class EncounterPanel extends JPanel implements Serializable {
 			animationTimer.start();
 		}
 	}
-	
+
 	public boolean isAnimating() {
 		return animating;
 	}
@@ -186,6 +192,12 @@ public class EncounterPanel extends JPanel implements Serializable {
 			repaint();
 
 		}
+
+	}
+
+	public void setBGImage(Image i) {
+
+		bgImage = i;
 
 	}
 }

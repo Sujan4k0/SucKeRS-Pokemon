@@ -18,11 +18,16 @@
 
 package controller;
 
+import java.awt.Image;
 import java.awt.Point;
 import java.awt.event.KeyEvent;
 import java.awt.event.KeyListener;
+import java.io.File;
+import java.io.IOException;
 import java.io.Serializable;
 import java.util.Random;
+
+import javax.imageio.ImageIO;
 
 import soundplayer.SoundPlayer;
 import view.*;
@@ -214,6 +219,9 @@ public abstract class GameMode implements Serializable {
 			// change trainer object point
 			trainer.getPoint().translate(dx, dy);
 
+			// interact with the new tile
+			map.getGroundTiles()[trainer.getPoint().x][trainer.getPoint().y].interactWithTrainer();
+			
 			// decrease steps
 			trainer.decreaseSteps();
 
@@ -274,6 +282,7 @@ public abstract class GameMode implements Serializable {
 	public void forfeitGame() {
 		forfeited = true;
 		endMessage = "Game Forfeited";
+		stopBGMusic();
 	}
 
 	public void startEncounter() {
@@ -295,6 +304,18 @@ public abstract class GameMode implements Serializable {
 		encounter.startEncounter(encounteredPokemon);
 		stopBGMusic();
 
+	}
+	
+	protected void setEncounterBG(String filePath) {
+		Image i;
+		try {
+			i = ImageIO.read(new File(filePath));
+			encounter.setBGImage(i);
+		} catch (IOException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+		
 	}
 
 	public void doTrainerAction(TrainerAction action) {
@@ -406,8 +427,7 @@ public abstract class GameMode implements Serializable {
 		 *---------------------------------------------------------------------*/
 		@Override
 		public void keyPressed(KeyEvent e) {
-			// System.out.println("GameMode Battle Listener");
-			// PROMPT USER TO PRESS "ENTER" AFTER BATTLE ENDS TO UPDATE THE MAP!!!! >:OOO
+			
 		}
 
 		@Override
