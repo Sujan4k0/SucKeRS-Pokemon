@@ -465,7 +465,7 @@ public class PokemonGUI {
             info.setEditable(false);
             info.setFont(new Font("Futura", Font.PLAIN, 15));
             dialog.add(info);
-            dialog.setSize(500, 200);
+            dialog.setSize(500, 300);
             dialog.setLocationRelativeTo(null);
             dialog.setVisible(true);
         }
@@ -528,7 +528,7 @@ public class PokemonGUI {
             info.setEditable(false);
             info.setFont(new Font("Futura", Font.PLAIN, 15));
             dialog.add(info);
-            dialog.setSize(500, 200);
+            dialog.setSize(500, 300);
             dialog.setLocationRelativeTo(null);
             dialog.setVisible(true);
         }

@@ -18,12 +18,13 @@ package model.PokemonModel;
 
 import java.awt.Image;
 import java.awt.image.BufferedImage;
+import java.io.Serializable;
 import java.util.Random;
 
 import model.TrainerModel.TrainerAction;
 import view.EncounterTimer;
 
-public abstract class Pokemon {
+public abstract class Pokemon implements Serializable{
 
     private String name; // name of this Pokemon
     private Image[] sprite; // different graphical views for this Pokemon
