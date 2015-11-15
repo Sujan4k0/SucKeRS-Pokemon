@@ -76,7 +76,7 @@ public class EncounterPanel extends JPanel implements Serializable {
 
 	}
 
-	public void hideEncounter() {
+	public void stopEncounter() {
 		animating = false;
 		if (animationTimer != null)
 			animationTimer.stop();
@@ -123,6 +123,7 @@ public class EncounterPanel extends JPanel implements Serializable {
 		this.repaint();
 
 	}
+	
 
 	public void animateTrainer() {
 		if (!animating) {
@@ -130,6 +131,10 @@ public class EncounterPanel extends JPanel implements Serializable {
 			animationTimer = new Timer(1000 / 10, new TrainerAnimationListener());
 			animationTimer.start();
 		}
+	}
+	
+	public boolean isAnimating() {
+		return animating;
 	}
 
 	private class ThisKeyListener implements KeyListener {

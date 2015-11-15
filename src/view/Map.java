@@ -16,7 +16,7 @@
  | ground, obstacles, and trainer.
  *===========================================================================*/
 
-package model.MapModel;
+package view;
 
 import java.awt.Dimension;
 import java.awt.Graphics;
@@ -31,6 +31,7 @@ import javax.swing.JPanel;
 
 import soundplayer.SoundPlayer;
 import view.GraphicsManager;
+import model.MapModel.*;
 
 public abstract class Map extends JPanel implements Serializable {
 

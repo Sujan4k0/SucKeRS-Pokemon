@@ -15,11 +15,15 @@
  | Tiles (Ground and Obstacle) that visually create a randomly generated maze
  | that the player must traverse the Trainer through.
  *===========================================================================*/
-package model.MapModel;
+package view;
 
 import java.awt.Image;
 import java.awt.Point;
 import java.util.Random;
+
+import model.MapModel.Ground;
+import model.MapModel.MazeGenerator;
+import model.MapModel.Obstacle;
 
 public class MazeMap extends Map {
 

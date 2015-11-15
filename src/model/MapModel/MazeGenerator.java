@@ -24,7 +24,8 @@ import java.util.Random;
 /*---------------------------------------------------------------------
  |  Class name:     [MazeGenerator]
  |  Purpose:        [Randomly generates a maze given a starting Point and 
- |				    2D array of Obstacles]
+ |				    2D array of Obstacles, the height/width of the array
+ |					must be odd numbers.]
  *---------------------------------------------------------------------*/
 public class MazeGenerator {
 
@@ -36,7 +37,7 @@ public class MazeGenerator {
 	 |  Method name:    [MazeGenerator]
 	 |  Purpose:  	    [Constructs a MazeGenerator]
 	 |  Parameters:     [Point: the starting point to generate the maze
-	 |					 Obstacle[][]: the array to generate the maze in]
+	 |					 Obstacle[odd num][odd num]: the array to generate the maze in]
 	 *---------------------------------------------------------------------*/
 	public MazeGenerator(Point start, Obstacle[][] obsts) {
 

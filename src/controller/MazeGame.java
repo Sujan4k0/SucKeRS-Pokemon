@@ -20,10 +20,8 @@ package controller;
 import java.awt.Point;
 import java.util.Random;
 
-import model.MapModel.Map;
-import model.MapModel.MazeMap;
+import view.*;
 import model.MapModel.Obstacle;
-import model.TrainerModel.Trainer;
 
 public class MazeGame extends GameMode {
 
@@ -34,6 +32,7 @@ public class MazeGame extends GameMode {
 	 *---------------------------------------------------------------------*/
 	public MazeGame(Random rand) {
 		super(rand);
+		startBGMusic();
 	}
 
 	/*---------------------------------------------------------------------

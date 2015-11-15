@@ -18,26 +18,17 @@
 
 package controller;
 
-import java.awt.Image;
 import java.awt.Point;
 import java.awt.event.KeyEvent;
 import java.awt.event.KeyListener;
-import java.io.File;
-import java.io.IOException;
 import java.io.Serializable;
 import java.util.Random;
 
-import javax.imageio.ImageIO;
-
 import soundplayer.SoundPlayer;
-import view.EncounterPanel;
-import view.PokemonDatabase;
-import model.MapModel.Map;
+import view.*;
 import model.MapModel.Obstacle;
-import model.PokemonModel.Common;
 import model.PokemonModel.Pokemon;
 import model.PokemonModel.PokemonResponse;
-import model.PokemonModel.PokemonType;
 import model.TrainerModel.Trainer;
 import model.TrainerModel.TrainerAction;
 
@@ -308,12 +299,23 @@ public abstract class GameMode implements Serializable {
 
 	public void doTrainerAction(TrainerAction action) {
 
+		if (action != TrainerAction.RUN_AWAY)
+			encounter.animateTrainer();
+		
+		encounteredPokemon.respond(action);
+		
 		switch (action) {
 
 		case THROW_BALL:
 			//trainer use ball
+			//trainer.useItem(new Pokeball());
+			if (encounteredPokemon.getState() == PokemonResponse.GET_CAUGHT)
+				trainer.addPokemon(encounteredPokemon);
 			break;
 		case RUN_AWAY:
+			inBattle = false;
+			encounter.stopEncounter();
+			// startBGMusic();
 			break;
 		case THROW_BAIT:
 			break;
@@ -324,7 +326,7 @@ public abstract class GameMode implements Serializable {
 
 		}
 
-		encounter.animateTrainer();
+		
 
 	}
 

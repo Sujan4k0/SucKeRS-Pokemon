@@ -15,9 +15,12 @@
  | used in the CEAGame (CATCH EM ALL!!!!). The createMap() method is automatically
  | called in the super() constructor.
  *===========================================================================*/
-package model.MapModel;
+package view;
 
 import java.awt.Point;
+
+import model.MapModel.Ground;
+import model.MapModel.Obstacle;
 
 public class CEAMap extends Map {
 
