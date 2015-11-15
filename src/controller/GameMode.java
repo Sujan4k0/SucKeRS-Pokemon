@@ -301,8 +301,7 @@ public abstract class GameMode implements Serializable {
 		}
 
 		inBattle = true;
-		encounteredPokemon.startEncounter();
-		encounter.showEncounter(encounteredPokemon);
+		encounter.startEncounter(encounteredPokemon);
 
 	}
 

@@ -73,6 +73,7 @@ public class PoopingOnPie_TestGUI extends JFrame {
             	add(game.getEncounterPanel(), BorderLayout.CENTER);
             	revalidate();
             	game.getEncounterPanel().requestFocusInWindow();
+            	game.getEncounterPanel().repaint();
             	battleShown = true;
             	mapShown = false;
             	System.out.println("Showing Battle");
