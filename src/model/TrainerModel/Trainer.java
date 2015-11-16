@@ -73,9 +73,8 @@ public class Trainer implements Serializable {
 
 	public Trainer(int s, int p) {
 
+		this();
 		steps = s;
-		items = new ArrayList<Item>();
-		capturedPokemon = new ArrayList<Pokemon>();
 		currentPokeballs = p;
 		fatigued = false;
 		trainerPosition = null;

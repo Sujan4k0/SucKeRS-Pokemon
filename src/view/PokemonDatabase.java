@@ -185,6 +185,15 @@ public class PokemonDatabase implements Serializable{
 
 	}
 	
+	/*---------------------------------------------------------------------
+	|  Method name:    [getPokemonByName]
+	|  Purpose:        [Returns the pokemon designated by String name. If it is an invalid name,
+	|                   method will simply return Diglett, to avoid something more drastic like 
+	|                   a Runtime Exception]
+	|  Parameters:     [String name of pokemon]
+	|  Returns:        [Pokemon]
+	 *---------------------------------------------------------------------*/
+	
 	public Pokemon getPokemonByName(String name) {
 		
 		switch (name.toUpperCase()) {
@@ -215,6 +224,8 @@ public class PokemonDatabase implements Serializable{
 			return diglett;
 		}
 	}
+	
+	
 
 	private Pokemon randomHelper(ArrayList<Pokemon> pokemonz, TerrainType tt) {
 		
@@ -252,6 +263,14 @@ public class PokemonDatabase implements Serializable{
 
 		}
 	}
+	
+	/*---------------------------------------------------------------------
+	|  Method name:    [caughtEmAll]
+	|  Purpose:        [Returns true if trainer caught one of each pokemon, 
+	|                   false otherwise. Vital to CEAGame isGameWon method]
+	|  Parameters:     [none]
+	|  Returns:        [boolean]
+	 *---------------------------------------------------------------------*/
 	
 	public boolean caughtEmAll(Trainer trainer) {
 		
