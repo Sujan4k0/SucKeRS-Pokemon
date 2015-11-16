@@ -253,7 +253,8 @@ public abstract class GameMode implements Serializable {
 					startEncounter();
 
 				//TODO encounters/items
-			} else map.setStartOffsets(0, 0);
+			} else map.setStartOffsets(0, 0
+					);
 			
 			// repaint the visual changes
 			map.repaint();
@@ -272,7 +273,8 @@ public abstract class GameMode implements Serializable {
 		} else if (isGameLost()) {
 			endMessage = "You LOSTTTTT >:(";
 			return false;
-		}
+		} else if (forfeited)
+			return false;
 
 		return true;
 	}

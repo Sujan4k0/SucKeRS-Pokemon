@@ -18,31 +18,34 @@ package model.ItemModel;
 import java.awt.Image;
 import java.io.Serializable;
 
-public abstract class Item implements Serializable{
+public abstract class Item implements Comparable<Item>, Serializable {
+
+	private static final long serialVersionUID = 1L;
+
 	protected String name;
 	private boolean forTrainer;
 	private boolean forPokemon;
 	protected transient Image image;
-	
-	
-	public Item(){
+
+	public Item() {
 	}
-	
+
 	/*---------------------------------------------------------------------
 	 |  Method name:    [getName]
 	 |  Purpose:  	    [return the name of an item]
 	 |  Returns:  	    [A string representing the name of an item]
 	 *---------------------------------------------------------------------*/
-	public String getName(){
+	public String getName() {
 		return name;
 	}
+
 	/*---------------------------------------------------------------------
 	 |  Method name:    [setName]
 	 |  Purpose:  	    [sets the name of an item]
 	 |  Parameters:     [String for the name]
 	 *---------------------------------------------------------------------*/
-	public void setName(String n){
-		name= n;
+	public void setName(String n) {
+		name = n;
 	}
 
 	/*---------------------------------------------------------------------
@@ -62,6 +65,7 @@ public abstract class Item implements Serializable{
 	public void setForPokemon(boolean forPokemon) {
 		this.forPokemon = forPokemon;
 	}
+
 	/*---------------------------------------------------------------------
 	 |  Method name:    [isForTrainer]
 	 |  Purpose:  	    [return whether item can be used on Trainer]
@@ -70,6 +74,7 @@ public abstract class Item implements Serializable{
 	public boolean isForTrainer() {
 		return forTrainer;
 	}
+
 	/*---------------------------------------------------------------------
 	 |  Method name:    [setForTrainers]
 	 |  Purpose:  	    [sets whether item can be used on pokemon]
@@ -78,10 +83,10 @@ public abstract class Item implements Serializable{
 	public void setForTrainer(boolean forTrainer) {
 		this.forTrainer = forTrainer;
 	}
-	
+
 	public static Item getItemByName(String name) {
 		switch (name.toUpperCase()) {
-		
+
 		case "POKEBALL":
 			return new PokeBall();
 		case "HYPER STEP POTION":
@@ -99,7 +104,24 @@ public abstract class Item implements Serializable{
 		default:
 			break;
 		}
-		
+
 		return null;
+	}
+
+	@Override
+	public int compareTo(Item t) {
+		System.out.println("Compare to called on : " + t.getName());
+		return this.getName().compareTo(t.getName());
+	}
+
+	@Override
+	public boolean equals(Object obj) {
+		if (!(obj instanceof Item))
+			return false;
+
+		final Item other = (Item) obj;
+		if (!name.equals(other.getName()))
+			return false;
+		return true;
 	}
 }
