@@ -48,6 +48,7 @@ import javafx.scene.control.ProgressBar;
 import model.ItemModel.Item;
 import model.PokemonModel.Pokemon;
 import model.TrainerModel.TrainerAction;
+import soundplayer.SoundPlayer;
 
 public class PokemonGUI {
 
@@ -63,6 +64,7 @@ public class PokemonGUI {
     private JCheckBox trainerCheck;
     private JCheckBox pokemonCheck;
     private JProgressBar steps;
+    private SoundPlayer soundPlayer;
 
     public static void main(String[] args) {
 
@@ -90,6 +92,7 @@ public class PokemonGUI {
 
         maze = false;
         catchEmAll = false;
+        soundPlayer = new SoundPlayer();
         startFrame();
     }
 
@@ -100,6 +103,8 @@ public class PokemonGUI {
     |                   want to play.]
     *---------------------------------------------------------------------*/
     private void startFrame() {
+        
+        soundPlayer.playSound("./sounds/opening_song.wav");
 
         // create the basic frame
         startScreen = new JFrame();
@@ -145,6 +150,8 @@ public class PokemonGUI {
     |                   player options like inventory.]
     *---------------------------------------------------------------------*/
     private void mapFrame() {
+        
+        soundPlayer.stopSound();
 
         // create the basic frame
         mapView = new JFrame();
@@ -557,7 +564,7 @@ public class PokemonGUI {
 
             String item = trainerItems.getSelectedItem().toString();
             
-            boolean found = true;
+            boolean found = false;
             int i = 0;
             
             while (!found) {
@@ -827,13 +834,13 @@ public class PokemonGUI {
 
             if (!mode.isGameActive()) {
 
+                soundPlayer.loopSound("./sounds/ending_song.wav");
                 endGameDisplay();
             }
 
             else if (mode.trainerInBattle()) {
 
                 battleFrame();
-                System.out.println("Starting battle sequence");
             }
 
             else {
