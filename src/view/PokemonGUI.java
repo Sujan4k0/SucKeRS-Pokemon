@@ -189,6 +189,7 @@ public class PokemonGUI {
         inventory.setBackground(Color.BLACK);
 
         trainerCheck = new JCheckBox("Use on trainer");
+        trainerCheck.setSelected(true);
         trainerCheck.setFocusable(false);
         trainerCheck.setForeground(Color.WHITE);
         pokemonCheck = new JCheckBox("Use on Selected Pokemon");
@@ -672,11 +673,9 @@ public class PokemonGUI {
 
                 saveState(); // save the game
             }
-
-            else if (reply == JOptionPane.NO_OPTION) {
-
-                System.exit(0); // quit program don't do anything
-            }
+            
+            System.exit(0);
+             
         }
 
         @Override
@@ -808,7 +807,13 @@ public class PokemonGUI {
                     
                     trainerPokemon.addItem(mon.getName() + " " + mon.rarityString());
                 }
-
+                
+                trainerItems.removeAll();
+                for (String s : mode.getTrainer().getItemQuantities().keySet()) {
+                    
+                    trainerItems.addItem(s + " " + mode.getTrainer().getItemQuantities().get(s));
+                }
+                
                 mapView.revalidate();
 
             }
@@ -855,6 +860,12 @@ public class PokemonGUI {
                     Pokemon mon = mode.getTrainer().getPokemon().get(p);
                     
                     trainerPokemon.addItem(mon.getName() + " " + mon.rarityString());
+                }
+                
+                trainerItems.removeAll();
+                for (String s : mode.getTrainer().getItemQuantities().keySet()) {
+                    
+                    trainerItems.addItem(s + " " + mode.getTrainer().getItemQuantities().get(s));
                 }
 
                 mapView.revalidate();
