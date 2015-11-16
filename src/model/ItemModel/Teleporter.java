@@ -59,4 +59,15 @@ public class Teleporter extends Item{
 	public Point getTeleportPoint(){
 		return teleportPoint;
 	}
+	
+	@Override
+	public boolean equals(Object obj) {
+		if (!(obj instanceof Teleporter))
+			return false;
+
+		final Teleporter other = (Teleporter) obj;
+		if (!teleportPoint.equals(other.getTeleportPoint()))
+			return false;
+		return true;
+	}
 }

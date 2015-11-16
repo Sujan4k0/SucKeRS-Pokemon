@@ -80,7 +80,7 @@ public class Trainer implements Serializable {
 		fatigued = false;
 		trainerPosition = null;
 		for (int i = 0; i < p; i++) {
-			items.add(new PokeBall());
+			addItem(new PokeBall());
 		}
 	}
 
@@ -151,47 +151,52 @@ public class Trainer implements Serializable {
 	 |  Parameters:     [an Item i]
 	 *---------------------------------------------------------------------*/
 	public void useItem(Item i) {
+		
+		for (int j = 0; j < items.size(); j++) {
+			if (items.get(j).getName().equals("Teleporter"))
+				
+		}
+		
+		if (i.getName() == "Teleporter") {
+			Teleporter t = (Teleporter) i;
+			if (t.isSet()) {
+				//Teleport animation
+				trainerPosition =
+						new Point((int) t.getTeleportPoint().getX(), (int) t.getTeleportPoint()
+								.getY());
+				//update observers for inventory
+			} else {
+				t.setPoint(trainerPosition);
+				return;
+			}
+		} else 
 
 		if (items.contains(i)) {
-			if (i.getName() == "Teleporter") {
-				Teleporter t = (Teleporter) i;
-				if (t.isSet()) {
-					//Teleport animation
-					trainerPosition =
-							new Point((int) t.getTeleportPoint().getX(), (int) t.getTeleportPoint()
-									.getY());
-					items.remove(i);
-					itemQuantities.put(i.getName(), (itemQuantities.get(i.getName()) - 1));
-					//update observers for inventory
-				} else {
-					t.setPoint(trainerPosition);
-				}
-			} else if (i.getName().equals("Fatigue Potion")) {
+			if (i.getName().equals("Fatigue Potion")) {
 				if (isFatigued()) {
 					setFatigued(false);
-					items.remove(i);
-					itemQuantities.put(i.getName(), (itemQuantities.get(i.getName()) - 1));
 					//update observers for inventory
 
 				} else {
 					System.out.println("You don't need that now.");//just for testing, will later update view to display this message
+					return;
 				}
 			} else if (i.getName().equals("Basic Step Potion")
 					|| i.getName().equals("Super Step Potion")
 					|| i.getName().equals("Hyper Step Potion")) {
 				this.steps += ((StepPotion) i).getStepBonus();
-				items.remove(i);
-				itemQuantities.put(i.getName(), (itemQuantities.get(i.getName()) - 1));
 				//update observers for inventory
 			} else if (i.getName().equals("PokeBall")) {
-				items.remove(i);
-				itemQuantities.put(i.getName(), (itemQuantities.get(i.getName()) - 1));
 			} else if (i.getName().equals("Harmonica")) {
-				items.remove(i);
-				itemQuantities.put(i.getName(), (itemQuantities.get(i.getName()) - 1));
-			} else {
-				System.out.println("name not recognized");
+
 			}
+
+			items.remove(i);
+			itemQuantities.put(i.getName(), (itemQuantities.get(i.getName()) - 1));
+
+			System.out.printf("Currently %d of %s.", itemQuantities.get(i.getName()), i.getName());
+		} else {
+			System.out.println("item not in inventory");
 		}
 	}
 
