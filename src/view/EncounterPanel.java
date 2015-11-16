@@ -2,6 +2,8 @@ package view;
 
 import java.awt.Color;
 import java.awt.Dimension;
+import java.awt.Font;
+import java.awt.FontMetrics;
 import java.awt.Graphics;
 import java.awt.Graphics2D;
 import java.awt.Image;
@@ -12,6 +14,7 @@ import java.awt.event.KeyListener;
 import java.io.File;
 import java.io.IOException;
 import java.io.Serializable;
+import java.util.Random;
 
 import javax.imageio.ImageIO;
 import javax.swing.*;
@@ -97,15 +100,32 @@ public class EncounterPanel extends JPanel implements Serializable {
 				encounteredPokemon.getSprite()[0].getScaledInstance(pokemonSize, pokemonSize,
 						Image.SCALE_SMOOTH);
 
+		// draw background
 		if (bgImage != null) {
 			Image scaledBG =
 					bgImage.getScaledInstance(this.getWidth(), this.getHeight(), Image.SCALE_SMOOTH);
 			g2.drawImage(scaledBG, 0, 0, null);
 		}
 
+		// draw pokemon
 		g2.drawImage(smaller, this.getWidth() - pokemonSize, this.getHeight() / 15, pokemonSize,
 				pokemonSize, null);
 
+		// draw pokemon stats
+		g2.setColor(Color.WHITE);
+		g2.setFont(new Font("Comic Sans", Font.CENTER_BASELINE, 30));
+		FontMetrics fm = g2.getFontMetrics();
+		int strW = fm.stringWidth(encounteredPokemon.getName());
+		g2.fillRect(this.getWidth() - pokemonSize - 200, this.getHeight() / 15 + 100,
+				strW + 25, 40);
+		g2.setColor(Color.BLACK);
+		g2.drawString(encounteredPokemon.getName(), this.getWidth() - pokemonSize - 190,
+				this.getHeight() / 15 + 125);
+		//g2.setColor(Color.blue);
+		//	g2.fillRoundRect(this.getWidth() - pokemonSize - 175, this.getHeight()/15 + 125, 
+		//encounteredPokemon.get, 25, 2, 2);*/
+
+		// draw trainer
 		if (trainerEncounterImage != null)
 			g2.drawImage(trainerEncounterImage, 0,
 					this.getHeight() - trainerEncounterImage.getHeight(null), 400, 400, null);
@@ -122,7 +142,9 @@ public class EncounterPanel extends JPanel implements Serializable {
 	}
 
 	public void startEncounter(Pokemon p) {
-		bgPlayer.loopSound("./sounds/Pokemon_BattleMusic_1.wav");
+
+		int rand = new Random().nextInt(4) + 1;
+		bgPlayer.loopSound("./sounds/Pokemon_BattleMusic_" + rand + ".wav");
 
 		p.startEncounter();
 		trainerEncounterImage = trainerImages[0];
@@ -207,6 +229,6 @@ public class EncounterPanel extends JPanel implements Serializable {
 					ImageIO.read(new File("./images/SucKeRS_LargeTrainerSpriteSheet_1.png"));
 		} catch (IOException e) {
 			e.printStackTrace();
-		}		
+		}
 	}
 }

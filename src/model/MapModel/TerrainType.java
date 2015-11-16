@@ -20,9 +20,10 @@ package model.MapModel;
 public enum TerrainType {
 	
 	//TODO add walking sound effects for dif terrain types
-	ICE("",""), GRASS("Grass_Step_1.wav", "Grass_Step_2.wav"), 
-	FOREST("Grass_Step_1.wav", "Grass_Step_2.wav"),
-	CAVE("",""), MYSTERY("",""), GENERIC("",""), DESERT("",""); // etc...
+	ICE("Grass_Step_1.wav", "Grass_Step_2.wav"), GRASS("Grass_Step_1.wav", "Grass_Step_2.wav"), 
+	FOREST("Grass_Step_1.wav", "Grass_Step_2.wav"), CAVE("Grass_Step_1.wav", "Grass_Step_2.wav"),
+	MYSTERY("Grass_Step_1.wav", "Grass_Step_2.wav"), GENERIC("Grass_Step_1.wav", "Grass_Step_2.wav"), 
+	DESERT("Grass_Step_1.wav", "Grass_Step_2.wav"); // etc...
 	
 
 	private static final String BASEDIR = "./sounds/walkingSFX/";
