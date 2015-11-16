@@ -168,17 +168,11 @@ public class PokemonGUI {
         items.add("TestPotion2");
         
         trainerPokemon = new JComboBox<Object>();
-        for (int p = 0; p < mode.getTrainer().getPokemon().size(); p++) {
+        updatePokemonList();
         
-            trainerPokemon.addItem(mode.getTrainer().getPokemon().get(p).getName());
-        }
-
         trainerItems = new JComboBox<Object>();  
-        for (String s : mode.getTrainer().getItemQuantities().keySet()) {
-            
-            trainerItems.addItem(s + " " + mode.getTrainer().getItemQuantities().get(s));
-        }
-                
+        updateItemsList();
+        
         trainerItems.setFocusable(false);
         trainerPokemon.setFocusable(false);
 
@@ -423,6 +417,27 @@ public class PokemonGUI {
             }
         }
     }
+    
+    private void updatePokemonList() {
+        
+        trainerPokemon.removeAllItems();      
+        for (int p = 0; p < mode.getTrainer().getPokemon().size(); p++) {
+        
+            Pokemon mon = mode.getTrainer().getPokemon().get(p);
+            
+            trainerPokemon.addItem(mon.getName() + " " + mon.rarityString());
+        }    
+    }
+    
+    private void updateItemsList() {
+        
+        trainerItems.removeAllItems();
+        for (String s : mode.getTrainer().getItemQuantities().keySet()) {
+            
+            trainerItems.addItem(s + " " + mode.getTrainer().getItemQuantities().get(s));
+            System.out.println(s);
+        }        
+    }
 
     /*---------------------------------------------------------------------
     |  Class name:     [CatchEmAllSelected]
@@ -589,6 +604,7 @@ public class PokemonGUI {
                 if (use.isForTrainer()) {
                     
                     mode.useItem(use);
+                    updateItemsList();
                 }
                 
                 else {
@@ -605,6 +621,7 @@ public class PokemonGUI {
                     
                     String pokemon = trainerPokemon.getSelectedItem().toString();
                     pokemon = pokemon.substring(0, pokemon.indexOf(' '));
+                    updateItemsList();
                     
                  //   mode.useItemOnPokemon(use, pokemon);
                 }
@@ -799,23 +816,10 @@ public class PokemonGUI {
                 encounterFrame.dispose();
                 mapView.setVisible(true);
                 
-                trainerPokemon.removeAllItems(); 
-                
-                for (int p = 0; p < mode.getTrainer().getPokemon().size(); p++) {
-                
-                    Pokemon mon = mode.getTrainer().getPokemon().get(p);
-                    
-                    trainerPokemon.addItem(mon.getName() + " " + mon.rarityString());
-                }
-                
-                trainerItems.removeAll();
-                for (String s : mode.getTrainer().getItemQuantities().keySet()) {
-                    
-                    trainerItems.addItem(s + " " + mode.getTrainer().getItemQuantities().get(s));
-                }
-                
+                updatePokemonList();
+                updateItemsList();
+                                
                 mapView.revalidate();
-
             }
         }
     }
@@ -853,21 +857,9 @@ public class PokemonGUI {
                 steps.setValue(mode.getTrainer().getSteps());
                 steps.setString((steps.getValue()) + " steps remaining");
                 
-                trainerPokemon.removeAllItems();
+                updatePokemonList();
+                updateItemsList();
                 
-                for (int p = 0; p < mode.getTrainer().getPokemon().size(); p++) {
-                
-                    Pokemon mon = mode.getTrainer().getPokemon().get(p);
-                    
-                    trainerPokemon.addItem(mon.getName() + " " + mon.rarityString());
-                }
-                
-                trainerItems.removeAll();
-                for (String s : mode.getTrainer().getItemQuantities().keySet()) {
-                    
-                    trainerItems.addItem(s + " " + mode.getTrainer().getItemQuantities().get(s));
-                }
-
                 mapView.revalidate();
             }
         }
