@@ -52,7 +52,6 @@ import soundplayer.SoundPlayer;
 
 public class PokemonGUI {
 
-    private static final String encoutnerFrame = null;
     private JFrame startScreen;
     private JFrame encounterFrame;
     private GameMode mode;
@@ -263,6 +262,8 @@ public class PokemonGUI {
     |                   the game has ended.]
     *---------------------------------------------------------------------*/
     public void endGameDisplay() {
+        
+        soundPlayer.loopSound("./sounds/ending_song.wav");
 
         mapView.dispose(); // get rid of the game
 
@@ -435,7 +436,6 @@ public class PokemonGUI {
         for (String s : mode.getTrainer().getItemQuantities().keySet()) {
             
             trainerItems.addItem(s + " " + mode.getTrainer().getItemQuantities().get(s));
-            System.out.println(s);
         }        
     }
 
@@ -744,6 +744,8 @@ public class PokemonGUI {
             // TODO Auto-generated method stub
 
             startScreen.setVisible(true);
+            soundPlayer.stopSound();
+            soundPlayer.loopSound("./sounds/opening_song.wav");
 
         }
 
