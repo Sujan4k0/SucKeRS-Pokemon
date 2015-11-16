@@ -255,48 +255,69 @@ public class PokemonDatabase implements Serializable{
 	
 	public boolean caughtEmAll(Trainer trainer) {
 		
-		//Check trainer's inventory against all common pokemon
+		boolean allCaught = true;	//Init all caught to false. Will change to true if a Mew was caug is missing.
 		
-		boolean allCaught = true;		//Init allCaught to true. This will be set to false if the trainer did not catch the pokemon
-		
-		for (Pokemon i : allCommon) {	//For all the uncommon pokemon
+		for (Pokemon i : trainer.getPokemon()) {	//For all the pokemon the trainer has
 			
-			for (Pokemon j : trainer.getPokemon()) {		//For all the pokemon the trainer has
+			if (i.getName().equals("MEW")) {			//If that pokemon is Mew
 				
-				if (i.getName().equals(j.getName())) {					//If the trainer has the pokemon, we can break out of the loop
+				//System.out.println("You caught "+i.getName());
+				allCaught = true;								//Set all caught to true and break the loop
+				break;
+			}
+			allCaught = false;							//Set all cauught to false and continue to search
+		}
+		
+		if (!allCaught) {			//If we all caught is not true, we missed Mew
+			
+			//System.out.println("You did not catch Mew"); 
+			return false; //If mew was not caught, return false
+		}
+		
+		for (Pokemon i : allCommon) {		//For all of the common pokemon
+			
+			for (Pokemon j : trainer.getPokemon()) { //For all the pokemon that the trainer has
+				
+				if (i.getName().equals(j.getName())) {		//If the trainer has that pokemon
 					
-					System.out.println("Trainer caught " + i.getName() + " " + j.getName());
-					break;													//Break out of the loop. allCaught should still be true		
-					
+					//System.out.println("You caught " + i.getName() + " " + j.getName());
+					allCaught = true;							//Set all caught to true and break out of the loop
+					break;
 				}
+				
+				allCaught = false;			//Set all caught to false
+			}
+			
+			if (!allCaught) {		//If not all the pokemon have been caught
+				
+				//System.out.println("You did not catch all the pokemon."); //If mew was not caught, return false
+				return false;		//Return false
 			}
 		}
 		
-		for (Pokemon i : allUncommon) {	//For all the uncommon pokemon
+		for (Pokemon i : allUncommon) {		//For all of the uncommon pokemon
 			
 			for (Pokemon j : trainer.getPokemon()) {		//For all the pokemon the trainer has
 				
-				if (i.getName().equals(j.getName())) {					//If the trainer has the pokemon, we can break out of the loop
+				if (i.getName().equals(j.getName())) {				//If the trainer has that pokemon
 					
-					System.out.println("Trainer caught " + i.getName() + " " + j.getName());
-					break;													//Break out of the loop. allCaught should still be true		
-						
-				}											
-			}
-			
-			
-		}
-		
-		//check to see if the trainer caught Mew
-		
-		for (Pokemon i : trainer.getPokemon()) {
-			
-			if (i.getName().equals(mew.getName())) {					//If the trainer has caught mew
+					//System.out.println("You caught " + i.getName() + " " + j.getName());		
+					allCaught = true;										//Set all caught to true and break out of the loop
+					break;			
+				}
 				
-				return true;													//We caught all of the Pokemon. Break out with true status			
+				allCaught = false;						//Set all caught to false
+			}
+			
+			if (!allCaught) {			//If not all the pokemon were caught
+				
+				//System.out.println("You did not catch all the pokemon."); //If mew was not caught, return false
+				return false;
 			}
 		}
 		
-		return false;				//If we have reached this point, we have not caught all the pokemon. Exit with false status.
+		//System.out.println("You caught all the pokemon!");
+		
+		return allCaught;	//Return allCaught, which is now true. You caught all the Pokemon!
 	}
 }

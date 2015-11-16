@@ -27,6 +27,9 @@ public class CEAGameTestWin {
 		ash.addPokemon(database.getLuvdisc());
 		ash.addPokemon(database.getRhydon());
 		ash.addPokemon(database.getSimisage());
+		
+		assertFalse(game.isGameWon());
+		
 		ash.addPokemon(database.getSteelix());
 		
 		assertTrue(game.isGameWon());
