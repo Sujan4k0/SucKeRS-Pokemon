@@ -144,6 +144,34 @@ public class PokemonTests {
         assertNull(testMon.getSprite());   
     }
     
+    @Test 
+    public void typeGetter() {
+        
+        Common testMon = new Common(new Random(), "Sarryathjan", null, PokemonType.ELECTRIC);
+        assertEquals(testMon.getType(), PokemonType.ELECTRIC);
+    }
+    
+    @Test
+    public void encounterChanceGetter() {
+        
+        Pokemon testMon = new Common(new Random(), "Sarryathjan", null, PokemonType.ELECTRIC);
+        assertEquals(testMon.getEncounterChance(), 10);
+    }
+    
+    @Test
+    public void rarityTest() {
+        
+        Pokemon testMon = new Common(new Random(), "Sarryathjan", null, PokemonType.ELECTRIC);
+        assertEquals(testMon.rarityString(), "(C)"); 
+        
+        testMon = new Uncommon(new Random(), "Sarryathjan", null, PokemonType.ELECTRIC);
+        assertEquals(testMon.rarityString(), "(U)"); 
+
+        testMon = new Legendary(new Random(), "Sarryathjan", null, PokemonType.ELECTRIC);
+        assertEquals(testMon.rarityString(), "(L)"); 
+
+    }
+    
     @Test
     public void invalidResponseBreak() {
         

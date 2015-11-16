@@ -104,7 +104,7 @@ public class PokemonGUI {
     *---------------------------------------------------------------------*/
     private void startFrame() {
         
-        soundPlayer.playSound("./sounds/opening_song.wav");
+        soundPlayer.loopSound("./sounds/opening_song.wav");
 
         // create the basic frame
         startScreen = new JFrame();
@@ -834,7 +834,7 @@ public class PokemonGUI {
 
             if (!mode.isGameActive()) {
 
-                soundPlayer.loopSound("./sounds/ending_song.wav");
+                soundPlayer.loopSound("./sounds/ending_song.wav"); 
                 endGameDisplay();
             }
 
