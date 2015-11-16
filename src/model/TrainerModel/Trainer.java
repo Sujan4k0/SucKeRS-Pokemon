@@ -150,12 +150,12 @@ public class Trainer implements Serializable {
 	 |  Parameters:     [an Item i]
 	 *---------------------------------------------------------------------*/
 	public void useItem(Item i) {
-		
+
 		for (int j = 0; j < items.size(); j++) {
-			if (items.get(j).getName().equals("Teleporter"))
-				
+			if (items.get(j).getName().equals("Teleporter")) {
+			}
 		}
-		
+
 		if (i.getName() == "Teleporter") {
 			Teleporter t = (Teleporter) i;
 			if (t.isSet()) {
@@ -168,7 +168,7 @@ public class Trainer implements Serializable {
 				t.setPoint(trainerPosition);
 				return;
 			}
-		} else 
+		} else
 
 		if (items.contains(i)) {
 			if (i.getName().equals("Fatigue Potion")) {
