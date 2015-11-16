@@ -246,16 +246,14 @@ public abstract class GameMode implements Serializable {
 				// decrease steps
 				trainer.decreaseSteps();
 
-				
-
 				// start an encounter
-				if (new Random().nextInt(10) == 9)
+				if (r.nextInt(10) == 9)
 					startEncounter();
 
 				//TODO encounters/items
-			} else map.setStartOffsets(0, 0
-					);
-			
+			} else
+				map.setStartOffsets(0, 0);
+
 			// repaint the visual changes
 			map.repaint();
 		}
@@ -313,12 +311,12 @@ public abstract class GameMode implements Serializable {
 
 	public void startEncounter() {
 
-		int rand = new Random().nextInt(30);
+		int rand = r.nextInt(20);
 
-		if (rand == 29)
+		if (rand == 19)
 			encounteredPokemon = database.getMew();
 		else {
-			rand = new Random().nextInt(15);
+			rand = r.nextInt(10);
 			if (rand == 9)
 				encounteredPokemon = database.getRandomUncommon(map.getCurrentTerrain());
 			else
@@ -332,17 +330,41 @@ public abstract class GameMode implements Serializable {
 	}
 
 	protected void setEncounterBG(TerrainType tt) {
+		Image[] imgs;
+		if (tt.name().toUpperCase().equals("MYSTERY")) {
+			imgs = new Image[3];
+			for (int j = 1; j < imgs.length + 1; j++) {
+				String path =
+						"./images/bgImages/" + tt.name().toLowerCase() + "BattleBackground" + j
+								+ ".png";
 
-		String path = "./images/bgImages/" + tt.name().toLowerCase() + "BattleBackground.png";
+				Image i;
+				try {
+					i = ImageIO.read(new File(path));
+					imgs[j - 1] = i;
+				} catch (IOException e) {
+					// TODO Auto-generated catch block
+					System.out.println("Tried reading Image at: " + path);
+					e.printStackTrace();
+				}
+			}
+		} else {
+			imgs = new Image[1];
+			String path =
+					"./images/bgImages/" + tt.name().toLowerCase() + "BattleBackground.png";
 
-		Image i;
-		try {
-			i = ImageIO.read(new File(path));
-			encounter.setBGImage(i);
-		} catch (IOException e) {
-			// TODO Auto-generated catch block
-			e.printStackTrace();
+			Image i;
+			try {
+				i = ImageIO.read(new File(path));
+				imgs[0] = i;
+			} catch (IOException e) {
+				// TODO Auto-generated catch block
+				System.out.println("Tried reading Image at: " + path);
+				e.printStackTrace();
+			}
 		}
+
+		encounter.setBGImages(imgs);
 
 	}
 
@@ -398,11 +420,11 @@ public abstract class GameMode implements Serializable {
 		if (i.getName().equals("Harmonica")) {
 			stopBGMusic();
 			bgPath = ((Harmonica) i).getSongFilePath(database.getPokemonByName(pName));
-			startNewBGMusic(); 
+			startNewBGMusic();
 		}
 
 	}
-	
+
 	public void loadImages() {
 		map.loadImages();
 		encounter.loadImages();
@@ -411,6 +433,9 @@ public abstract class GameMode implements Serializable {
 
 	public void useItem(Item i) {
 		trainer.useItem(i);
+		
+		if (i.getName().equals("Teleporter"))
+			map.update(trainer);
 	}
 
 	private void endEncounter() {
@@ -430,7 +455,7 @@ public abstract class GameMode implements Serializable {
 	public void startNewBGMusic() {
 		bgPlayer.loopSound(bgPath);
 	}
-	
+
 	public void restartBGMusic() {
 		bgPlayer.restartSound();
 	}
@@ -438,7 +463,7 @@ public abstract class GameMode implements Serializable {
 	public void pauseBGMusic() {
 		bgPlayer.pauseSound();
 	}
-	
+
 	public void stopBGMusic() {
 		bgPlayer.stopSound();
 	}
@@ -476,6 +501,10 @@ public abstract class GameMode implements Serializable {
 
 			if (!isGameActive())
 				stopBGMusic();
+
+			map.update(trainer); // does anything the map needs to check ever key press
+			
+			map.repaint();
 
 		}
 

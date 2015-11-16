@@ -18,15 +18,20 @@
 package view;
 
 import java.awt.Point;
+import javax.swing.Timer;
 
+import model.ItemModel.Teleporter;
 import model.MapModel.Ground;
 import model.MapModel.Obstacle;
+import model.TrainerModel.Trainer;
 
 public class CEAMap extends Map {
 
 	private static final long serialVersionUID = 1L;
 
 	Ground grassy, deserty, icey, cavey, plainy, secrety1, secrety2;
+
+	boolean inLastPart = false; // if player should be in last part of map
 
 	// entire CEAMap is 3 by 3 Maps combined
 	public static int WIDTH = (Map.WIDTH * 3), HEIGHT = (Map.HEIGHT * 3);
@@ -149,12 +154,20 @@ public class CEAMap extends Map {
 
 	private void makeIceyLand() {
 
-		for (int i = Map.HEIGHT * 2; i < 3 * Map.HEIGHT; i++) {
-			for (int j = Map.WIDTH; j < 2 * Map.WIDTH; j++) {
+		int minH = Map.HEIGHT * 2;
+		int maxH = Map.HEIGHT * 3;
+
+		int minW = Map.WIDTH;
+		int maxW = Map.WIDTH * 2;
+		// places ground, border, and path thing
+		for (int i = minH; i < maxH; i++) {
+			for (int j = minW; j < maxW; j++) {
 				groundTiles[i][j] = icey;
-				if (i == Map.HEIGHT * 2 || j == Map.WIDTH || j == 2 * Map.WIDTH - 1
-						|| i == 3 * Map.HEIGHT - 1)
+				if (i == minH || j == minW || j == maxW - 1 || i == maxH - 1)
 					obstacleTiles[i][j] = Obstacle.TREE_SNOWY; // placeholder
+
+				if ((j == minW + 2 || j == maxW - 2) && i > minH + 2 && i < minH - 2)
+					obstacleTiles[i][j] = Obstacle.TREE_SNOWY;
 			}
 		}
 
@@ -288,6 +301,27 @@ public class CEAMap extends Map {
 
 			}
 		}
+	}
+
+	@Override
+	public void update(Object o) {
+
+		Trainer t = (Trainer) o;
+		if (!inLastPart && new PokemonDatabase().caughtAllExceptLeg(t)) {
+			inLastPart = true; // time for secrety secret time
+			Teleporter tele = new Teleporter(); // create teleporter to go to secret
+			tele.setPoint(new Point(Map.HEIGHT - 2, Map.WIDTH / 2)); // set point
+			t.addItem(tele); // add Teleporter to Trainer's inventory
+			setStartOffsets(0, 0);
+			movementTimer.stop();
+			movementTimer = new Timer(movementTimer.getDelay(), new MovementTimerListener());
+		}
+
+		if (!t.getPoint().equals(trainerPoint)) {
+			trainerPoint = new Point(t.getPoint());
+			repaint();
+		}
+
 	}
 
 }

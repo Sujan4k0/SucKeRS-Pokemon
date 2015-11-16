@@ -154,6 +154,8 @@ public abstract class Map extends JPanel implements Serializable {
 	public void drawMap(Graphics g) {
 
 		int x = 0, y = 0;
+		
+		checkMapPlacement();
 
 		// draw ground and obstacle tiles
 		for (int i = startX; i < (startX + Map.HEIGHT); i++) {
@@ -170,7 +172,21 @@ public abstract class Map extends JPanel implements Serializable {
 		// draw trainer sprite
 		GraphicsManager.drawSprite(g, dir, trainerSheet, (trainerPoint.y % WIDTH) * Tile.SIZE - yOffset,
 				(trainerPoint.x % HEIGHT) * Tile.SIZE - xOffset);
+		
+		
 
+	}
+	
+	public void checkMapPlacement() {
+		if (trainerPoint.x >= startX)
+			moveDown();
+		if (trainerPoint.x >= startX)
+			moveDown();
+		
+		if (trainerPoint.x <= startX)
+			moveUp();
+		if (trainerPoint.x <= startX)
+			moveUp();
 	}
 
 	/*---------------------------------------------------------------------
@@ -304,6 +320,7 @@ public abstract class Map extends JPanel implements Serializable {
 	public void setStartOffsets(int x, int y) {
 		xOffset = x;
 		yOffset = y;
+		movementTimer.stop();
 	}
 	
 	public void startTrainerMovement() {
@@ -311,7 +328,7 @@ public abstract class Map extends JPanel implements Serializable {
 	}
 
 	//animates the hunter's image for movement
-		private class MovementTimerListener implements ActionListener {
+		protected class MovementTimerListener implements ActionListener {
 
 			int MOVE = 2, moveAmount = 0;
 			int tic = 0;
@@ -368,4 +385,6 @@ public abstract class Map extends JPanel implements Serializable {
 				e.printStackTrace();
 			}			
 		}
+		
+		public abstract void update(Object o);
 }
