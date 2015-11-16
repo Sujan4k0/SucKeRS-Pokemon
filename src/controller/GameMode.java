@@ -502,9 +502,7 @@ public abstract class GameMode implements Serializable {
 			if (!isGameActive())
 				stopBGMusic();
 
-			map.update(trainer); // does anything the map needs to check ever key press
-			
-			map.repaint();
+			//map.update(trainer); // does anything the map needs to check ever key press
 
 		}
 

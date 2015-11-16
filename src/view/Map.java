@@ -39,7 +39,7 @@ import model.MapModel.*;
 public abstract class Map extends JPanel implements Serializable {
 
 	private static final long serialVersionUID = 1L;
-	
+
 	private static int MOVEMENT_SPEED = 7;
 
 	// visible Map is WIDTH by HEIGHT tiles
@@ -57,13 +57,13 @@ public abstract class Map extends JPanel implements Serializable {
 
 	// the Point the trainer is visually at
 	Point trainerPoint;
-	
+
 	// timer to animate trainer movement
 	Timer movementTimer;
-	
+
 	// if the trainer movement is being animated
 	boolean animating = false;
-	
+
 	// offsets for trainer animation
 	int xOffset = 0, yOffset = 0;
 
@@ -72,8 +72,10 @@ public abstract class Map extends JPanel implements Serializable {
 		UP, RIGHT, UP_1, LEFT, RIGHT_1, DOWN_1, LEFT_1, RIGHT_2, DOWN, LEFT_2, UP_2, DOWN_2
 	}
 
-	// the direction the trainer sprite currently is facing/using
+	// the direction the trainer sprite currently is facing
 	TrainerDirection dir = TrainerDirection.RIGHT;
+	// the direction the trainer sprite is currently drawn as
+	TrainerDirection drawnDir = TrainerDirection.RIGHT;
 
 	// the Trainer's sprite sheet
 	transient Image trainerSheet;
@@ -108,7 +110,7 @@ public abstract class Map extends JPanel implements Serializable {
 		int prefh = HEIGHT * Tile.SIZE;
 
 		this.setPreferredSize(new Dimension(prefw, prefh));
-		
+
 		// make animation timer for Trainer movement
 		movementTimer = new Timer(MOVEMENT_SPEED, new MovementTimerListener());
 
@@ -154,7 +156,7 @@ public abstract class Map extends JPanel implements Serializable {
 	public void drawMap(Graphics g) {
 
 		int x = 0, y = 0;
-		
+
 		checkMapPlacement();
 
 		// draw ground and obstacle tiles
@@ -170,19 +172,17 @@ public abstract class Map extends JPanel implements Serializable {
 		}
 
 		// draw trainer sprite
-		GraphicsManager.drawSprite(g, dir, trainerSheet, (trainerPoint.y % WIDTH) * Tile.SIZE - yOffset,
-				(trainerPoint.x % HEIGHT) * Tile.SIZE - xOffset);
-		
-		
+		GraphicsManager.drawSprite(g, drawnDir, trainerSheet, (trainerPoint.y % WIDTH) * Tile.SIZE
+				- yOffset, (trainerPoint.x % HEIGHT) * Tile.SIZE - xOffset);
 
 	}
-	
+
 	public void checkMapPlacement() {
 		if (trainerPoint.x >= startX)
 			moveDown();
 		if (trainerPoint.x >= startX)
 			moveDown();
-		
+
 		if (trainerPoint.x <= startX)
 			moveUp();
 		if (trainerPoint.x <= startX)
@@ -312,79 +312,99 @@ public abstract class Map extends JPanel implements Serializable {
 		// TODO Auto-generated method stub
 		return groundTiles[trainerPoint.x][trainerPoint.y].getTerrainType();
 	}
-	
+
 	public boolean isAnimating() {
 		return animating;
 	}
-	
+
 	public void setStartOffsets(int x, int y) {
 		xOffset = x;
 		yOffset = y;
 		movementTimer.stop();
 	}
-	
+
 	public void startTrainerMovement() {
 		movementTimer.start();
 	}
 
 	//animates the hunter's image for movement
-		protected class MovementTimerListener implements ActionListener {
+	protected class MovementTimerListener implements ActionListener {
 
-			int MOVE = 2, moveAmount = 0;
-			int tic = 0;
+		boolean walk = false;
+		int MOVE = 2, moveAmount = 0;
+		int tic = 0;
 
-			@Override
-			public void actionPerformed(ActionEvent e) {
+		@Override
+		public void actionPerformed(ActionEvent e) {
 
-				animating = true;
-				
-				if (xOffset > 0 || yOffset > 0)
-					moveAmount = -MOVE;
-				else moveAmount = MOVE;
-				
-				if (tic < Math.abs(Tile.SIZE / moveAmount)) {
+			animating = true;
 
-					// determine which direction to move in
-					switch (dir) {
+			if (xOffset > 0 || yOffset > 0)
+				moveAmount = -MOVE;
+			else
+				moveAmount = MOVE;
 
-					case UP:
-						xOffset += moveAmount;
-						break;
-					case DOWN:
-						xOffset += moveAmount;
-						break;
-					case LEFT:
-						yOffset += moveAmount;
-						break;
-					case RIGHT:
-						yOffset += moveAmount;
-						break;
-					default:
-						break;
+			if (tic < Math.abs(Tile.SIZE / moveAmount)) {
 
-					}
+				// determine which direction to move in
+				switch (dir) {
 
-					tic++;
-				} else {
-					movementTimer.stop();
-					tic = 0;
-					animating = false;
+				case UP:
+					if (walk)
+						drawnDir = Map.TrainerDirection.UP_1;
+					else
+						drawnDir = Map.TrainerDirection.UP_2;
+					xOffset += moveAmount;
+					break;
+				case DOWN:
+					if (walk)
+						drawnDir = Map.TrainerDirection.DOWN_1;
+					else
+						drawnDir = Map.TrainerDirection.DOWN_2;
+					xOffset += moveAmount;
+					break;
+				case LEFT:
+					if (walk)
+						drawnDir = Map.TrainerDirection.LEFT_1;
+					else
+						drawnDir = Map.TrainerDirection.LEFT_2;
+					yOffset += moveAmount;
+					break;
+				case RIGHT:
+					if (walk)
+						drawnDir = Map.TrainerDirection.RIGHT_1;
+					else
+						drawnDir = Map.TrainerDirection.RIGHT_2;
+					yOffset += moveAmount;
+					break;
+				default:
+					break;
+
 				}
-				repaint();
+
+				tic++;
+			} else {
+				movementTimer.stop();
+				drawnDir = dir;
+				tic = 0;
+				animating = false;
+				walk = !walk;
 			}
-
+			repaint();
 		}
 
-		public void loadImages() {
-			try {
-				trainerSheet = ImageIO.read(new File("./images/SucKeRS_TrainerSpriteSheet_Test.png"));
-				groundTileSet = ImageIO.read(new File("./images/SucKeRS_PokemonTileSet.png"));
-				obstacleTileSet = ImageIO.read(new File("./images/SucKeRS_PokemonObstacleTileSet.png"));
-			} catch (IOException e) {
-				// TODO Auto-generated catch block
-				e.printStackTrace();
-			}			
+	}
+
+	public void loadImages() {
+		try {
+			trainerSheet = ImageIO.read(new File("./images/SucKeRS_TrainerSpriteSheet_Test.png"));
+			groundTileSet = ImageIO.read(new File("./images/SucKeRS_PokemonTileSet.png"));
+			obstacleTileSet = ImageIO.read(new File("./images/SucKeRS_PokemonObstacleTileSet.png"));
+		} catch (IOException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
 		}
-		
-		public abstract void update(Object o);
+	}
+
+	public abstract void update(Object o);
 }
