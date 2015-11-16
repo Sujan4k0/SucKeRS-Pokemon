@@ -172,7 +172,6 @@ public class PokemonGUI {
             trainerItems.addItem(s + " " + mode.getTrainer().getItemQuantities().get(s));
         }
                 
-        trainerItems = new JComboBox<Object>(items.toArray());
         trainerItems.setFocusable(false);
         trainerPokemon.setFocusable(false);
 
@@ -443,11 +442,7 @@ public class PokemonGUI {
                         ois.close(); // close object stream
                         fis.close(); // close file stream
 
-                        if (mode.getMap() == null) {
-                            
-                            mode.createMap();
-                        }
-                        
+                        mode.loadImages();
                     } catch (Exception e1) {
                     }
                 }
@@ -511,6 +506,8 @@ public class PokemonGUI {
                         mode = (MazeGame) ois.readObject(); // get the MazeGame object
                         ois.close(); // close object stream
                         fis.close(); // close file stream
+                        
+                        mode.loadImages();
 
                     } catch (Exception e1) {// default model
                     }

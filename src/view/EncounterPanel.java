@@ -200,4 +200,13 @@ public class EncounterPanel extends JPanel implements Serializable {
 		bgImage = i;
 
 	}
+
+	public void loadImages() {
+		try {
+			bigTrainerSheet =
+					ImageIO.read(new File("./images/SucKeRS_LargeTrainerSpriteSheet_1.png"));
+		} catch (IOException e) {
+			e.printStackTrace();
+		}		
+	}
 }
