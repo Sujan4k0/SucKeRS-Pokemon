@@ -253,7 +253,7 @@ public abstract class GameMode implements Serializable {
 					startEncounter();
 
 				//TODO encounters/items
-			}
+			} else map.setStartOffsets(0, 0);
 			
 			// repaint the visual changes
 			map.repaint();
@@ -295,7 +295,7 @@ public abstract class GameMode implements Serializable {
 		return endMessage;
 	}
 
-	public String getBatteMessage() {
+	public String getBattleMessage() {
 		return battleMessage;
 	}
 
@@ -325,7 +325,7 @@ public abstract class GameMode implements Serializable {
 
 		inBattle = true;
 		encounter.startEncounter(encounteredPokemon);
-		stopBGMusic();
+		pauseBGMusic();
 
 	}
 
@@ -396,7 +396,7 @@ public abstract class GameMode implements Serializable {
 		if (i.getName().equals("Harmonica")) {
 			stopBGMusic();
 			bgPath = ((Harmonica) i).getSongFilePath(database.getPokemonByName(pName));
-			startBGMusic(); 
+			startNewBGMusic(); 
 		}
 
 	}
@@ -404,6 +404,7 @@ public abstract class GameMode implements Serializable {
 	public void loadImages() {
 		map.loadImages();
 		encounter.loadImages();
+		startNewBGMusic();
 	}
 
 	public void useItem(Item i) {
@@ -413,7 +414,7 @@ public abstract class GameMode implements Serializable {
 	private void endEncounter() {
 		inBattle = false;
 		encounter.stopEncounter();
-		startBGMusic();
+		restartBGMusic();
 	}
 
 	public boolean trainerInBattle() {
@@ -424,10 +425,18 @@ public abstract class GameMode implements Serializable {
 		return encounter;
 	}
 
-	public void startBGMusic() {
+	public void startNewBGMusic() {
 		bgPlayer.loopSound(bgPath);
 	}
+	
+	public void restartBGMusic() {
+		bgPlayer.restartSound();
+	}
 
+	public void pauseBGMusic() {
+		bgPlayer.pauseSound();
+	}
+	
 	public void stopBGMusic() {
 		bgPlayer.stopSound();
 	}

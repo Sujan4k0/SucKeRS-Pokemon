@@ -25,7 +25,7 @@ import model.PokemonModel.Pokemon;
 import model.TrainerModel.Trainer;
 
 public class CEAGame extends GameMode {
-
+ 
 	/*---------------------------------------------------------------------
 	 |  Method name:    [CEAGame]
 	 |  Purpose:  	    [Constructs a CEAGame (Catch 'em All)]
@@ -34,9 +34,10 @@ public class CEAGame extends GameMode {
 	public CEAGame(Random rand) {
 		super(rand);
 		bgPath = "./sounds/Ruby_Sapphire_SafariZone.mp3";
-		startBGMusic();
+		startNewBGMusic();
 		
-		useItemOnPokemon(new Harmonica(), database.getCyndaquil().getName());
+		useItemOnPokemon(new Harmonica(), database.getMew().getName());
+		
 	}
 
 	/*---------------------------------------------------------------------

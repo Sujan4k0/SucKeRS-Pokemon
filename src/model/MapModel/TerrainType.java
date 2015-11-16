@@ -20,11 +20,12 @@ package model.MapModel;
 public enum TerrainType {
 	
 	//TODO add walking sound effects for dif terrain types
-	
-	ICE("",""), GRASS("./sounds/Grass_Step_1.wav", "./sounds/Grass_Step_2.wav"), 
-	FOREST("./sounds/Grass_Step_1.wav", "./sounds/Grass_Step_2.wav"),
+	ICE("",""), GRASS("Grass_Step_1.wav", "Grass_Step_2.wav"), 
+	FOREST("Grass_Step_1.wav", "Grass_Step_2.wav"),
 	CAVE("",""), MYSTERY("",""), GENERIC("",""), DESERT("",""); // etc...
 	
+
+	private static final String BASEDIR = "./sounds/walkingSFX/";
 	
 	private String sfxFilePath1, sfxFilePath2;
 	/*---------------------------------------------------------------------
@@ -32,8 +33,8 @@ public enum TerrainType {
 	 |  Purpose:  	    [(no purpose currently - may or may not have purpose later)]
 	 *---------------------------------------------------------------------*/
 	TerrainType(String s1, String s2) {
-		sfxFilePath1 = s1;
-		sfxFilePath2 = s2;
+		sfxFilePath1 = BASEDIR + s1;
+		sfxFilePath2 = BASEDIR + s2;
 	}
 	
 	/*---------------------------------------------------------------------

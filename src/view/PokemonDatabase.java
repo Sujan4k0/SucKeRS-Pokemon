@@ -255,11 +255,11 @@ public class PokemonDatabase implements Serializable{
 	
 	public boolean caughtEmAll(Trainer trainer) {
 		
-		boolean allCaught = true;	//Init all caught to false. Will change to true if a Mew was caug is missing.
+		boolean allCaught = false;	//Init all caught to false. Will change to true if a Mew was caug is missing.
 		
 		for (Pokemon i : trainer.getPokemon()) {	//For all the pokemon the trainer has
 			
-			if (i.getName().equals("MEW")) {			//If that pokemon is Mew
+			if (i.getName().equals(getMew().getName())) {			//If that pokemon is Mew
 				
 				//System.out.println("You caught "+i.getName());
 				allCaught = true;								//Set all caught to true and break the loop

@@ -80,21 +80,21 @@ public abstract class Item implements Serializable{
 	}
 	
 	public static Item getItemByName(String name) {
-		switch (name) {
+		switch (name.toUpperCase()) {
 		
-		case "PokeBall":
+		case "POKEBALL":
 			return new PokeBall();
-		case "Hyper Step Potion":
+		case "HYPER STEP POTION":
 			return new HyperStepPotion();
-		case "Fatigue Potion":
+		case "FATIGUE POTION":
 			return new FatiguePotion();
-		case "Harmonica":
+		case "HARMONICA":
 			return new Harmonica();
-		case "Super Step Potion":
+		case "SUPER STEP POTION":
 			return new SuperStepPotion();
-		case "Basic Step Potion":
+		case "BASIC STEP POTION":
 			return new BasicStepPotion();
-		case "Teleporter":
+		case "TELEPORTER":
 			return new Teleporter();
 		default:
 			break;
