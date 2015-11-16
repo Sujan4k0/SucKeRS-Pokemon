@@ -443,11 +443,8 @@ public class PokemonGUI {
                         ois.close(); // close object stream
                         fis.close(); // close file stream
 
-                        if (mode.getMap() == null) {
-                            
-                            mode.createMap();
-                        }
-                        
+                        System.out.println("This ran : " + mode.getMap().getObstacleTiles()[0][0].getTerrainType().name());
+                        mode.loadImages();
                     } catch (Exception e1) {
                     }
                 }

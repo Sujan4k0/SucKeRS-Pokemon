@@ -357,4 +357,15 @@ public abstract class Map extends JPanel implements Serializable {
 			}
 
 		}
+
+		public void loadImages() {
+			try {
+				trainerSheet = ImageIO.read(new File("./images/SucKeRS_TrainerSpriteSheet_Test.png"));
+				groundTileSet = ImageIO.read(new File("./images/SucKeRS_PokemonTileSet.png"));
+				obstacleTileSet = ImageIO.read(new File("./images/SucKeRS_PokemonObstacleTileSet.png"));
+			} catch (IOException e) {
+				// TODO Auto-generated catch block
+				e.printStackTrace();
+			}			
+		}
 }

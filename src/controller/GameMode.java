@@ -400,6 +400,11 @@ public abstract class GameMode implements Serializable {
 		}
 
 	}
+	
+	public void loadImages() {
+		map.loadImages();
+		encounter.loadImages();
+	}
 
 	public void useItem(Item i) {
 		trainer.useItem(i);

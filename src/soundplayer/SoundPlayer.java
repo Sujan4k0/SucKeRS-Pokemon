@@ -50,4 +50,8 @@ public class SoundPlayer implements Serializable {
 
 		mediaPlayer.play();
 	}
+	
+	public void pauseSound() {
+		mediaPlayer.pause();
+	}
 }
