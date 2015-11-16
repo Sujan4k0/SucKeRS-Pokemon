@@ -395,8 +395,8 @@ public abstract class GameMode implements Serializable {
 
 		if (i.getName().equals("Harmonica")) {
 			stopBGMusic();
-			//bgPath = ((Harmonica) i).getSongFilePath(database.getPokemonByName(pName));
-			//startBGMusic(); 
+			bgPath = ((Harmonica) i).getSongFilePath(database.getPokemonByName(pName));
+			startBGMusic(); 
 		}
 
 	}

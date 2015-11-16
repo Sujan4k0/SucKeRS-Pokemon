@@ -20,6 +20,7 @@ import java.util.ArrayList;
 import java.util.Random;
 
 import view.*;
+import model.ItemModel.Harmonica;
 import model.PokemonModel.Pokemon;
 import model.TrainerModel.Trainer;
 
@@ -34,6 +35,8 @@ public class CEAGame extends GameMode {
 		super(rand);
 		bgPath = "./sounds/Ruby_Sapphire_SafariZone.mp3";
 		startBGMusic();
+		
+		useItemOnPokemon(new Harmonica(), database.getCyndaquil().getName());
 	}
 
 	/*---------------------------------------------------------------------

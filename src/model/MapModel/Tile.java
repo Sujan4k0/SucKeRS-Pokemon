@@ -17,7 +17,9 @@
  *===========================================================================*/
 package model.MapModel;
 
-public interface Tile {
+import java.io.Serializable;
+
+public interface Tile extends Serializable {
 	
 	// the width and height of each Tile in pixels
 	public static final int SIZE = 50;

@@ -58,7 +58,7 @@ public class Trainer implements Serializable {
 		currentPokeballs = 30;
 		fatigued = false;
 		trainerPosition = null;
-		for (int i=0; i<30; i++){
+		for (int i = 0; i < 30; i++) {
 			addItem(new PokeBall());
 		}
 	}
@@ -79,23 +79,23 @@ public class Trainer implements Serializable {
 		currentPokeballs = p;
 		fatigued = false;
 		trainerPosition = null;
-		for (int i=0; i<p; i++){
+		for (int i = 0; i < p; i++) {
 			items.add(new PokeBall());
 		}
 	}
-	
+
 	/*---------------------------------------------------------------------
 	 |  Method name:    [getPoint]
 	 |  Purpose:  	    [gets the trainer's position]
 	 |  Parameters:     [none]
 	 |  Returns:  	    [Point]
 	 *---------------------------------------------------------------------*/
-	
+
 	public Point getPoint() {
 
 		return trainerPosition;
 	}
-	
+
 	/*---------------------------------------------------------------------
 	 |  Method name:    [setPoint]
 	 |  Purpose:  	    [Sets a new Point representing the trainer's position]
@@ -107,7 +107,7 @@ public class Trainer implements Serializable {
 
 		trainerPosition = new Point(p);
 	}
-	
+
 	/*---------------------------------------------------------------------
 	 |  Method name:    [getItemQuantities]
 	 |  Purpose:  	    [Returns the list of the quantity of each item that the trainer has]
@@ -115,16 +115,17 @@ public class Trainer implements Serializable {
 	 |  Returns:        [HashMap<String, Integer>]
 	 *---------------------------------------------------------------------*/
 	public HashMap<String, Integer> getItemQuantities() {
-		
+
 		return itemQuantities;
 	}
+
 	/*---------------------------------------------------------------------
 	 |  Method name:    [getItems]
 	 |  Purpose:  	    [Returns the list of items that the trainer has]
 	 |  Parameters:     [none]
 	 |  Returns:        [ArrayList<Item>]
 	 *---------------------------------------------------------------------*/
-	public ArrayList<Item> getItems(){
+	public ArrayList<Item> getItems() {
 		return items;
 	}
 
@@ -136,11 +137,10 @@ public class Trainer implements Serializable {
 	 *---------------------------------------------------------------------*/
 	public void addItem(Item i) {
 		items.add(i);
-		if (!itemQuantities.containsKey(i.getName())){
+		if (!itemQuantities.containsKey(i.getName())) {
 			itemQuantities.put(i.getName(), 1);
-		}
-		else{
-			itemQuantities.put(i.getName(), (itemQuantities.get(i.getName())+1));
+		} else {
+			itemQuantities.put(i.getName(), (itemQuantities.get(i.getName()) + 1));
 		}
 		//notifyObservers
 	}
@@ -151,162 +151,165 @@ public class Trainer implements Serializable {
 	 |  Parameters:     [an Item i]
 	 *---------------------------------------------------------------------*/
 	public void useItem(Item i) {
-		if (i.getName() == "Teleporter") {
-			Teleporter t = (Teleporter) i;
-			if (t.isSet()) {
-				//Teleport animation
-				trainerPosition = new Point((int) t.getTeleportPoint().getX(),
-						(int) t.getTeleportPoint().getY());
-				items.remove(i);
-				itemQuantities.put(i.getName(), (itemQuantities.get(i.getName())-1));
-				//update observers for inventory
-			} else {
-				t.setPoint(trainerPosition);
-			}
-		}
-		else if (i.getName().equals("Fatigue Potion")) {
-			if (isFatigued()) {
-				setFatigued(false);
-				items.remove(i);
-				itemQuantities.put(i.getName(), (itemQuantities.get(i.getName())-1));
-				//update observers for inventory
 
+		if (items.contains(i)) {
+			if (i.getName() == "Teleporter") {
+				Teleporter t = (Teleporter) i;
+				if (t.isSet()) {
+					//Teleport animation
+					trainerPosition =
+							new Point((int) t.getTeleportPoint().getX(), (int) t.getTeleportPoint()
+									.getY());
+					items.remove(i);
+					itemQuantities.put(i.getName(), (itemQuantities.get(i.getName()) - 1));
+					//update observers for inventory
+				} else {
+					t.setPoint(trainerPosition);
+				}
+			} else if (i.getName().equals("Fatigue Potion")) {
+				if (isFatigued()) {
+					setFatigued(false);
+					items.remove(i);
+					itemQuantities.put(i.getName(), (itemQuantities.get(i.getName()) - 1));
+					//update observers for inventory
+
+				} else {
+					System.out.println("You don't need that now.");//just for testing, will later update view to display this message
+				}
+			} else if (i.getName().equals("Basic Step Potion")
+					|| i.getName().equals("Super Step Potion")
+					|| i.getName().equals("Hyper Step Potion")) {
+				this.steps += ((StepPotion) i).getStepBonus();
+				items.remove(i);
+				itemQuantities.put(i.getName(), (itemQuantities.get(i.getName()) - 1));
+				//update observers for inventory
+			} else if (i.getName().equals("PokeBall")) {
+				items.remove(i);
+				itemQuantities.put(i.getName(), (itemQuantities.get(i.getName()) - 1));
+			} else if (i.getName().equals("Harmonica")) {
+				items.remove(i);
+				itemQuantities.put(i.getName(), (itemQuantities.get(i.getName()) - 1));
 			} else {
-				System.out.println("You don't need that now.");//just for testing, will later update view to display this message
+				System.out.println("name not recognized");
 			}
-		} 
-		else if (i.getName().equals("Basic Step Potion") 
-				|| i.getName().equals("Super Step Potion") 
-				|| i.getName().equals("Hyper Step Potion")) {
-			this.steps += ((StepPotion) i).getStepBonus();
-			items.remove(i);
-			itemQuantities.put(i.getName(), (itemQuantities.get(i.getName())-1));
-			//update observers for inventory
-		}
-		else if (i.getName().equals("PokeBall")){
-			items.remove(i);
-			itemQuantities.put(i.getName(), (itemQuantities.get(i.getName())-1));
-		}
-		else if (i.getName().equals("Harmonica")){
-			items.remove(i);
-			itemQuantities.put(i.getName(), (itemQuantities.get(i.getName())-1));
-		}
-		else {
-			System.out.println("name not recognized");
 		}
 	}
-	
+
 	/*---------------------------------------------------------------------
 	 |  Method name:    [getPokemon]
 	 |  Purpose:  	    [Returns the list of Pokemon]
 	 |  Parameters:     [none]
 	 |  Returns:  	    [ArrayList<Pokemon>]
 	 *---------------------------------------------------------------------*/
-	
+
 	public ArrayList<Pokemon> getPokemon() {
-		
+
 		return capturedPokemon;
 	}
-	
+
 	/*---------------------------------------------------------------------
 	 |  Method name:    [addPokemon]
 	 |  Purpose:  	    [Adds a new Pokemon to the list of captured pokemon]
 	 |  Parameters:     [Pokemon p: the Pokemon being added]
 	 |  Returns:  	    [none]
 	 *---------------------------------------------------------------------*/
-	
+
 	public void addPokemon(Pokemon p) {
-		
+
 		capturedPokemon.add(p);
 	}
-	
+
 	/*---------------------------------------------------------------------
 	 |  Method name:    [getPokeballs]
 	 |  Purpose:  	    [Returns the current number of pokeballs the trainer has]
 	 |  Parameters:     [none]
 	 |  Returns:  	    [int: # of pokeballs]
 	 *---------------------------------------------------------------------*/
-	
+
 	public int getPokeballs() {
-		
+
 		return currentPokeballs;
 	}
-	
+
 	/*---------------------------------------------------------------------
 	 |  Method name:    [isFatigued]
 	 |  Purpose:  	    [Returns whether the trainer is fatigued]
 	 |  Parameters:     [none]
 	 |  Returns:  	    [boolean: whether the trainer is fatigued]
 	 *---------------------------------------------------------------------*/
-	
+
 	public boolean isFatigued() {
-		
+
 		return fatigued;
 	}
-	
+
 	/*-----------------------------------------------------------------------------
 	 |  Method name:    [setFatigued]
 	 |  Purpose:  	    [Changes whether or not the trainer is fatigued]
 	 |  Parameters:     [boolean v, true to set trainer to fatigued and vice versa]
 	 |  Returns:  	    [none]
 	 *-----------------------------------------------------------------------------*/
-	
+
 	public void setFatigued(boolean v) {
-		
+
 		fatigued = v;
 	}
-	
+
 	/*---------------------------------------------------------------------
 	 |  Method name:    [getSteps]
 	 |  Purpose:  	    [Returns number of steps the trainer has left]
 	 |  Parameters:     [none]
 	 |  Returns:  	    [int steps]
 	 *---------------------------------------------------------------------*/
-	
+
 	public int getSteps() {
-		
+
 		return steps;
 	}
-	
+
 	/*---------------------------------------------------------------------
 	 |  Method name:    [decreaseSteps]
 	 |  Purpose:  	    [Decreases steps by either 1, or 2 if trainer is fatigued]
 	 |  Parameters:     [none]
 	 |  Returns:  	    [none]
 	 *---------------------------------------------------------------------*/
-	
+
 	public void decreaseSteps() {
-		
-		if (isFatigued()) steps -= 2;
-		else steps -= 1;
-		
+
+		if (isFatigued())
+			steps -= 2;
+		else
+			steps -= 1;
+
 	}
-	
+
 	/*---------------------------------------------------------------------
 	 |  Method name:    []
 	 |  Purpose:  	    []
 	 |  Parameters:     []
 	 |  Returns:  	    []
 	 *---------------------------------------------------------------------*/
-	
-	/*public void throwRock() {
-		
-		
-	}
-	
-	public void giveBait() {
-		
-		
-	}
-	
-	public void throwPokeball() {
-		
-		
-	}
-	
-	public void runAway() {
-		
-		
-	}*/
+
+	/*
+	 * public void throwRock() {
+	 * 
+	 * 
+	 * }
+	 * 
+	 * public void giveBait() {
+	 * 
+	 * 
+	 * }
+	 * 
+	 * public void throwPokeball() {
+	 * 
+	 * 
+	 * }
+	 * 
+	 * public void runAway() {
+	 * 
+	 * 
+	 * }
+	 */
 
 }
