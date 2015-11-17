@@ -14,7 +14,7 @@
  | Description: This enum holds the different type of Ground Tiles that can be
  | placed onto the ground in the game for aesthetic, and later auditory, purposes.
  *===========================================================================*/
-package model.MapModel;
+package model.GameModel;
 
 import soundplayer.SoundPlayer;
 

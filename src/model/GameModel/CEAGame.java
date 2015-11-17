@@ -1,5 +1,5 @@
 /*=========================================================================== 
- | Assignment: FINAL PROJECT: [MazeGame] 
+ | Assignment: FINAL PROJECT: [CEAGame] 
  | 
  | Authors:    [Sujan Patel  (sujan4k0@email.arizona.edu)] 
  |	     	   [Keith Smith  (browningsmith@email.arizona.edu)]
@@ -11,29 +11,35 @@
  | Project Manager/Section Leader: Jeremy Mowery 
  | Due Date: [12.7.15] 
  | 
- | Description: This class is used to create a MazeGame. The MazeGame contains
- | a MazeMap which is a randomly generated maze that the player must get the trainer
- | through in order to win.
+ | Description: This class is used to make a CEAGame (Catch 'em All). It has a
+ | CEAMap and its own specific win/lose conditions.
  *===========================================================================*/
-package controller;
+package model.GameModel;
 
-import java.awt.Point;
 import java.util.Random;
 
+import model.ItemModel.Harmonica;
 import view.*;
-import model.MapModel.Obstacle;
 
-public class MazeGame extends GameMode {
+public class CEAGame extends GameMode {
+
+	private static final long serialVersionUID = 1L;
 
 	/*---------------------------------------------------------------------
-	 |  Method name:    [MazeGame]
-	 |  Purpose:  	    [Constructs a MazeGame]
-	 |  Parameters:     [Random: to later generate random encounters/items]
+	 |  Method name:    [CEAGame]
+	 |  Purpose:  	    [Constructs a CEAGame (Catch 'em All)]
+	 |  Parameters:     [Random: for later random encounter/items/stuff]
 	 *---------------------------------------------------------------------*/
-	public MazeGame(Random rand) {
+	public CEAGame(Random rand) {
 		super(rand);
-		bgPath = "./sounds/Ruby_Sapphire_Mt.Pyre.mp3";
-		startNewBGMusic();
+		bgPath = "./sounds/Ruby_Sapphire_SafariZone.mp3";
+		loadImages();
+		
+		trainer.addItem(new Harmonica());
+		trainer.addItem(new Harmonica());
+		
+		// useItemOnPokemon(new Harmonica(), database.getMew().getName());
+		
 	}
 
 	/*---------------------------------------------------------------------
@@ -41,19 +47,10 @@ public class MazeGame extends GameMode {
 	 |  Purpose:  	    [To check if the user has won the game]
 	 |  Returns:  	    [boolean: true is user won, false is not]
 	 *---------------------------------------------------------------------*/
+	@Override
 	public boolean isGameWon() {
-
-		// get the obstacles of current map
-		Obstacle[][] obstacle = map.getObstacleTiles();
-
-		for (int i = 0; i < MazeMap.HEIGHT; i++) {
-			if (obstacle[i][MazeMap.WIDTH - 1] == null) {
-				if (trainer.getPoint().equals(new Point(i, MazeMap.WIDTH - 1)))
-					return true;
-			}
-		}
-
-		return false;
+		
+		return database.caughtEmAll(trainer);
 	}
 
 	/*---------------------------------------------------------------------
@@ -63,25 +60,25 @@ public class MazeGame extends GameMode {
 	 *---------------------------------------------------------------------*/
 	@Override
 	public boolean isGameLost() {
-
+		// TODO add losing conditions
 		if (trainer.getSteps() == 0)
 			return true;
 		
 		return false;
 	}
-	
 
 	/*---------------------------------------------------------------------
 	 |  Method name:    [createMap]
-	 |  Purpose:  	    [assigns a MazeMap to the Map instance variable]
+	 |  Purpose:  	    [assigns a CEAMap to the Map instance variable]
 	 *---------------------------------------------------------------------*/
 	@Override
 	public void createMap() {
-		map = new MazeMap();
+		map = new CEAMap();
 	}
-	
+
 	@Override
-	public void startNewBGMusic() {
-		bgPlayer.loopSound(bgPath);		
+	public void trainerCaughtPokemon() {
+		// nothing hurr
 	}
+
 }

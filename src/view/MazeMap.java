@@ -21,9 +21,9 @@ import java.awt.Image;
 import java.awt.Point;
 import java.util.Random;
 
-import model.MapModel.Ground;
-import model.MapModel.MazeGenerator;
-import model.MapModel.Obstacle;
+import model.GameModel.Ground;
+import model.GameModel.MazeGenerator;
+import model.GameModel.Obstacle;
 
 public class MazeMap extends Map {
 

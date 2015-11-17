@@ -22,7 +22,7 @@ import java.awt.Graphics2D;
 import java.awt.Image;
 import java.awt.image.BufferedImage;
 
-import model.MapModel.Tile;
+import model.GameModel.Tile;
 
 public class GraphicsManager {
 

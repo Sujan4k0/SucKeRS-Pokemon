@@ -34,7 +34,7 @@ import javax.swing.Timer;
 
 import soundplayer.SoundPlayer;
 import view.GraphicsManager;
-import model.MapModel.*;
+import model.GameModel.*;
 
 public abstract class Map extends JPanel implements Serializable {
 
@@ -183,10 +183,21 @@ public abstract class Map extends JPanel implements Serializable {
 		if (trainerPoint.x >= startX)
 			moveDown();
 
-		if (trainerPoint.x <= startX)
+		if (trainerPoint.x < startX)
 			moveUp();
-		if (trainerPoint.x <= startX)
+		if (trainerPoint.x < startX)
 			moveUp();
+		
+		if (trainerPoint.y >= startY)
+			moveRight();
+		if (trainerPoint.y >= startY)
+			moveRight();
+
+		
+		if (trainerPoint.y < startY)
+			moveLeft();
+		if (trainerPoint.y < startY)
+			moveLeft();
 	}
 
 	/*---------------------------------------------------------------------

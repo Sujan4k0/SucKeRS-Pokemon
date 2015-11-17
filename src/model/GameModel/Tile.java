@@ -15,7 +15,7 @@
  | type of Tile. Currently there is Ground and Obstacle - each has their own 
  | interaction with the Trainer.
  *===========================================================================*/
-package model.MapModel;
+package model.GameModel;
 
 import java.io.Serializable;
 
