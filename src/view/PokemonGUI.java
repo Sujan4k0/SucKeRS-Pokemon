@@ -107,6 +107,7 @@ public class PokemonGUI {
 
         // create the basic frame
         startScreen = new JFrame();
+        startScreen.setResizable(false);
         startScreen.setSize(600, 300);
         startScreen.setTitle("Pokemon");
         startScreen.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
@@ -154,12 +155,14 @@ public class PokemonGUI {
 
         // create the basic frame
         mapView = new JFrame();
+        mapView.setResizable(false);
         mapView.setDefaultCloseOperation(JFrame.DO_NOTHING_ON_CLOSE); // ask to save instead
         mapView.addWindowListener(new CloseGameListener()); // when close attempted, ask to save
 
         // add the map (JPanel) from the GameMode to the frame
         mode.getMap().setBorder(BorderFactory.createLineBorder(new Color(244, 220, 38), 5));
         mapView.add(mode.getMap(), BorderLayout.WEST);
+        mode.getMap().requestFocusInWindow();
         mode.getMap().addKeyListener(new GameWon()); // GUI will check the status of the game when the player moves
 
         ArrayList<String> items = new ArrayList<String>();
@@ -269,6 +272,7 @@ public class PokemonGUI {
 
         // new frame to display all the player stats
         JFrame endStats = new JFrame();
+        endStats.setResizable(false);
         endStats.setSize(500, 500);
         endStats.setTitle("Game Over");
         endStats.setVisible(true);
@@ -348,6 +352,7 @@ public class PokemonGUI {
 
         mapView.setVisible(false);
         encounterFrame = new JFrame();
+        encounterFrame.setResizable(false);
         encounterFrame.setTitle("Battle");
         encounterFrame.setVisible(true);
         encounterFrame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
@@ -466,6 +471,9 @@ public class PokemonGUI {
                         fis.close(); // close file stream
 
                         mode.loadImages();
+                        mode.getMap().setFocusable(true);
+
+                        
                     } catch (Exception e1) {
                     }
                 }
@@ -531,6 +539,7 @@ public class PokemonGUI {
                         fis.close(); // close file stream
                         
                         mode.loadImages();
+                        mode.getMap().setFocusable(true);
 
                     } catch (Exception e1) {// default model
                     }
