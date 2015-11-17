@@ -101,12 +101,12 @@ public class MazeMap extends Map {
 			if (obstacleTiles[i][w - 1] == null)
 				groundTiles[i][w - 1] = Ground.ICE_1;
 		}
+	}
 
-		// move the visually drawn part of Map to the area where the Trainer starts
-		if (trainerPoint.x >= Map.HEIGHT)
-			moveDown();
-		if (trainerPoint.x >= 2 * Map.HEIGHT)
-			moveDown();
+	@Override
+	public void update(Object o) {
+		// TODO Auto-generated method stub
+		
 	}
 
 	

@@ -151,24 +151,35 @@ public class Trainer implements Serializable {
 	 *---------------------------------------------------------------------*/
 	public void useItem(Item i) {
 		
-		for (int j = 0; j < items.size(); j++) {
-			if (items.get(j).getName().equals("Teleporter"));
-				
-		}
-		
+		System.out.println("Using: " + i.getName());
+
 		if (i.getName() == "Teleporter") {
-			Teleporter t = (Teleporter) i;
-			if (t.isSet()) {
+			//find the teleporter for the arraylist of items
+			//because we need the point associated with it
+			Teleporter t = null;
+			for (int j = 0; j < items.size(); j++) {
+				Item x = items.get(j);
+				if (x.getName().equals("Teleporter")) {
+					t = (Teleporter) x;
+					break;
+				}
+			}
+			
+			if (t == null) 
+				return;
+			else if (t.isSet()) {
+				
+				System.out.println("Updating Trainer Pos");
 				//Teleport animation
 				trainerPosition =
 						new Point((int) t.getTeleportPoint().getX(), (int) t.getTeleportPoint()
 								.getY());
 				//update observers for inventory
-			} else {
+			} else {System.out.println("Setting Trainer Pos");
 				t.setPoint(trainerPosition);
 				return;
 			}
-		} else 
+		} else
 
 		if (items.contains(i)) {
 			if (i.getName().equals("Fatigue Potion")) {

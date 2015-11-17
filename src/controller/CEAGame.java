@@ -36,7 +36,7 @@ public class CEAGame extends GameMode {
 		bgPath = "./sounds/Ruby_Sapphire_SafariZone.mp3";
 		startNewBGMusic();
 		
-		useItemOnPokemon(new Harmonica(), database.getMew().getName());
+		// useItemOnPokemon(new Harmonica(), database.getMew().getName());
 		
 	}
 

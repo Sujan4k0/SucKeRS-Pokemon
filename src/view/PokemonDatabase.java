@@ -264,34 +264,9 @@ public class PokemonDatabase implements Serializable{
 		}
 	}
 	
-	/*---------------------------------------------------------------------
-	|  Method name:    [caughtEmAll]
-	|  Purpose:        [Returns true if trainer caught one of each pokemon, 
-	|                   false otherwise. Vital to CEAGame isGameWon method]
-	|  Parameters:     [none]
-	|  Returns:        [boolean]
-	 *---------------------------------------------------------------------*/
-	
-	public boolean caughtEmAll(Trainer trainer) {
-		
+	public boolean caughtAllExceptLeg(Trainer trainer) {
+
 		boolean allCaught = false;	//Init all caught to false. Will change to true if a Mew was caug is missing.
-		
-		for (Pokemon i : trainer.getPokemon()) {	//For all the pokemon the trainer has
-			
-			if (i.getName().equals(getMew().getName())) {			//If that pokemon is Mew
-				
-				//System.out.println("You caught "+i.getName());
-				allCaught = true;								//Set all caught to true and break the loop
-				break;
-			}
-			allCaught = false;							//Set all cauught to false and continue to search
-		}
-		
-		if (!allCaught) {			//If we all caught is not true, we missed Mew
-			
-			//System.out.println("You did not catch Mew"); 
-			return false; //If mew was not caught, return false
-		}
 		
 		for (Pokemon i : allCommon) {		//For all of the common pokemon
 			
@@ -338,5 +313,34 @@ public class PokemonDatabase implements Serializable{
 		//System.out.println("You caught all the pokemon!");
 		
 		return allCaught;	//Return allCaught, which is now true. You caught all the Pokemon!
+	}
+	
+	/*---------------------------------------------------------------------
+	|  Method name:    [caughtEmAll]
+	|  Purpose:        [Returns true if trainer caught one of each pokemon, 
+	|                   false otherwise. Vital to CEAGame isGameWon method]
+	|  Parameters:     [none]
+	|  Returns:        [boolean]
+	 *---------------------------------------------------------------------*/
+	
+	public boolean caughtEmAll(Trainer trainer) {
+	
+		if (caughtAllExceptLeg(trainer)) {
+			boolean allCaught = false;
+			for (Pokemon i : trainer.getPokemon()) {	//For all the pokemon the trainer has
+				
+				if (i.getName().equals(getMew().getName())) {			//If that pokemon is Mew
+					
+					//System.out.println("You caught "+i.getName());
+					allCaught = true;								//Set all caught to true and break the loop
+					break;
+				}
+				allCaught = false;							//Set all cauught to false and continue to search
+			}
+			
+			return allCaught;
+			
+		} else return false;
+	
 	}
 }
