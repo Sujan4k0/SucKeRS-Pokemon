@@ -87,6 +87,7 @@ public class PokemonDatabase implements Serializable {
 		allLegendary = new ArrayList<Pokemon>();
 		allLegendary.add(mew);
 
+		allPokemon = new ArrayList<Pokemon>();
 		allPokemon.addAll(allCommon);
 		allPokemon.addAll(allUncommon);
 		allPokemon.addAll(allLegendary);
