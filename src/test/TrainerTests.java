@@ -13,7 +13,7 @@ import model.TrainerModel.Trainer;
 
 public class TrainerTests {
 
-	@Test
+	/*@Test
 	public void testDefaultTrainer() {
 		Trainer ash = new Trainer();
 		
@@ -29,7 +29,7 @@ public class TrainerTests {
 		assertEquals(brock.getSteps(), 360);
 		assertEquals(brock.getPokeballs(), 22);
 		assertFalse(brock.isFatigued());
-	}
+	}*/
 	
 	@Test
 	public void testPoint() {
