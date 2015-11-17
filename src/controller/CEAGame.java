@@ -18,6 +18,7 @@ package controller;
 
 import java.util.Random;
 
+import model.ItemModel.Harmonica;
 import view.*;
 
 public class CEAGame extends GameMode {
@@ -33,6 +34,9 @@ public class CEAGame extends GameMode {
 		super(rand);
 		bgPath = "./sounds/Ruby_Sapphire_SafariZone.mp3";
 		startNewBGMusic();
+		
+		trainer.addItem(new Harmonica());
+		trainer.addItem(new Harmonica());
 		
 		// useItemOnPokemon(new Harmonica(), database.getMew().getName());
 		

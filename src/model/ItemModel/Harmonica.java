@@ -6,8 +6,8 @@ public class Harmonica extends Item{
 	
 	public Harmonica(){
 		super.setName("Harmonica");
-		super.setForPokemon(false);
-		super.setForTrainer(true);
+		super.setForPokemon(true);
+		super.setForTrainer(false);
 	}
 	
 	public String getSongFilePath(Pokemon poke){
