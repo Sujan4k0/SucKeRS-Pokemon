@@ -15,7 +15,7 @@
  | a maze by removing Obstacles from it. The array must be completely full of
  | Obstacles.
  *===========================================================================*/
-package model.MapModel;
+package model.GameModel;
 
 import java.awt.Point;
 import java.util.ArrayList;

@@ -15,7 +15,7 @@
  | specific Pokemon with different TerrainTypes - will also be used for
  | specific sound effects when trainer walks on a Ground Tile.
  *===========================================================================*/ 
-package model.MapModel;
+package model.GameModel;
 
 public enum TerrainType {
 	

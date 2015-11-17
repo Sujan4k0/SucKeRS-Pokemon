@@ -19,7 +19,7 @@ import java.util.Random;
 import javax.imageio.ImageIO;
 import javax.swing.*;
 
-import model.MapModel.Tile;
+import model.GameModel.Tile;
 import model.PokemonModel.Pokemon;
 import soundplayer.SoundPlayer;
 

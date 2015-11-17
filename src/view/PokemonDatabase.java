@@ -24,7 +24,7 @@ import java.util.Random;
 
 import javax.imageio.ImageIO;
 
-import model.MapModel.TerrainType;
+import model.GameModel.TerrainType;
 import model.PokemonModel.Common;
 import model.PokemonModel.Legendary;
 import model.PokemonModel.Pokemon;

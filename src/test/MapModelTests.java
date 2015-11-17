@@ -7,7 +7,7 @@ import java.awt.Image;
 import java.awt.Point;
 import java.awt.image.BufferedImage;
 
-import model.MapModel.*;
+import model.GameModel.*;
 
 import org.junit.Test;
 

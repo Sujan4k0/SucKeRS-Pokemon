@@ -16,7 +16,7 @@
  | GameMode.
  *===========================================================================*/
 
-package controller;
+package model.GameModel;
 
 import java.awt.Image;
 import java.awt.Point;
@@ -32,8 +32,6 @@ import javax.imageio.ImageIO;
 import soundplayer.SoundPlayer;
 import view.*;
 import model.ItemModel.*;
-import model.MapModel.Obstacle;
-import model.MapModel.TerrainType;
 import model.PokemonModel.Pokemon;
 import model.PokemonModel.PokemonResponse;
 import model.TrainerModel.Trainer;

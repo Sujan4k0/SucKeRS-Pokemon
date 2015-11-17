@@ -7,9 +7,9 @@ import java.util.Random;
 
 import javax.swing.*;
 
-import controller.CEAGame;
-import controller.GameMode;
-import controller.MazeGame;
+import model.GameModel.CEAGame;
+import model.GameModel.GameMode;
+import model.GameModel.MazeGame;
 //import controller.MazeGame;
 //import model.MapModel.MazeMap;
 import model.TrainerModel.Trainer;

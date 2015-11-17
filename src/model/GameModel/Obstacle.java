@@ -14,7 +14,7 @@
  | Description: The Obstacle Tiles to be used on Maps. These cannot be walked on/through
  | and may later have an interaction with the Trainer.
  *===========================================================================*/
-package model.MapModel;
+package model.GameModel;
 
 public enum Obstacle implements Tile{
 	

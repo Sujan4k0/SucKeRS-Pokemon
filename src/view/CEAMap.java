@@ -18,11 +18,12 @@
 package view;
 
 import java.awt.Point;
+
 import javax.swing.Timer;
 
+import model.GameModel.Ground;
+import model.GameModel.Obstacle;
 import model.ItemModel.Teleporter;
-import model.MapModel.Ground;
-import model.MapModel.Obstacle;
 import model.TrainerModel.Trainer;
 
 public class CEAMap extends Map {

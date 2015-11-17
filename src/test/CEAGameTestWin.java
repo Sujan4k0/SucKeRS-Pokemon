@@ -1,9 +1,12 @@
 package test;
 
 import static org.junit.Assert.*;
+
 import java.util.Random;
+
 import org.junit.Test;
-import controller.CEAGame;
+
+import model.GameModel.CEAGame;
 import model.TrainerModel.Trainer;
 import view.PokemonDatabase;
 

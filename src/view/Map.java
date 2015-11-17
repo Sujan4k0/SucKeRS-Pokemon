@@ -34,7 +34,7 @@ import javax.swing.Timer;
 
 import soundplayer.SoundPlayer;
 import view.GraphicsManager;
-import model.MapModel.*;
+import model.GameModel.*;
 
 public abstract class Map extends JPanel implements Serializable {
 

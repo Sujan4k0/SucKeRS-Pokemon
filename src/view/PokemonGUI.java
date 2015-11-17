@@ -41,10 +41,10 @@ import javax.imageio.ImageIO;
 import javax.swing.*;
 import javax.swing.border.BevelBorder;
 
-import controller.CEAGame;
-import controller.GameMode;
-import controller.MazeGame;
 import javafx.scene.control.ProgressBar;
+import model.GameModel.CEAGame;
+import model.GameModel.GameMode;
+import model.GameModel.MazeGame;
 import model.ItemModel.Item;
 import model.PokemonModel.Pokemon;
 import model.TrainerModel.TrainerAction;
