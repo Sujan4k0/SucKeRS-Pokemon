@@ -386,6 +386,7 @@ public abstract class GameMode implements Serializable {
 				battleMessage = "You have no pokeballs left bitch";
 				doAnimation = false;
 			} else if (encounteredPokemon.getState() == PokemonResponse.GET_CAUGHT) {
+				trainerCaughtPokemon();
 				battleMessage = "You successfully caught " + pName + "!";
 				trainer.useItem(new PokeBall());
 				trainer.addPokemon(encounteredPokemon);
