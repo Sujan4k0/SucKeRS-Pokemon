@@ -635,6 +635,9 @@ public class PokemonGUI {
                     
                 }
             }
+            
+            steps.setValue(mode.getTrainer().getSteps());
+            steps.setString((steps.getValue()) + " steps remaining");
         }
         
      }
