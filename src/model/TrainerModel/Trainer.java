@@ -297,6 +297,18 @@ public class Trainer implements Serializable {
 			steps -= 1;
 
 	}
+	
+	/*---------------------------------------------------------------------
+	 |  Method name:    [increaseSteps]
+	 |  Purpose:  	    [Increase steps by int 's']
+	 |  Parameters:     [int 's']
+	 |  Returns:  	    [none]
+	 *---------------------------------------------------------------------*/
+	
+	public void increaseSteps(int s) {
+		
+		steps += s;
+	}
 
 	/*---------------------------------------------------------------------
 	 |  Method name:    []

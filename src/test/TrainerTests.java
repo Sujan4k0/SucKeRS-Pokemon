@@ -95,29 +95,6 @@ public class TrainerTests {
 	}
 	
 	@Test
-	public void testTeleporter() {
-		
-		Trainer mercer = new Trainer();
-		Teleporter tp = new Teleporter();
-		mercer.addItem(tp);
-		assertTrue(mercer.getItems().contains(tp));
-		
-		mercer.setPoint(new Point(50,25));
-		assertFalse(tp.isSet());
-		mercer.useItem(tp);
-		assertTrue(tp.isSet());
-		assertTrue(mercer.getItems().contains(tp));
-		assertEquals(tp.getTeleportPoint(), new Point(50,25));
-		
-		mercer.setPoint(new Point(100,100));
-		assertEquals(mercer.getPoint(), new Point(100,100));
-		mercer.useItem(tp);
-		assertFalse(mercer.getItems().contains(tp));
-		assertEquals(mercer.getPoint(), new Point(50,25));
-		
-	}
-	
-	@Test
 	public void testBasicStepPotion() {
 		
 		Trainer aang = new Trainer();
