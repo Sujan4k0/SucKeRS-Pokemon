@@ -216,7 +216,7 @@ public class PokemonGUI {
         steps = new JProgressBar(0, mode.getTrainer().getSteps());
         steps.setValue(mode.getTrainer().getSteps()); // will need to replace this with steps
         steps.setStringPainted(true);
-        steps.setString((steps.getValue()) + " steps remaining");
+        steps.setString((mode.getTrainer().getSteps()) + " steps remaining");
         trainerDisplay.add(steps, BorderLayout.SOUTH);
         userOptions.add(trainerDisplay, BorderLayout.NORTH);
 
@@ -623,7 +623,7 @@ public class PokemonGUI {
                     pokemon = pokemon.substring(0, pokemon.indexOf(' '));
                     updateItemsList();
                     
-                 //   mode.useItemOnPokemon(use, pokemon);
+                    mode.useItemOnPokemon(use, pokemon);
                 }
                 
                 else {
@@ -637,7 +637,7 @@ public class PokemonGUI {
             }
             
             steps.setValue(mode.getTrainer().getSteps());
-            steps.setString((steps.getValue()) + " steps remaining");
+            steps.setString((mode.getTrainer().getSteps()) + " steps remaining");
         }
         
      }
@@ -860,7 +860,7 @@ public class PokemonGUI {
             else {
 
                 steps.setValue(mode.getTrainer().getSteps());
-                steps.setString((steps.getValue()) + " steps remaining");
+                steps.setString((mode.getTrainer().getSteps()) + " steps remaining");
                 
                 updatePokemonList();
                 updateItemsList();
