@@ -95,6 +95,6 @@ public class MazeGame extends GameMode {
 
 	@Override
 	public void trainerCaughtPokemon() {
-		// trainer.increaseSteps(10);
+		trainer.increaseSteps(10);
 	}
 }
