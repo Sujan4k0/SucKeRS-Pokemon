@@ -21,9 +21,13 @@ import java.awt.Point;
 import java.util.Random;
 
 import view.*;
+import model.ItemModel.BasicStepPotion;
+import model.ItemModel.Teleporter;
 import model.MapModel.Obstacle;
 
 public class MazeGame extends GameMode {
+
+	private static final long serialVersionUID = 1L;
 
 	/*---------------------------------------------------------------------
 	 |  Method name:    [MazeGame]
@@ -34,6 +38,10 @@ public class MazeGame extends GameMode {
 		super(rand);
 		bgPath = "./sounds/Ruby_Sapphire_Mt.Pyre.mp3";
 		startNewBGMusic();
+		
+		// for testing
+		trainer.addItem(new BasicStepPotion());
+		trainer.addItem(new Teleporter());
 	}
 
 	/*---------------------------------------------------------------------
@@ -83,5 +91,10 @@ public class MazeGame extends GameMode {
 	@Override
 	public void startNewBGMusic() {
 		bgPlayer.loopSound(bgPath);		
+	}
+
+	@Override
+	public void trainerCaughtPokemon() {
+		// trainer.increaseSteps(10);
 	}
 }

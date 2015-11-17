@@ -16,16 +16,14 @@
  *===========================================================================*/
 package controller;
 
-import java.util.ArrayList;
 import java.util.Random;
 
 import view.*;
-import model.ItemModel.Harmonica;
-import model.PokemonModel.Pokemon;
-import model.TrainerModel.Trainer;
 
 public class CEAGame extends GameMode {
- 
+
+	private static final long serialVersionUID = 1L;
+
 	/*---------------------------------------------------------------------
 	 |  Method name:    [CEAGame]
 	 |  Purpose:  	    [Constructs a CEAGame (Catch 'em All)]
@@ -72,6 +70,11 @@ public class CEAGame extends GameMode {
 	@Override
 	public void createMap() {
 		map = new CEAMap();
+	}
+
+	@Override
+	public void trainerCaughtPokemon() {
+		// nothing hurr
 	}
 
 }

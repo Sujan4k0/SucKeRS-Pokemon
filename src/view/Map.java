@@ -183,9 +183,9 @@ public abstract class Map extends JPanel implements Serializable {
 		if (trainerPoint.x >= startX)
 			moveDown();
 
-		if (trainerPoint.x <= startX)
+		if (trainerPoint.x < startX)
 			moveUp();
-		if (trainerPoint.x <= startX)
+		if (trainerPoint.x < startX)
 			moveUp();
 	}
 
