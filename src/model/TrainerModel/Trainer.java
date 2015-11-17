@@ -152,7 +152,7 @@ public class Trainer implements Serializable {
 	public void useItem(Item i) {
 		
 		for (int j = 0; j < items.size(); j++) {
-			if (items.get(j).getName().equals("Teleporter"))
+			if (items.get(j).getName().equals("Teleporter"));
 				
 		}
 		
