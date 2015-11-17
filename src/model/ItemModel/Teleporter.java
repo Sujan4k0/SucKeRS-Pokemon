@@ -22,7 +22,7 @@ import java.awt.Point;
 public class Teleporter extends Item{
 	private boolean set=false;
 	private Point teleportPoint;
-	
+
 	/*---------------------------------------------------------------------
 	 |  Purpose:  	    [Constructor]
 	 *---------------------------------------------------------------------*/
@@ -31,7 +31,7 @@ public class Teleporter extends Item{
 		super.setForPokemon(false);
 		super.setForTrainer(true);
 	}
-   	
+
 	/*---------------------------------------------------------------------
 	 |  Method name:    [setPoint]
 	 |  Purpose:  	    [Sets the point for where the player returns to when they use the teleporter]
@@ -41,7 +41,7 @@ public class Teleporter extends Item{
 		teleportPoint= p;
 		set=true;
 	}
-	
+
 	/*---------------------------------------------------------------------
 	 |  Method name:    [isSet]
 	 |  Purpose:  	    [returns whether or not the teleport point has already been set]
@@ -50,7 +50,7 @@ public class Teleporter extends Item{
 	public boolean isSet(){
 		return set;
 	}
-	
+
 	/*---------------------------------------------------------------------
 	 |  Method name:    [getTeleportPoint]
 	 |  Purpose:  	    [Returns point for where the player returns to when they use the teleporter]
@@ -59,15 +59,24 @@ public class Teleporter extends Item{
 	public Point getTeleportPoint(){
 		return teleportPoint;
 	}
-	
+
 	@Override
 	public boolean equals(Object obj) {
 		if (!(obj instanceof Teleporter))
 			return false;
 
 		final Teleporter other = (Teleporter) obj;
-		if (!teleportPoint.equals(other.getTeleportPoint()))
-			return false;
-		return true;
+		if ((this.isSet() && other.isSet())){
+			if (!teleportPoint.equals(other.getTeleportPoint())){
+				return false;
+			}
+			else{
+				return true;
+			}
+		}
+		if ((!this.isSet() && !other.isSet())){
+			return true;
+		}
+		else return false;
 	}
 }

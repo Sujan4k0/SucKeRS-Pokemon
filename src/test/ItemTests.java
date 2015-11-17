@@ -132,13 +132,13 @@ public class ItemTests {
 
 		Ryan.useItem(pb);
 		assertTrue(Ryan.getItemQuantities().get("PokeBall")==30);
-		assertTrue(!Ryan.getItems().contains(pb));
 	}
 
 	/*---------------------------------------------------------------------
 	 |  Method name:    [testHarmonica]
 	 |  Purpose:  	    [Test the functionality of Harmonicas
 	 *---------------------------------------------------------------------*/
+	@Test
 	public void testHarmonica(){
 		Trainer Ryan = new Trainer();
 		Item h = new Harmonica();
@@ -147,7 +147,7 @@ public class ItemTests {
 		assertTrue(Ryan.getItems().contains(h));
 
 		Ryan.useItem(h);
-		assertTrue(Ryan.getItemQuantities().get("Hamonica")==0);
+		assertTrue(Ryan.getItemQuantities().get("Harmonica")==0);
 		assertTrue(!Ryan.getItems().contains(h));
 	}
 
