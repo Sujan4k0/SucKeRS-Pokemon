@@ -84,11 +84,6 @@ public abstract class GameMode implements Serializable {
 
 		trainer.setPoint(new Point(map.getTrainerPoint()));
 
-		// add KeyListener to this Map so that the user can move the trainer
-		// and other button-y things
-		map.addKeyListener(new OurKeyListener());
-		encounter.addKeyListener(new BattleKeyListener());
-
 		// set focusable so that the KeyListener works
 		map.setFocusable(true);
 
@@ -192,29 +187,37 @@ public abstract class GameMode implements Serializable {
 				dx = -1;
 				dir = Map.TrainerDirection.UP;
 				map.setStartOffsets(-50, 0);
-				/*if (trainerCanMove(e) && (trainer.getPoint().x + dx) % Map.HEIGHT == Map.HEIGHT - 1)
-					map.moveUp();*/
+				/*
+				 * if (trainerCanMove(e) && (trainer.getPoint().x + dx) %
+				 * Map.HEIGHT == Map.HEIGHT - 1) map.moveUp();
+				 */
 				break;
 			case KeyEvent.VK_DOWN:
 				dx = 1;
 				dir = Map.TrainerDirection.DOWN;
 				map.setStartOffsets(50, 0);
-				/*if (trainerCanMove(e) && (trainer.getPoint().x + dx) % Map.HEIGHT == 0)
-					map.moveDown();*/
+				/*
+				 * if (trainerCanMove(e) && (trainer.getPoint().x + dx) %
+				 * Map.HEIGHT == 0) map.moveDown();
+				 */
 				break;
 			case KeyEvent.VK_RIGHT:
 				dy = 1;
 				dir = Map.TrainerDirection.RIGHT;
 				map.setStartOffsets(0, 50);
-			    /*if (trainerCanMove(e) && (trainer.getPoint().y + dy) % Map.WIDTH == 0)
-					map.moveRight();*/
+				/*
+				 * if (trainerCanMove(e) && (trainer.getPoint().y + dy) %
+				 * Map.WIDTH == 0) map.moveRight();
+				 */
 				break;
 			case KeyEvent.VK_LEFT:
 				dy = -1;
 				dir = Map.TrainerDirection.LEFT;
 				map.setStartOffsets(0, -50);
-				/*if (trainerCanMove(e) && (trainer.getPoint().y + dy) % Map.WIDTH == Map.WIDTH - 1)
-					map.moveLeft();*/
+				/*
+				 * if (trainerCanMove(e) && (trainer.getPoint().y + dy) %
+				 * Map.WIDTH == Map.WIDTH - 1) map.moveLeft();
+				 */
 				break;
 			default:
 				break;
@@ -350,8 +353,7 @@ public abstract class GameMode implements Serializable {
 			}
 		} else {
 			imgs = new Image[1];
-			String path =
-					"./images/bgImages/" + tt.name().toLowerCase() + "BattleBackground.png";
+			String path = "./images/bgImages/" + tt.name().toLowerCase() + "BattleBackground.png";
 
 			Image i;
 			try {
@@ -418,7 +420,7 @@ public abstract class GameMode implements Serializable {
 
 		trainer.useItem(i);
 
-		if (i.getName().equals("Harmonica")) {
+		if (i.getName().equals("Harmonica") && trainer.getItems().contains(new Harmonica())) {
 			stopBGMusic();
 			bgPath = ((Harmonica) i).getSongFilePath(database.getPokemonByName(pName));
 			startNewBGMusic();
@@ -428,13 +430,22 @@ public abstract class GameMode implements Serializable {
 
 	public void loadImages() {
 		map.loadImages();
+		database.loadAllPokemon();
 		encounter.loadImages();
 		startNewBGMusic();
+		assignListeners();
+	}
+
+	private void assignListeners() {
+		// add KeyListener to this Map so that the user can move the trainer
+		// and other button-y things
+		map.addKeyListener(new OurKeyListener());
+		encounter.addKeyListener(new BattleKeyListener());
 	}
 
 	public void useItem(Item i) {
 		trainer.useItem(i);
-		
+
 		if (i.getName().equals("Teleporter"))
 			map.update(trainer);
 	}
@@ -472,7 +483,7 @@ public abstract class GameMode implements Serializable {
 	public void setBGMusicPath(String s) {
 		bgPath = s;
 	}
-	
+
 	public abstract void trainerCaughtPokemon();
 
 	/*---------------------------------------------------------------------
@@ -494,7 +505,7 @@ public abstract class GameMode implements Serializable {
 		@Override
 		public void keyPressed(KeyEvent e) {
 
-			// System.out.println("Our GameMode Listener");
+			System.out.println("Our GameMode Listener");
 
 			// if the game is not won or lost or forfeited, move the trainer
 			if (!inBattle && !forfeited && !isGameWon() && !isGameLost()) {

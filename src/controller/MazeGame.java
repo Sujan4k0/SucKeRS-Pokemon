@@ -37,7 +37,7 @@ public class MazeGame extends GameMode {
 	public MazeGame(Random rand) {
 		super(rand);
 		bgPath = "./sounds/Ruby_Sapphire_Mt.Pyre.mp3";
-		startNewBGMusic();
+		loadImages();
 		
 		// for testing
 		trainer.addItem(new BasicStepPotion());

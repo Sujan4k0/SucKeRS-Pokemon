@@ -33,7 +33,7 @@ public class CEAGame extends GameMode {
 	public CEAGame(Random rand) {
 		super(rand);
 		bgPath = "./sounds/Ruby_Sapphire_SafariZone.mp3";
-		startNewBGMusic();
+		loadImages();
 		
 		trainer.addItem(new Harmonica());
 		trainer.addItem(new Harmonica());

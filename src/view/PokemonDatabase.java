@@ -32,7 +32,7 @@ import model.PokemonModel.PokemonType;
 import model.PokemonModel.Uncommon;
 import model.TrainerModel.Trainer;
 
-public class PokemonDatabase implements Serializable{
+public class PokemonDatabase implements Serializable {
 
 	// uncommon
 	private Common magikarp;
@@ -63,12 +63,7 @@ public class PokemonDatabase implements Serializable{
 	public PokemonDatabase() {
 
 		// common
-		magikarp = new Common(new Random(), "Magikarp", getImage("Magikarp"), PokemonType.WATER);
-		cyndaquil = new Common(new Random(), "Cyndaquil", getImage("Cyndaquil"), PokemonType.FIRE);
-		rhydon = new Common(new Random(), "Rhydon", getImage("Rhydon"), PokemonType.ROCK);
-		diglett = new Common(new Random(), "Diglett", getImage("Diglett"), PokemonType.GROUND);
-		simisage = new Common(new Random(), "Simisage", getImage("Simisage"), PokemonType.GRASS);
-		luvdisc = new Common(new Random(), "Luvdisc", getImage("Luvdisc"), PokemonType.WATER);
+		loadCommons();
 
 		allCommon = new ArrayList<Pokemon>();
 		allCommon.add(magikarp);
@@ -78,13 +73,9 @@ public class PokemonDatabase implements Serializable{
 		allCommon.add(simisage);
 		allCommon.add(luvdisc);
 
-		// uncommon 
-		pikachu = new Uncommon(new Random(), "Pikachu", getImage("Pikachu"), PokemonType.ELECTRIC);
-		steelix = new Uncommon(new Random(), "Steelix", getImage("Steelix"), PokemonType.GROUND);
-		exeggutor =
-				new Uncommon(new Random(), "Exeggutor", getImage("Exeggutor"), PokemonType.GRASS);
-		gyrados = new Uncommon(new Random(), "Gyrados", getImage("Gyrados"), PokemonType.WATER);
-
+		// uncommon
+		loadUncommons();
+		
 		allUncommon = new ArrayList<Pokemon>();
 		allUncommon.add(pikachu);
 		allUncommon.add(steelix);
@@ -92,7 +83,51 @@ public class PokemonDatabase implements Serializable{
 		allUncommon.add(gyrados);
 
 		// legendary
+		loadLegendaries();
+	}
+	
+	public void loadAllPokemon() {
+		loadCommons();
+		loadUncommons();
+		loadLegendaries();
+		
+		allUncommon = new ArrayList<Pokemon>();
+		allUncommon.add(pikachu);
+		allUncommon.add(steelix);
+		allUncommon.add(exeggutor);
+		allUncommon.add(gyrados);
+		
+		allCommon = new ArrayList<Pokemon>();
+		allCommon.add(magikarp);
+		allCommon.add(cyndaquil);
+		allCommon.add(rhydon);
+		allCommon.add(diglett);
+		allCommon.add(simisage);
+		allCommon.add(luvdisc);
+		
+	}
+
+	private void loadLegendaries() {
+
 		mew = new Legendary(new Random(), "Mew", getImage("Mew"), PokemonType.PSYCHIC);
+	}
+
+	private void loadCommons() {
+		magikarp = new Common(new Random(), "Magikarp", getImage("Magikarp"), PokemonType.WATER);
+		cyndaquil = new Common(new Random(), "Cyndaquil", getImage("Cyndaquil"), PokemonType.FIRE);
+		rhydon = new Common(new Random(), "Rhydon", getImage("Rhydon"), PokemonType.ROCK);
+		diglett = new Common(new Random(), "Diglett", getImage("Diglett"), PokemonType.GROUND);
+		simisage = new Common(new Random(), "Simisage", getImage("Simisage"), PokemonType.GRASS);
+		luvdisc = new Common(new Random(), "Luvdisc", getImage("Luvdisc"), PokemonType.WATER);
+	}
+
+	private void loadUncommons() {
+		// uncommon 
+		pikachu = new Uncommon(new Random(), "Pikachu", getImage("Pikachu"), PokemonType.ELECTRIC);
+		steelix = new Uncommon(new Random(), "Steelix", getImage("Steelix"), PokemonType.GROUND);
+		exeggutor =
+				new Uncommon(new Random(), "Exeggutor", getImage("Exeggutor"), PokemonType.GRASS);
+		gyrados = new Uncommon(new Random(), "Gyrados", getImage("Gyrados"), PokemonType.WATER);
 	}
 
 	/*---------------------------------------------------------------------
@@ -176,7 +211,7 @@ public class PokemonDatabase implements Serializable{
 	public Pokemon getRandomCommon(TerrainType tt) {
 
 		return randomHelper(allCommon, tt);
-		
+
 	}
 
 	public Pokemon getRandomUncommon(TerrainType tt) {
@@ -184,7 +219,7 @@ public class PokemonDatabase implements Serializable{
 		return randomHelper(allUncommon, tt);
 
 	}
-	
+
 	/*---------------------------------------------------------------------
 	|  Method name:    [getPokemonByName]
 	|  Purpose:        [Returns the pokemon designated by String name. If it is an invalid name,
@@ -193,9 +228,9 @@ public class PokemonDatabase implements Serializable{
 	|  Parameters:     [String name of pokemon]
 	|  Returns:        [Pokemon]
 	 *---------------------------------------------------------------------*/
-	
+
 	public Pokemon getPokemonByName(String name) {
-		
+
 		switch (name.toUpperCase()) {
 		case "MAGIKARP":
 			return magikarp;
@@ -220,15 +255,14 @@ public class PokemonDatabase implements Serializable{
 		case "MEW":
 			return mew;
 		default:
-			System.out.println("Error: Invalid pokemon name. No worries, we'll give you a Diglett instead! ;)");
+			System.out
+					.println("Error: Invalid pokemon name. No worries, we'll give you a Diglett instead! ;)");
 			return diglett;
 		}
 	}
-	
-	
 
 	private Pokemon randomHelper(ArrayList<Pokemon> pokemonz, TerrainType tt) {
-		
+
 		int rand = new Random().nextInt(pokemonz.size());
 		Pokemon currPokemon = pokemonz.get(rand);
 		PokemonType type = currPokemon.getType();
@@ -242,18 +276,14 @@ public class PokemonDatabase implements Serializable{
 				if (currPokemon.getType() == PokemonType.WATER)
 					return currPokemon;
 				break;
-			/*case ICE:
-				if (type == PokemonType.ROCK || type == PokemonType.GROUND)
-					return currPokemon;
-				break;
-			case CAVE:
-				if (type == PokemonType.GRASS || type == PokemonType.ELECTRIC)
-					return currPokemon;
-				break;
-			case FOREST:
-				if (type == PokemonType.FIRE || type == PokemonType.PSYCHIC)
-					return currPokemon;
-				break;*/
+			/*
+			 * case ICE: if (type == PokemonType.ROCK || type ==
+			 * PokemonType.GROUND) return currPokemon; break; case CAVE: if
+			 * (type == PokemonType.GRASS || type == PokemonType.ELECTRIC)
+			 * return currPokemon; break; case FOREST: if (type ==
+			 * PokemonType.FIRE || type == PokemonType.PSYCHIC) return
+			 * currPokemon; break;
+			 */
 			default:
 				return currPokemon;
 			}
@@ -263,58 +293,58 @@ public class PokemonDatabase implements Serializable{
 
 		}
 	}
-	
+
 	public boolean caughtAllExceptLeg(Trainer trainer) {
 
-		boolean allCaught = false;	//Init all caught to false. Will change to true if a Mew was caug is missing.
-		
-		for (Pokemon i : allCommon) {		//For all of the common pokemon
-			
+		boolean allCaught = false; //Init all caught to false. Will change to true if a Mew was caug is missing.
+
+		for (Pokemon i : allCommon) { //For all of the common pokemon
+
 			for (Pokemon j : trainer.getPokemon()) { //For all the pokemon that the trainer has
-				
-				if (i.getName().equals(j.getName())) {		//If the trainer has that pokemon
-					
+
+				if (i.getName().equals(j.getName())) { //If the trainer has that pokemon
+
 					//System.out.println("You caught " + i.getName() + " " + j.getName());
-					allCaught = true;							//Set all caught to true and break out of the loop
+					allCaught = true; //Set all caught to true and break out of the loop
 					break;
 				}
-				
-				allCaught = false;			//Set all caught to false
+
+				allCaught = false; //Set all caught to false
 			}
-			
-			if (!allCaught) {		//If not all the pokemon have been caught
-				
+
+			if (!allCaught) { //If not all the pokemon have been caught
+
 				//System.out.println("You did not catch all the pokemon."); //If mew was not caught, return false
-				return false;		//Return false
+				return false; //Return false
 			}
 		}
-		
-		for (Pokemon i : allUncommon) {		//For all of the uncommon pokemon
-			
-			for (Pokemon j : trainer.getPokemon()) {		//For all the pokemon the trainer has
-				
-				if (i.getName().equals(j.getName())) {				//If the trainer has that pokemon
-					
+
+		for (Pokemon i : allUncommon) { //For all of the uncommon pokemon
+
+			for (Pokemon j : trainer.getPokemon()) { //For all the pokemon the trainer has
+
+				if (i.getName().equals(j.getName())) { //If the trainer has that pokemon
+
 					//System.out.println("You caught " + i.getName() + " " + j.getName());		
-					allCaught = true;										//Set all caught to true and break out of the loop
-					break;			
+					allCaught = true; //Set all caught to true and break out of the loop
+					break;
 				}
-				
-				allCaught = false;						//Set all caught to false
+
+				allCaught = false; //Set all caught to false
 			}
-			
-			if (!allCaught) {			//If not all the pokemon were caught
-				
+
+			if (!allCaught) { //If not all the pokemon were caught
+
 				//System.out.println("You did not catch all the pokemon."); //If mew was not caught, return false
 				return false;
 			}
 		}
-		
+
 		//System.out.println("You caught all the pokemon!");
-		
-		return allCaught;	//Return allCaught, which is now true. You caught all the Pokemon!
+
+		return allCaught; //Return allCaught, which is now true. You caught all the Pokemon!
 	}
-	
+
 	/*---------------------------------------------------------------------
 	|  Method name:    [caughtEmAll]
 	|  Purpose:        [Returns true if trainer caught one of each pokemon, 
@@ -322,25 +352,26 @@ public class PokemonDatabase implements Serializable{
 	|  Parameters:     [none]
 	|  Returns:        [boolean]
 	 *---------------------------------------------------------------------*/
-	
+
 	public boolean caughtEmAll(Trainer trainer) {
-	
+
 		if (caughtAllExceptLeg(trainer)) {
 			boolean allCaught = false;
-			for (Pokemon i : trainer.getPokemon()) {	//For all the pokemon the trainer has
-				
-				if (i.getName().equals(getMew().getName())) {			//If that pokemon is Mew
-					
+			for (Pokemon i : trainer.getPokemon()) { //For all the pokemon the trainer has
+
+				if (i.getName().equals(getMew().getName())) { //If that pokemon is Mew
+
 					//System.out.println("You caught "+i.getName());
-					allCaught = true;								//Set all caught to true and break the loop
+					allCaught = true; //Set all caught to true and break the loop
 					break;
 				}
-				allCaught = false;							//Set all cauught to false and continue to search
+				allCaught = false; //Set all cauught to false and continue to search
 			}
-			
+
 			return allCaught;
-			
-		} else return false;
-	
+
+		} else
+			return false;
+
 	}
 }
