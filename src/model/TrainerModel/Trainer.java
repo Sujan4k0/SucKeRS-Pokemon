@@ -22,6 +22,7 @@ package model.TrainerModel;
 
 import java.awt.Point;
 import java.io.Serializable;
+import java.util.List;
 import java.util.ArrayList;
 import java.util.HashMap;
 
@@ -29,16 +30,14 @@ import model.ItemModel.Item;
 import model.ItemModel.PokeBall;
 import model.ItemModel.StepPotion;
 import model.ItemModel.Teleporter;
-//import model.MapModel.Map.Direction; //This was removed ?
 import model.PokemonModel.Pokemon;
 
 public class Trainer implements Serializable {
 
 	private int steps; //Number of steps the trainer has left to take
 	private HashMap<String, Integer> itemQuantities; //trainer's inventory of items
-	private ArrayList<Item> items;
-	private ArrayList<Pokemon> capturedPokemon; //trainer's collection of pokemon
-	private int currentPokeballs;
+	private List<Item> items;
+	private List<Pokemon> capturedPokemon; //trainer's collection of pokemon
 	private boolean fatigued;
 	private Point trainerPosition;
 
@@ -55,7 +54,6 @@ public class Trainer implements Serializable {
 		items = new ArrayList<Item>();
 		itemQuantities = new HashMap<String, Integer>();
 		capturedPokemon = new ArrayList<Pokemon>();
-		currentPokeballs = 30;
 		fatigued = false;
 		trainerPosition = null;
 		for (int i = 0; i < 30; i++) {
@@ -73,9 +71,10 @@ public class Trainer implements Serializable {
 
 	public Trainer(int s, int p) {
 
-		this();
 		steps = s;
-		currentPokeballs = p;
+		items = new ArrayList<Item>();
+		itemQuantities = new HashMap<String, Integer>();
+		capturedPokemon = new ArrayList<Pokemon>();
 		fatigued = false;
 		trainerPosition = null;
 		for (int i = 0; i < p; i++) {
@@ -124,7 +123,7 @@ public class Trainer implements Serializable {
 	 |  Parameters:     [none]
 	 |  Returns:        [ArrayList<Item>]
 	 *---------------------------------------------------------------------*/
-	public ArrayList<Item> getItems() {
+	public List<Item> getItems() {
 		return items;
 	}
 
@@ -217,7 +216,7 @@ public class Trainer implements Serializable {
 	 |  Returns:  	    [ArrayList<Pokemon>]
 	 *---------------------------------------------------------------------*/
 
-	public ArrayList<Pokemon> getPokemon() {
+	public List<Pokemon> getPokemon() {
 
 		return capturedPokemon;
 	}
@@ -232,18 +231,6 @@ public class Trainer implements Serializable {
 	public void addPokemon(Pokemon p) {
 
 		capturedPokemon.add(p);
-	}
-
-	/*---------------------------------------------------------------------
-	 |  Method name:    [getPokeballs]
-	 |  Purpose:  	    [Returns the current number of pokeballs the trainer has]
-	 |  Parameters:     [none]
-	 |  Returns:  	    [int: # of pokeballs]
-	 *---------------------------------------------------------------------*/
-
-	public int getPokeballs() {
-
-		return currentPokeballs;
 	}
 
 	/*---------------------------------------------------------------------
@@ -309,34 +296,4 @@ public class Trainer implements Serializable {
 		
 		steps += s;
 	}
-
-	/*---------------------------------------------------------------------
-	 |  Method name:    []
-	 |  Purpose:  	    []
-	 |  Parameters:     []
-	 |  Returns:  	    []
-	 *---------------------------------------------------------------------*/
-
-	/*
-	 * public void throwRock() {
-	 * 
-	 * 
-	 * }
-	 * 
-	 * public void giveBait() {
-	 * 
-	 * 
-	 * }
-	 * 
-	 * public void throwPokeball() {
-	 * 
-	 * 
-	 * }
-	 * 
-	 * public void runAway() {
-	 * 
-	 * 
-	 * }
-	 */
-
 }
