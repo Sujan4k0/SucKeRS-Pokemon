@@ -50,7 +50,7 @@ public class GameModelTests {
 			for (int j = 0; j < 11; j++)
 				obstacles[i][j] = Obstacle.ROCK_1;
 
-		new MazeGenerator(new Point(5, 1), obstacles).generateMaze();
+		new MazeGenerator(new Random(),new Point(5, 1), obstacles).generateMaze();
 
 		// maze obstacles should only have 1 null on the left most 
 		// and also right most sides of the map
