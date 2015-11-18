@@ -35,7 +35,6 @@ public class MazeGame extends GameMode {
 	 *---------------------------------------------------------------------*/
 	public MazeGame(Random rand) {
 		super(rand);
-		bgPath = "./sounds/Ruby_Sapphire_Mt.Pyre.mp3";
 		loadImages();
 		
 		// for testing
@@ -85,11 +84,6 @@ public class MazeGame extends GameMode {
 	@Override
 	public void createMap() {
 		map = new MazeMap();
-	}
-	
-	@Override
-	public void startNewBGMusic() {
-		bgPlayer.loopSound(bgPath);		
 	}
 
 	@Override

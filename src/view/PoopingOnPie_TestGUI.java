@@ -44,7 +44,6 @@ public class PoopingOnPie_TestGUI extends JFrame {
 
 		// paints the map JPanel
 		game.getMap().repaint();
-		game.startNewBGMusic();
 		
 	}
 

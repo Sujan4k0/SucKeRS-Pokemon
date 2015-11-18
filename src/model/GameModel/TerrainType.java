@@ -25,8 +25,7 @@ public enum TerrainType {
 	MYSTERY("Grass_Step_1.wav", "Grass_Step_2.wav"), GENERIC("Grass_Step_1.wav", "Grass_Step_2.wav"), 
 	DESERT("Grass_Step_1.wav", "Grass_Step_2.wav"); // etc...
 	
-
-	private static final String BASEDIR = "./sounds/walkingSFX/";
+	public static final String BASEDIR = "./sounds/walkingSFX/";
 	
 	private String sfxFilePath1, sfxFilePath2;
 	/*---------------------------------------------------------------------
@@ -34,8 +33,12 @@ public enum TerrainType {
 	 |  Purpose:  	    [(no purpose currently - may or may not have purpose later)]
 	 *---------------------------------------------------------------------*/
 	TerrainType(String s1, String s2) {
-		sfxFilePath1 = BASEDIR + s1;
-		sfxFilePath2 = BASEDIR + s2;
+		setSoundFilePaths(BASEDIR + s1, BASEDIR + s2);
+	}
+	
+	public void setSoundFilePaths(String s1, String s2) {
+		sfxFilePath1 = s1;
+		sfxFilePath2 = s2;
 	}
 	
 	/*---------------------------------------------------------------------

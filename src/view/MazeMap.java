@@ -39,6 +39,8 @@ public class MazeMap extends Map {
 	public MazeMap() {
 
 		super();
+		
+		bgPath = "./sounds/Ruby_Sapphire_Mt.Pyre.mp3";
 	}
 
 	/*---------------------------------------------------------------------

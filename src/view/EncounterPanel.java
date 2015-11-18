@@ -19,6 +19,7 @@ import java.util.Random;
 import javax.imageio.ImageIO;
 import javax.swing.*;
 
+import model.GameModel.TerrainType;
 import model.GameModel.Tile;
 import model.PokemonModel.Pokemon;
 import soundplayer.SoundPlayer;
@@ -248,10 +249,42 @@ public class EncounterPanel extends JPanel implements Serializable {
 
 	}
 
-	public void setBGImages(Image[] i) {
+	public void setBGImages(TerrainType tt) {
+		Image[] imgs;
+		if (tt.name().toUpperCase().equals("MYSTERY")) {
+			imgs = new Image[3];
+			for (int j = 1; j < imgs.length + 1; j++) {
+				String path =
+						"./images/bgImages/" + tt.name().toLowerCase() + "BattleBackground" + j
+								+ ".png";
+
+				Image i;
+				try {
+					i = ImageIO.read(new File(path));
+					imgs[j - 1] = i;
+				} catch (IOException e) {
+					// TODO Auto-generated catch block
+					System.out.println("Tried reading Image at: " + path);
+					e.printStackTrace();
+				}
+			}
+		} else {
+			imgs = new Image[1];
+			String path = "./images/bgImages/" + tt.name().toLowerCase() + "BattleBackground.png";
+
+			Image i;
+			try {
+				i = ImageIO.read(new File(path));
+				imgs[0] = i;
+			} catch (IOException e) {
+				// TODO Auto-generated catch block
+				System.out.println("Tried reading Image at: " + path);
+				e.printStackTrace();
+			}
+		}
 
 		animatedBGTimer.stop();
-		bgImages = i;
+		bgImages = imgs;
 		bgImage = bgImages[0];
 		animatedBGTimer.start();
 

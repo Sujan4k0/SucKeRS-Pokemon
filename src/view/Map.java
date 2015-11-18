@@ -47,6 +47,9 @@ public abstract class Map extends JPanel implements Serializable {
 
 	// the height and width, for use in moveRight() and moveDown()
 	int h = WIDTH, w = HEIGHT;
+	
+	// file path of BG music
+	String bgPath = "";
 
 	// to hold the Ground and Obstacle Tiles to draw
 	Ground[][] groundTiles;
@@ -66,6 +69,12 @@ public abstract class Map extends JPanel implements Serializable {
 
 	// offsets for trainer animation
 	int xOffset = 0, yOffset = 0;
+
+	// Plays bg sounds :D
+	SoundPlayer bgPlayer = new SoundPlayer();
+
+	// Plays sfx :D
+	SoundPlayer sfxPlayer = new SoundPlayer();
 
 	// the directions associated with the trainer's sprite sheet
 	public static enum TrainerDirection {
@@ -187,13 +196,12 @@ public abstract class Map extends JPanel implements Serializable {
 			moveUp();
 		if (trainerPoint.x < startX)
 			moveUp();
-		
+
 		if (trainerPoint.y >= startY)
 			moveRight();
 		if (trainerPoint.y >= startY)
 			moveRight();
 
-		
 		if (trainerPoint.y < startY)
 			moveLeft();
 		if (trainerPoint.y < startY)
@@ -418,4 +426,35 @@ public abstract class Map extends JPanel implements Serializable {
 	}
 
 	public abstract void update(Object o);
+
+	public void playWalkingSound() {
+		// play sounds effect of walking on this tile
+		sfxPlayer.playSound(getGroundTiles()[trainerPoint.x][trainerPoint.y].getSoundFilePath());
+	}
+	public void startNewBGMusic() {
+		bgPlayer.loopSound(bgPath);
+	}
+
+	public void restartBGMusic() {
+		bgPlayer.restartSound();
+	}
+
+	public void pauseBGMusic() {
+		bgPlayer.pauseSound();
+	}
+
+	public void stopBGMusic() {
+		bgPlayer.stopSound();
+	}
+
+	public void changeBGMusic(String songFilePath) {
+		stopBGMusic();
+		bgPath = songFilePath;
+		startNewBGMusic();
+		
+	}
+	
+	public String getBGMusicFilePath() {
+		return bgPath;
+	}
 }

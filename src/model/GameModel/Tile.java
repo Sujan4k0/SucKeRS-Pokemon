@@ -25,13 +25,6 @@ public interface Tile extends Serializable {
 	public static final int SIZE = 50;
 
 	/*---------------------------------------------------------------------
-	 |  Method name:    [interactWithTrainer]
-	 |  Purpose:  	    [To do specific things when trainer steps on the Tile] 
-	 |  Returns:        [String as placeholder for testing]
-	 *---------------------------------------------------------------------*/
-	public String interactWithTrainer();
-
-	/*---------------------------------------------------------------------
 	 |  Method name:    [getTerrainType]
 	 |  Purpose:  	    [Getter for the TerrainType]
 	 |  Returns:  	    [TerrainType]

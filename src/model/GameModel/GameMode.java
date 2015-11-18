@@ -45,17 +45,11 @@ public abstract class GameMode implements Serializable {
 	Map map; // the visual map of this game
 	EncounterPanel encounter;
 	Random r; // used for random encounters/items
-	String endMessage = "", bgPath = "", battleMessage = ""; // the message to show on end game
+	String endMessage = "", battleMessage = ""; // the message to show on end game
 	boolean forfeited = false;
 	boolean inBattle = false;
 	Pokemon encounteredPokemon;
 	Map.TrainerDirection dir = Map.TrainerDirection.RIGHT;
-
-	// Plays bg sounds :D
-	SoundPlayer bgPlayer = new SoundPlayer();
-
-	// Plays sfx :D
-	SoundPlayer sfxPlayer = new SoundPlayer();
 
 	// database of Pokemon
 	PokemonDatabase database;
@@ -107,10 +101,10 @@ public abstract class GameMode implements Serializable {
 	/*--------------------------------------------------------------------
 	 |  Method name:    [trainerCanMove]
 	 |  Purpose:  	    [To know if the Trainer can move]
-	 |  Parameters:     [KeyEvent: the direction the user is trying to move the trainer]
+	 |  Parameters:     [int: the direction the user is trying to move the trainer from KeyEvent]
 	 |  Returns:  	    [boolean: true if Trainer can move, false if Trainer can't]
 	 *---------------------------------------------------------------------*/
-	public boolean trainerCanMove(KeyEvent e) {
+	public boolean trainerCanMove(int keyEventNum) {
 
 		// get all obstacles from the map to check collision
 		Obstacle[][] obsts = map.getObstacleTiles();
@@ -125,19 +119,18 @@ public abstract class GameMode implements Serializable {
 		 * Obstacle in that direction and 2. moving won't make the trainer go
 		 * out of bounds of the map
 		 */
-		if (e.getKeyCode() == KeyEvent.VK_UP && prev.x - 1 >= 0
-				&& obsts[prev.x - 1][prev.y] == null)
+		if (keyEventNum == KeyEvent.VK_UP && prev.x - 1 >= 0 && obsts[prev.x - 1][prev.y] == null)
 			return true;
 
-		else if (e.getKeyCode() == KeyEvent.VK_DOWN && prev.x + 1 < obsts.length
+		else if (keyEventNum == KeyEvent.VK_DOWN && prev.x + 1 < obsts.length
 				&& obsts[prev.x + 1][prev.y] == null)
 			return true;
 
-		else if (e.getKeyCode() == KeyEvent.VK_LEFT && prev.y - 1 >= 0
+		else if (keyEventNum == KeyEvent.VK_LEFT && prev.y - 1 >= 0
 				&& obsts[prev.x][prev.y - 1] == null)
 			return true;
 
-		else if (e.getKeyCode() == KeyEvent.VK_RIGHT && prev.y + 1 < obsts[0].length
+		else if (keyEventNum == KeyEvent.VK_RIGHT && prev.y + 1 < obsts[0].length
 				&& obsts[prev.x][prev.y + 1] == null)
 			return true;
 
@@ -168,13 +161,12 @@ public abstract class GameMode implements Serializable {
 	/*---------------------------------------------------------------------
 	 |  Method name:    [moveTrainer]
 	 |  Purpose:  	    [To change trainer sprite and then attempt to move the trainer]
-	 |  Parameters:  	[KeyEvent: direction in which trainer is trying to move]
+	 |  Parameters:  	[int: direction in which trainer is trying to move from KeyEvent]
 	 *---------------------------------------------------------------------*/
-	public void moveTrainer(KeyEvent e) {
+	public void moveTrainer(int kc) {
 		if (!map.isAnimating()) {
 
 			int dx = 0, dy = 0;
-			int kc = e.getKeyCode();
 
 			// Depending on the KeyEvent passed in, sets the change in the x
 			// or y direction accordingly. If the trainer is able to move and
@@ -226,7 +218,7 @@ public abstract class GameMode implements Serializable {
 
 			// if the trainer can move, then move the trainer and decrease steps
 			// and check for random encounter and stuff
-			if (trainerCanMove(e)) {
+			if (trainerCanMove(kc)) {
 
 				// change trainer object point
 				trainer.getPoint().translate(dx, dy);
@@ -236,10 +228,9 @@ public abstract class GameMode implements Serializable {
 
 				// animate the movement
 				map.startTrainerMovement();
-
-				// interact with the new tile
-				map.getGroundTiles()[trainer.getPoint().x][trainer.getPoint().y]
-						.interactWithTrainer();
+				
+				// play walking sound
+				map.playWalkingSound();
 
 				setEncounterBG(map.getGroundTiles()[trainer.getPoint().x][trainer.getPoint().y]
 						.getTerrainType());
@@ -307,7 +298,7 @@ public abstract class GameMode implements Serializable {
 	public void forfeitGame() {
 		forfeited = true;
 		endMessage = "Game Forfeited";
-		stopBGMusic();
+		map.stopBGMusic();
 	}
 
 	public void startEncounter() {
@@ -326,102 +317,112 @@ public abstract class GameMode implements Serializable {
 
 		inBattle = true;
 		encounter.startEncounter(encounteredPokemon);
-		pauseBGMusic();
+		map.pauseBGMusic();
 
 	}
 
+	public void setEncounteredPokemon(Pokemon p) {
+		encounteredPokemon = p;
+	}
+
+	public Pokemon getEncounteredPokemon() {
+		return encounteredPokemon;
+	}
+
 	protected void setEncounterBG(TerrainType tt) {
-		Image[] imgs;
-		if (tt.name().toUpperCase().equals("MYSTERY")) {
-			imgs = new Image[3];
-			for (int j = 1; j < imgs.length + 1; j++) {
-				String path =
-						"./images/bgImages/" + tt.name().toLowerCase() + "BattleBackground" + j
-								+ ".png";
-
-				Image i;
-				try {
-					i = ImageIO.read(new File(path));
-					imgs[j - 1] = i;
-				} catch (IOException e) {
-					// TODO Auto-generated catch block
-					System.out.println("Tried reading Image at: " + path);
-					e.printStackTrace();
-				}
-			}
-		} else {
-			imgs = new Image[1];
-			String path = "./images/bgImages/" + tt.name().toLowerCase() + "BattleBackground.png";
-
-			Image i;
-			try {
-				i = ImageIO.read(new File(path));
-				imgs[0] = i;
-			} catch (IOException e) {
-				// TODO Auto-generated catch block
-				System.out.println("Tried reading Image at: " + path);
-				e.printStackTrace();
-			}
-		}
-
-		encounter.setBGImages(imgs);
+		encounter.setBGImages(tt);
 
 	}
 
 	public void doTrainerAction(TrainerAction action) {
 
+		// get the name of the encountered Pokemon
 		String pName = encounteredPokemon.getName();
 
+		// to tell the EncounterPanel if the Trainer should be animated
+		// at the end of the method
 		boolean doAnimation = true;
 
+		// if the Pokemon ran away in response to this TrainerAction
+		// update the battleMessage, then end the encounter
 		if (encounteredPokemon.respond(action) == PokemonResponse.RUN_AWAY) {
-			battleMessage = pName + " ran away T_T";
 			endEncounter();
 		}
 
 		switch (action) {
 
+		// the Trainer threw a PokeBall
 		case THROW_BALL:
+			// if Trainer has no PokeBalls to use, update the battleMessage
+			// and do not tell the EncounterPanel to animate the trainer
 			if (trainer.getItemQuantities().get("PokeBall") == 0) {
 				battleMessage = "You have no pokeballs left bitch";
 				doAnimation = false;
-			} else if (encounteredPokemon.getState() == PokemonResponse.GET_CAUGHT) {
-				trainerCaughtPokemon();
-				battleMessage = "You successfully caught " + pName + "!";
+			} 
+			// else the Trainer does have PokeBalls to use
+			// so use the PokeBall, then check if the Pokemon was caught
+			else {
+				
+				// use the PokeBall
 				trainer.useItem(new PokeBall());
-				trainer.addPokemon(encounteredPokemon);
-				endEncounter();
-			} else
-				battleMessage = "You threw a PokeBall!! But it failed... :(";
+
+				// if the Trainer caught the Pokemon
+				if (encounteredPokemon.getState() == PokemonResponse.GET_CAUGHT) {
+					
+					// do anything a specific GameMode has to do when the Trainer
+					// catches a Pokemon
+					trainerCaughtPokemon();
+					
+					// update the battleMessage
+					battleMessage = "You successfully caught " + pName + "!";
+					
+					// add the Pokemon to the Trainer's List of Pokemon
+					trainer.addPokemon(encounteredPokemon);
+					
+					// end the encounter
+					endEncounter();
+				} 
+				
+				// the Pokemon was not caught
+				else // just update battleMessage
+					battleMessage = "You threw a PokeBall!! But it failed... :(";
+			}
 			break;
+		
+		// the Trainer ran away, update battleMessage, end the encounter
+		// and the Trainer should not be animated
 		case RUN_AWAY:
 			battleMessage = "You ran away! U little bitch... -.-";
+			doAnimation = false;
 			endEncounter();
 			break;
+		// the Trainer threw bait, update the battleMessage
 		case THROW_BAIT:
 			battleMessage = "You threw bait to" + pName + "!";
 			break;
+		// the Trainer threw a rock, update the battleMessage
 		case THROW_ROCK:
 			battleMessage = "You threw a rock at " + pName + "!";
 			break;
+		// any other enum value was passed - do nothing
 		default:
 			break;
 
 		}
 
-		if (action != TrainerAction.RUN_AWAY && doAnimation)
+		// if the Trainer should be animated,
+		// tell the EncounterPanel to animate the Trainer
+		if (doAnimation)
 			encounter.animateTrainer();
 
 	}
 
 	public void useItemOnPokemon(Item i, String pName) {
 
-		trainer.useItem(i);
+		useItem(i);
 
 		if (i.getName().equals("Harmonica") && trainer.getItems().contains(new Harmonica())) {
-			stopBGMusic();
-			bgPath = ((Harmonica) i).getSongFilePath(database.getPokemonByName(pName));
-			startNewBGMusic();
+			map.changeBGMusic(((Harmonica) i).getSongFilePath(database.getPokemonByName(pName)));
 		}
 
 	}
@@ -430,7 +431,7 @@ public abstract class GameMode implements Serializable {
 		map.loadImages();
 		database.loadAllPokemon();
 		encounter.loadImages();
-		startNewBGMusic();
+		map.startNewBGMusic();
 		assignListeners();
 	}
 
@@ -438,7 +439,6 @@ public abstract class GameMode implements Serializable {
 		// add KeyListener to this Map so that the user can move the trainer
 		// and other button-y things
 		map.addKeyListener(new OurKeyListener());
-		encounter.addKeyListener(new BattleKeyListener());
 	}
 
 	public void useItem(Item i) {
@@ -451,7 +451,7 @@ public abstract class GameMode implements Serializable {
 	private void endEncounter() {
 		inBattle = false;
 		encounter.stopEncounter();
-		restartBGMusic();
+		map.restartBGMusic();
 	}
 
 	public boolean trainerInBattle() {
@@ -462,28 +462,11 @@ public abstract class GameMode implements Serializable {
 		return encounter;
 	}
 
-	public void startNewBGMusic() {
-		bgPlayer.loopSound(bgPath);
-	}
-
-	public void restartBGMusic() {
-		bgPlayer.restartSound();
-	}
-
-	public void pauseBGMusic() {
-		bgPlayer.pauseSound();
-	}
-
-	public void stopBGMusic() {
-		bgPlayer.stopSound();
-	}
-
-	public void setBGMusicPath(String s) {
-		bgPath = s;
-	}
-
 	public abstract void trainerCaughtPokemon();
 
+	
+	
+	// TODO THIS WILL BE MOVED TO MAP
 	/*---------------------------------------------------------------------
 	 |  Class name:     [OurKeyListener]
 	 |  Purpose:        [Used to move trainer around the map]
@@ -508,41 +491,13 @@ public abstract class GameMode implements Serializable {
 			// if the game is not won or lost or forfeited, move the trainer
 			if (!inBattle && !forfeited && !isGameWon() && !isGameLost()) {
 				// set sprite direction and try to move trainer
-				moveTrainer(e);
+				moveTrainer(e.getKeyCode());
 			}
 
 			if (!isGameActive())
-				stopBGMusic();
+				map.stopBGMusic();
 
 			//map.update(trainer); // does anything the map needs to check ever key press
-
-		}
-
-		@Override
-		public void keyReleased(KeyEvent e) {
-
-		}
-
-	}
-
-	/*---------------------------------------------------------------------
-	 |  Class name:     [OurKeyListener]
-	 |  Purpose:        [Used to move trainer around the map]
-	 *---------------------------------------------------------------------*/
-	private class BattleKeyListener implements KeyListener {
-
-		@Override
-		public void keyTyped(KeyEvent e) {
-
-		}
-
-		/*---------------------------------------------------------------------
-		 |  Method name:    [keyPressed]
-		 |  Purpose:  	    [handles KeyEvents on key press]
-		 |  Parameters:     [KeyEvent]
-		 *---------------------------------------------------------------------*/
-		@Override
-		public void keyPressed(KeyEvent e) {
 
 		}
 

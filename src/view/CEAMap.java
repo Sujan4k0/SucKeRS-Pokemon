@@ -43,6 +43,7 @@ public class CEAMap extends Map {
 	 *---------------------------------------------------------------------*/
 	public CEAMap() {
 		super();
+		bgPath = "./sounds/Ruby_Sapphire_SafariZone.mp3";
 	}
 
 	/*---------------------------------------------------------------------

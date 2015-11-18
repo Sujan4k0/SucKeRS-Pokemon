@@ -19,6 +19,7 @@ package model.GameModel;
 import java.util.Random;
 
 import model.ItemModel.Harmonica;
+import model.ItemModel.PokeBall;
 import view.*;
 
 public class CEAGame extends GameMode {
@@ -32,7 +33,6 @@ public class CEAGame extends GameMode {
 	 *---------------------------------------------------------------------*/
 	public CEAGame(Random rand) {
 		super(rand);
-		bgPath = "./sounds/Ruby_Sapphire_SafariZone.mp3";
 		loadImages();
 		
 		trainer.addItem(new Harmonica());
@@ -61,7 +61,7 @@ public class CEAGame extends GameMode {
 	@Override
 	public boolean isGameLost() {
 		// TODO add losing conditions
-		if (trainer.getSteps() == 0)
+		if (trainer.getSteps() == 0 || !trainer.getItems().contains(new PokeBall()))
 			return true;
 		
 		return false;
