@@ -173,9 +173,13 @@ public class Trainer implements Serializable {
 				trainerPosition =
 						new Point((int) t.getTeleportPoint().getX(), (int) t.getTeleportPoint()
 								.getY());
+				items.remove(t);
+				itemQuantities.put(t.getName(), (itemQuantities.get(t.getName()) - 1));
 				//update observers for inventory
-			} else {System.out.println("Setting Trainer Pos");
+			} else {
+				System.out.println("Setting Trainer Pos");
 				t.setPoint(trainerPosition);
+				
 				return;
 			}
 		} else

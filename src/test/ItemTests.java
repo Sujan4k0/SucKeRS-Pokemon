@@ -176,13 +176,13 @@ public class ItemTests {
 	public void testItem(){
 		PokeBall pb = new PokeBall();
 		FatiguePotion fp = new FatiguePotion();
-		assertTrue(Item.getItemByName("POKEBALL").getName().equals(new PokeBall().getName()));
-		assertTrue(Item.getItemByName("HYPER STEP POTION").getName().equals(new HyperStepPotion().getName()));
-		assertTrue(Item.getItemByName("SUPER STEP POTION").getName().equals(new SuperStepPotion().getName()));
-		assertTrue(Item.getItemByName("BASIC STEP POTION").getName().equals(new BasicStepPotion().getName()));
-		assertTrue(Item.getItemByName("TELEPORTER").getName().equals(new Teleporter().getName()));
-		assertTrue(Item.getItemByName("Harmonica").getName().equals(new Harmonica().getName()));
-		assertTrue(Item.getItemByName("Fatigue Potion").getName().equals(new FatiguePotion().getName()));
+		assertTrue(Item.getItemByName("pokeball").getName().equals(new PokeBall().getName()));
+		assertTrue(Item.getItemByName("hyper step potion").getName().equals(new HyperStepPotion().getName()));
+		assertTrue(Item.getItemByName("super step potion").getName().equals(new SuperStepPotion().getName()));
+		assertTrue(Item.getItemByName("basic step potion").getName().equals(new BasicStepPotion().getName()));
+		assertTrue(Item.getItemByName("teleporter").getName().equals(new Teleporter().getName()));
+		assertTrue(Item.getItemByName("harmonica").getName().equals(new Harmonica().getName()));
+		assertTrue(Item.getItemByName("fatigue Potion").getName().equals(new FatiguePotion().getName()));
 		assertTrue(Item.getItemByName("not an item")== null);
 		
 		assertTrue(new PokeBall().compareTo(new PokeBall()) == 0);
