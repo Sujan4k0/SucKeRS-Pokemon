@@ -255,20 +255,25 @@ public class GameModelTests {
 			}
 		};
 		GameMode g = new CEAGame(r);
-
 		// in CEAGame, should be able to move any direction at start
 		Point start = new Point(g.getTrainer().getPoint());
 		g.moveTrainer(KeyEvent.VK_LEFT);
 		Point end = new Point(g.getTrainer().getPoint());
 		assertEquals(start, new Point(end.x, end.y + 1));
+		
+		g = new CEAGame(r);
 		start = new Point(g.getTrainer().getPoint());
 		g.moveTrainer(KeyEvent.VK_RIGHT);
 		end = new Point(g.getTrainer().getPoint());
 		assertEquals(start, new Point(end.x, end.y - 1));
+		
+		g = new CEAGame(r);
 		start = new Point(g.getTrainer().getPoint());
 		g.moveTrainer(KeyEvent.VK_UP);
 		end = new Point(g.getTrainer().getPoint());
 		assertEquals(start, new Point(end.x + 1, end.y));
+		
+		g = new CEAGame(r);
 		start = new Point(g.getTrainer().getPoint());
 		g.moveTrainer(KeyEvent.VK_DOWN);
 		end = new Point(g.getTrainer().getPoint());
