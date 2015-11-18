@@ -27,6 +27,9 @@ public abstract class Item implements Comparable<Item>, Serializable {
 	private boolean forPokemon;
 	protected transient Image image;
 
+	/*---------------------------------------------------------------------
+	 |  Purpose:  	    [Constructor]
+	 *---------------------------------------------------------------------*/
 	public Item() {
 	}
 
@@ -84,6 +87,12 @@ public abstract class Item implements Comparable<Item>, Serializable {
 		this.forTrainer = forTrainer;
 	}
 
+	/*---------------------------------------------------------------------
+	 |  Method name:    [getItemByName]
+	 |  Purpose:  	    [returns the item based on a string representing its name]
+	 |  Parameters:  	[string representing an items name]
+	 |  Returns:		[an Item]
+	 *---------------------------------------------------------------------*/
 	public static Item getItemByName(String name) {
 		switch (name.toUpperCase()) {
 
@@ -108,12 +117,25 @@ public abstract class Item implements Comparable<Item>, Serializable {
 		return null;
 	}
 
+	/*---------------------------------------------------------------------
+	 |  Method name:    [compareTo]
+	 |  Purpose:  	    [compares two items for use with sorting]
+	 |  Parameters:  	[An item to compare]
+	 |  Returns:		[An int representing the relative order of the 2
+	  					item's names]
+	 *---------------------------------------------------------------------*/
 	@Override
 	public int compareTo(Item t) {
 		System.out.println("Compare to called on : " + t.getName());
 		return this.getName().compareTo(t.getName());
 	}
 
+	/*---------------------------------------------------------------------
+	 |  Method name:    [equals]
+	 |  Purpose:  	    [compares two objects to see if they are identical]
+	 |  Parameters:  	[an Object to compare]
+	 |  Returns:		[a boolean representing if they are equal or not]
+	 *---------------------------------------------------------------------*/
 	@Override
 	public boolean equals(Object obj) {
 		if (!(obj instanceof Item))
