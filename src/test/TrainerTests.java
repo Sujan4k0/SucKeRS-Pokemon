@@ -12,24 +12,6 @@ import model.ItemModel.*;
 import model.TrainerModel.Trainer;
 
 public class TrainerTests {
-
-	/*@Test
-	public void testDefaultTrainer() {
-		Trainer ash = new Trainer();
-		
-		assertEquals(ash.getSteps(), 500);
-		assertEquals(ash.getPokeballs(), 30);
-		assertFalse(ash.isFatigued());
-	}
-	
-	@Test
-	public void testCustomTrainer() {
-		Trainer brock = new Trainer(360, 22);
-		
-		assertEquals(brock.getSteps(), 360);
-		assertEquals(brock.getPokeballs(), 22);
-		assertFalse(brock.isFatigued());
-	}*/
 	
 	@Test
 	public void testPoint() {
@@ -61,6 +43,8 @@ public class TrainerTests {
 		assertEquals(sarina.getSteps(),500);
 		sarina.decreaseSteps();
 		assertEquals(sarina.getSteps(),499);
+		sarina.increaseSteps(36);
+		assertEquals(sarina.getSteps(), 499 + 36);
 		
 	}
 	
@@ -126,11 +110,61 @@ public class TrainerTests {
 		Trainer pedro = new Trainer(300,20);
 		HyperStepPotion hsp = new HyperStepPotion();
 		pedro.addItem(hsp);
-		assertTrue(pedro.getItems().contains(hsp));
+		assertTrue(pedro.getItemQuantities().get(hsp.getName()) == 1);
 		assertEquals(pedro.getSteps(),300);
 		pedro.useItem(hsp);
 		assertEquals(pedro.getSteps(),350);
 		assertFalse(pedro.getItems().contains(hsp));
+	}
+	
+	@Test
+	public void testAddRemoveItems() {
+		
+		Trainer ash = new Trainer();
+		Harmonica h = new Harmonica();
+		PokeBall pb = new PokeBall();
+		
+		//Test adding and using a harmonica
+		
+		ash.useItem(h);
+		ash.addItem(h);
+		assertTrue(ash.getItemQuantities().get(h.getName()) == 1);
+		ash.useItem(h);
+		assertTrue(ash.getItemQuantities().get(h.getName()) == 0);
+		
+		//Test adding and using a pokeball
+		
+		assertTrue(ash.getItemQuantities().get(pb.getName()) == 30);
+		ash.addItem(pb);
+		assertTrue(ash.getItemQuantities().get(pb.getName()) == 31);
+		ash.useItem(pb);
+		assertTrue(ash.getItemQuantities().get(pb.getName()) == 30);
+	}
+	
+	@Test
+	public void testTeleporter() {
+		
+		Trainer misty = new Trainer();
+		misty.setPoint(new Point(5,10));									//Set trainer's point to 5, 10
+		Teleporter tp = new Teleporter();
+		
+		misty.useItem(tp);													//Attempt to use item while it is not in inventory. Should not throw an exception
+		
+		misty.addItem(tp);
+		assertTrue(misty.getItemQuantities().get(tp.getName()) == 1);
+		assertFalse(tp.isSet());											//Teleporter should not be set. It has not been used yet.
+		
+		misty.useItem(tp);													//Attempt to use item now that teleporter is in inventory.
+		assertTrue(misty.getItemQuantities().get(tp.getName()) == 1);		//Teleporter should still be in inventory
+		assertTrue(tp.isSet());												//Teleporter should now be set
+		assertEquals(tp.getTeleportPoint(),misty.getPoint());				//Teleport point should be set to the trainer's current location on use
+		
+		misty.setPoint(new Point(12,37));									//Set Trainer to a new point
+		assertNotEquals(misty.getPoint(), new Point(5,10));					//Verify Misty is no longer in the same spot
+		
+		misty.useItem(tp);
+		assertTrue(misty.getItemQuantities().get(tp.getName()) == 0);		//Verify that misty no longer has a teleporter
+		assertEquals(misty.getPoint(), new Point(5,10));					//Verify that misty transported to original position
 	}
 	
 	/*@Test
