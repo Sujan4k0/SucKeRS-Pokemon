@@ -60,6 +60,12 @@ public class Teleporter extends Item{
 		return teleportPoint;
 	}
 
+	/*---------------------------------------------------------------------
+	 |  Method name:    [equals]
+	 |  Purpose:  	    [compares two objects to see if they are identical]
+	 |  Parameters:  	[an Object to compare]
+	 |  Returns:		[a boolean representing if they are equal or not]
+	 *---------------------------------------------------------------------*/
 	@Override
 	public boolean equals(Object obj) {
 		if (!(obj instanceof Teleporter))

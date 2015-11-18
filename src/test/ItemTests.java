@@ -169,7 +169,7 @@ public class ItemTests {
 		assertTrue(!Ryan.getItems().contains(h));
 	}
 	/*---------------------------------------------------------------------
-	 |  Method name:    [testHarmonica]
+	 |  Method name:    [testItem]
 	 |  Purpose:  	    [Test the functionality of Item super-class]
 	 *---------------------------------------------------------------------*/
 	@Test
