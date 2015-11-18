@@ -83,7 +83,7 @@ public class MazeGame extends GameMode {
 	 *---------------------------------------------------------------------*/
 	@Override
 	public void createMap() {
-		map = new MazeMap();
+		map = new MazeMap(r);
 	}
 
 	@Override

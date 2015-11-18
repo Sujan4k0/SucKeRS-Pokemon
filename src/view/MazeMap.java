@@ -31,14 +31,18 @@ public class MazeMap extends Map {
 
 	// entire MazeMap is 3 by 3 Maps combined
 	public static int WIDTH = (Map.WIDTH * 3), HEIGHT = (Map.HEIGHT * 3);
+	
+	Random rand;
 
 	/*---------------------------------------------------------------------
 	 |  Method name:    [MazeMap]
 	 |  Purpose:  	    [Construct a MazeMap]
 	 *---------------------------------------------------------------------*/
-	public MazeMap() {
+	public MazeMap(Random r) {
 
 		super();
+		
+		rand = r;
 		
 		bgPath = "./sounds/Ruby_Sapphire_Mt.Pyre.mp3";
 	}
@@ -88,7 +92,7 @@ public class MazeMap extends Map {
 			randX -= 1;
 
 		// generates the maze tiles
-		new MazeGenerator(new Point(randX, 1), obstacleTiles).generateMaze();
+		new MazeGenerator(rand, new Point(randX, 1), obstacleTiles).generateMaze();
 
 		// find the only null Obstacle on the left-most side
 		// this is where the trainer will start

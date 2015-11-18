@@ -36,10 +36,11 @@ public class MazeGenerator {
 	/*---------------------------------------------------------------------
 	 |  Method name:    [MazeGenerator]
 	 |  Purpose:  	    [Constructs a MazeGenerator]
-	 |  Parameters:     [Point: the starting point to generate the maze
+	 |  Parameters:     [Random: random object to use to generate map
+	 |					 Point: the starting point to generate the maze
 	 |					 Obstacle[odd num][odd num]: the array to generate the maze in]
 	 *---------------------------------------------------------------------*/
-	public MazeGenerator(Point start, Obstacle[][] obsts) {
+	public MazeGenerator(Random r, Point start, Obstacle[][] obsts) {
 
 		// instantiate pointList
 		pointList = new ArrayList<Point>();
