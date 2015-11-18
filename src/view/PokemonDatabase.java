@@ -51,8 +51,8 @@ public class PokemonDatabase implements Serializable {
 	// legendary
 	private Legendary mew;
 
-	// all the Common Pokemon and Uncommon
-	private ArrayList<Pokemon> allCommon, allUncommon;
+	// all the Common, Uncommon, and Legendary, then all Pokemon together
+	private ArrayList<Pokemon> allCommon, allUncommon, allLegendary, allPokemon;
 
 	/*---------------------------------------------------------------------
 	|  Method name:    [PokemonDatabase]
@@ -62,41 +62,20 @@ public class PokemonDatabase implements Serializable {
 	 *---------------------------------------------------------------------*/
 	public PokemonDatabase() {
 
-		// common
-		loadCommons();
-
-		allCommon = new ArrayList<Pokemon>();
-		allCommon.add(magikarp);
-		allCommon.add(cyndaquil);
-		allCommon.add(rhydon);
-		allCommon.add(diglett);
-		allCommon.add(simisage);
-		allCommon.add(luvdisc);
-
-		// uncommon
-		loadUncommons();
-		
-		allUncommon = new ArrayList<Pokemon>();
-		allUncommon.add(pikachu);
-		allUncommon.add(steelix);
-		allUncommon.add(exeggutor);
-		allUncommon.add(gyrados);
-
-		// legendary
-		loadLegendaries();
+		loadAllPokemon();
 	}
-	
+
 	public void loadAllPokemon() {
-		loadCommons();
-		loadUncommons();
-		loadLegendaries();
-		
+		loadCommon();
+		loadUncommon();
+		loadLegendary();
+
 		allUncommon = new ArrayList<Pokemon>();
 		allUncommon.add(pikachu);
 		allUncommon.add(steelix);
 		allUncommon.add(exeggutor);
 		allUncommon.add(gyrados);
-		
+
 		allCommon = new ArrayList<Pokemon>();
 		allCommon.add(magikarp);
 		allCommon.add(cyndaquil);
@@ -104,15 +83,23 @@ public class PokemonDatabase implements Serializable {
 		allCommon.add(diglett);
 		allCommon.add(simisage);
 		allCommon.add(luvdisc);
-		
+
+		allLegendary = new ArrayList<Pokemon>();
+		allLegendary.add(mew);
+
+		allPokemon = new ArrayList<Pokemon>();
+		allPokemon.addAll(allCommon);
+		allPokemon.addAll(allUncommon);
+		allPokemon.addAll(allLegendary);
+
 	}
 
-	private void loadLegendaries() {
+	private void loadLegendary() {
 
 		mew = new Legendary(new Random(), "Mew", getImage("Mew"), PokemonType.PSYCHIC);
 	}
 
-	private void loadCommons() {
+	private void loadCommon() {
 		magikarp = new Common(new Random(), "Magikarp", getImage("Magikarp"), PokemonType.WATER);
 		cyndaquil = new Common(new Random(), "Cyndaquil", getImage("Cyndaquil"), PokemonType.FIRE);
 		rhydon = new Common(new Random(), "Rhydon", getImage("Rhydon"), PokemonType.ROCK);
@@ -121,7 +108,7 @@ public class PokemonDatabase implements Serializable {
 		luvdisc = new Common(new Random(), "Luvdisc", getImage("Luvdisc"), PokemonType.WATER);
 	}
 
-	private void loadUncommons() {
+	private void loadUncommon() {
 		// uncommon 
 		pikachu = new Uncommon(new Random(), "Pikachu", getImage("Pikachu"), PokemonType.ELECTRIC);
 		steelix = new Uncommon(new Random(), "Steelix", getImage("Steelix"), PokemonType.GROUND);
@@ -373,5 +360,10 @@ public class PokemonDatabase implements Serializable {
 		} else
 			return false;
 
+	}
+
+	public ArrayList<Pokemon> getAllPokemon() {
+
+		return allPokemon;
 	}
 }
