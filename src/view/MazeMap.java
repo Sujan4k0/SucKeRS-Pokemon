@@ -78,7 +78,10 @@ public class MazeMap extends Map {
 
 		// generates a random location along the height at width = 1
 		// to be used for the starting point of the maze generator
-		int randX = new Random().nextInt(h - 2) + 1; 
+		int randX = r.nextInt(h - 1); 
+		
+		if (randX == 0)
+			randX++;
 
 		// makes randX have to be an odd integer so that there is
 		// only a single border of obstacles around the edges :D
