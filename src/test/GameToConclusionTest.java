@@ -116,7 +116,7 @@ public class GameToConclusionTest {
         mg.moveTrainer(KeyEvent.VK_RIGHT);
         assertFalse(mg.isGameWon());
         mg.moveTrainer(KeyEvent.VK_RIGHT);
-  //      System.out.println(mg.getTrainer().getPoint());
+        System.out.println(mg.getTrainer().getPoint());
         //System.out.println(mg.getMap().)
 
         //assertTrue(mg.isGameWon());				//Game should now be won
@@ -156,8 +156,6 @@ public class GameToConclusionTest {
         System.out.println(mg.getTrainer().getSteps());
 
         mg.moveTrainer(KeyEvent.VK_RIGHT);
-        System.out.println(mg.getTrainer().getSteps());
-
         mg.moveTrainer(KeyEvent.VK_LEFT);
         mg.moveTrainer(KeyEvent.VK_RIGHT);
         mg.moveTrainer(KeyEvent.VK_LEFT);
@@ -408,4 +406,5 @@ public class GameToConclusionTest {
         System.out.println(mg.getTrainer().getSteps());
         assertTrue(mg.isGameLost());
     }
+
 }
