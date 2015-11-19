@@ -409,7 +409,7 @@ public class PokemonGUI {
             }
         }
 
-        if (catchEmAll) { // we're playing catch 'em all, make a CEA save
+        else if (catchEmAll) { // we're playing catch 'em all, make a CEA save
 
             try {
                 FileOutputStream fos = new FileOutputStream("PokemonCEASave");
@@ -454,6 +454,7 @@ public class PokemonGUI {
         public void actionPerformed(ActionEvent e) {
 
             catchEmAll = true; // we are playing CEA
+            maze = false;
 
             if (new File("PokemonCEASave").isFile()) { // if a previous CEA save file exists, ask the user if they want to load
 
@@ -523,6 +524,7 @@ public class PokemonGUI {
         public void actionPerformed(ActionEvent e) {
 
             maze = true; // we are playing maze
+            catchEmAll = false;
 
             if (new File("PokemonMazeSave").isFile()) { // if a save exists, ask if they would like to load it
 

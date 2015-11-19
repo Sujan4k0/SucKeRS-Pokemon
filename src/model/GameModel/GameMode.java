@@ -486,8 +486,6 @@ public abstract class GameMode implements Serializable {
 		@Override
 		public void keyPressed(KeyEvent e) {
 
-			System.out.println("Our GameMode Listener");
-
 			// if the game is not won or lost or forfeited, move the trainer
 			if (!inBattle && !forfeited && !isGameWon() && !isGameLost()) {
 				// set sprite direction and try to move trainer
