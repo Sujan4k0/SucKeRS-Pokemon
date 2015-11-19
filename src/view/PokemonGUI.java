@@ -169,12 +169,15 @@ public class PokemonGUI {
         items.add("TestPotion1");
         items.add("TestPotion2");
         
+        // create list of pokemon
         trainerPokemon = new JComboBox<Object>();
         updatePokemonList();
         
+        // create list of items
         trainerItems = new JComboBox<Object>();  
         updateItemsList();
         
+        // make lists non-focusable
         trainerItems.setFocusable(false);
         trainerPokemon.setFocusable(false);
 
@@ -191,14 +194,18 @@ public class PokemonGUI {
         pokemonCheck = new JCheckBox("Use on Selected Pokemon");
         pokemonCheck.setFocusable(false);
         pokemonCheck.setForeground(Color.WHITE);
+       
+        // add checks to a group so only one can be chosen
         ButtonGroup buttonGroup = new ButtonGroup();
         buttonGroup.add(trainerCheck);
         buttonGroup.add(pokemonCheck);
 
+        // add checks and lists to inventory panel
         inventory.add(trainerCheck);
         inventory.add(pokemonCheck);
         inventory.add(trainerPokemon);
         inventory.add(trainerItems);
+        
         userOptions.add(inventory, BorderLayout.CENTER);
         userOptions.setBackground(Color.BLACK);
 
@@ -216,6 +223,7 @@ public class PokemonGUI {
             e.printStackTrace();
         }
 
+        // steps progress bar
         steps = new JProgressBar(0, mode.getTrainer().getSteps());
         steps.setValue(mode.getTrainer().getSteps()); // will need to replace this with steps
         steps.setStringPainted(true);
@@ -223,37 +231,52 @@ public class PokemonGUI {
         trainerDisplay.add(steps, BorderLayout.SOUTH);
         userOptions.add(trainerDisplay, BorderLayout.NORTH);
 
+        // three user buttons
         JPanel userButtons = new JPanel(new GridLayout(3, 1));
+        
+        // create the buttons
         JButton save = new JButton("Save Game");
-        save.setFocusable(false);
         JButton use = new JButton("Use Item");
-        use.setFocusable(false);
         JButton forfeit = new JButton("Forfeit");
+        
+        // all buttons are non-focusable
+        save.setFocusable(false);
+        use.setFocusable(false);
         forfeit.setFocusable(false);
+        
+        // add action listeners to the buttons for function
+        use.addActionListener(new ItemUser());
+        save.addActionListener(new GameSaver());
+        forfeit.addActionListener(new Forfeiter());
+        
+        // make the buttons pretty
         save.setOpaque(true);
         save.setBackground(new Color(102, 178, 255));
         use.setOpaque(true);
         use.setBackground(new Color(51, 255, 153));
         forfeit.setOpaque(true);
         forfeit.setBackground(new Color(255, 51, 51));
+        
+        // add the buttons to the button panel
         userButtons.add(use);
         userButtons.add(save);
         userButtons.add(forfeit);
+        
+        // make button panel pretty
         userButtons.setBackground(Color.BLACK);
+        
+        // add panel to the options panel
         userOptions.add(userButtons, BorderLayout.SOUTH);
 
+        // make user options pretty and non-focusable
         userOptions.setBorder(BorderFactory.createLineBorder(new Color(244, 220, 38), 5));
         userOptions.setFocusable(false);
 
-        mapView.add(userOptions, BorderLayout.EAST);
+        mapView.add(userOptions, BorderLayout.EAST); // add options to the frame
 
         mapView.pack();
-        mapView.setLocationRelativeTo(null);
-        mapView.setVisible(true);
-
-        use.addActionListener(new ItemUser());
-        save.addActionListener(new GameSaver());
-        forfeit.addActionListener(new Forfeiter());
+        mapView.setLocationRelativeTo(null); // center the map
+        mapView.setVisible(true);        
         
         mode.getMap().repaint();
         mapView.repaint();
@@ -350,44 +373,52 @@ public class PokemonGUI {
     *---------------------------------------------------------------------*/
     private void battleFrame() {
 
-        mapView.setVisible(false);
+        mapView.setVisible(false); // hide map
+        
+        // set up new frame for the battle
         encounterFrame = new JFrame();
         encounterFrame.setResizable(false);
         encounterFrame.setTitle("Battle");
         encounterFrame.setVisible(true);
-        encounterFrame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
-        encounterFrame.add(mode.getEncounterPanel(), BorderLayout.CENTER);
-        mode.getEncounterPanel().setBorder(BorderFactory.createLineBorder(new Color(76,176,159), 5));
+        encounterFrame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE); // game will shut down
+        encounterFrame.add(mode.getEncounterPanel(), BorderLayout.CENTER); // get panel from mode
+        mode.getEncounterPanel().setBorder(BorderFactory.createLineBorder(new Color(76,176,159), 5)); // make it pretty
         encounterFrame.revalidate();
 
-        JPanel trainerControls = new JPanel(new GridLayout(2, 2));
-        trainerControls.setBackground(new Color(76,176,159));
-        trainerControls.setBorder(BorderFactory.createLineBorder(new Color(163, 116, 179), 5));
+        // panel for the trainer controls
+        JPanel trainerControls = new JPanel(new GridLayout(2, 2)); // four buttons possible
+        trainerControls.setBackground(new Color(76,176,159)); // make pretty
+        trainerControls.setBorder(BorderFactory.createLineBorder(new Color(163, 116, 179), 5)); // make pretty
 
+        // make four buttons for the user battle controls
         JButton throwRock = new JButton("Throw Rock");
         JButton throwBait = new JButton("Throw Bait");
         JButton runAway = new JButton("Run");
         JButton throwBall = new JButton("Throw Pokeball");
 
+        // add action listener for all buttons
         throwRock.addActionListener(new TrainerActionButtons());
         throwBait.addActionListener(new TrainerActionButtons());
         runAway.addActionListener(new TrainerActionButtons());
         throwBall.addActionListener(new TrainerActionButtons());
         
+        // make buttons pretty
         throwRock.setBackground(new Color(255, 199, 229));
         throwBait.setBackground(new Color (232, 170, 0));
         runAway.setBackground(new Color(16, 160, 222));
         throwBall.setBackground(new Color(54, 191, 27));
 
+        // add the buttons to the panel of buttons
         trainerControls.add(throwRock);
         trainerControls.add(throwBait);
         trainerControls.add(runAway);
         trainerControls.add(throwBall);
 
+        // add the control panel to the battle frame
         encounterFrame.add(trainerControls, BorderLayout.SOUTH);
         
-        encounterFrame.setSize(800, 550);
-        encounterFrame.setLocationRelativeTo(null);
+        encounterFrame.setSize(800, 550); // good looking size
+        encounterFrame.setLocationRelativeTo(null); // center the frame
     }
 
     /*---------------------------------------------------------------------
@@ -424,22 +455,33 @@ public class PokemonGUI {
         }
     }
     
+    /*---------------------------------------------------------------------
+    |  Method name:    [updatePokemonList]
+    |  Purpose:        [Updates the JComboBox of caught Pokemon for the
+    |                   GUI's display.]
+    *---------------------------------------------------------------------*/
     private void updatePokemonList() {
         
-        trainerPokemon.removeAllItems();      
+        trainerPokemon.removeAllItems(); // remove all items from the JComboBox first    
         for (int p = 0; p < mode.getTrainer().getPokemon().size(); p++) {
         
+            // add the String for the Pokemon and its rarity
             Pokemon mon = mode.getTrainer().getPokemon().get(p);
-            
             trainerPokemon.addItem(mon.getName() + " " + mon.rarityString());
         }    
     }
     
+    /*---------------------------------------------------------------------
+    |  Method name:    [updateItemsList]
+    |  Purpose:        [Updates the JComboBox of gathered items for the
+    |                   GUI's display]
+    *---------------------------------------------------------------------*/
     private void updateItemsList() {
         
-        trainerItems.removeAllItems();
+        trainerItems.removeAllItems(); // remove all items from the JCombobox first
         for (String s : mode.getTrainer().getItemQuantities().keySet()) {
             
+            // add the String for the item and quantity associated with it
             trainerItems.addItem(s + " " + mode.getTrainer().getItemQuantities().get(s));
         }        
     }
@@ -454,8 +496,8 @@ public class PokemonGUI {
         public void actionPerformed(ActionEvent e) {
 
             catchEmAll = true; // we are playing CEA
-            maze = false;
-            boolean save = false;
+            maze = false; // not playing maze
+            boolean save = false; // currently have not loaded from a save
 
             if (new File("PokemonCEASave").isFile()) { // if a previous CEA save file exists, ask the user if they want to load
 
@@ -474,10 +516,11 @@ public class PokemonGUI {
 
                         mode.loadImages();
                         mode.getMap().setFocusable(true);
-                        save = true;
-
+                        save = true; // we've loaded from a save
                         
-                    } catch (Exception e1) {
+                    } catch (Exception e1) { // indicate that the save doesn't work (should never happen)
+                        
+                        JOptionPane.showMessageDialog(null, "The save is corrupted, please start a new game");
                     }
                 }
 
@@ -490,14 +533,13 @@ public class PokemonGUI {
             else {
 
                 mode = new CEAGame(new Random()); // no save existed, create a new game
-            }
-            
+            }            
             
             // hide the start menu
             startScreen.setVisible(false);
             mapFrame(); // set up the game visibility and map
 
-            if (!save) {
+            if (!save) { // we did not load a save, show the starting dialog
                 
                 // explanatory dialog that appears for this game type
                 JDialog dialog = new JDialog(mapView, "Gotta Catch 'Em All");
@@ -509,12 +551,12 @@ public class PokemonGUI {
                         + "He must have some problem with captivity. But we're human\n"
                         + "and we don't listen to nature, so I have a genius idea:\n"
                         + "maybe if you catch all the 6 common and 4 uncommon in the\n" + "area he'll appear.\n");
-                info.setEditable(false);
-                info.setFont(new Font("Futura", Font.PLAIN, 15));
-                dialog.add(info);
-                dialog.setSize(500, 300);
-                dialog.setLocationRelativeTo(null);
-                dialog.setVisible(true);
+                info.setEditable(false); // dialog should not be editable
+                info.setFont(new Font("Futura", Font.PLAIN, 15)); // fun looking font
+                dialog.add(info); // add the text to the dialog box
+                dialog.setSize(500, 300); // made a little bigger for Windows machines (?)
+                dialog.setLocationRelativeTo(null); // show at center of screen
+                dialog.setVisible(true); // show it
             }
         }
     }
@@ -529,8 +571,8 @@ public class PokemonGUI {
         public void actionPerformed(ActionEvent e) {
 
             maze = true; // we are playing maze
-            catchEmAll = false;
-            boolean save = false;
+            catchEmAll = false; // not playing catchEmAll
+            boolean save = false; // we have not loaded from a save
 
             if (new File("PokemonMazeSave").isFile()) { // if a save exists, ask if they would like to load it
 
@@ -547,21 +589,23 @@ public class PokemonGUI {
                         ois.close(); // close object stream
                         fis.close(); // close file stream
                         
-                        mode.loadImages();
+                        mode.loadImages(); // load all the images (not persistent)
                         mode.getMap().setFocusable(true);
-                        save = true;
+                        save = true; // we have loaded from a save
 
-                    } catch (Exception e1) {// default model
+                    } catch (Exception e1) {// Indicate that the save doesn't work (should never happen)
+                        
+                        JOptionPane.showMessageDialog(null, "The save is corrupted, please start a new game");
                     }
                 }
 
-                else {
+                else { // getting the was not chosen
 
                     mode = new MazeGame(new Random()); // no selected, create a new game
                 }
             }
 
-            else {
+            else { // no save file exists, just make a new game
 
                 mode = new MazeGame(new Random()); // no save existed, create a new game
 
@@ -570,7 +614,7 @@ public class PokemonGUI {
             startScreen.setVisible(false); // hide start screen
             mapFrame(); // start the view of the map and game
 
-            if (!save) {
+            if (!save) { // we didn't load from a save, so show new game introductory dialog
                 
                 // pop up dialog explaining this game mode
                 JDialog dialog = new JDialog(mapView, "Welcome to the Maze");
@@ -581,12 +625,12 @@ public class PokemonGUI {
                         + "you're a bit tired and only have 500 steps left in you.\n"
                         + "Catching some loyal Pokemon may help push you along the way.\n"
                         + "There are also some goodies throughout the maze that may\n" + "help you get out of here!");
-                info.setEditable(false);
-                info.setFont(new Font("Futura", Font.PLAIN, 15));
-                dialog.add(info);
-                dialog.setSize(500, 300);
-                dialog.setLocationRelativeTo(null);
-                dialog.setVisible(true);
+                info.setEditable(false); // dialog should not be editable
+                info.setFont(new Font("Futura", Font.PLAIN, 15)); // fun looking font
+                dialog.add(info); // add the text to the dialog box
+                dialog.setSize(500, 300); // size set a little bigger for Windows machines (?)
+                dialog.setLocationRelativeTo(null); // put at center of screen
+                dialog.setVisible(true); // show it
             }
         }
     }
@@ -600,61 +644,61 @@ public class PokemonGUI {
         @Override
         public void actionPerformed(ActionEvent e) {
 
+            // get the String of the item selected in the JComboBox
             String item = trainerItems.getSelectedItem().toString();
             
-            boolean found = false;
-            int i = 0;
+            boolean found = false; // we have not found the index of the quantity
+            int i = 0; // index of current character
             
             while (!found) {
                 
+                if (i >= item.length()) { // no number found, issue with hash set
+                    
+                    break;
+                }
+                
+                // found the quantity
                 if (Character.isDigit(item.charAt(i))) {
                     
                     found = true;
                 }
-                else {
+                else { // keep looking for a digit
                     
                     i++;
                 }
             }
             
-            item = item.substring(0, i - 1);
-            Item use = Item.getItemByName(item);
+            item = item.substring(0, i - 1); // make a substring from the start to before the numbers
+            Item use = Item.getItemByName(item); // get the item object to be used
 
-
-            if (trainerCheck.isSelected()) {
+            if (trainerCheck.isSelected()) { // user wants to use the item on the trainer
                                 
-                if (use.isForTrainer()) {
+                if (use.isForTrainer()) { // item is usable on a trainer
                     
                     mode.useItem(use);
-                    updateItemsList();
+                    updateItemsList(); // reflect on GUI that item was used
                 }
                 
-                else {
+                else { // item is only for a Pokemon, show error
 
-                    JOptionPane.showMessageDialog(null, "This item is unusable on a trainer.");
-                    
-                    // yell about it
+                    JOptionPane.showMessageDialog(null, "This item is unusable on a trainer.");                    
                 }
             }
             
-            else {
+            else { // user wants to use the item on a Pokemon
                 
-                if (use.isForPokemon()) {
+                if (use.isForPokemon()) { // item is usable on a pokemon
                     
                     String pokemon = trainerPokemon.getSelectedItem().toString();
-                    pokemon = pokemon.substring(0, pokemon.indexOf(' '));
-                    updateItemsList();
+                    pokemon = pokemon.substring(0, pokemon.indexOf(' ')); // no Pokemon name have space, can just take index
+                    updateItemsList(); // reflect on GUI that item was used
                     
                     mode.useItemOnPokemon(use, pokemon);
                 }
                 
-                else {
+                else { // item is only usable on trainer, show error
                     
-                    JOptionPane.showMessageDialog(null, "This item is unusable on a pokemon.");
-
-                    
-                    // yell about it 
-                    
+                    JOptionPane.showMessageDialog(null, "This item is unusable on a pokemon.");                    
                 }
             }
             
@@ -686,8 +730,8 @@ public class PokemonGUI {
         @Override
         public void actionPerformed(ActionEvent e) {
 
-            mode.forfeitGame();
-            endGameDisplay();
+            mode.forfeitGame(); // notify mode that the game is over
+            endGameDisplay(); // show the end game stats
         }
     }
 
@@ -716,8 +760,7 @@ public class PokemonGUI {
                 saveState(); // save the game
             }
             
-            System.exit(0);
-             
+            System.exit(0);     
         }
 
         @Override
@@ -768,10 +811,9 @@ public class PokemonGUI {
         public void windowClosing(WindowEvent e) {
             // TODO Auto-generated method stub
 
-            startScreen.setVisible(true);
-            soundPlayer.stopSound();
-            soundPlayer.loopSound("./sounds/opening_song.wav");
-
+            startScreen.setVisible(true); // show the start screen again
+            soundPlayer.stopSound(); // stop end game sounds
+            soundPlayer.loopSound("./sounds/opening_song.wav"); // play start sounds
         }
 
         @Override
@@ -868,22 +910,24 @@ public class PokemonGUI {
         public void keyPressed(KeyEvent e) {
             // TODO Auto-generated method stub
 
-            if (!mode.isGameActive()) {
+            if (!mode.isGameActive()) { // game is over
 
-                soundPlayer.loopSound("./sounds/ending_song.wav");
-                endGameDisplay();
+                soundPlayer.loopSound("./sounds/ending_song.wav"); // play end song
+                endGameDisplay(); // show end game display
             }
 
-            else if (mode.trainerInBattle()) {
+            else if (mode.trainerInBattle()) { // entered battle
 
-                battleFrame();
+                battleFrame(); // show battle frame
             }
 
-            else {
+            else { // update everything that should be updated
 
+                // steps update
                 steps.setValue(mode.getTrainer().getSteps());
                 steps.setString((mode.getTrainer().getSteps()) + " steps remaining");
                 
+                // inventory updates
                 updatePokemonList();
                 updateItemsList();
                 
