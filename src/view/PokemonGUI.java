@@ -64,6 +64,7 @@ public class PokemonGUI {
     private JCheckBox pokemonCheck;
     private JProgressBar steps;
     private SoundPlayer soundPlayer;
+    private JTextArea battleMessages;
 
     public static void main(String[] args) {
 
@@ -385,6 +386,8 @@ public class PokemonGUI {
         mode.getEncounterPanel().setBorder(BorderFactory.createLineBorder(new Color(76,176,159), 5)); // make it pretty
         encounterFrame.revalidate();
 
+        JPanel battleActions = new JPanel(new BorderLayout()); // panel to hold messages and actions 
+        
         // panel for the trainer controls
         JPanel trainerControls = new JPanel(new GridLayout(2, 2)); // four buttons possible
         trainerControls.setBackground(new Color(76,176,159)); // make pretty
@@ -414,8 +417,21 @@ public class PokemonGUI {
         trainerControls.add(runAway);
         trainerControls.add(throwBall);
 
-        // add the control panel to the battle frame
-        encounterFrame.add(trainerControls, BorderLayout.SOUTH);
+        battleActions.add(trainerControls, BorderLayout.CENTER);
+        
+        // battle messages appear here
+        JPanel battleDialog = new JPanel(new BorderLayout());
+        battleDialog.setBorder(BorderFactory.createLineBorder(new Color(163, 116, 179), 5)); // make pretty
+        battleMessages = new JTextArea();
+        battleMessages.setEditable(false);
+        battleMessages.setRows(5);
+        battleMessages.setFont(new Font("Futura", Font.PLAIN, 15)); // fun looking font
+        battleMessages.setText("You've encountered a Pokemon!");
+        battleDialog.add(battleMessages);
+        
+        battleActions.add(battleDialog, BorderLayout.WEST); // add the dialog to the actions panel
+        
+        encounterFrame.add(battleActions, BorderLayout.SOUTH); // add the actions panel to the frame
         
         encounterFrame.setSize(800, 550); // good looking size
         encounterFrame.setLocationRelativeTo(null); // center the frame
