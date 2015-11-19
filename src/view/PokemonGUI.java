@@ -455,6 +455,7 @@ public class PokemonGUI {
 
             catchEmAll = true; // we are playing CEA
             maze = false;
+            boolean save = false;
 
             if (new File("PokemonCEASave").isFile()) { // if a previous CEA save file exists, ask the user if they want to load
 
@@ -473,6 +474,7 @@ public class PokemonGUI {
 
                         mode.loadImages();
                         mode.getMap().setFocusable(true);
+                        save = true;
 
                         
                     } catch (Exception e1) {
@@ -495,22 +497,25 @@ public class PokemonGUI {
             startScreen.setVisible(false);
             mapFrame(); // set up the game visibility and map
 
-            // explanatory dialog that appears for this game type
-            JDialog dialog = new JDialog(mapView, "Gotta Catch 'Em All");
-            JTextArea info = new JTextArea();
-            info.append("Hey there noob trainer, you wanna be a master!?.\n"
-                    + "We've been hearing some strange rumors in the area. \n"
-                    + "There have been rare sightings of some beast Pokemon.\n"
-                    + "He seems to appear when lots of Pokemon have been caught.\n"
-                    + "He must have some problem with captivity. But we're human\n"
-                    + "and we don't listen to nature, so I have a genius idea:\n"
-                    + "maybe if you catch all the 6 common and 4 uncommon in the\n" + "area he'll appear.\n");
-            info.setEditable(false);
-            info.setFont(new Font("Futura", Font.PLAIN, 15));
-            dialog.add(info);
-            dialog.setSize(500, 300);
-            dialog.setLocationRelativeTo(null);
-            dialog.setVisible(true);
+            if (!save) {
+                
+                // explanatory dialog that appears for this game type
+                JDialog dialog = new JDialog(mapView, "Gotta Catch 'Em All");
+                JTextArea info = new JTextArea();
+                info.append("Hey there noob trainer, you wanna be a master!?.\n"
+                        + "We've been hearing some strange rumors in the area. \n"
+                        + "There have been rare sightings of some beast Pokemon.\n"
+                        + "He seems to appear when lots of Pokemon have been caught.\n"
+                        + "He must have some problem with captivity. But we're human\n"
+                        + "and we don't listen to nature, so I have a genius idea:\n"
+                        + "maybe if you catch all the 6 common and 4 uncommon in the\n" + "area he'll appear.\n");
+                info.setEditable(false);
+                info.setFont(new Font("Futura", Font.PLAIN, 15));
+                dialog.add(info);
+                dialog.setSize(500, 300);
+                dialog.setLocationRelativeTo(null);
+                dialog.setVisible(true);
+            }
         }
     }
 
@@ -525,6 +530,7 @@ public class PokemonGUI {
 
             maze = true; // we are playing maze
             catchEmAll = false;
+            boolean save = false;
 
             if (new File("PokemonMazeSave").isFile()) { // if a save exists, ask if they would like to load it
 
@@ -543,6 +549,7 @@ public class PokemonGUI {
                         
                         mode.loadImages();
                         mode.getMap().setFocusable(true);
+                        save = true;
 
                     } catch (Exception e1) {// default model
                     }
@@ -563,21 +570,24 @@ public class PokemonGUI {
             startScreen.setVisible(false); // hide start screen
             mapFrame(); // start the view of the map and game
 
-            // pop up dialog explaining this game mode
-            JDialog dialog = new JDialog(mapView, "Welcome to the Maze");
-            JTextArea info = new JTextArea();
-            info.append("So you've chosen the maze? Daunting.\n"
-                    + "So obviously, you gotta make it to the end of the maze. \n"
-                    + "The end is denoted by an ice tile, but wait...\n"
-                    + "you're a bit tired and only have 500 steps left in you.\n"
-                    + "Catching some loyal Pokemon may help push you along the way.\n"
-                    + "There are also some goodies throughout the maze that may\n" + "help you get out of here!");
-            info.setEditable(false);
-            info.setFont(new Font("Futura", Font.PLAIN, 15));
-            dialog.add(info);
-            dialog.setSize(500, 300);
-            dialog.setLocationRelativeTo(null);
-            dialog.setVisible(true);
+            if (!save) {
+                
+                // pop up dialog explaining this game mode
+                JDialog dialog = new JDialog(mapView, "Welcome to the Maze");
+                JTextArea info = new JTextArea();
+                info.append("So you've chosen the maze? Daunting.\n"
+                        + "So obviously, you gotta make it to the end of the maze. \n"
+                        + "The end is denoted by an ice tile, but wait...\n"
+                        + "you're a bit tired and only have 500 steps left in you.\n"
+                        + "Catching some loyal Pokemon may help push you along the way.\n"
+                        + "There are also some goodies throughout the maze that may\n" + "help you get out of here!");
+                info.setEditable(false);
+                info.setFont(new Font("Futura", Font.PLAIN, 15));
+                dialog.add(info);
+                dialog.setSize(500, 300);
+                dialog.setLocationRelativeTo(null);
+                dialog.setVisible(true);
+            }
         }
     }
 
