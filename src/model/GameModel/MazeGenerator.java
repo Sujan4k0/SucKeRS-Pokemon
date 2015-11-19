@@ -43,7 +43,7 @@ public class MazeGenerator {
 	 *---------------------------------------------------------------------*/
 	public MazeGenerator(Random rand, Point start, Obstacle[][] obsts) {
 
-		rand = r;
+		r = rand;
 		
 		// instantiate pointList
 		pointList = new ArrayList<Point>();
