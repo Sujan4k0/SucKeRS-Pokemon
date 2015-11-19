@@ -557,19 +557,7 @@ public class PokemonGUI {
                 mode = new MazeGame(new Random()); // no save existed, create a new game
 
             }
-            
-            Random r = new Random() {
-                private static final long serialVersionUID = 1L;
-
-                @Override
-                public int nextInt(int i) {
-                    return 3; // always generate maze right
-                }
-            };
-            
-            mode = new MazeGame(r);
-
-            
+          
             startScreen.setVisible(false); // hide start screen
             mapFrame(); // start the view of the map and game
 
