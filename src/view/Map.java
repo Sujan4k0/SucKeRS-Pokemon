@@ -27,6 +27,7 @@ import java.awt.event.ActionListener;
 import java.io.File;
 import java.io.IOException;
 import java.io.Serializable;
+import java.util.Random;
 
 import javax.imageio.ImageIO;
 import javax.swing.JPanel;
@@ -75,6 +76,9 @@ public abstract class Map extends JPanel implements Serializable {
 
 	// Plays sfx :D
 	SoundPlayer sfxPlayer = new SoundPlayer();
+	
+	// for randomly generating stuff
+	Random r;
 
 	// the directions associated with the trainer's sprite sheet
 	public static enum TrainerDirection {
@@ -97,7 +101,9 @@ public abstract class Map extends JPanel implements Serializable {
 	 |  Method name:    [Map]
 	 |  Purpose:  	    [Constructor for Map]
 	 *---------------------------------------------------------------------*/
-	public Map() {
+	public Map(Random rand) {
+		
+		r = rand;
 
 		// get sprite sheets & tile sets
 		try {

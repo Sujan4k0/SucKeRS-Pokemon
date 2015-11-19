@@ -27,7 +27,83 @@ public class GameToConclusionTest {
 
         assertFalse(mg.isGameWon()); //Game should not be won at start
 
-        mg.moveTrainer(KeyEvent.VK_RIGHT);
+        mg.moveTrainer(KeyEvent.VK_RIGHT); // 1
+        assertFalse(mg.isGameWon());
+        mg.moveTrainer(KeyEvent.VK_RIGHT); // 2
+        assertFalse(mg.isGameWon());
+        mg.moveTrainer(KeyEvent.VK_RIGHT); // 3
+        assertFalse(mg.isGameWon());
+        mg.moveTrainer(KeyEvent.VK_RIGHT); // 4
+        assertFalse(mg.isGameWon());
+        mg.moveTrainer(KeyEvent.VK_RIGHT); // 5
+        assertFalse(mg.isGameWon());
+        mg.moveTrainer(KeyEvent.VK_RIGHT); // 6
+        assertFalse(mg.isGameWon());
+        mg.moveTrainer(KeyEvent.VK_RIGHT); // 7
+        assertFalse(mg.isGameWon());
+        mg.moveTrainer(KeyEvent.VK_RIGHT); // 8
+        assertFalse(mg.isGameWon());
+        mg.moveTrainer(KeyEvent.VK_RIGHT); // 9
+        assertFalse(mg.isGameWon());
+        mg.moveTrainer(KeyEvent.VK_RIGHT); // 10
+        assertFalse(mg.isGameWon());
+        mg.moveTrainer(KeyEvent.VK_RIGHT); // 11
+        assertFalse(mg.isGameWon());
+        mg.moveTrainer(KeyEvent.VK_RIGHT); // 12
+        assertFalse(mg.isGameWon());
+        mg.moveTrainer(KeyEvent.VK_RIGHT); // 13
+        assertFalse(mg.isGameWon());
+        mg.moveTrainer(KeyEvent.VK_RIGHT); // 14
+        assertFalse(mg.isGameWon());
+        mg.moveTrainer(KeyEvent.VK_RIGHT); // 15
+        assertFalse(mg.isGameWon());
+        mg.moveTrainer(KeyEvent.VK_RIGHT); // 16
+        assertFalse(mg.isGameWon());
+        mg.moveTrainer(KeyEvent.VK_RIGHT); // 17
+        assertFalse(mg.isGameWon());
+        mg.moveTrainer(KeyEvent.VK_RIGHT); // 18
+        assertFalse(mg.isGameWon());
+        mg.moveTrainer(KeyEvent.VK_RIGHT); // 19
+        assertFalse(mg.isGameWon());
+        mg.moveTrainer(KeyEvent.VK_RIGHT); // 20
+        assertFalse(mg.isGameWon());
+        mg.moveTrainer(KeyEvent.VK_RIGHT); // 21
+        assertFalse(mg.isGameWon());
+        mg.moveTrainer(KeyEvent.VK_RIGHT); // 22
+        assertFalse(mg.isGameWon());
+        mg.moveTrainer(KeyEvent.VK_RIGHT); // 23
+        assertFalse(mg.isGameWon());
+        mg.moveTrainer(KeyEvent.VK_RIGHT); // 24
+        assertFalse(mg.isGameWon());
+        mg.moveTrainer(KeyEvent.VK_RIGHT); // 25
+        assertFalse(mg.isGameWon());
+        mg.moveTrainer(KeyEvent.VK_RIGHT); // 26
+        assertFalse(mg.isGameWon());
+        mg.moveTrainer(KeyEvent.VK_RIGHT); // 27
+        assertFalse(mg.isGameWon());
+        mg.moveTrainer(KeyEvent.VK_RIGHT); // 28
+        assertFalse(mg.isGameWon());
+        mg.moveTrainer(KeyEvent.VK_RIGHT); // 29
+        assertFalse(mg.isGameWon());
+        mg.moveTrainer(KeyEvent.VK_RIGHT); // 30
+        assertFalse(mg.isGameWon());
+        mg.moveTrainer(KeyEvent.VK_RIGHT); // 31
+        assertFalse(mg.isGameWon());
+        mg.moveTrainer(KeyEvent.VK_RIGHT); // 32
+        assertFalse(mg.isGameWon());
+        mg.moveTrainer(KeyEvent.VK_RIGHT); // 33
+        assertFalse(mg.isGameWon());
+        mg.moveTrainer(KeyEvent.VK_RIGHT); // 34
+        assertFalse(mg.isGameWon());
+        mg.moveTrainer(KeyEvent.VK_RIGHT); // 35
+        assertFalse(mg.isGameWon());
+        mg.moveTrainer(KeyEvent.VK_RIGHT); // 36
+        assertFalse(mg.isGameWon());
+        mg.moveTrainer(KeyEvent.VK_RIGHT); // 37
+        assertFalse(mg.isGameWon());
+        mg.moveTrainer(KeyEvent.VK_RIGHT); // 38
+        assertFalse(mg.isGameWon());
+        mg.moveTrainer(KeyEvent.VK_RIGHT); // 39
         assertFalse(mg.isGameWon());
         mg.moveTrainer(KeyEvent.VK_RIGHT);
         assertFalse(mg.isGameWon());
@@ -39,87 +115,11 @@ public class GameToConclusionTest {
         assertFalse(mg.isGameWon());
         mg.moveTrainer(KeyEvent.VK_RIGHT);
         assertFalse(mg.isGameWon());
-        mg.moveTrainer(KeyEvent.VK_RIGHT);
-        assertFalse(mg.isGameWon());
-        mg.moveTrainer(KeyEvent.VK_RIGHT);
-        assertFalse(mg.isGameWon());
-        mg.moveTrainer(KeyEvent.VK_RIGHT);
-        assertFalse(mg.isGameWon());
-        mg.moveTrainer(KeyEvent.VK_RIGHT);
-        assertFalse(mg.isGameWon());
-        mg.moveTrainer(KeyEvent.VK_RIGHT);
-        assertFalse(mg.isGameWon());
-        mg.moveTrainer(KeyEvent.VK_RIGHT);
-        assertFalse(mg.isGameWon());
-        mg.moveTrainer(KeyEvent.VK_RIGHT);
-        assertFalse(mg.isGameWon());
-        mg.moveTrainer(KeyEvent.VK_RIGHT);
-        assertFalse(mg.isGameWon());
-        mg.moveTrainer(KeyEvent.VK_RIGHT);
-        assertFalse(mg.isGameWon());
-        mg.moveTrainer(KeyEvent.VK_RIGHT);
-        assertFalse(mg.isGameWon());
-        mg.moveTrainer(KeyEvent.VK_RIGHT);
-        assertFalse(mg.isGameWon());
-        mg.moveTrainer(KeyEvent.VK_RIGHT);
-        assertFalse(mg.isGameWon());
-        mg.moveTrainer(KeyEvent.VK_RIGHT);
-        assertFalse(mg.isGameWon());
-        mg.moveTrainer(KeyEvent.VK_RIGHT);
-        assertFalse(mg.isGameWon());
-        mg.moveTrainer(KeyEvent.VK_RIGHT);
-        assertFalse(mg.isGameWon());
-        mg.moveTrainer(KeyEvent.VK_RIGHT);
-        assertFalse(mg.isGameWon());
-        mg.moveTrainer(KeyEvent.VK_RIGHT);
-        assertFalse(mg.isGameWon());
-        mg.moveTrainer(KeyEvent.VK_RIGHT);
-        assertFalse(mg.isGameWon());
-        mg.moveTrainer(KeyEvent.VK_RIGHT);
-        assertFalse(mg.isGameWon());
-        mg.moveTrainer(KeyEvent.VK_RIGHT);
-        assertFalse(mg.isGameWon());
-        mg.moveTrainer(KeyEvent.VK_RIGHT);
-        assertFalse(mg.isGameWon());
-        mg.moveTrainer(KeyEvent.VK_RIGHT);
-        assertFalse(mg.isGameWon());
-        mg.moveTrainer(KeyEvent.VK_RIGHT);
-        assertFalse(mg.isGameWon());
-        mg.moveTrainer(KeyEvent.VK_RIGHT);
-        assertFalse(mg.isGameWon());
-        mg.moveTrainer(KeyEvent.VK_RIGHT);
-        assertFalse(mg.isGameWon());
-        mg.moveTrainer(KeyEvent.VK_RIGHT);
-        assertFalse(mg.isGameWon());
-        mg.moveTrainer(KeyEvent.VK_RIGHT);
-        assertFalse(mg.isGameWon());
-        mg.moveTrainer(KeyEvent.VK_RIGHT);
-        assertFalse(mg.isGameWon());
-        mg.moveTrainer(KeyEvent.VK_RIGHT);
-        assertFalse(mg.isGameWon());
-        mg.moveTrainer(KeyEvent.VK_RIGHT);
-        assertFalse(mg.isGameWon());
-        mg.moveTrainer(KeyEvent.VK_RIGHT);
-        assertFalse(mg.isGameWon());
-        mg.moveTrainer(KeyEvent.VK_RIGHT);
-        assertFalse(mg.isGameWon());
-        mg.moveTrainer(KeyEvent.VK_RIGHT);
-        assertFalse(mg.isGameWon());
-        mg.moveTrainer(KeyEvent.VK_RIGHT);
-        assertFalse(mg.isGameWon());
-        mg.moveTrainer(KeyEvent.VK_RIGHT);
-        assertFalse(mg.isGameWon());
-        mg.moveTrainer(KeyEvent.VK_RIGHT);
-        assertFalse(mg.isGameWon());
-        mg.moveTrainer(KeyEvent.VK_RIGHT);
-        assertFalse(mg.isGameWon());
-        mg.moveTrainer(KeyEvent.VK_RIGHT);
-        assertFalse(mg.isGameWon());
-        mg.moveTrainer(KeyEvent.VK_RIGHT);
+       mg.moveTrainer(KeyEvent.VK_RIGHT);
         System.out.println(mg.getTrainer().getPoint());
-        //System.out.println(mg.getMap().)
+        //System.out.println(mg.getMap().);
 
-        //assertTrue(mg.isGameWon());				//Game should now be won
+        assertTrue(mg.isGameWon());				//Game should now be won
     }
 
     @Test
@@ -156,6 +156,8 @@ public class GameToConclusionTest {
         System.out.println(mg.getTrainer().getSteps());
 
         mg.moveTrainer(KeyEvent.VK_RIGHT);
+        System.out.println(mg.getTrainer().getSteps());
+
         mg.moveTrainer(KeyEvent.VK_LEFT);
         mg.moveTrainer(KeyEvent.VK_RIGHT);
         mg.moveTrainer(KeyEvent.VK_LEFT);
@@ -406,5 +408,4 @@ public class GameToConclusionTest {
         System.out.println(mg.getTrainer().getSteps());
         assertTrue(mg.isGameLost());
     }
-
 }

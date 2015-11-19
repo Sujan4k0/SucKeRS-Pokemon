@@ -73,7 +73,7 @@ public class CEAGame extends GameMode {
 	 *---------------------------------------------------------------------*/
 	@Override
 	public void createMap() {
-		map = new CEAMap();
+		map = new CEAMap(r);
 	}
 
 	@Override

@@ -18,6 +18,7 @@
 package view;
 
 import java.awt.Point;
+import java.util.Random;
 
 import javax.swing.Timer;
 
@@ -41,8 +42,8 @@ public class CEAMap extends Map {
 	 |  Method name:    [CEAMap]
 	 |  Purpose:  	    [Constructs a CEAMap]
 	 *---------------------------------------------------------------------*/
-	public CEAMap() {
-		super();
+	public CEAMap(Random rand) {
+		super(rand);
 		bgPath = "./sounds/Ruby_Sapphire_SafariZone.mp3";
 	}
 

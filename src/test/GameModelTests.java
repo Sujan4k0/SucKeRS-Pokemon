@@ -34,7 +34,7 @@ public class GameModelTests {
 		public int nextInt(int i) {
 			return Integer.MAX_VALUE / 2;
 		}
-	}, "testMon1", new Image[0], PokemonType.WATER);
+	}, "testMon1", new Image[0], PokemonType.WATER); 
 
 	private static Pokemon alwaysPM = new Common(new Random() {
 		@Override
@@ -184,7 +184,7 @@ public class GameModelTests {
 	public void mazeGameMapTest() {
 		MazeGame maze = new MazeGame(new Random());
 		maze.createMap();
-		// CEAGame should have CEAMap
+		// MazeGame should have MazeMap
 		assertEquals(maze.getMap().getClass(), MazeMap.class);
 	}
 
