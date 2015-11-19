@@ -157,7 +157,6 @@ public class ItemTests {
 		
 		Image[] i =new Image[0];
 		Common luvdisc = new Common(new Random(), "Luvdisc", i, PokemonType.WATER);
-		System.out.println(h.getSongFilePath(luvdisc));
 		assertTrue(h.getSongFilePath(luvdisc).equals("./sounds/pokemonSongs/luvdisc_song.wav"));
 		
 		Ryan.addItem(h);

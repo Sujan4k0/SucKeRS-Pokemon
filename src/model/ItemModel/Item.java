@@ -126,7 +126,6 @@ public abstract class Item implements Comparable<Item>, Serializable {
 	 *---------------------------------------------------------------------*/
 	@Override
 	public int compareTo(Item t) {
-		System.out.println("Compare to called on : " + t.getName());
 		return this.getName().compareTo(t.getName());
 	}
 

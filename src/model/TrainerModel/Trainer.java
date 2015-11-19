@@ -150,8 +150,6 @@ public class Trainer implements Serializable {
 	 *---------------------------------------------------------------------*/
 	public void useItem(Item i) {
 		
-		System.out.println("Using: " + i.getName());
-
 		if (i.getName() == "Teleporter") {
 			//find the teleporter for the arraylist of items
 			//because we need the point associated with it
@@ -168,7 +166,6 @@ public class Trainer implements Serializable {
 				return;
 			else if (t.isSet()) {
 				
-				System.out.println("Updating Trainer Pos");
 				//Teleport animation
 				trainerPosition =
 						new Point((int) t.getTeleportPoint().getX(), (int) t.getTeleportPoint()
@@ -177,7 +174,6 @@ public class Trainer implements Serializable {
 				itemQuantities.put(t.getName(), (itemQuantities.get(t.getName()) - 1));
 				//update observers for inventory
 			} else {
-				System.out.println("Setting Trainer Pos");
 				t.setPoint(trainerPosition);
 				
 				return;
@@ -191,7 +187,6 @@ public class Trainer implements Serializable {
 					//update observers for inventory
 
 				} else {
-					System.out.println("You don't need that now.");//just for testing, will later update view to display this message
 					return;
 				}
 			} else if (i.getName().equals("Basic Step Potion")
@@ -207,9 +202,7 @@ public class Trainer implements Serializable {
 			items.remove(i);
 			itemQuantities.put(i.getName(), (itemQuantities.get(i.getName()) - 1));
 
-			System.out.printf("Currently %d of %s.", itemQuantities.get(i.getName()), i.getName());
 		} else {
-			System.out.println("item not in inventory");
 		}
 	}
 
