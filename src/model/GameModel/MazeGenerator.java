@@ -32,6 +32,7 @@ public class MazeGenerator {
 	private Obstacle[][] obstacles; // array totally full of Obstacles
 	private ArrayList<Point> pointList; // list of Points to make maze
 	private Point currentPt; // the current Point being checked
+	private Random r;
 
 	/*---------------------------------------------------------------------
 	 |  Method name:    [MazeGenerator]
@@ -40,8 +41,10 @@ public class MazeGenerator {
 	 |					 Point: the starting point to generate the maze
 	 |					 Obstacle[odd num][odd num]: the array to generate the maze in]
 	 *---------------------------------------------------------------------*/
-	public MazeGenerator(Random r, Point start, Obstacle[][] obsts) {
+	public MazeGenerator(Random rand, Point start, Obstacle[][] obsts) {
 
+		rand = r;
+		
 		// instantiate pointList
 		pointList = new ArrayList<Point>();
 
@@ -81,7 +84,7 @@ public class MazeGenerator {
 			}
 
 			// generate a random int to represent the direction to try and move in
-			int randomDir = new Random().nextInt(4);
+			int randomDir = r.nextInt(4);
 
 			// the number of spaces that are moved for each direction generated
 			int m = 2;
@@ -126,7 +129,7 @@ public class MazeGenerator {
 		// find a place on the left that is connected with the maze
 		// and place the start there by removing that object
 		while (!startPlaced) {
-			int rand = new Random().nextInt(obstacles.length);
+			int rand = r.nextInt(obstacles.length);
 
 			if (obstacles[rand][1] == null) {
 				obstacles[rand][0] = null;
@@ -137,7 +140,7 @@ public class MazeGenerator {
 		// find a place on the right that is connected with the maze
 		// and place the end there by removing that object
 		while (!endPlaced) {
-			int rand = new Random().nextInt(obstacles.length);
+			int rand = r.nextInt(obstacles.length);
 
 			if (obstacles[rand][obstacles[0].length - 2] == null) {
 				obstacles[rand][obstacles[0].length - 1] = null;
