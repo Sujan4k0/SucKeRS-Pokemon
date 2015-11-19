@@ -281,7 +281,7 @@ public class CEAMap extends Map {
 
 	private void makeSuperySecretyLand() {
 		for (int i = 0; i < Map.HEIGHT; i++) {
-			for (int j = 0; j < Map.WIDTH; j++) {
+			for (int j = 0; j < Map.WIDTH - 1; j++) {
 				if (i % 2 == 0) {
 					groundTiles[i][j] = secrety1;
 					if (i == 0 || j == 0 || j == Map.WIDTH - 1 || i == Map.HEIGHT - 1)

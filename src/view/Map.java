@@ -429,6 +429,7 @@ public abstract class Map extends JPanel implements Serializable {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
 		}
+		animating = false;
 	}
 
 	public abstract void update(Object o);
