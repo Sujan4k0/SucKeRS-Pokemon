@@ -60,30 +60,15 @@ public class EncounterPanel extends JPanel implements Serializable {
 	Timer animatedBGTimer;
 
 	public EncounterPanel() {
-		// get sprite sheets & tile sets
-		try {
-			bigTrainerSheet =
-					ImageIO.read(new File("./images/SucKeRS_LargeTrainerSpriteSheet_1.png"));
-		} catch (IOException e) {
-			e.printStackTrace();
-		}
 
-		trainerImages =
-				GraphicsManager.getImageArray(bigTrainerSheet,
-						GraphicsManager.BIGSPRITESHEET_WIDTH,
-						GraphicsManager.BIGSPRITESHEET_HEIGHT, 400);
+		load();
+
 		int prefw = WIDTH * Tile.SIZE;
 		int prefh = HEIGHT * Tile.SIZE;
 
 		this.setPreferredSize(new Dimension(prefw, prefh));
 
 		this.addKeyListener(new ThisKeyListener());
-
-		// create Timers
-
-		animationTimer = new Timer(1000 / 10, new TrainerAnimationListener());
-		animatedBGTimer = new Timer(1000 / 100, new BGAnimationListener());
-		animatedBGTimer.start();
 
 	}
 
@@ -121,19 +106,19 @@ public class EncounterPanel extends JPanel implements Serializable {
 		}
 
 		// draw pokemon
-		g2.drawImage(smaller, this.getWidth()
-				- pokemonSize, this.getHeight() / 15, pokemonSize,
+		g2.drawImage(smaller, this.getWidth() - pokemonSize, this.getHeight() / 15, pokemonSize,
 				pokemonSize, null);
 
-		/* draw pokemon stats
-		g2.setColor(Color.WHITE);
-		g2.setFont(new Font("Comic Sans", Font.CENTER_BASELINE, 30));
-		FontMetrics fm = g2.getFontMetrics();
-		int strW = fm.stringWidth(encounteredPokemon.getName());
-		g2.fillRect(this.getWidth() - pokemonSize - 200, this.getHeight() / 15 + 100, strW + 25, 40);
-		g2.setColor(Color.BLACK);
-		g2.drawString(encounteredPokemon.getName(), this.getWidth() - pokemonSize - 190,
-				this.getHeight() / 15 + 125);*/
+		/*
+		 * draw pokemon stats g2.setColor(Color.WHITE); g2.setFont(new
+		 * Font("Comic Sans", Font.CENTER_BASELINE, 30)); FontMetrics fm =
+		 * g2.getFontMetrics(); int strW =
+		 * fm.stringWidth(encounteredPokemon.getName());
+		 * g2.fillRect(this.getWidth() - pokemonSize - 200, this.getHeight() /
+		 * 15 + 100, strW + 25, 40); g2.setColor(Color.BLACK);
+		 * g2.drawString(encounteredPokemon.getName(), this.getWidth() -
+		 * pokemonSize - 190, this.getHeight() / 15 + 125);
+		 */
 		//g2.setColor(Color.blue);
 		//	g2.fillRoundRect(this.getWidth() - pokemonSize - 175, this.getHeight()/15 + 125, 
 		//encounteredPokemon.get, 25, 2, 2);*/
@@ -159,6 +144,7 @@ public class EncounterPanel extends JPanel implements Serializable {
 		int rand = new Random().nextInt(4) + 1;
 		bgPlayer.loopSound("./sounds/Pokemon_BattleMusic_" + rand + ".wav");
 
+		animatedBGTimer.start();
 		p.startEncounter();
 		trainerEncounterImage = trainerImages[0];
 		encounteredPokemon = p;
@@ -213,9 +199,10 @@ public class EncounterPanel extends JPanel implements Serializable {
 				num++;
 			} else if (num >= bgImages.length) { // set num back to 0
 				num = 0;
-			} else // if bgImages only has 1 image, stop the timer for memory
+			} else
+				// if bgImages only has 1 image, stop the timer for memory
 				animatedBGTimer.stop();
-			
+
 			repaint();
 
 		}
@@ -291,7 +278,7 @@ public class EncounterPanel extends JPanel implements Serializable {
 
 	}
 
-	public void loadImages() {
+	public void load() {
 		try {
 			bigTrainerSheet =
 					ImageIO.read(new File("./images/SucKeRS_LargeTrainerSpriteSheet_1.png"));
@@ -302,5 +289,10 @@ public class EncounterPanel extends JPanel implements Serializable {
 		} catch (IOException e) {
 			e.printStackTrace();
 		}
+
+		// create Timers
+
+		animationTimer = new Timer(1000 / 10, new TrainerAnimationListener());
+		animatedBGTimer = new Timer(1000 / 100, new BGAnimationListener());
 	}
 }

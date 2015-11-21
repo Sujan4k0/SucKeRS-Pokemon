@@ -48,7 +48,7 @@ public abstract class Map extends JPanel implements Serializable {
 
 	// the height and width, for use in moveRight() and moveDown()
 	int h = WIDTH, w = HEIGHT;
-	
+
 	// file path of BG music
 	String bgPath = "";
 
@@ -76,7 +76,7 @@ public abstract class Map extends JPanel implements Serializable {
 
 	// Plays sfx :D
 	SoundPlayer sfxPlayer = new SoundPlayer();
-	
+
 	// for randomly generating stuff
 	Random r;
 
@@ -102,18 +102,11 @@ public abstract class Map extends JPanel implements Serializable {
 	 |  Purpose:  	    [Constructor for Map]
 	 *---------------------------------------------------------------------*/
 	public Map(Random rand) {
-		
+
 		r = rand;
 
 		// get sprite sheets & tile sets
-		try {
-			trainerSheet = ImageIO.read(new File("./images/SucKeRS_TrainerSpriteSheet_Test.png"));
-			groundTileSet = ImageIO.read(new File("./images/SucKeRS_PokemonTileSet.png"));
-			obstacleTileSet = ImageIO.read(new File("./images/SucKeRS_PokemonObstacleTileSet.png"));
-		} catch (IOException e) {
-			// TODO Auto-generated catch block
-			e.printStackTrace();
-		}
+		load();
 
 		// create the Map and fill the Tile arrays (Ground and Obstacle)
 		createMap();
@@ -125,9 +118,6 @@ public abstract class Map extends JPanel implements Serializable {
 		int prefh = HEIGHT * Tile.SIZE;
 
 		this.setPreferredSize(new Dimension(prefw, prefh));
-
-		// make animation timer for Trainer movement
-		movementTimer = new Timer(MOVEMENT_SPEED, new MovementTimerListener());
 
 	}
 
@@ -421,7 +411,7 @@ public abstract class Map extends JPanel implements Serializable {
 
 	}
 
-	public void loadImages() {
+	public void load() {
 		try {
 			trainerSheet = ImageIO.read(new File("./images/SucKeRS_TrainerSpriteSheet_Test.png"));
 			groundTileSet = ImageIO.read(new File("./images/SucKeRS_PokemonTileSet.png"));
@@ -431,6 +421,11 @@ public abstract class Map extends JPanel implements Serializable {
 			e.printStackTrace();
 		}
 		animating = false;
+		// make animation timer for Trainer movement
+		movementTimer = new Timer(MOVEMENT_SPEED, new MovementTimerListener());
+		if (bgPath != null && !bgPath.equals(""))
+			startNewBGMusic();
+
 	}
 
 	public abstract void update(Object o);
@@ -439,6 +434,7 @@ public abstract class Map extends JPanel implements Serializable {
 		// play sounds effect of walking on this tile
 		sfxPlayer.playSound(getGroundTiles()[trainerPoint.x][trainerPoint.y].getSoundFilePath());
 	}
+
 	public void startNewBGMusic() {
 		bgPlayer.loopSound(bgPath);
 	}
@@ -459,9 +455,9 @@ public abstract class Map extends JPanel implements Serializable {
 		stopBGMusic();
 		bgPath = songFilePath;
 		startNewBGMusic();
-		
+
 	}
-	
+
 	public String getBGMusicFilePath() {
 		return bgPath;
 	}

@@ -427,10 +427,9 @@ public abstract class GameMode implements Serializable {
 	}
 
 	public void loadImages() {
-		map.loadImages();
+		map.load();
 		database.loadAllPokemon();
-		encounter.loadImages();
-		map.startNewBGMusic();
+		encounter.load();
 		assignListeners();
 	}
 
