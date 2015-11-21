@@ -275,6 +275,7 @@ public abstract class Map extends JPanel implements Serializable {
 	 *---------------------------------------------------------------------*/
 	public void setTrainerDir(Map.TrainerDirection d) {
 		dir = d;
+		drawnDir = d;
 	}
 
 	/*---------------------------------------------------------------------

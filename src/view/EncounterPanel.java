@@ -121,10 +121,11 @@ public class EncounterPanel extends JPanel implements Serializable {
 		}
 
 		// draw pokemon
-		g2.drawImage(smaller, this.getWidth() - pokemonSize, this.getHeight() / 15, pokemonSize,
+		g2.drawImage(smaller, this.getWidth()
+				- pokemonSize, this.getHeight() / 15, pokemonSize,
 				pokemonSize, null);
 
-		// draw pokemon stats
+		/* draw pokemon stats
 		g2.setColor(Color.WHITE);
 		g2.setFont(new Font("Comic Sans", Font.CENTER_BASELINE, 30));
 		FontMetrics fm = g2.getFontMetrics();
@@ -132,7 +133,7 @@ public class EncounterPanel extends JPanel implements Serializable {
 		g2.fillRect(this.getWidth() - pokemonSize - 200, this.getHeight() / 15 + 100, strW + 25, 40);
 		g2.setColor(Color.BLACK);
 		g2.drawString(encounteredPokemon.getName(), this.getWidth() - pokemonSize - 190,
-				this.getHeight() / 15 + 125);
+				this.getHeight() / 15 + 125);*/
 		//g2.setColor(Color.blue);
 		//	g2.fillRoundRect(this.getWidth() - pokemonSize - 175, this.getHeight()/15 + 125, 
 		//encounteredPokemon.get, 25, 2, 2);*/

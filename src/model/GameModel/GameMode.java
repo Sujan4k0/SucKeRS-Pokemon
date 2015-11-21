@@ -239,7 +239,7 @@ public abstract class GameMode implements Serializable {
 				trainer.decreaseSteps();
 
 				// start an encounter
-				if (r.nextInt(10) == 9)
+				if (r.nextInt(5) == 4)
 					startEncounter();
 
 				//TODO encounters/items
@@ -303,13 +303,13 @@ public abstract class GameMode implements Serializable {
 
 	public void startEncounter() {
 
-		int rand = r.nextInt(20);
+		int rand = r.nextInt(10);
 
-		if (rand == 19)
+		if (rand == 9)
 			encounteredPokemon = database.getMew();
 		else {
-			rand = r.nextInt(10);
-			if (rand == 9)
+			rand = r.nextInt(5);
+			if (rand == 4)
 				encounteredPokemon = database.getRandomUncommon(map.getCurrentTerrain());
 			else
 				encounteredPokemon = database.getRandomCommon(map.getCurrentTerrain());
@@ -419,12 +419,11 @@ public abstract class GameMode implements Serializable {
 
 	public void useItemOnPokemon(Item i, String pName) {
 
-		useItem(i);
-
 		if (i.getName().equals("Harmonica") && trainer.getItems().contains(new Harmonica())) {
 			map.changeBGMusic(((Harmonica) i).getSongFilePath(database.getPokemonByName(pName)));
 		}
 
+		useItem(i);
 	}
 
 	public void loadImages() {
@@ -442,10 +441,12 @@ public abstract class GameMode implements Serializable {
 	}
 
 	public void useItem(Item i) {
-		trainer.useItem(i);
 
-		if (i.getName().equals("Teleporter"))
+		if (trainer.getItemQuantities().get(i.getName()) > 0 && i.getName().equals("Teleporter"))
 			map.update(trainer);
+		
+
+		trainer.useItem(i);
 	}
 
 	private void endEncounter() {

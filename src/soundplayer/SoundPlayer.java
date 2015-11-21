@@ -19,11 +19,16 @@ public class SoundPlayer implements Serializable {
 	}
 
 	public void playSound(String filePath) {
-
+		
 		File file = new File(filePath);
 		Media med = new Media(file.toURI().toString());
 
 		mediaPlayer = new MediaPlayer(med);
+		mediaPlayer.setOnEndOfMedia(new Runnable() {
+			public void run() {
+				mediaPlayer.dispose();
+			}
+		});
 		mediaPlayer.setOnReady(new Runnable() {
 			@Override
 			public void run() {

@@ -19,7 +19,7 @@ public class EncounterTimer {
         
         pokemon = p;
         tic = 0;
-        timer = new Timer(100, new TimerListener());
+        timer = new Timer(1000, new TimerListener());
     }
     
     /*---------------------------------------------------------------------
