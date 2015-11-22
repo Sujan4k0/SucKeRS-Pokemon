@@ -24,6 +24,7 @@ import javax.swing.Timer;
 
 import model.GameModel.Ground;
 import model.GameModel.Obstacle;
+import model.ItemModel.Item;
 import model.ItemModel.Teleporter;
 import model.TrainerModel.Trainer;
 
@@ -325,6 +326,12 @@ public class CEAMap extends Map {
 			repaint();
 		}
 
+	}
+
+	@Override
+	public void initializeItems() {
+		itemTiles = new Item[h][w];
+		
 	}
 
 }

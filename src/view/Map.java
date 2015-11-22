@@ -36,6 +36,7 @@ import javax.swing.Timer;
 import soundplayer.SoundPlayer;
 import view.GraphicsManager;
 import model.GameModel.*;
+import model.ItemModel.Item;
 
 public abstract class Map extends JPanel implements Serializable {
 
@@ -55,6 +56,9 @@ public abstract class Map extends JPanel implements Serializable {
 	// to hold the Ground and Obstacle Tiles to draw
 	Ground[][] groundTiles;
 	Obstacle[][] obstacleTiles;
+	
+	// to holds Items for the Trainer to pick up :D
+	Item[][] itemTiles;
 
 	// the tile sets for Ground and Obstacle
 	transient Image groundTileSet, obstacleTileSet;
@@ -110,6 +114,9 @@ public abstract class Map extends JPanel implements Serializable {
 
 		// create the Map and fill the Tile arrays (Ground and Obstacle)
 		createMap();
+		
+		// add the Items for the Trainer wewt
+		initializeItems();
 
 		// set the preferred size of the Map JPanel
 		// based on the WIDTH and HEIGHT (num of tiles)
@@ -120,6 +127,8 @@ public abstract class Map extends JPanel implements Serializable {
 		this.setPreferredSize(new Dimension(prefw, prefh));
 
 	}
+
+	public abstract void initializeItems();
 
 	/*---------------------------------------------------------------------
 	 |  Method name:    [paintComponent]
@@ -132,7 +141,7 @@ public abstract class Map extends JPanel implements Serializable {
 		drawMap(g);
 
 	}
-
+	
 	/*---------------------------------------------------------------------
 	 |  Method name:    [getGroundTiles]
 	 |  Purpose:  	    [Getter for groundTiles[][]]

@@ -24,6 +24,7 @@ import java.util.Random;
 import model.GameModel.Ground;
 import model.GameModel.MazeGenerator;
 import model.GameModel.Obstacle;
+import model.ItemModel.Item;
 
 public class MazeMap extends Map {
 
@@ -111,6 +112,12 @@ public class MazeMap extends Map {
 	@Override
 	public void update(Object o) {
 		// TODO Auto-generated method stub
+		
+	}
+	
+	@Override
+	public void initializeItems() {
+		itemTiles = new Item[h][w];
 		
 	}
 
