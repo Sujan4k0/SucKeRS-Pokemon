@@ -65,6 +65,7 @@ public class PokemonGUI {
     private JProgressBar steps;
     private SoundPlayer soundPlayer;
     private JTextArea battleMessages;
+    private boolean battleJustEnded;
 
     public static void main(String[] args) {
 
@@ -423,10 +424,11 @@ public class PokemonGUI {
         JPanel battleDialog = new JPanel(new BorderLayout());
         battleDialog.setBorder(BorderFactory.createLineBorder(new Color(163, 116, 179), 5)); // make pretty
         battleMessages = new JTextArea();
+        battleMessages.setText(mode.getBattleMessage());
         battleMessages.setEditable(false);
         battleMessages.setRows(5);
         battleMessages.setFont(new Font("Futura", Font.PLAIN, 15)); // fun looking font
-        battleMessages.setText("You've encountered a Pokemon!");
+        battleMessages.setText("                       ");
         battleDialog.add(battleMessages);
         
         battleActions.add(battleDialog, BorderLayout.WEST); // add the dialog to the actions panel
@@ -895,8 +897,12 @@ public class PokemonGUI {
                 break;
             }
             
+            battleMessages.setText(mode.getBattleMessage());
+            
             // previous action ended the battle
             if (!mode.trainerInBattle()) {
+                
+                JOptionPane.showMessageDialog(null, mode.getBattleMessage(), "Battle Over", JOptionPane.INFORMATION_MESSAGE);
                 
                 encounterFrame.dispose();
                 mapView.setVisible(true);
@@ -936,7 +942,7 @@ public class PokemonGUI {
 
                 battleFrame(); // show battle frame
             }
-
+            
             else { // update everything that should be updated
 
                 // steps update

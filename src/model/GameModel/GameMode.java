@@ -28,6 +28,7 @@ import java.io.Serializable;
 import java.util.Random;
 
 import javax.imageio.ImageIO;
+import javax.swing.JOptionPane;
 
 import soundplayer.SoundPlayer;
 import view.*;
@@ -45,7 +46,7 @@ public abstract class GameMode implements Serializable {
 	Map map; // the visual map of this game
 	EncounterPanel encounter;
 	Random r; // used for random encounters/items
-	String endMessage = "", battleMessage = ""; // the message to show on end game
+	String endMessage = "", battleMessage = "You've encountered a Pokemon!"; // the message to show on end game
 	boolean forfeited = false;
 	boolean inBattle = false;
 	Pokemon encounteredPokemon;
@@ -302,6 +303,8 @@ public abstract class GameMode implements Serializable {
 	}
 
 	public void startEncounter() {
+	    
+	    battleMessage = "You've encountered a Pokemon!";
 
 		int rand = r.nextInt(10);
 
@@ -346,6 +349,7 @@ public abstract class GameMode implements Serializable {
 		// if the Pokemon ran away in response to this TrainerAction
 		// update the battleMessage, then end the encounter
 		if (encounteredPokemon.respond(action) == PokemonResponse.RUN_AWAY) {
+		    battleMessage = "Pokemon ran away!";
 			endEncounter();
 		}
 
@@ -449,6 +453,7 @@ public abstract class GameMode implements Serializable {
 	}
 
 	private void endEncounter() {
+	    
 		inBattle = false;
 		encounter.stopEncounter();
 		map.restartBGMusic();
