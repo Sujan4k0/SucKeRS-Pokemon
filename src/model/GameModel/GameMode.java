@@ -46,7 +46,13 @@ public abstract class GameMode implements Serializable {
 	Map map; // the visual map of this game
 	EncounterPanel encounter;
 	Random r; // used for random encounters/items
-	String endMessage = "", battleMessage = "You've encountered a Pokemon!"; // the message to show on end game
+	String endMessage = "", battleMessage = "You've encountered a Pokemon!"; // the
+																				// message
+																				// to
+																				// show
+																				// on
+																				// end
+																				// game
 	boolean forfeited = false;
 	boolean inBattle = false;
 	Pokemon encounteredPokemon;
@@ -123,16 +129,13 @@ public abstract class GameMode implements Serializable {
 		if (keyEventNum == KeyEvent.VK_UP && prev.x - 1 >= 0 && obsts[prev.x - 1][prev.y] == null)
 			return true;
 
-		else if (keyEventNum == KeyEvent.VK_DOWN && prev.x + 1 < obsts.length
-				&& obsts[prev.x + 1][prev.y] == null)
+		else if (keyEventNum == KeyEvent.VK_DOWN && prev.x + 1 < obsts.length && obsts[prev.x + 1][prev.y] == null)
 			return true;
 
-		else if (keyEventNum == KeyEvent.VK_LEFT && prev.y - 1 >= 0
-				&& obsts[prev.x][prev.y - 1] == null)
+		else if (keyEventNum == KeyEvent.VK_LEFT && prev.y - 1 >= 0 && obsts[prev.x][prev.y - 1] == null)
 			return true;
 
-		else if (keyEventNum == KeyEvent.VK_RIGHT && prev.y + 1 < obsts[0].length
-				&& obsts[prev.x][prev.y + 1] == null)
+		else if (keyEventNum == KeyEvent.VK_RIGHT && prev.y + 1 < obsts[0].length && obsts[prev.x][prev.y + 1] == null)
 			return true;
 
 		// if all other if() statements were false, the trainer can't move
@@ -171,7 +174,8 @@ public abstract class GameMode implements Serializable {
 
 			// Depending on the KeyEvent passed in, sets the change in the x
 			// or y direction accordingly. If the trainer is able to move and
-			// the trainer is moving to the next part of the Map, the Map 'moves'
+			// the trainer is moving to the next part of the Map, the Map
+			// 'moves'
 			// so that the new area is shown
 			switch (kc) {
 			case KeyEvent.VK_UP:
@@ -229,12 +233,11 @@ public abstract class GameMode implements Serializable {
 
 				// animate the movement
 				map.startTrainerMovement();
-				
+
 				// play walking sound
 				map.playWalkingSound();
 
-				setEncounterBG(map.getGroundTiles()[trainer.getPoint().x][trainer.getPoint().y]
-						.getTerrainType());
+				setEncounterBG(map.getGroundTiles()[trainer.getPoint().x][trainer.getPoint().y].getTerrainType());
 
 				// decrease steps
 				trainer.decreaseSteps();
@@ -243,7 +246,7 @@ public abstract class GameMode implements Serializable {
 				if (r.nextInt(5) == 4)
 					startEncounter();
 
-				//TODO encounters/items
+				// TODO encounters/items
 			} else
 				map.setStartOffsets(0, 0);
 
@@ -303,8 +306,8 @@ public abstract class GameMode implements Serializable {
 	}
 
 	public void startEncounter() {
-	    
-	    battleMessage = "You've encountered a Pokemon!";
+
+		battleMessage = "You've encountered a Pokemon!";
 
 		int rand = r.nextInt(10);
 
@@ -349,76 +352,77 @@ public abstract class GameMode implements Serializable {
 		// if the Pokemon ran away in response to this TrainerAction
 		// update the battleMessage, then end the encounter
 		if (encounteredPokemon.respond(action) == PokemonResponse.RUN_AWAY) {
-		    battleMessage = "Pokemon ran away!";
+			battleMessage = "Pokemon ran away!";
 			endEncounter();
-		}
+		} else {
 
-		switch (action) {
+			switch (action) {
 
-		// the Trainer threw a PokeBall
-		case THROW_BALL:
-			// if Trainer has no PokeBalls to use, update the battleMessage
-			// and do not tell the EncounterPanel to animate the trainer
-			if (trainer.getItemQuantities().get("PokeBall") == 0) {
-				battleMessage = "You have no pokeballs left bitch";
+			// the Trainer threw a PokeBall
+			case THROW_BALL:
+				// if Trainer has no PokeBalls to use, update the battleMessage
+				// and do not tell the EncounterPanel to animate the trainer
+				if (trainer.getItemQuantities().get("PokeBall") == 0) {
+					battleMessage = "You have no pokeballs left bitch";
+					doAnimation = false;
+				}
+				// else the Trainer does have PokeBalls to use
+				// so use the PokeBall, then check if the Pokemon was caught
+				else {
+
+					// use the PokeBall
+					trainer.useItem(new PokeBall());
+
+					// if the Trainer caught the Pokemon
+					if (encounteredPokemon.getState() == PokemonResponse.GET_CAUGHT) {
+
+						// do anything a specific GameMode has to do when the
+						// Trainer
+						// catches a Pokemon
+						trainerCaughtPokemon();
+
+						// update the battleMessage
+						battleMessage = "You successfully caught " + pName + "!";
+
+						// add the Pokemon to the Trainer's List of Pokemon
+						trainer.addPokemon(encounteredPokemon);
+
+						// end the encounter
+						endEncounter();
+					}
+
+					// the Pokemon was not caught
+					else // just update battleMessage
+						battleMessage = "You threw a PokeBall!! But it failed... :(";
+				}
+				break;
+
+			// the Trainer ran away, update battleMessage, end the encounter
+			// and the Trainer should not be animated
+			case RUN_AWAY:
+				battleMessage = "You ran away! U little bitch... -.-";
 				doAnimation = false;
-			} 
-			// else the Trainer does have PokeBalls to use
-			// so use the PokeBall, then check if the Pokemon was caught
-			else {
-				
-				// use the PokeBall
-				trainer.useItem(new PokeBall());
+				endEncounter();
+				break;
+			// the Trainer threw bait, update the battleMessage
+			case THROW_BAIT:
+				battleMessage = "You threw bait to " + pName + "!";
+				break;
+			// the Trainer threw a rock, update the battleMessage
+			case THROW_ROCK:
+				battleMessage = "You threw a rock at " + pName + "!";
+				break;
+			// any other enum value was passed - do nothing
+			default:
+				break;
 
-				// if the Trainer caught the Pokemon
-				if (encounteredPokemon.getState() == PokemonResponse.GET_CAUGHT) {
-					
-					// do anything a specific GameMode has to do when the Trainer
-					// catches a Pokemon
-					trainerCaughtPokemon();
-					
-					// update the battleMessage
-					battleMessage = "You successfully caught " + pName + "!";
-					
-					// add the Pokemon to the Trainer's List of Pokemon
-					trainer.addPokemon(encounteredPokemon);
-					
-					// end the encounter
-					endEncounter();
-				} 
-				
-				// the Pokemon was not caught
-				else // just update battleMessage
-					battleMessage = "You threw a PokeBall!! But it failed... :(";
 			}
-			break;
-		
-		// the Trainer ran away, update battleMessage, end the encounter
-		// and the Trainer should not be animated
-		case RUN_AWAY:
-			battleMessage = "You ran away! U little bitch... -.-";
-			doAnimation = false;
-			endEncounter();
-			break;
-		// the Trainer threw bait, update the battleMessage
-		case THROW_BAIT:
-			battleMessage = "You threw bait to" + pName + "!";
-			break;
-		// the Trainer threw a rock, update the battleMessage
-		case THROW_ROCK:
-			battleMessage = "You threw a rock at " + pName + "!";
-			break;
-		// any other enum value was passed - do nothing
-		default:
-			break;
 
+			// if the Trainer should be animated,
+			// tell the EncounterPanel to animate the Trainer
+			if (doAnimation)
+				encounter.animateTrainer();
 		}
-
-		// if the Trainer should be animated,
-		// tell the EncounterPanel to animate the Trainer
-		if (doAnimation)
-			encounter.animateTrainer();
-
 	}
 
 	public void useItemOnPokemon(Item i, String pName) {
@@ -447,13 +451,12 @@ public abstract class GameMode implements Serializable {
 
 		if (trainer.getItemQuantities().get(i.getName()) > 0 && i.getName().equals("Teleporter"))
 			map.update(trainer);
-		
 
 		trainer.useItem(i);
 	}
 
 	private void endEncounter() {
-	    
+
 		inBattle = false;
 		encounter.stopEncounter();
 		map.restartBGMusic();
@@ -469,8 +472,6 @@ public abstract class GameMode implements Serializable {
 
 	public abstract void trainerCaughtPokemon();
 
-	
-	
 	// TODO THIS WILL BE MOVED TO MAP
 	/*---------------------------------------------------------------------
 	 |  Class name:     [OurKeyListener]
@@ -500,7 +501,8 @@ public abstract class GameMode implements Serializable {
 			if (!isGameActive())
 				map.stopBGMusic();
 
-			//map.update(trainer); // does anything the map needs to check ever key press
+			// map.update(trainer); // does anything the map needs to check ever
+			// key press
 
 		}
 
