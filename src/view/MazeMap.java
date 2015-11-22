@@ -24,6 +24,7 @@ import java.util.Random;
 import model.GameModel.Ground;
 import model.GameModel.MazeGenerator;
 import model.GameModel.Obstacle;
+import model.ItemModel.Harmonica;
 import model.ItemModel.Item;
 
 public class MazeMap extends Map {
@@ -40,7 +41,7 @@ public class MazeMap extends Map {
 	public MazeMap(Random rand) {
 
 		super(rand);
-		
+
 		bgPath = "./sounds/Ruby_Sapphire_Mt.Pyre.mp3";
 	}
 
@@ -51,7 +52,7 @@ public class MazeMap extends Map {
 	 *---------------------------------------------------------------------*/
 	@Override
 	public void createMap() {
-		
+
 		// these values are needed in order for the move
 		// methods to work (refer to Map.java)
 		w = MazeMap.WIDTH;
@@ -79,8 +80,8 @@ public class MazeMap extends Map {
 
 		// generates a random location along the height at width = 1
 		// to be used for the starting point of the maze generator
-		int randX = r.nextInt(h - 1); 
-		
+		int randX = r.nextInt(h - 1);
+
 		if (randX == 0)
 			randX++;
 
@@ -112,15 +113,26 @@ public class MazeMap extends Map {
 	@Override
 	public void update(Object o) {
 		// TODO Auto-generated method stub
-		
+
 	}
-	
+
 	@Override
 	public void initializeItems() {
 		itemTiles = new Item[h][w];
-		
-	}
 
-	
+		int count = 0;
+		while (count < 52) {
+			
+			// avoid entrance and exit
+			int randX = r.nextInt(obstacleTiles.length - 2) + 1;
+			int randY = r.nextInt(obstacleTiles[0].length - 2) + 1;
+			
+			if (obstacleTiles[randX][randY] == null) {
+				itemTiles[randX][randY] = new Harmonica();
+				count++;
+			} 
+		}
+
+	}
 
 }

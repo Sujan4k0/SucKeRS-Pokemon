@@ -46,13 +46,11 @@ public abstract class GameMode implements Serializable {
 	Map map; // the visual map of this game
 	EncounterPanel encounter;
 	Random r; // used for random encounters/items
-	String endMessage = "", battleMessage = "You've encountered a Pokemon!"; // the
-																				// message
-																				// to
-																				// show
-																				// on
-																				// end
-																				// game
+	
+	// messages to show on end game and during battle and random game message
+	String endMessage = "", battleMessage = "You've encountered a Pokemon!"; 
+	String alertMessage = "";
+	
 	boolean forfeited = false;
 	boolean inBattle = false;
 	Pokemon encounteredPokemon;
@@ -242,8 +240,12 @@ public abstract class GameMode implements Serializable {
 				// decrease steps
 				trainer.decreaseSteps();
 
-				// start an encounter
-				if (r.nextInt(5) == 4)
+				// first try to pick up an item
+				if (map.trainerSteppingOnItem()) {
+					trainer.addItem(map.getItemAtCurrentLocation());
+				}
+				// else try to start an encounter
+				else if (r.nextInt(5) == 4)
 					startEncounter();
 
 				// TODO encounters/items
@@ -271,6 +273,19 @@ public abstract class GameMode implements Serializable {
 			return false;
 
 		return true;
+	}
+	
+	public boolean gameAlert() {
+		if (alertMessage.length() > 0)
+			return true;
+		return false;
+	}
+	
+	public String getNotification() {
+		
+		String x = alertMessage;
+		alertMessage = "";
+		return x;
 	}
 
 	/*---------------------------------------------------------------------

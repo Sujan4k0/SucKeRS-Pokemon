@@ -61,7 +61,7 @@ public abstract class Map extends JPanel implements Serializable {
 	Item[][] itemTiles;
 
 	// the tile sets for Ground and Obstacle
-	transient Image groundTileSet, obstacleTileSet;
+	transient Image groundTileSet, obstacleTileSet, itemImage;
 
 	// the Point the trainer is visually at
 	Point trainerPoint;
@@ -163,6 +163,14 @@ public abstract class Map extends JPanel implements Serializable {
 	}
 
 	/*---------------------------------------------------------------------
+	 |  Method name:    [getItemTiles]
+	 |  Purpose:  	    [Getter for itemTiles[][]]
+	 |  Returns:        [Item[][]]
+	 *---------------------------------------------------------------------*/
+	public Item[][] getItemTiles() {
+		return itemTiles;
+	}
+	/*---------------------------------------------------------------------
 	 |  Method name:    [drawMap]
 	 |  Purpose:  	    [Draws the Ground, Obstacle, and Trainer]
 	 |  Parameters:     [Graphics: the Graphics Object to use to draw]
@@ -173,7 +181,7 @@ public abstract class Map extends JPanel implements Serializable {
 
 		checkMapPlacement();
 
-		// draw ground and obstacle tiles
+		// draw ground and obstacle tiles and ITEMSSS
 		for (int i = startX; i < (startX + Map.HEIGHT); i++) {
 			y = (i - startX) * Tile.SIZE;
 			for (int j = startY; j < (startY + Map.WIDTH); j++) {
@@ -181,6 +189,8 @@ public abstract class Map extends JPanel implements Serializable {
 				GraphicsManager.drawTile(g, groundTiles[i][j], groundTileSet, x, y);
 				if (obstacleTiles[i][j] != null)
 					GraphicsManager.drawTile(g, obstacleTiles[i][j], obstacleTileSet, x, y);
+				if (itemTiles[i][j] != null)
+					g.drawImage(itemImage, x + Tile.SIZE/4, y + Tile.SIZE/4, null);
 			}
 
 		}
@@ -425,6 +435,8 @@ public abstract class Map extends JPanel implements Serializable {
 			trainerSheet = ImageIO.read(new File("./images/SucKeRS_TrainerSpriteSheet_Test.png"));
 			groundTileSet = ImageIO.read(new File("./images/SucKeRS_PokemonTileSet.png"));
 			obstacleTileSet = ImageIO.read(new File("./images/SucKeRS_PokemonObstacleTileSet.png"));
+			itemImage = ImageIO.read(new File("./images/Dream_Safari_Ball_Sprite.png"));
+			itemImage = itemImage.getScaledInstance(Tile.SIZE/2, Tile.SIZE/2, Image.SCALE_SMOOTH);
 		} catch (IOException e) {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
@@ -469,5 +481,17 @@ public abstract class Map extends JPanel implements Serializable {
 
 	public String getBGMusicFilePath() {
 		return bgPath;
+	}
+
+	public boolean trainerSteppingOnItem() {
+		if (itemTiles[trainerPoint.x][trainerPoint.y] != null)
+			return true;
+		else return false;
+	}
+	
+	public Item getItemAtCurrentLocation() {
+		Item i = itemTiles[trainerPoint.x][trainerPoint.y];
+		itemTiles[trainerPoint.x][trainerPoint.y] = null;
+		return i;
 	}
 }
