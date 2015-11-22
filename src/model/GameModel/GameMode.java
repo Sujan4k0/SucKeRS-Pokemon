@@ -242,7 +242,10 @@ public abstract class GameMode implements Serializable {
 
 				// first try to pick up an item
 				if (map.trainerSteppingOnItem()) {
-					trainer.addItem(map.getItemAtCurrentLocation());
+					Item pickedUp = map.getItemAtCurrentLocation();
+					trainer.addItem(pickedUp);
+					alertMessage = "You picked up a fucking " + pickedUp.getName() + "!!!!!!! YESSSSSS";
+					
 				}
 				// else try to start an encounter
 				else if (r.nextInt(5) == 4)
