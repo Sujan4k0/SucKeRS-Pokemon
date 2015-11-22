@@ -953,6 +953,12 @@ public class PokemonGUI {
                 updateItemsList();
                 
                 mapView.revalidate();
+                
+                if (mode.gameAlert()) {
+                    
+                    JOptionPane.showMessageDialog(null, mode.getNotification(), "HEY TRAINER PERSON!", JOptionPane.INFORMATION_MESSAGE);
+
+                }
             }
         }
 

@@ -24,8 +24,7 @@ import javax.swing.Timer;
 
 import model.GameModel.Ground;
 import model.GameModel.Obstacle;
-import model.ItemModel.Item;
-import model.ItemModel.Teleporter;
+import model.ItemModel.*;
 import model.TrainerModel.Trainer;
 
 public class CEAMap extends Map {
@@ -331,7 +330,32 @@ public class CEAMap extends Map {
 	@Override
 	public void initializeItems() {
 		itemTiles = new Item[h][w];
-		
+		//Start area items
+		itemTiles[Map.HEIGHT+5][6]=new Harmonica();
+		itemTiles[Map.HEIGHT+1][Map.WIDTH-2]=new BasicStepPotion();
+		itemTiles[Map.HEIGHT*2-2][Map.WIDTH-2]=new BasicStepPotion();
+		//Grass area items
+		itemTiles[Map.HEIGHT+5][Map.WIDTH+7]=new Harmonica();
+		itemTiles[Map.HEIGHT+2][Map.WIDTH+3]=new SuperStepPotion();
+		itemTiles[Map.HEIGHT*2-3][Map.WIDTH*2-4]=new FatiguePotion();
+		//Ice area items
+		itemTiles[Map.HEIGHT*3-2][Map.WIDTH*2-2]=new BasicStepPotion();
+		itemTiles[Map.HEIGHT*3-4][Map.WIDTH*2-8]=new Harmonica();
+		itemTiles[Map.HEIGHT*3-6][Map.WIDTH*2-8]=new Teleporter();
+		//desert area items
+		itemTiles[Map.HEIGHT+3][Map.WIDTH*3-5]=new HyperStepPotion();
+		itemTiles[Map.HEIGHT*2-2][Map.WIDTH*3-5]=new HyperStepPotion();
+		itemTiles[Map.HEIGHT+5][Map.WIDTH*3-3]=new Harmonica();
+		itemTiles[Map.HEIGHT*2-2][Map.WIDTH*2+2]=new FatiguePotion();
+		//cave area items
+		itemTiles[3][Map.WIDTH+4]=new FatiguePotion();
+		itemTiles[3][Map.WIDTH+9]=new SuperStepPotion();
+		itemTiles[6][Map.WIDTH+7]=new Harmonica();
+		//Secret area items
+		itemTiles[2][1]=new Harmonica();
+		itemTiles[Map.HEIGHT-2][1]=new Harmonica();
+		itemTiles[2][Map.WIDTH-2]=new Harmonica();
+		itemTiles[Map.HEIGHT-2][Map.WIDTH-2]=new Harmonica();
 	}
 
 }
