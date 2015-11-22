@@ -874,26 +874,28 @@ public class PokemonGUI {
         @Override
         public void actionPerformed(ActionEvent e) {
 
-            // go through available actions and do the corresponding TrainerAction
-            switch (e.getActionCommand()) {
-
-            case "Throw Rock":
-                mode.doTrainerAction(TrainerAction.THROW_ROCK);
-                break;
-
-            case "Throw Bait":
-                mode.doTrainerAction(TrainerAction.THROW_BAIT);
-                break;
-
-            case "Throw Pokeball":
-                mode.doTrainerAction(TrainerAction.THROW_BALL);
-                break;
-
-            case "Run":
-                mode.doTrainerAction(TrainerAction.RUN_AWAY);
-                break;
-            default:
-                break;
+            if (mode.trainerInBattle()) {
+                // go through available actions and do the corresponding TrainerAction
+                switch (e.getActionCommand()) {
+    
+                case "Throw Rock":
+                    mode.doTrainerAction(TrainerAction.THROW_ROCK);
+                    break;
+    
+                case "Throw Bait":
+                    mode.doTrainerAction(TrainerAction.THROW_BAIT);
+                    break;
+    
+                case "Throw Pokeball":
+                    mode.doTrainerAction(TrainerAction.THROW_BALL);
+                    break;
+    
+                case "Run":
+                    mode.doTrainerAction(TrainerAction.RUN_AWAY);
+                    break;
+                default:
+                    break;
+                }
             }
             
             battleMessages.setText(mode.getBattleMessage());

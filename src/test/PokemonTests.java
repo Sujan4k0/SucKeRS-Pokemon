@@ -129,13 +129,13 @@ public class PokemonTests {
         assertEquals(testMon.getName(), "SARRYATHJAN");        
     }
 
-    @Test
-    public void EncounterTest() {
-
-        Pokemon testMon = new Common(new Random(), "Sarryathjan", null, PokemonType.ELECTRIC);
-        testMon.startEncounter();
-        testMon.setState(PokemonResponse.RUN_AWAY);
-    }
+//    @Test
+//    public void EncounterTest() {
+//
+//        Pokemon testMon = new Common(new Random(), "Sarryathjan", null, PokemonType.ELECTRIC);
+//        testMon.startEncounter();
+//        testMon.setState(PokemonResponse.RUN_AWAY);
+//    }
     
     @Test
     public void spriteGetter() {
