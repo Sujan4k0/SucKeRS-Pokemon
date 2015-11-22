@@ -902,7 +902,7 @@ public class PokemonGUI {
             // previous action ended the battle
             if (!mode.trainerInBattle()) {
                 
-                JOptionPane.showMessageDialog(null, mode.getBattleMessage());                    
+                JOptionPane.showMessageDialog(null, mode.getBattleMessage(), "Battle Over", JOptionPane.INFORMATION_MESSAGE);
                 
                 encounterFrame.dispose();
                 mapView.setVisible(true);
@@ -941,17 +941,8 @@ public class PokemonGUI {
             else if (mode.trainerInBattle()) { // entered battle
 
                 battleFrame(); // show battle frame
-                battleJustEnded = true;
             }
             
-//            else if (battleJustEnded) {
-//                
-//                // ending dialog
-//                battleJustEnded = false;
-//
-//                
-//            }
-//
             else { // update everything that should be updated
 
                 // steps update
