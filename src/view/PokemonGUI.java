@@ -428,7 +428,6 @@ public class PokemonGUI {
         battleMessages.setEditable(false);
         battleMessages.setRows(5);
         battleMessages.setFont(new Font("Futura", Font.PLAIN, 15)); // fun looking font
-        battleMessages.setText("                       ");
         battleDialog.add(battleMessages);
         
         battleActions.add(battleDialog, BorderLayout.WEST); // add the dialog to the actions panel
