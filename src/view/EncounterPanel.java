@@ -22,6 +22,7 @@ import javax.swing.*;
 import model.GameModel.TerrainType;
 import model.GameModel.Tile;
 import model.PokemonModel.Pokemon;
+import model.PokemonModel.PokemonResponse;
 import soundplayer.SoundPlayer;
 
 public class EncounterPanel extends JPanel implements Serializable {
@@ -94,24 +95,21 @@ public class EncounterPanel extends JPanel implements Serializable {
 		g2.drawRect(0, 0, this.getWidth(), this.getHeight());
 
 		int pokemonSize = 300;
-		Image smaller =
-				encounteredPokemon.getSprite()[0].getScaledInstance(pokemonSize, pokemonSize,
-						Image.SCALE_SMOOTH);
+		Image smaller = encounteredPokemon.getSprite()[0].getScaledInstance(pokemonSize, pokemonSize,
+				Image.SCALE_SMOOTH);
 
 		// draw background
 		if (bgImages.length != 0) {
-			Image scaledBG =
-					bgImage.getScaledInstance(this.getWidth(), this.getHeight(), Image.SCALE_SMOOTH);
+			Image scaledBG = bgImage.getScaledInstance(this.getWidth(), this.getHeight(), Image.SCALE_SMOOTH);
 			g2.drawImage(scaledBG, 0, 0, null);
 		}
 
 		// draw pokemon
-		g2.drawImage(smaller, this.getWidth() - pokemonSize, this.getHeight() / 15, pokemonSize,
-				pokemonSize, null);
+		g2.drawImage(smaller, this.getWidth() - pokemonSize, this.getHeight() / 15, pokemonSize, pokemonSize, null);
 
 		/*
-		 * draw pokemon stats g2.setColor(Color.WHITE); g2.setFont(new
-		 * Font("Comic Sans", Font.CENTER_BASELINE, 30)); FontMetrics fm =
+		 * draw pokemon stats g2.setColor(Color.WHITE); g2.setFont(new Font(
+		 * "Comic Sans", Font.CENTER_BASELINE, 30)); FontMetrics fm =
 		 * g2.getFontMetrics(); int strW =
 		 * fm.stringWidth(encounteredPokemon.getName());
 		 * g2.fillRect(this.getWidth() - pokemonSize - 200, this.getHeight() /
@@ -119,14 +117,15 @@ public class EncounterPanel extends JPanel implements Serializable {
 		 * g2.drawString(encounteredPokemon.getName(), this.getWidth() -
 		 * pokemonSize - 190, this.getHeight() / 15 + 125);
 		 */
-		//g2.setColor(Color.blue);
-		//	g2.fillRoundRect(this.getWidth() - pokemonSize - 175, this.getHeight()/15 + 125, 
-		//encounteredPokemon.get, 25, 2, 2);*/
+		// g2.setColor(Color.blue);
+		// g2.fillRoundRect(this.getWidth() - pokemonSize - 175,
+		// this.getHeight()/15 + 125,
+		// encounteredPokemon.get, 25, 2, 2);*/
 
 		// draw trainer
 		if (trainerEncounterImage != null)
-			g2.drawImage(trainerEncounterImage, 0,
-					this.getHeight() - trainerEncounterImage.getHeight(null), 400, 400, null);
+			g2.drawImage(trainerEncounterImage, 0, this.getHeight() - trainerEncounterImage.getHeight(null), 400, 400,
+					null);
 
 	}
 
@@ -145,9 +144,10 @@ public class EncounterPanel extends JPanel implements Serializable {
 		bgPlayer.loopSound("./sounds/Pokemon_BattleMusic_" + rand + ".wav");
 
 		animatedBGTimer.start();
-		p.startEncounter();
+
 		trainerEncounterImage = trainerImages[0];
 		encounteredPokemon = p;
+		
 		repaint();
 
 	}
@@ -242,9 +242,7 @@ public class EncounterPanel extends JPanel implements Serializable {
 		if (tt.name().toUpperCase().equals("MYSTERY")) {
 			imgs = new Image[3];
 			for (int j = 1; j < imgs.length + 1; j++) {
-				String path =
-						"./images/bgImages/" + tt.name().toLowerCase() + "BattleBackground" + j
-								+ ".png";
+				String path = "./images/bgImages/" + tt.name().toLowerCase() + "BattleBackground" + j + ".png";
 
 				Image i;
 				try {
@@ -280,12 +278,9 @@ public class EncounterPanel extends JPanel implements Serializable {
 
 	public void load() {
 		try {
-			bigTrainerSheet =
-					ImageIO.read(new File("./images/SucKeRS_LargeTrainerSpriteSheet_1.png"));
-			trainerImages =
-					GraphicsManager.getImageArray(bigTrainerSheet,
-							GraphicsManager.BIGSPRITESHEET_WIDTH,
-							GraphicsManager.BIGSPRITESHEET_HEIGHT, 400);
+			bigTrainerSheet = ImageIO.read(new File("./images/SucKeRS_LargeTrainerSpriteSheet_1.png"));
+			trainerImages = GraphicsManager.getImageArray(bigTrainerSheet, GraphicsManager.BIGSPRITESHEET_WIDTH,
+					GraphicsManager.BIGSPRITESHEET_HEIGHT, 400);
 		} catch (IOException e) {
 			e.printStackTrace();
 		}
@@ -295,4 +290,6 @@ public class EncounterPanel extends JPanel implements Serializable {
 		animationTimer = new Timer(1000 / 10, new TrainerAnimationListener());
 		animatedBGTimer = new Timer(1000 / 100, new BGAnimationListener());
 	}
+
+	
 }

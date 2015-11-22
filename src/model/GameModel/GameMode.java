@@ -20,6 +20,8 @@ package model.GameModel;
 
 import java.awt.Image;
 import java.awt.Point;
+import java.awt.event.ActionEvent;
+import java.awt.event.ActionListener;
 import java.awt.event.KeyEvent;
 import java.awt.event.KeyListener;
 import java.io.File;
@@ -29,6 +31,7 @@ import java.util.Random;
 
 import javax.imageio.ImageIO;
 import javax.swing.JOptionPane;
+import javax.swing.Timer;
 
 import soundplayer.SoundPlayer;
 import view.*;
@@ -46,15 +49,17 @@ public abstract class GameMode implements Serializable {
 	Map map; // the visual map of this game
 	EncounterPanel encounter;
 	Random r; // used for random encounters/items
-	
+
 	// messages to show on end game and during battle and random game message
-	String endMessage = "", battleMessage = "You've encountered a Pokemon!"; 
+	String endMessage = "", battleMessage = "You've encountered a Pokemon!";
 	String alertMessage = "";
-	
+
 	boolean forfeited = false;
 	boolean inBattle = false;
 	Pokemon encounteredPokemon;
 	Map.TrainerDirection dir = Map.TrainerDirection.RIGHT;
+
+	EncounterTimer encounterTimer;
 
 	// database of Pokemon
 	PokemonDatabase database;
@@ -245,7 +250,7 @@ public abstract class GameMode implements Serializable {
 					Item pickedUp = map.getItemAtCurrentLocation();
 					trainer.addItem(pickedUp);
 					alertMessage = "You picked up a fucking " + pickedUp.getName() + "!!!!!!! YESSSSSS";
-					
+
 				}
 				// else try to start an encounter
 				else if (r.nextInt(5) == 4)
@@ -277,15 +282,15 @@ public abstract class GameMode implements Serializable {
 
 		return true;
 	}
-	
+
 	public boolean gameAlert() {
 		if (alertMessage.length() > 0)
 			return true;
 		return false;
 	}
-	
+
 	public String getNotification() {
-		
+
 		String x = alertMessage;
 		alertMessage = "";
 		return x;
@@ -310,7 +315,9 @@ public abstract class GameMode implements Serializable {
 	}
 
 	public String getBattleMessage() {
-		return battleMessage;
+		String ret = battleMessage;
+		battleMessage = "";
+		return ret;
 	}
 
 	/*---------------------------------------------------------------------
@@ -323,6 +330,10 @@ public abstract class GameMode implements Serializable {
 		map.stopBGMusic();
 	}
 
+	/*---------------------------------------------------------------------
+	|  Method name:    [startEncounter]
+	|  Purpose:        [This start an encounter]
+	 *---------------------------------------------------------------------*/
 	public void startEncounter() {
 
 		battleMessage = "You've encountered a Pokemon!";
@@ -338,6 +349,9 @@ public abstract class GameMode implements Serializable {
 			else
 				encounteredPokemon = database.getRandomCommon(map.getCurrentTerrain());
 		}
+
+		encounterTimer = new EncounterTimer(encounteredPokemon);
+		encounterTimer.start();
 
 		inBattle = true;
 		encounter.startEncounter(encounteredPokemon);
@@ -370,7 +384,8 @@ public abstract class GameMode implements Serializable {
 		// if the Pokemon ran away in response to this TrainerAction
 		// update the battleMessage, then end the encounter
 		if (encounteredPokemon.respond(action) == PokemonResponse.RUN_AWAY) {
-			battleMessage = "Pokemon ran away!";
+			if (battleMessage.equals(""))
+				battleMessage = "Pokemon ran away!";
 			endEncounter();
 		} else {
 
@@ -529,5 +544,60 @@ public abstract class GameMode implements Serializable {
 
 		}
 
+	}
+
+	private class EncounterTimer {
+
+		private int MAX_TICS = 60; // how long the Ticker will go on
+		private int tic; // current second we're on
+		private Timer timer;
+		private Pokemon pokemon;
+
+		public EncounterTimer(Pokemon p) {
+
+			pokemon = p;
+			tic = 0;
+			timer = new Timer(1000, new TimerListener());
+		}
+
+		/*---------------------------------------------------------------------
+		|  Method name:    [start]
+		|  Purpose:        [Starts the timer]
+		*---------------------------------------------------------------------*/
+		public void start() {
+
+			timer.start();
+		}
+
+		/*---------------------------------------------------------------------
+		|  Class name:     [TimerListener]
+		|  Purpose:        [Allows for the timer to countdown once the Pokemon
+		|                   is encountered.]
+		*---------------------------------------------------------------------*/
+		private class TimerListener implements ActionListener {
+
+			@Override
+			public void actionPerformed(ActionEvent e) {
+
+				if (tic <= MAX_TICS) { // 60 seconds has not passed
+
+					tic++;
+
+					if (pokemon.getState() == PokemonResponse.RUN_AWAY) {
+						timer.stop();
+						endEncounter();
+					}
+
+				}
+
+				else { // time is up
+
+					pokemon.setState(PokemonResponse.RUN_AWAY);
+					endEncounter();
+					battleMessage = "You took too long and the pokemon ran away =',',',(";
+					timer.stop(); // stop the timer
+				}
+			}
+		}
 	}
 }

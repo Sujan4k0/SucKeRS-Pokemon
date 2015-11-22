@@ -22,7 +22,6 @@ import java.io.Serializable;
 import java.util.Random;
 
 import model.TrainerModel.TrainerAction;
-import view.EncounterTimer;
 
 public abstract class Pokemon implements Serializable {
 
@@ -91,8 +90,7 @@ public abstract class Pokemon implements Serializable {
 
 				pokemonState = PokemonResponse.RUN_AWAY;
 			}
-			if (pokemonState != PokemonResponse.STAND_GROUND)
-				System.out.println("Threw Bait: Pokemon State = " + pokemonState);
+			
 			break;
 
 		case THROW_BALL:
@@ -108,8 +106,6 @@ public abstract class Pokemon implements Serializable {
 				pokemonState = PokemonResponse.RUN_AWAY;
 			}
 
-			if (pokemonState != PokemonResponse.STAND_GROUND)
-				System.out.println("Threw Ball: Pokemon State = " + pokemonState);
 			break;
 
 		case THROW_ROCK:
@@ -124,17 +120,12 @@ public abstract class Pokemon implements Serializable {
 				pokemonState = PokemonResponse.RUN_AWAY;
 			}
 			
-			if (pokemonState != PokemonResponse.STAND_GROUND)
-				System.out.println("Threw Rock: Pokemon State = " + pokemonState);
 			break;
 
 		default:
 			// should never get here
 			break;
 		}
-
-		System.out.printf("Action: %s, Decider = %d, RunP = %.1f, CatchP = %.1f\n", action.name(),
-				decider, runPercentage, catchPercentage);
 
 		return pokemonState; // give back the determined response
 	}
@@ -172,16 +163,6 @@ public abstract class Pokemon implements Serializable {
 	public void setState(PokemonResponse givenState) {
 
 		pokemonState = givenState;
-	}
-
-	/*---------------------------------------------------------------------
-	|  Method name:    [startEncounter]
-	|  Purpose:        [This will start the timer of the encounter with
-	|                   this Pokemon when the Trainer encounters it.]
-	 *---------------------------------------------------------------------*/
-	public void startEncounter() {
-
-		new EncounterTimer(this).start();
 	}
 
 	/*---------------------------------------------------------------------
