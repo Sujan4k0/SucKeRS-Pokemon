@@ -15,6 +15,7 @@ import model.ItemModel.Teleporter;
 import model.PokemonModel.Common;
 import model.PokemonModel.Legendary;
 import model.PokemonModel.Pokemon;
+import model.PokemonModel.PokemonResponse;
 import model.PokemonModel.PokemonType;
 import model.TrainerModel.TrainerAction;
 
@@ -30,6 +31,13 @@ import view.PokemonDatabase;
 public class GameModelTests {
 
 	private static Pokemon impossiblePM = new Legendary(new Random() {
+		@Override
+		public int nextInt(int i) {
+			return Integer.MAX_VALUE / 2;
+		}
+	}, "testMon1", new Image[0], PokemonType.WATER); 
+	
+	private static Pokemon impossiblePM2 = new Legendary(new Random() {
 		@Override
 		public int nextInt(int i) {
 			return Integer.MAX_VALUE / 2;
@@ -332,6 +340,26 @@ public class GameModelTests {
 		g.setEndMessage("yo");
 
 		assertEquals(g.getEndMessage(), "yo");
+	}
+	
+	@Test
+	public void gameModeDoTrainerActionTest() {
+		GameMode g = new CEAGame(new Random() {
+			@Override
+			public int nextInt(int i) {
+				return 0;
+			}
+		});
+		// set the encountered pokemon to something already running away
+		impossiblePM2.setState(PokemonResponse.RUN_AWAY);
+		g.setEncounteredPokemon(impossiblePM2);
+		g.startEncounter();
+		// resets battle message (FOR NOW MUAHAHAAHA)
+		g.getBattleMessage();
+		// throw bait
+		g.doTrainerAction(TrainerAction.THROW_BAIT);
+		// pokemon should still have run away state
+		assertEquals(impossiblePM2.getState(), PokemonResponse.RUN_AWAY);
 	}
 
 	@Test
