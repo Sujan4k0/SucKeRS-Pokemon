@@ -64,8 +64,6 @@ public abstract class GameMode implements Serializable {
 	// database of Pokemon
 	PokemonDatabase database;
 	
-	boolean timerUp = false;
-
 	// count number of steps Trainer takes so that encounters aren't every
 	// one freaking step
 
@@ -134,13 +132,16 @@ public abstract class GameMode implements Serializable {
 		if (keyEventNum == KeyEvent.VK_UP && prev.x - 1 >= 0 && obsts[prev.x - 1][prev.y] == null)
 			return true;
 
-		else if (keyEventNum == KeyEvent.VK_DOWN && prev.x + 1 < obsts.length && obsts[prev.x + 1][prev.y] == null)
+		else if (keyEventNum == KeyEvent.VK_DOWN && prev.x + 1 < obsts.length
+				&& obsts[prev.x + 1][prev.y] == null)
 			return true;
 
-		else if (keyEventNum == KeyEvent.VK_LEFT && prev.y - 1 >= 0 && obsts[prev.x][prev.y - 1] == null)
+		else if (keyEventNum == KeyEvent.VK_LEFT && prev.y - 1 >= 0
+				&& obsts[prev.x][prev.y - 1] == null)
 			return true;
 
-		else if (keyEventNum == KeyEvent.VK_RIGHT && prev.y + 1 < obsts[0].length && obsts[prev.x][prev.y + 1] == null)
+		else if (keyEventNum == KeyEvent.VK_RIGHT && prev.y + 1 < obsts[0].length
+				&& obsts[prev.x][prev.y + 1] == null)
 			return true;
 
 		// if all other if() statements were false, the trainer can't move
@@ -242,7 +243,8 @@ public abstract class GameMode implements Serializable {
 				// play walking sound
 				map.playWalkingSound();
 
-				setEncounterBG(map.getGroundTiles()[trainer.getPoint().x][trainer.getPoint().y].getTerrainType());
+				setEncounterBG(map.getGroundTiles()[trainer.getPoint().x][trainer.getPoint().y]
+						.getTerrainType());
 
 				// decrease steps
 				trainer.decreaseSteps();
@@ -251,11 +253,12 @@ public abstract class GameMode implements Serializable {
 				if (map.trainerSteppingOnItem()) {
 					Item pickedUp = map.getItemAtCurrentLocation();
 					trainer.addItem(pickedUp);
-					alertMessage = "You picked up a fucking " + pickedUp.getName() + "!!!!!!! YESSSSSS";
+					alertMessage =
+							"You picked up a *fudging* " + pickedUp.getName() + "!!!!!!! YESSSSSS";
 
 				}
 				// else try to start an encounter
-				else if (r.nextInt(5) == 4)
+				else if (r.nextInt(15) == 14)
 					startEncounter();
 
 				// TODO encounters/items
@@ -383,80 +386,83 @@ public abstract class GameMode implements Serializable {
 
 		// if the Pokemon ran away in response to this TrainerAction
 		// update the battleMessage, then end the encounter
-		if (encounteredPokemon.respond(action) == PokemonResponse.RUN_AWAY) {
-			if (!timerUp)
+		if (inBattle) {
+			if (encounteredPokemon.respond(action) == PokemonResponse.RUN_AWAY) {
 				battleMessage = "Pokemon ran away!";
-			endEncounter();
-		} else {
-
-			switch (action) {
-
-			// the Trainer threw a PokeBall
-			case THROW_BALL:
-				// if Trainer has no PokeBalls to use, update the battleMessage
-				// and do not tell the EncounterPanel to animate the trainer
-				if (trainer.getItemQuantities().get("PokeBall") == 0) {
-					battleMessage = "You have no pokeballs left bitch";
-					doAnimation = false;
-				}
-				// else the Trainer does have PokeBalls to use
-				// so use the PokeBall, then check if the Pokemon was caught
-				else {
-
-					// use the PokeBall
-					trainer.useItem(new PokeBall());
-
-					// if the Trainer caught the Pokemon
-					if (encounteredPokemon.getState() == PokemonResponse.GET_CAUGHT) {
-
-						// do anything a specific GameMode has to do when the
-						// Trainer
-						// catches a Pokemon
-						trainerCaughtPokemon();
-
-						// update the battleMessage
-						battleMessage = "You successfully caught " + pName + "!";
-
-						// add the Pokemon to the Trainer's List of Pokemon
-						trainer.addPokemon(encounteredPokemon);
-
-						// end the encounter
-						endEncounter();
-					}
-
-					// the Pokemon was not caught
-					else // just update battleMessage
-						battleMessage = "You threw a PokeBall!! But it failed... :(";
-				}
-				break;
-
-			// the Trainer ran away, update battleMessage, end the encounter
-			// and the Trainer should not be animated
-			case RUN_AWAY:
-				battleMessage = "You ran away! U little bitch... -.-";
-				doAnimation = false;
 				endEncounter();
-				break;
-			// the Trainer threw bait, update the battleMessage
-			case THROW_BAIT:
-				battleMessage = "You threw bait to " + pName + "!";
-				break;
-			// the Trainer threw a rock, update the battleMessage
-			case THROW_ROCK:
-				battleMessage = "You threw a rock at " + pName + "!";
-				break;
-			// any other enum value was passed - do nothing
-			default:
-				break;
 
+			} else {
+
+				switch (action) {
+
+				// the Trainer threw a PokeBall
+				case THROW_BALL:
+					// if Trainer has no PokeBalls to use, update the battleMessage
+					// and do not tell the EncounterPanel to animate the trainer
+					if (trainer.getItemQuantities().get("PokeBall") == 0) {
+						battleMessage = "You have no pokeballs left bitch";
+						doAnimation = false;
+					}
+					// else the Trainer does have PokeBalls to use
+					// so use the PokeBall, then check if the Pokemon was caught
+					else {
+
+						// use the PokeBall
+						trainer.useItem(new PokeBall());
+
+						// if the Trainer caught the Pokemon
+						if (encounteredPokemon.getState() == PokemonResponse.GET_CAUGHT) {
+
+							// do anything a specific GameMode has to do when the
+							// Trainer
+							// catches a Pokemon
+							trainerCaughtPokemon();
+
+							// update the battleMessage
+							battleMessage = "You successfully caught " + pName + "!";
+
+							// add the Pokemon to the Trainer's List of Pokemon
+							trainer.addPokemon(encounteredPokemon);
+
+							// end the encounter
+							endEncounter();
+						}
+
+						// the Pokemon was not caught
+						else
+							// just update battleMessage
+							battleMessage = "You threw a PokeBall!! But it failed... :(";
+					}
+					break;
+
+				// the Trainer ran away, update battleMessage, end the encounter
+				// and the Trainer should not be animated
+				case RUN_AWAY:
+					battleMessage = "You ran away! U little bitch... -.-";
+					doAnimation = false;
+					endEncounter();
+					break;
+				// the Trainer threw bait, update the battleMessage
+				case THROW_BAIT:
+					battleMessage = "You threw bait to " + pName + "!";
+					break;
+				// the Trainer threw a rock, update the battleMessage
+				case THROW_ROCK:
+					battleMessage = "You threw a rock at " + pName + "!";
+					break;
+				// any other enum value was passed - do nothing
+				default:
+					break;
+
+				}
+
+				// if the Trainer should be animated,
+				// tell the EncounterPanel to animate the Trainer
+				if (doAnimation)
+					encounter.animateTrainer();
 			}
-
-			// if the Trainer should be animated,
-			// tell the EncounterPanel to animate the Trainer
-			if (doAnimation)
-				encounter.animateTrainer();
 		}
-		
+
 	}
 
 	public void useItemOnPokemon(Item i, String pName) {
@@ -559,13 +565,12 @@ public abstract class GameMode implements Serializable {
 			pokemon = p;
 			tic = 0;
 			timer = new Timer(1000, new TimerListener());
-			timerUp = false;
 		}
 
 		/*---------------------------------------------------------------------
 		|  Method name:    [start]
 		|  Purpose:        [Starts the timer]
-		*---------------------------------------------------------------------*/
+		 *---------------------------------------------------------------------*/
 		public void start() {
 
 			timer.start();
@@ -575,7 +580,7 @@ public abstract class GameMode implements Serializable {
 		|  Class name:     [TimerListener]
 		|  Purpose:        [Allows for the timer to countdown once the Pokemon
 		|                   is encountered.]
-		*---------------------------------------------------------------------*/
+		 *---------------------------------------------------------------------*/
 		private class TimerListener implements ActionListener {
 
 			@Override
@@ -585,10 +590,8 @@ public abstract class GameMode implements Serializable {
 
 					tic++;
 
-					if (pokemon.getState() == PokemonResponse.RUN_AWAY) {
+					if (pokemon.getState() != PokemonResponse.STAND_GROUND)
 						timer.stop();
-						endEncounter();
-					}
 
 				}
 
@@ -597,7 +600,6 @@ public abstract class GameMode implements Serializable {
 					pokemon.setState(PokemonResponse.RUN_AWAY);
 					endEncounter();
 					battleMessage = "You took too long and the pokemon ran away =',',',(";
-					timerUp = true;
 					timer.stop(); // stop the timer
 				}
 			}

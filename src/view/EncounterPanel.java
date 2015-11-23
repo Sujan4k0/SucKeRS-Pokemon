@@ -78,6 +78,10 @@ public class EncounterPanel extends JPanel implements Serializable {
 		drawEncounter(g);
 
 	}
+	
+	public Pokemon getEncounteredPokemon() {
+		return encounteredPokemon;
+	}
 
 	public void stopEncounter() {
 		animating = false;
