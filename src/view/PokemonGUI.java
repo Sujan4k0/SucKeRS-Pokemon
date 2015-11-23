@@ -66,6 +66,7 @@ public class PokemonGUI {
     private SoundPlayer soundPlayer;
     private JTextArea battleMessages;
     private boolean battleJustEnded;
+    private Pokedex dex;
 
     public static void main(String[] args) {
 
@@ -234,34 +235,39 @@ public class PokemonGUI {
         userOptions.add(trainerDisplay, BorderLayout.NORTH);
 
         // three user buttons
-        JPanel userButtons = new JPanel(new GridLayout(3, 1));
+        JPanel userButtons = new JPanel(new GridLayout(4, 1));
         
         // create the buttons
         JButton save = new JButton("Save Game");
         JButton use = new JButton("Use Item");
+        JButton pokedex = new JButton("Pokedex");
         JButton forfeit = new JButton("Forfeit");
         
         // all buttons are non-focusable
         save.setFocusable(false);
         use.setFocusable(false);
         forfeit.setFocusable(false);
+        pokedex.setFocusable(false);
         
         // add action listeners to the buttons for function
         use.addActionListener(new ItemUser());
         save.addActionListener(new GameSaver());
         forfeit.addActionListener(new Forfeiter());
+        pokedex.addActionListener(new PokedexCreator());
         
         // make the buttons pretty
-        save.setOpaque(true);
+       // save.setOpaque(true);
         save.setBackground(new Color(102, 178, 255));
-        use.setOpaque(true);
+       // use.setOpaque(true);
         use.setBackground(new Color(51, 255, 153));
-        forfeit.setOpaque(true);
+      //  forfeit.setOpaque(true);
         forfeit.setBackground(new Color(255, 51, 51));
+        pokedex.setBackground(new Color(181,74,247));
         
         // add the buttons to the button panel
         userButtons.add(use);
         userButtons.add(save);
+        userButtons.add(pokedex);
         userButtons.add(forfeit);
         
         // make button panel pretty
@@ -752,6 +758,65 @@ public class PokemonGUI {
         }
     }
 
+    private class PokedexCreator implements ActionListener {
+
+        @Override
+        public void actionPerformed(ActionEvent e) {
+
+            dex = new Pokedex(mode.getTrainer());
+            mapView.setVisible(false);
+            dex.addWindowListener(new PokedexCloser());
+        }   
+    }
+    
+    private class PokedexCloser implements WindowListener {
+
+        @Override
+        public void windowOpened(WindowEvent e) {
+            // TODO Auto-generated method stub
+            
+        }
+
+        @Override
+        public void windowClosing(WindowEvent e) {
+
+            dex.dispose();
+            mapView.setVisible(true);
+        }
+
+        @Override
+        public void windowClosed(WindowEvent e) {
+            // TODO Auto-generated method stub
+            
+        }
+
+        @Override
+        public void windowIconified(WindowEvent e) {
+            // TODO Auto-generated method stub
+            
+        }
+
+        @Override
+        public void windowDeiconified(WindowEvent e) {
+            // TODO Auto-generated method stub
+            
+        }
+
+        @Override
+        public void windowActivated(WindowEvent e) {
+            // TODO Auto-generated method stub
+            
+        }
+
+        @Override
+        public void windowDeactivated(WindowEvent e) {
+            // TODO Auto-generated method stub
+            
+        }
+        
+        
+    }
+    
     /*---------------------------------------------------------------------
     |  Class name:     [CloseGameListener]
     |  Purpose:        [Allows the user to save the game if they just
