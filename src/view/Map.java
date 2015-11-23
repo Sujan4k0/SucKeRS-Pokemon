@@ -42,16 +42,11 @@ public abstract class Map extends JPanel implements Serializable {
 
 	private static final long serialVersionUID = 1L;
 
-	private static int MOVEMENT_SPEED = 7;
-
 	// visible Map is WIDTH by HEIGHT tiles
 	public static final int WIDTH = 15, HEIGHT = 11;
 
 	// the height and width, for use in moveRight() and moveDown()
 	int h = WIDTH, w = HEIGHT;
-
-	// file path of BG music
-	String bgPath = "";
 
 	// to hold the Ground and Obstacle Tiles to draw
 	Ground[][] groundTiles;
@@ -60,26 +55,8 @@ public abstract class Map extends JPanel implements Serializable {
 	// to holds Items for the Trainer to pick up :D
 	Item[][] itemTiles;
 
-	// the tile sets for Ground and Obstacle
-	transient Image groundTileSet, obstacleTileSet, itemImage;
-
 	// the Point the trainer is visually at
 	Point trainerPoint;
-
-	// timer to animate trainer movement
-	Timer movementTimer;
-
-	// if the trainer movement is being animated
-	boolean animating = false;
-
-	// offsets for trainer animation
-	int xOffset = 0, yOffset = 0;
-
-	// Plays bg sounds :D
-	SoundPlayer bgPlayer = new SoundPlayer();
-
-	// Plays sfx :D
-	SoundPlayer sfxPlayer = new SoundPlayer();
 
 	// for randomly generating stuff
 	Random r;
@@ -94,8 +71,6 @@ public abstract class Map extends JPanel implements Serializable {
 	// the direction the trainer sprite is currently drawn as
 	TrainerDirection drawnDir = TrainerDirection.RIGHT;
 
-	// the Trainer's sprite sheet
-	transient Image trainerSheet;
 
 	// the X and Y positions in the Obstacle/Ground arrays
 	// to start drawing from (for switching area trainer is in)
@@ -108,9 +83,6 @@ public abstract class Map extends JPanel implements Serializable {
 	public Map(Random rand) {
 
 		r = rand;
-
-		// get sprite sheets & tile sets
-		load();
 
 		// create the Map and fill the Tile arrays (Ground and Obstacle)
 		createMap();
@@ -130,18 +102,6 @@ public abstract class Map extends JPanel implements Serializable {
 
 	public abstract void initializeItems();
 
-	/*---------------------------------------------------------------------
-	 |  Method name:    [paintComponent]
-	 |  Purpose:  	    [To make it so that calling Map.repaint() draws the map
-	 |					directly onto this JPanel]
-	 |  Parameters:     [Graphics: this object's Graphics object]
-	 *---------------------------------------------------------------------*/
-	public void paintComponent(Graphics g) {
-
-		drawMap(g);
-
-	}
-	
 	/*---------------------------------------------------------------------
 	 |  Method name:    [getGroundTiles]
 	 |  Purpose:  	    [Getter for groundTiles[][]]
@@ -170,36 +130,15 @@ public abstract class Map extends JPanel implements Serializable {
 	public Item[][] getItemTiles() {
 		return itemTiles;
 	}
-	/*---------------------------------------------------------------------
-	 |  Method name:    [drawMap]
-	 |  Purpose:  	    [Draws the Ground, Obstacle, and Trainer]
-	 |  Parameters:     [Graphics: the Graphics Object to use to draw]
-	 *---------------------------------------------------------------------*/
-	public void drawMap(Graphics g) {
-
-		int x = 0, y = 0;
-
-		checkMapPlacement();
-
-		// draw ground and obstacle tiles and ITEMSSS
-		for (int i = startX; i < (startX + Map.HEIGHT); i++) {
-			y = (i - startX) * Tile.SIZE;
-			for (int j = startY; j < (startY + Map.WIDTH); j++) {
-				x = (j - startY) * Tile.SIZE;
-				GraphicsManager.drawTile(g, groundTiles[i][j], groundTileSet, x, y);
-				if (obstacleTiles[i][j] != null)
-					GraphicsManager.drawTile(g, obstacleTiles[i][j], obstacleTileSet, x, y);
-				if (itemTiles[i][j] != null)
-					g.drawImage(itemImage, x + Tile.SIZE/4, y + Tile.SIZE/4, null);
-			}
-
-		}
-
-		// draw trainer sprite
-		GraphicsManager.drawSprite(g, drawnDir, trainerSheet, (trainerPoint.y % WIDTH) * Tile.SIZE
-				- yOffset, (trainerPoint.x % HEIGHT) * Tile.SIZE - xOffset);
-
+	
+	public int getStartX() {
+		return startX;
 	}
+	
+	public int getStartY() {
+		return startY;
+	}
+	
 
 	public void checkMapPlacement() {
 		if (trainerPoint.x >= startX)
@@ -306,24 +245,6 @@ public abstract class Map extends JPanel implements Serializable {
 	}
 
 	/*---------------------------------------------------------------------
-	 |  Method name:    [getObstacleTileSet]
-	 |  Purpose:  	    [Getter for the the Obstacle tile set]
-	 |  Returns:  	    [Image]
-	 *---------------------------------------------------------------------*/
-	public Image getObstacleTileSet() {
-		return obstacleTileSet;
-	}
-
-	/*---------------------------------------------------------------------
-	 |  Method name:    [getGroundTileSet]
-	 |  Purpose:  	    [Getter for the Ground tile set]
-	 |  Returns:  	    [Image]
-	 *---------------------------------------------------------------------*/
-	public Image getGroundTileSet() {
-		return groundTileSet;
-	}
-
-	/*---------------------------------------------------------------------
 	 |  Method name:    [getTrainerDir]
 	 |  Purpose:  	    [Getter for the Map.Direction that the trainer sprite is facing]
 	 |  Returns:  	    [Map.Direction: direction the trainer sprite is facing.
@@ -334,153 +255,9 @@ public abstract class Map extends JPanel implements Serializable {
 		return dir;
 	}
 
-	/*---------------------------------------------------------------------
-	 |  Method name:    [getTrainerSheet]
-	 |  Purpose:  	    [Getter for the trainer's sprite sheet]
-	 |  Returns:  	    [Image: the trainer's sprite sheet]
-	 *---------------------------------------------------------------------*/
-	public Image getTrainerSheet() {
-		return trainerSheet;
-	}
-
 	public TerrainType getCurrentTerrain() {
 		// TODO Auto-generated method stub
 		return groundTiles[trainerPoint.x][trainerPoint.y].getTerrainType();
-	}
-
-	public boolean isAnimating() {
-		return animating;
-	}
-
-	public void setStartOffsets(int x, int y) {
-		xOffset = x;
-		yOffset = y;
-		movementTimer.stop();
-	}
-
-	public void startTrainerMovement() {
-		movementTimer.start();
-	}
-
-	//animates the hunter's image for movement
-	protected class MovementTimerListener implements ActionListener {
-
-		boolean walk = false;
-		int MOVE = 2, moveAmount = 0;
-		int tic = 0;
-
-		@Override
-		public void actionPerformed(ActionEvent e) {
-
-			animating = true;
-
-			if (xOffset > 0 || yOffset > 0)
-				moveAmount = -MOVE;
-			else
-				moveAmount = MOVE;
-
-			if (tic < Math.abs(Tile.SIZE / moveAmount)) {
-
-				// determine which direction to move in
-				switch (dir) {
-
-				case UP:
-					if (walk)
-						drawnDir = Map.TrainerDirection.UP_1;
-					else
-						drawnDir = Map.TrainerDirection.UP_2;
-					xOffset += moveAmount;
-					break;
-				case DOWN:
-					if (walk)
-						drawnDir = Map.TrainerDirection.DOWN_1;
-					else
-						drawnDir = Map.TrainerDirection.DOWN_2;
-					xOffset += moveAmount;
-					break;
-				case LEFT:
-					if (walk)
-						drawnDir = Map.TrainerDirection.LEFT_1;
-					else
-						drawnDir = Map.TrainerDirection.LEFT_2;
-					yOffset += moveAmount;
-					break;
-				case RIGHT:
-					if (walk)
-						drawnDir = Map.TrainerDirection.RIGHT_1;
-					else
-						drawnDir = Map.TrainerDirection.RIGHT_2;
-					yOffset += moveAmount;
-					break;
-				default:
-					break;
-
-				}
-
-				tic++;
-			} else {
-				movementTimer.stop();
-				drawnDir = dir;
-				tic = 0;
-				animating = false;
-				walk = !walk;
-			}
-			repaint();
-		}
-
-	}
-
-	public void load() {
-		try {
-			trainerSheet = ImageIO.read(new File("./images/SucKeRS_TrainerSpriteSheet_Test.png"));
-			groundTileSet = ImageIO.read(new File("./images/SucKeRS_PokemonTileSet.png"));
-			obstacleTileSet = ImageIO.read(new File("./images/SucKeRS_PokemonObstacleTileSet.png"));
-			itemImage = ImageIO.read(new File("./images/Dream_Safari_Ball_Sprite.png"));
-			itemImage = itemImage.getScaledInstance(Tile.SIZE/2, Tile.SIZE/2, Image.SCALE_SMOOTH);
-		} catch (IOException e) {
-			// TODO Auto-generated catch block
-			e.printStackTrace();
-		}
-		animating = false;
-		// make animation timer for Trainer movement
-		movementTimer = new Timer(MOVEMENT_SPEED, new MovementTimerListener());
-		if (bgPath != null && !bgPath.equals(""))
-			startNewBGMusic();
-
-	}
-
-	public abstract void update(Object o);
-
-	public void playWalkingSound() {
-		// play sounds effect of walking on this tile
-		sfxPlayer.playSound(getGroundTiles()[trainerPoint.x][trainerPoint.y].getSoundFilePath());
-	}
-
-	public void startNewBGMusic() {
-		bgPlayer.loopSound(bgPath);
-	}
-
-	public void restartBGMusic() {
-		bgPlayer.restartSound();
-	}
-
-	public void pauseBGMusic() {
-		bgPlayer.pauseSound();
-	}
-
-	public void stopBGMusic() {
-		bgPlayer.stopSound();
-	}
-
-	public void changeBGMusic(String songFilePath) {
-		stopBGMusic();
-		bgPath = songFilePath;
-		startNewBGMusic();
-
-	}
-
-	public String getBGMusicFilePath() {
-		return bgPath;
 	}
 
 	public boolean trainerSteppingOnItem() {

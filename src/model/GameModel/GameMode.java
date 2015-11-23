@@ -505,46 +505,7 @@ public abstract class GameMode implements Serializable {
 
 	public abstract void trainerCaughtPokemon();
 
-	// TODO THIS WILL BE MOVED TO MAP
-	/*---------------------------------------------------------------------
-	 |  Class name:     [OurKeyListener]
-	 |  Purpose:        [Used to move trainer around the map]
-	 *---------------------------------------------------------------------*/
-	private class OurKeyListener implements KeyListener {
-
-		@Override
-		public void keyTyped(KeyEvent e) {
-
-		}
-
-		/*---------------------------------------------------------------------
-		 |  Method name:    [keyPressed]
-		 |  Purpose:  	    [handles KeyEvents on key press]
-		 |  Parameters:     [KeyEvent]
-		 *---------------------------------------------------------------------*/
-		@Override
-		public void keyPressed(KeyEvent e) {
-
-			// if the game is not won or lost or forfeited, move the trainer
-			if (!inBattle && !forfeited && !isGameWon() && !isGameLost()) {
-				// set sprite direction and try to move trainer
-				moveTrainer(e.getKeyCode());
-			}
-
-			if (!isGameActive())
-				map.stopBGMusic();
-
-			// map.update(trainer); // does anything the map needs to check ever
-			// key press
-
-		}
-
-		@Override
-		public void keyReleased(KeyEvent e) {
-
-		}
-
-	}
+	
 
 	private class EncounterTimer {
 
