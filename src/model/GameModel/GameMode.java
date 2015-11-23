@@ -59,7 +59,7 @@ public abstract class GameMode implements Serializable {
 	Pokemon encounteredPokemon;
 	Map.TrainerDirection dir = Map.TrainerDirection.RIGHT;
 
-	EncounterTimer encounterTimer;
+	transient EncounterTimer encounterTimer;
 
 	// database of Pokemon
 	PokemonDatabase database;
