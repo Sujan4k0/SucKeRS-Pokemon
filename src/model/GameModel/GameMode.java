@@ -63,6 +63,8 @@ public abstract class GameMode implements Serializable {
 
 	// database of Pokemon
 	PokemonDatabase database;
+	
+	boolean timerUp = false;
 
 	// count number of steps Trainer takes so that encounters aren't every
 	// one freaking step
@@ -315,9 +317,7 @@ public abstract class GameMode implements Serializable {
 	}
 
 	public String getBattleMessage() {
-		String ret = battleMessage;
-		battleMessage = "";
-		return ret;
+		return battleMessage;
 	}
 
 	/*---------------------------------------------------------------------
@@ -384,7 +384,7 @@ public abstract class GameMode implements Serializable {
 		// if the Pokemon ran away in response to this TrainerAction
 		// update the battleMessage, then end the encounter
 		if (encounteredPokemon.respond(action) == PokemonResponse.RUN_AWAY) {
-			if (battleMessage.equals(""))
+			if (!timerUp)
 				battleMessage = "Pokemon ran away!";
 			endEncounter();
 		} else {
@@ -456,6 +456,7 @@ public abstract class GameMode implements Serializable {
 			if (doAnimation)
 				encounter.animateTrainer();
 		}
+		
 	}
 
 	public void useItemOnPokemon(Item i, String pName) {
@@ -558,6 +559,7 @@ public abstract class GameMode implements Serializable {
 			pokemon = p;
 			tic = 0;
 			timer = new Timer(1000, new TimerListener());
+			timerUp = false;
 		}
 
 		/*---------------------------------------------------------------------
@@ -595,6 +597,7 @@ public abstract class GameMode implements Serializable {
 					pokemon.setState(PokemonResponse.RUN_AWAY);
 					endEncounter();
 					battleMessage = "You took too long and the pokemon ran away =',',',(";
+					timerUp = true;
 					timer.stop(); // stop the timer
 				}
 			}
