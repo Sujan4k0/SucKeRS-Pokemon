@@ -48,9 +48,7 @@ public class Pokedex extends JFrame {
 
         
         this.trainer = trainer;
-//        trainer.addPokemon(new PokemonDatabase().getCyndaquil());
-//        trainer.addPokemon(new PokemonDatabase().getCyndaquil());
-//        trainer.addPokemon(new PokemonDatabase().getMew());
+        trainer.addPokemon(new PokemonDatabase().getExeggutor());
 
         
         this.setTitle("Pokedex");
@@ -218,9 +216,21 @@ public class Pokedex extends JFrame {
                 
                 if (trainer.getPokemon().get(k).getName().equals(visiblePokemon.get(i).getName())) {
                     
-                    trainerHasOne.add(visiblePokemon.get(i));
-                    listModel.addElement(visiblePokemon.get(i).getName());
-                    visiblePokemon.remove(visiblePokemon.get(i));
+                    boolean add = true;
+                    
+                    for (int m = 0; m < trainerHasOne.size(); m++) {
+                        
+                        if (trainer.getPokemon().get(k).getName().equals(trainerHasOne.get(m).getName())) {
+                            
+                            add = false;
+                        }
+                    }
+                    
+                    if (add) {
+                    
+                        trainerHasOne.add(visiblePokemon.get(i));
+                        listModel.addElement(visiblePokemon.get(i).getName());                  
+                    }
                 }
             }
         }
