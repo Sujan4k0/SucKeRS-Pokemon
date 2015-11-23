@@ -111,12 +111,6 @@ public class MazeMap extends Map {
 	}
 
 	@Override
-	public void update(Object o) {
-		// TODO Auto-generated method stub
-
-	}
-
-	@Override
 	public void initializeItems() {
 		itemTiles = new Item[h][w];
 

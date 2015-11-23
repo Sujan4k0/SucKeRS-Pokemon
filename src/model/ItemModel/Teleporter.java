@@ -38,7 +38,7 @@ public class Teleporter extends Item{
 	 |  Parameters:     [A Point p representing the current position of the trainer]
 	 *---------------------------------------------------------------------*/
 	public void setPoint(Point p){
-		teleportPoint= p;
+		teleportPoint= new Point(p); // so that it doesn't point to the same address
 		set=true;
 	}
 
@@ -56,7 +56,7 @@ public class Teleporter extends Item{
 	 |  Purpose:  	    [Returns point for where the player returns to when they use the teleporter]
 	 |  Returns:  	    [A Point for where the player returns to when they use the teleporter]
 	 *---------------------------------------------------------------------*/
-	public Point getTeleportPoint(){
+	public Point getTeleportPoint() {
 		return teleportPoint;
 	}
 

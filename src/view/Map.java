@@ -91,6 +91,7 @@ public abstract class Map extends JPanel implements Serializable {
 
 	// the direction the trainer sprite currently is facing
 	TrainerDirection dir = TrainerDirection.RIGHT;
+	
 	// the direction the trainer sprite is currently drawn as
 	TrainerDirection drawnDir = TrainerDirection.RIGHT;
 
@@ -448,8 +449,6 @@ public abstract class Map extends JPanel implements Serializable {
 			startNewBGMusic();
 
 	}
-
-	public abstract void update(Object o);
 
 	public void playWalkingSound() {
 		// play sounds effect of walking on this tile

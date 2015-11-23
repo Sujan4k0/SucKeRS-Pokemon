@@ -18,22 +18,16 @@
 
 package model.GameModel;
 
-import java.awt.Image;
 import java.awt.Point;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.awt.event.KeyEvent;
 import java.awt.event.KeyListener;
-import java.io.File;
-import java.io.IOException;
 import java.io.Serializable;
 import java.util.Random;
 
-import javax.imageio.ImageIO;
-import javax.swing.JOptionPane;
 import javax.swing.Timer;
 
-import soundplayer.SoundPlayer;
 import view.*;
 import model.ItemModel.*;
 import model.PokemonModel.Pokemon;
@@ -261,7 +255,7 @@ public abstract class GameMode implements Serializable {
 				else if (r.nextInt(15) == 14)
 					startEncounter();
 
-				// TODO encounters/items
+				// encounters/items
 			} else
 				map.setStartOffsets(0, 0);
 
@@ -489,10 +483,13 @@ public abstract class GameMode implements Serializable {
 
 	public void useItem(Item i) {
 
-		if (trainer.getItemQuantities().get(i.getName()) > 0 && i.getName().equals("Teleporter"))
-			map.update(trainer);
+		if (trainer.getItemQuantities().get(i.getName()) > 0 && i.getName().equals("Teleporter")) {
+			trainer.useItem(i);
+			map.setTrainerPoint(trainer.getPoint());
+			map.repaint();
+		} else trainer.useItem(i);
 
-		trainer.useItem(i);
+		
 	}
 
 	private void endEncounter() {
@@ -543,6 +540,9 @@ public abstract class GameMode implements Serializable {
 
 			// map.update(trainer); // does anything the map needs to check ever
 			// key press
+			
+			if (database.caughtAllExceptLeg(trainer) && map.getClass().equals(CEAMap.class))
+				((CEAMap) map).lastPartCheck(trainer);
 
 		}
 

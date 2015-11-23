@@ -305,12 +305,9 @@ public class CEAMap extends Map {
 			}
 		}
 	}
-
-	@Override
-	public void update(Object o) {
-
-		Trainer t = (Trainer) o;
-		if (!inLastPart && new PokemonDatabase().caughtAllExceptLeg(t)) {
+	
+	public void lastPartCheck(Trainer t) {
+		if (!inLastPart) {
 			inLastPart = true; // time for secrety secret time
 			Teleporter tele = new Teleporter(); // create teleporter to go to secret
 			tele.setPoint(new Point(Map.HEIGHT - 2, Map.WIDTH / 2)); // set point
@@ -319,12 +316,6 @@ public class CEAMap extends Map {
 			movementTimer.stop();
 			movementTimer = new Timer(movementTimer.getDelay(), new MovementTimerListener());
 		}
-
-		if (!t.getPoint().equals(trainerPoint)) {
-			trainerPoint = new Point(t.getPoint());
-			repaint();
-		}
-
 	}
 
 	@Override
