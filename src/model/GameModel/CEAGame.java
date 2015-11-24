@@ -40,10 +40,10 @@ public class CEAGame extends GameMode {
 		trainer.addItem(new Harmonica());
 		trainer.addItem(new Harmonica());
 
-		/* for testing teleportation
+		// for testing teleportation
 		for (Pokemon p : database.getAllPokemon())
 			if (!p.getName().toUpperCase().equals("MEW"))
-				trainer.addPokemon(p); */
+				trainer.addPokemon(p);
 
 	}
 
@@ -110,7 +110,7 @@ public class CEAGame extends GameMode {
 				// in cavey area
 				else if (tp.x < Map.HEIGHT && tp.y >= Map.WIDTH && tp.y < 2 * Map.WIDTH)
 					encounteredPokemon = database.getExeggutor();
-				
+
 			} else
 				encounteredPokemon = database.getRandomCommon(map.getCurrentTerrain());
 

@@ -62,6 +62,8 @@ public abstract class Map extends JPanel implements Serializable {
 
 	// the tile sets for Ground and Obstacle
 	transient Image groundTileSet, obstacleTileSet, itemImage;
+	
+	transient Image mewImage;
 
 	// the Point the trainer is visually at
 	Point trainerPoint;
@@ -195,6 +197,10 @@ public abstract class Map extends JPanel implements Serializable {
 			}
 
 		}
+		
+		// draw mew if necessary
+				if (trainerPoint.x < Map.HEIGHT && trainerPoint.y < Map.WIDTH)
+					g.drawImage(mewImage, 7 * Tile.SIZE, 1 * Tile.SIZE, null);
 
 		// draw trainer sprite
 		GraphicsManager.drawSprite(g, drawnDir, trainerSheet, (trainerPoint.y % WIDTH) * Tile.SIZE
@@ -438,6 +444,7 @@ public abstract class Map extends JPanel implements Serializable {
 			obstacleTileSet = ImageIO.read(new File("./images/SucKeRS_PokemonObstacleTileSet.png"));
 			itemImage = ImageIO.read(new File("./images/Dream_Safari_Ball_Sprite.png"));
 			itemImage = itemImage.getScaledInstance(Tile.SIZE/2, Tile.SIZE/2, Image.SCALE_SMOOTH);
+			mewImage = ImageIO.read(new File("./images/mew_sprite.png"));
 		} catch (IOException e) {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
