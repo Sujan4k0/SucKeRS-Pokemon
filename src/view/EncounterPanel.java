@@ -160,6 +160,7 @@ public class EncounterPanel extends JPanel implements Serializable {
 
 	public void animateTrainer(TrainerAction ta) {
 		currentAction = ta;
+		//sfxPlayer.playSound("sounds/battlesfx/woosh.mp3");
 		if (!animating) {
 			animating = true;
 			animationTimer.start();
