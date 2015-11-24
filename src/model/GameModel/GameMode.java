@@ -42,6 +42,7 @@ public abstract class GameMode implements Serializable {
 	Trainer trainer;
 	Map map; // the visual map of this game
 	EncounterPanel encounter;
+	int moveCount = 0; // moves during encounter
 	Random r; // used for random encounters/items
 
 	// messages to show on end game and during battle and random game message
@@ -52,9 +53,7 @@ public abstract class GameMode implements Serializable {
 	boolean inBattle = false;
 	Pokemon encounteredPokemon;
 	Map.TrainerDirection dir = Map.TrainerDirection.RIGHT;
-
-	transient EncounterTimer encounterTimer;
-
+	
 	// database of Pokemon
 	PokemonDatabase database;
 	
@@ -347,9 +346,6 @@ public abstract class GameMode implements Serializable {
 				encounteredPokemon = database.getRandomCommon(map.getCurrentTerrain());
 		}
 
-		encounterTimer = new EncounterTimer(encounteredPokemon);
-		encounterTimer.start();
-
 		inBattle = true;
 		encounter.startEncounter(encounteredPokemon);
 		map.pauseBGMusic();
@@ -377,10 +373,16 @@ public abstract class GameMode implements Serializable {
 		// to tell the EncounterPanel if the Trainer should be animated
 		// at the end of the method
 		boolean doAnimation = true;
+		
+		if (moveCount == 10) {
+			battleMessage = "You used too many turns. F U.\n Pokemon is GONE. GOONNNEEEE. FUUUCKKKK";
+			endEncounter();
+		}
 
 		// if the Pokemon ran away in response to this TrainerAction
 		// update the battleMessage, then end the encounter
-		if (inBattle) {
+		else if (!encounter.isAnimating() && inBattle) {
+			moveCount++; // increase moves used
 			if (encounteredPokemon.respond(action) == PokemonResponse.RUN_AWAY) {
 				battleMessage = "Pokemon ran away!";
 				endEncounter();
@@ -453,7 +455,7 @@ public abstract class GameMode implements Serializable {
 				// if the Trainer should be animated,
 				// tell the EncounterPanel to animate the Trainer
 				if (doAnimation)
-					encounter.animateTrainer();
+					encounter.animateTrainer(action);
 			}
 		}
 
@@ -494,6 +496,7 @@ public abstract class GameMode implements Serializable {
 
 	private void endEncounter() {
 
+		moveCount = 0; // reset moveCount
 		inBattle = false;
 		encounter.stopEncounter();
 		map.restartBGMusic();
@@ -551,58 +554,5 @@ public abstract class GameMode implements Serializable {
 
 		}
 
-	}
-
-	private class EncounterTimer {
-
-		private int MAX_TICS = 60; // how long the Ticker will go on
-		private int tic; // current second we're on
-		private Timer timer;
-		private Pokemon pokemon;
-
-		public EncounterTimer(Pokemon p) {
-
-			pokemon = p;
-			tic = 0;
-			timer = new Timer(1000, new TimerListener());
-		}
-
-		/*---------------------------------------------------------------------
-		|  Method name:    [start]
-		|  Purpose:        [Starts the timer]
-		 *---------------------------------------------------------------------*/
-		public void start() {
-
-			timer.start();
-		}
-
-		/*---------------------------------------------------------------------
-		|  Class name:     [TimerListener]
-		|  Purpose:        [Allows for the timer to countdown once the Pokemon
-		|                   is encountered.]
-		 *---------------------------------------------------------------------*/
-		private class TimerListener implements ActionListener {
-
-			@Override
-			public void actionPerformed(ActionEvent e) {
-
-				if (tic <= MAX_TICS) { // 60 seconds has not passed
-
-					tic++;
-
-					if (pokemon.getState() != PokemonResponse.STAND_GROUND)
-						timer.stop();
-
-				}
-
-				else { // time is up
-
-					pokemon.setState(PokemonResponse.RUN_AWAY);
-					endEncounter();
-					battleMessage = "You took too long and the pokemon ran away =',',',(";
-					timer.stop(); // stop the timer
-				}
-			}
-		}
 	}
 }
