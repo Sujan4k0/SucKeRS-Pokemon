@@ -47,4 +47,10 @@ public class Legendary extends Pokemon {
         return RARITY;
     }
 
+    @Override
+    public Rarity getRarity() {
+        // TODO Auto-generated method stub
+        return Rarity.LEGENDARY;
+    }
+
 }
