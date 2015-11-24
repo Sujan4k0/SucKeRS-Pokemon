@@ -26,6 +26,7 @@ import model.PokemonModel.Legendary;
 import model.PokemonModel.Pokemon;
 import model.PokemonModel.PokemonResponse;
 import model.PokemonModel.PokemonType;
+import model.PokemonModel.Rarity;
 import model.PokemonModel.Uncommon;
 import model.TrainerModel.TrainerAction;
 
@@ -129,13 +130,44 @@ public class PokemonTests {
         assertEquals(testMon.getName(), "SARRYATHJAN");        
     }
 
-//    @Test
-//    public void EncounterTest() {
-//
-//        Pokemon testMon = new Common(new Random(), "Sarryathjan", null, PokemonType.ELECTRIC);
-//        testMon.startEncounter();
-//        testMon.setState(PokemonResponse.RUN_AWAY);
-//    }
+    @Test
+    public void rarities() {
+        
+        Common testMon = new Common(new Random(), "Sarryathjan", null, PokemonType.ELECTRIC);
+        assertEquals(testMon.getRarity(), Rarity.COMMON);
+        
+        Uncommon testMon1 = new Uncommon(new Random(), "Sarryathjan", null, PokemonType.ELECTRIC);
+        assertEquals(testMon1.getRarity(), Rarity.UNCOMMON);
+        
+        Legendary testMon2 = new Legendary(new Random(), "Sarryathjan", null, PokemonType.ELECTRIC);
+        assertEquals(testMon2.getRarity(), Rarity.LEGENDARY);
+    }
+    
+    @Test
+    public void genericGettersAndSetters() {
+        
+        Legendary testMon2 = new Legendary(new Random(), "Sarryathjan", null, PokemonType.ELECTRIC);
+        assertEquals(testMon2.getType(), PokemonType.ELECTRIC);
+        
+        assertEquals(testMon2.getEncounterChance(), 10);
+      
+        testMon2.setState(PokemonResponse.GET_CAUGHT);
+        assertEquals(testMon2.getState(), PokemonResponse.GET_CAUGHT);
+    }
+
+    @Test
+    public void rarityStrings() {
+        
+        Common testMon = new Common(new Random(), "Sarryathjan", null, PokemonType.ELECTRIC);
+        assertEquals(testMon.rarityString(), "(C)");
+        
+        Uncommon testMon1 = new Uncommon(new Random(), "Sarryathjan", null, PokemonType.ELECTRIC);
+        assertEquals(testMon1.rarityString(), "(U)");
+        
+        Legendary testMon2 = new Legendary(new Random(), "Sarryathjan", null, PokemonType.ELECTRIC);
+        assertEquals(testMon2.rarityString(), "(L)");
+
+    }
     
     @Test
     public void spriteGetter() {
@@ -167,5 +199,12 @@ public class PokemonTests {
         }
         
         PokemonType t = PokemonType.valueOf("ELECTRIC");
+        
+        for (Rarity rt : Rarity.values()) {
+            
+            assertNotNull(rt);
+        }
+        
+        Rarity rt = Rarity.valueOf("LEGENDARY");
     }
 }
