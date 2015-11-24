@@ -158,13 +158,14 @@ public class EncounterPanel extends JPanel implements Serializable {
 
 	}
 
-	public void animateTrainer(TrainerAction ta) {
+	public void animateTrainer(TrainerAction ta, PokemonResponse pr) {
 		currentAction = ta;
-		//sfxPlayer.playSound("sounds/battlesfx/woosh.mp3");
 		if (!animating) {
 			animating = true;
 			animationTimer.start();
 		}
+		
+		playBattleSound(ta, pr);			//Play a sound effect
 	}
 
 	public boolean isAnimating() {
@@ -274,6 +275,29 @@ public class EncounterPanel extends JPanel implements Serializable {
 
 		animationTimer = new Timer(1000 / 10, new TrainerAnimationListener());
 		animatedBGTimer = new Timer(1000 / 100, new BGAnimationListener());
+	}
+	
+	/*---------------------------------------------------------------------
+	 |  Method name:    [playBattleSound]
+	 |  Purpose:  	    [Plays a battle sound effect based on the outcome 
+	 |                  of a TrainerAction and PokemonResponse]
+	 |  Parameters:     [TrainerAction ta, PokemonResponse pr]
+	 *---------------------------------------------------------------------*/
+	
+	public void playBattleSound(TrainerAction ta, PokemonResponse pr) {
+		
+		if (pr == PokemonResponse.GET_CAUGHT) {		 //If the pokemon was caught
+			
+			sfxPlayer.playSound("sounds/battlesfx/PokemonCaught.mp3");		//Play the sound effect of a pokemon being caught
+		}
+		else if (ta == TrainerAction.THROW_BALL) {   //If the trainer threw a pokeball, we know it missed. Play the missed sound effect
+			
+			sfxPlayer.playSound("sounds/battlesfx/PokeballMisses.mp3");	    //Play the sound of a pokeball missing
+		}
+		else if ((ta == TrainerAction.THROW_BAIT) || (ta == TrainerAction.THROW_ROCK)) {		//Otherwise if the trainer is throwing something
+			
+			sfxPlayer.playSound("sounds/battlesfx/woosh.mp3");
+		}	
 	}
 
 	
