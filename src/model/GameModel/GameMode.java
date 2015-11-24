@@ -250,6 +250,10 @@ public abstract class GameMode implements Serializable {
 							"You picked up a *fudging* " + pickedUp.getName() + "!!!!!!! YESSSSSS";
 
 				}
+				else if (trainer.getPoint().equals(new Point(1, 7)) 
+						&& this.getClass().equals(CEAGame.class)) {
+					((CEAGame) this).startLegEncounter();
+				}
 				// else try to start an encounter
 				else if (r.nextInt(15) == 14)
 					startEncounter();
@@ -332,11 +336,9 @@ public abstract class GameMode implements Serializable {
 	 *---------------------------------------------------------------------*/
 	public void startEncounter() {
 
-		battleMessage = "You've encountered a Pokemon!";
-
 		int rand = r.nextInt(10);
 		System.out.println("Map class = " + map.getClass().getName());
-		if (!map.getClass().equals(CEAMap.class) && rand == 9)
+		if (rand == 9)
 			encounteredPokemon = database.getMew();
 		else {
 			rand = r.nextInt(5);
@@ -345,6 +347,8 @@ public abstract class GameMode implements Serializable {
 			else
 				encounteredPokemon = database.getRandomCommon(map.getCurrentTerrain());
 		}
+
+		battleMessage = "You've encountered a " + encounteredPokemon.getName() + "!";
 
 		inBattle = true;
 		encounter.startEncounter(encounteredPokemon);
@@ -415,7 +419,7 @@ public abstract class GameMode implements Serializable {
 							// do anything a specific GameMode has to do when the
 							// Trainer
 							// catches a Pokemon
-							trainerCaughtPokemon();
+							trainerCaughtPokemon(encounteredPokemon);
 
 							// update the battleMessage
 							battleMessage = "You successfully caught " + pName + "!";
@@ -513,7 +517,7 @@ public abstract class GameMode implements Serializable {
 		return encounter;
 	}
 
-	public abstract void trainerCaughtPokemon();
+	public abstract void trainerCaughtPokemon(Pokemon p);
 
 	// TODO THIS WILL BE MOVED TO MAP
 	/*---------------------------------------------------------------------

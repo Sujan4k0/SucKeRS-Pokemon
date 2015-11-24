@@ -158,7 +158,7 @@ public class EncounterPanel extends JPanel implements Serializable {
 
 	}
 
-	public void animateTrainer(TrainerAction ta) {
+	public void animateTrainer(TrainerAction ta, PokemonResponse pr) {
 		currentAction = ta;
 		//sfxPlayer.playSound("sounds/battlesfx/woosh.mp3");
 		if (!animating) {
