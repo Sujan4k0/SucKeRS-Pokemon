@@ -305,12 +305,9 @@ public class CEAMap extends Map {
 			}
 		}
 	}
-
-	@Override
-	public void update(Object o) {
-
-		Trainer t = (Trainer) o;
-		if (!inLastPart && new PokemonDatabase().caughtAllExceptLeg(t)) {
+	
+	public void lastPartCheck(Trainer t) {
+		if (!inLastPart) {
 			inLastPart = true; // time for secrety secret time
 			Teleporter tele = new Teleporter(); // create teleporter to go to secret
 			tele.setPoint(new Point(Map.HEIGHT - 2, Map.WIDTH / 2)); // set point
@@ -319,12 +316,6 @@ public class CEAMap extends Map {
 			movementTimer.stop();
 			movementTimer = new Timer(movementTimer.getDelay(), new MovementTimerListener());
 		}
-
-		if (!t.getPoint().equals(trainerPoint)) {
-			trainerPoint = new Point(t.getPoint());
-			repaint();
-		}
-
 	}
 
 	@Override
@@ -337,7 +328,7 @@ public class CEAMap extends Map {
 		//Grass area items
 		itemTiles[Map.HEIGHT+5][Map.WIDTH+7]=new Harmonica();
 		itemTiles[Map.HEIGHT+2][Map.WIDTH+3]=new SuperStepPotion();
-		itemTiles[Map.HEIGHT*2-3][Map.WIDTH*2-4]=new FatiguePotion();
+		itemTiles[Map.HEIGHT*2-3][Map.WIDTH*2-4]=new BasicStepPotion();
 		//Ice area items
 		itemTiles[Map.HEIGHT*3-2][Map.WIDTH*2-2]=new BasicStepPotion();
 		itemTiles[Map.HEIGHT*3-4][Map.WIDTH*2-8]=new Harmonica();
@@ -346,9 +337,9 @@ public class CEAMap extends Map {
 		itemTiles[Map.HEIGHT+3][Map.WIDTH*3-5]=new HyperStepPotion();
 		itemTiles[Map.HEIGHT*2-2][Map.WIDTH*3-5]=new HyperStepPotion();
 		itemTiles[Map.HEIGHT+5][Map.WIDTH*3-3]=new Harmonica();
-		itemTiles[Map.HEIGHT*2-2][Map.WIDTH*2+2]=new FatiguePotion();
+		itemTiles[Map.HEIGHT*2-2][Map.WIDTH*2+2]=new BasicStepPotion();
 		//cave area items
-		itemTiles[3][Map.WIDTH+4]=new FatiguePotion();
+		itemTiles[3][Map.WIDTH+4]=new BasicStepPotion();
 		itemTiles[3][Map.WIDTH+9]=new SuperStepPotion();
 		itemTiles[6][Map.WIDTH+7]=new Harmonica();
 		//Secret area items

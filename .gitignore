@@ -1,5 +1,6 @@
 # Created by https://www.gitignore.io/api/windows,osx,linux,java,eclipse,intellij
-
+PokemonCEASave
+PokemonMazeSave
 ### Windows ###
 # Windows image file caches
 Thumbs.db

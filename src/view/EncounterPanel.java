@@ -23,6 +23,7 @@ import model.GameModel.TerrainType;
 import model.GameModel.Tile;
 import model.PokemonModel.Pokemon;
 import model.PokemonModel.PokemonResponse;
+import model.TrainerModel.TrainerAction;
 import soundplayer.SoundPlayer;
 
 public class EncounterPanel extends JPanel implements Serializable {
@@ -34,6 +35,9 @@ public class EncounterPanel extends JPanel implements Serializable {
 
 	// Plays sfx :D
 	SoundPlayer sfxPlayer = new SoundPlayer();
+	
+	// Current action to animate
+	TrainerAction currentAction;
 
 	// currently encountered Pokemon to draw to jpanel
 	Pokemon encounteredPokemon;
@@ -68,8 +72,6 @@ public class EncounterPanel extends JPanel implements Serializable {
 		int prefh = HEIGHT * Tile.SIZE;
 
 		this.setPreferredSize(new Dimension(prefw, prefh));
-
-		this.addKeyListener(new ThisKeyListener());
 
 	}
 
@@ -156,7 +158,9 @@ public class EncounterPanel extends JPanel implements Serializable {
 
 	}
 
-	public void animateTrainer() {
+	public void animateTrainer(TrainerAction ta) {
+		currentAction = ta;
+		//sfxPlayer.playSound("sounds/battlesfx/woosh.mp3");
 		if (!animating) {
 			animating = true;
 			animationTimer.start();
@@ -165,29 +169,6 @@ public class EncounterPanel extends JPanel implements Serializable {
 
 	public boolean isAnimating() {
 		return animating;
-	}
-
-	private class ThisKeyListener implements KeyListener {
-
-		@Override
-		public void keyTyped(KeyEvent e) {
-			// TODO Auto-generated method stub
-
-		}
-
-		@Override
-		public void keyPressed(KeyEvent e) {
-			// System.out.println("Encounter Listener");
-			if (!animating && e.getKeyCode() == KeyEvent.VK_SPACE)
-				animateTrainer();
-		}
-
-		@Override
-		public void keyReleased(KeyEvent e) {
-			// TODO Auto-generated method stub
-
-		}
-
 	}
 
 	private class BGAnimationListener implements ActionListener {
