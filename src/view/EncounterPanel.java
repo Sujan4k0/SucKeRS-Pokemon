@@ -287,7 +287,7 @@ public class EncounterPanel extends JPanel implements Serializable {
 	public void playBattleSound(TrainerAction ta, PokemonResponse pr) {
 		
 		if ((ta == TrainerAction.THROW_BAIT) || (ta == TrainerAction.THROW_ROCK)) {		//If the trainer is throwing something other than a Pokeball
-			System.out.println("Pokemon says he wasn't caught, and trainer didn't throw a ball. Play other sfx");
+			
 			sfxPlayer.playSound("sounds/battlesfx/woosh.mp3");
 		}
 		else if (ta == TrainerAction.THROW_BALL) {		 //If the trainer was throwing a pokeball
@@ -298,7 +298,7 @@ public class EncounterPanel extends JPanel implements Serializable {
 			}
 			else {
 				
-				sfxPlayer.playSound("sounds/battlesfx/PokeballMisses");
+				sfxPlayer.playSound("sounds/battlesfx/PokeballMisses.mp3");
 			}
 		}	
 	}
