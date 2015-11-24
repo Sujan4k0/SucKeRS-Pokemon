@@ -288,17 +288,17 @@ public class EncounterPanel extends JPanel implements Serializable {
 		
 		if ((ta == TrainerAction.THROW_BAIT) || (ta == TrainerAction.THROW_ROCK)) {		//If the trainer is throwing something other than a Pokeball
 			
-			sfxPlayer.playSound("sounds/battlesfx/woosh.mp3");
+			sfxPlayer.playSound("sounds/battlesfx/woosh.wav");
 		}
 		else if (ta == TrainerAction.THROW_BALL) {		 //If the trainer was throwing a pokeball
 			
 			if (pr == PokemonResponse.GET_CAUGHT) {
 				
-				sfxPlayer.playSound("sounds/battlesfx/PokemonCaught.mp3");
+				sfxPlayer.playSound("sounds/battlesfx/PokemonCaught.wav");
 			}
 			else {
 				
-				sfxPlayer.playSound("sounds/battlesfx/PokeballMisses.mp3");
+				sfxPlayer.playSound("sounds/battlesfx/PokeballMisses.wav");
 			}
 		}	
 	}
