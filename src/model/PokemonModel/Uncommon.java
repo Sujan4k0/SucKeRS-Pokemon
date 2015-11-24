@@ -45,4 +45,10 @@ public class Uncommon extends Pokemon {
 
         return RARITY;
     }
+
+    @Override
+    public Rarity getRarity() {
+        // TODO Auto-generated method stub
+        return rarity.UNCOMMON;
+    }
 }

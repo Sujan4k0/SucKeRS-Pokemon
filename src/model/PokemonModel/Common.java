@@ -24,6 +24,8 @@ public class Common extends Pokemon {
     protected int APPEARANCE_CHANCE;
     protected String RARITY;
     
+    private Rarity rarityLevel;
+    
     /*---------------------------------------------------------------------
     |  Method name:    [Common]
     |  Purpose:        [Constructor]
@@ -44,5 +46,11 @@ public class Common extends Pokemon {
     public String rarityString() {
         // TODO Auto-generated method stub
         return RARITY;
+    }
+
+    @Override
+    public Rarity getRarity() {
+        // TODO Auto-generated method stub
+        return rarity.COMMON;
     }
 }
