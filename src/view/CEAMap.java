@@ -328,7 +328,7 @@ public class CEAMap extends Map {
 		//Grass area items
 		itemTiles[Map.HEIGHT+5][Map.WIDTH+7]=new Harmonica();
 		itemTiles[Map.HEIGHT+2][Map.WIDTH+3]=new SuperStepPotion();
-		itemTiles[Map.HEIGHT*2-3][Map.WIDTH*2-4]=new FatiguePotion();
+		itemTiles[Map.HEIGHT*2-3][Map.WIDTH*2-4]=new BasicStepPotion();
 		//Ice area items
 		itemTiles[Map.HEIGHT*3-2][Map.WIDTH*2-2]=new BasicStepPotion();
 		itemTiles[Map.HEIGHT*3-4][Map.WIDTH*2-8]=new Harmonica();
@@ -337,9 +337,9 @@ public class CEAMap extends Map {
 		itemTiles[Map.HEIGHT+3][Map.WIDTH*3-5]=new HyperStepPotion();
 		itemTiles[Map.HEIGHT*2-2][Map.WIDTH*3-5]=new HyperStepPotion();
 		itemTiles[Map.HEIGHT+5][Map.WIDTH*3-3]=new Harmonica();
-		itemTiles[Map.HEIGHT*2-2][Map.WIDTH*2+2]=new FatiguePotion();
+		itemTiles[Map.HEIGHT*2-2][Map.WIDTH*2+2]=new BasicStepPotion();
 		//cave area items
-		itemTiles[3][Map.WIDTH+4]=new FatiguePotion();
+		itemTiles[3][Map.WIDTH+4]=new BasicStepPotion();
 		itemTiles[3][Map.WIDTH+9]=new SuperStepPotion();
 		itemTiles[6][Map.WIDTH+7]=new Harmonica();
 		//Secret area items
