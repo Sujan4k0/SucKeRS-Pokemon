@@ -53,10 +53,10 @@ public abstract class GameMode implements Serializable {
 	boolean inBattle = false;
 	Pokemon encounteredPokemon;
 	Map.TrainerDirection dir = Map.TrainerDirection.RIGHT;
-	
+
 	// database of Pokemon
 	PokemonDatabase database;
-	
+
 	// count number of steps Trainer takes so that encounters aren't every
 	// one freaking step
 
@@ -335,8 +335,8 @@ public abstract class GameMode implements Serializable {
 		battleMessage = "You've encountered a Pokemon!";
 
 		int rand = r.nextInt(10);
-
-		if (rand == 9)
+		System.out.println("Map class = " + map.getClass().getName());
+		if (!map.getClass().equals(CEAMap.class) && rand == 9)
 			encounteredPokemon = database.getMew();
 		else {
 			rand = r.nextInt(5);
@@ -374,8 +374,11 @@ public abstract class GameMode implements Serializable {
 		// at the end of the method
 		boolean doAnimation = true;
 		
+		PokemonResponse pr = encounteredPokemon.respond(action);
+
 		if (moveCount == 10) {
-			battleMessage = "You used too many turns. F U.\n Pokemon is GONE. GOONNNEEEE. FUUUCKKKK";
+			battleMessage =
+					"You used too many turns. F U.\n Pokemon is GONE. GOONNNEEEE. FUUUCKKKK";
 			endEncounter();
 		}
 
@@ -383,7 +386,7 @@ public abstract class GameMode implements Serializable {
 		// update the battleMessage, then end the encounter
 		else if (!encounter.isAnimating() && inBattle) {
 			moveCount++; // increase moves used
-			if (encounteredPokemon.respond(action) == PokemonResponse.RUN_AWAY) {
+			if (pr == PokemonResponse.RUN_AWAY) {
 				battleMessage = "Pokemon ran away!";
 				endEncounter();
 
@@ -455,7 +458,7 @@ public abstract class GameMode implements Serializable {
 				// if the Trainer should be animated,
 				// tell the EncounterPanel to animate the Trainer
 				if (doAnimation)
-					encounter.animateTrainer(action);
+					encounter.animateTrainer(action, pr);
 			}
 		}
 
@@ -489,9 +492,9 @@ public abstract class GameMode implements Serializable {
 			trainer.useItem(i);
 			map.setTrainerPoint(trainer.getPoint());
 			map.repaint();
-		} else trainer.useItem(i);
+		} else
+			trainer.useItem(i);
 
-		
 	}
 
 	private void endEncounter() {
@@ -543,7 +546,7 @@ public abstract class GameMode implements Serializable {
 
 			// map.update(trainer); // does anything the map needs to check ever
 			// key press
-			
+
 			if (database.caughtAllExceptLeg(trainer) && map.getClass().equals(CEAMap.class))
 				((CEAMap) map).lastPartCheck(trainer);
 
