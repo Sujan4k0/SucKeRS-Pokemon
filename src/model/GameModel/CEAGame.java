@@ -16,6 +16,7 @@
  *===========================================================================*/
 package model.GameModel;
 
+import java.awt.Point;
 import java.util.Random;
 
 import model.ItemModel.Harmonica;
@@ -38,12 +39,11 @@ public class CEAGame extends GameMode {
 
 		trainer.addItem(new Harmonica());
 		trainer.addItem(new Harmonica());
-		
-		
-		// for testing 
+
+		/* for testing teleportation
 		for (Pokemon p : database.getAllPokemon())
 			if (!p.getName().toUpperCase().equals("MEW"))
-				trainer.addPokemon(p);
+				trainer.addPokemon(p); */
 
 	}
 
@@ -90,11 +90,28 @@ public class CEAGame extends GameMode {
 
 		// only uncommon and common pokemon can be encountered
 		// and only not in secrety secret land
-		if (trainer.getPoint().x >= Map.HEIGHT && trainer.getPoint().y >= Map.WIDTH) {
+		if (trainer.getPoint().x >= Map.HEIGHT || trainer.getPoint().y >= Map.WIDTH) {
 			int rand = r.nextInt(5);
-			if (rand == 4)
-				encounteredPokemon = database.getRandomUncommon(map.getCurrentTerrain());
-			else
+			if (rand == 4) {
+
+				Point tp = trainer.getPoint();
+
+				// in plainy area
+				if (tp.x >= Map.HEIGHT && tp.x < Map.HEIGHT * 2 && tp.y < Map.WIDTH)
+					encounteredPokemon = database.getSteelix();
+				// in icey area
+				else if (tp.x >= Map.HEIGHT * 2 && tp.x < Map.HEIGHT * 3 && tp.y >= Map.WIDTH
+						&& tp.y < 2 * Map.WIDTH)
+					encounteredPokemon = database.getPikachu();
+				// in deserty area
+				else if (tp.x >= Map.HEIGHT && tp.x < Map.HEIGHT * 2 && tp.y >= Map.WIDTH * 2
+						&& tp.y < 3 * Map.WIDTH)
+					encounteredPokemon = database.getGyrados();
+				// in cavey area
+				else if (tp.x < Map.HEIGHT && tp.y >= Map.WIDTH && tp.y < 2 * Map.WIDTH)
+					encounteredPokemon = database.getExeggutor();
+				
+			} else
 				encounteredPokemon = database.getRandomCommon(map.getCurrentTerrain());
 
 			battleMessage = "You've encountered a " + encounteredPokemon.getName() + "!";
@@ -112,8 +129,7 @@ public class CEAGame extends GameMode {
 
 	public void startLegEncounter() {
 
-		battleMessage =
-				"You've encountered MEW!!\n AHHHHHHhhHHHhHhH.\n" + "Can you catch it??!!?!";
+		battleMessage = "You've encountered MEW!!\n AHHHHHHhhHHHhHhH.\n" + "Can you catch it??!!?!";
 
 		inBattle = true;
 		encounteredPokemon = database.getMew();
