@@ -23,6 +23,7 @@ import java.util.Random;
 import view.*;
 import model.ItemModel.BasicStepPotion;
 import model.ItemModel.Teleporter;
+import model.PokemonModel.Pokemon;
 
 public class MazeGame extends GameMode {
 
@@ -87,7 +88,7 @@ public class MazeGame extends GameMode {
 	}
 
 	@Override
-	public void trainerCaughtPokemon() {
+	public void trainerCaughtPokemon(Pokemon p) {
 		trainer.increaseSteps(10);
 	}
 }

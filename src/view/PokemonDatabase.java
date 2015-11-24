@@ -91,7 +91,6 @@ public class PokemonDatabase implements Serializable {
 		allPokemon.addAll(allCommon);
 		allPokemon.addAll(allUncommon);
 		allPokemon.addAll(allLegendary);
-
 	}
 
 	private void loadLegendary() {
@@ -112,8 +111,7 @@ public class PokemonDatabase implements Serializable {
 		// uncommon 
 		pikachu = new Uncommon(new Random(), "Pikachu", getImage("Pikachu"), PokemonType.ELECTRIC);
 		steelix = new Uncommon(new Random(), "Steelix", getImage("Steelix"), PokemonType.GROUND);
-		exeggutor =
-				new Uncommon(new Random(), "Exeggutor", getImage("Exeggutor"), PokemonType.GRASS);
+		exeggutor = new Uncommon(new Random(), "Exeggutor", getImage("Exeggutor"), PokemonType.GRASS);
 		gyrados = new Uncommon(new Random(), "Gyrados", getImage("Gyrados"), PokemonType.WATER);
 	}
 
@@ -142,57 +140,90 @@ public class PokemonDatabase implements Serializable {
 
 	public Pokemon getMagikarp() {
 
-		return magikarp;
+	    Pokemon p = magikarp;
+	    magikarp = new Common(new Random(), "Magikarp", getImage("Magikarp"), PokemonType.WATER);
+	    
+		return p;
 	}
 
 	public Pokemon getCyndaquil() {
-
-		return cyndaquil;
+	    
+	    Pokemon p = cyndaquil;
+        cyndaquil = new Common(new Random(), "Cyndaquil", getImage("Cyndaquil"), PokemonType.FIRE);
+	    
+		return p;
 	}
 
 	public Pokemon getRhydon() {
 
-		return rhydon;
+	    Pokemon p = rhydon;
+	    rhydon = new Common(new Random(), "Rhydon", getImage("Rhydon"), PokemonType.ROCK);
+	    
+		return p;
 	}
 
 	public Pokemon getDiglett() {
+	    
+	    Pokemon p = diglett;
+	    diglett = new Common(new Random(), "Diglett", getImage("Diglett"), PokemonType.GROUND);
 
-		return diglett;
+		return p;
 	}
 
 	public Pokemon getSimisage() {
+	    
+	    Pokemon p = simisage;
+	    simisage = new Common(new Random(), "Simisage", getImage("Simisage"), PokemonType.GRASS);
 
 		return simisage;
 	}
 
 	public Pokemon getLuvdisc() {
+	    
+	    Pokemon p = luvdisc;
+	    luvdisc =  new Common(new Random(), "Luvdisc", getImage("Luvdisc"), PokemonType.WATER);
 
-		return luvdisc;
+		return p;
 	}
 
 	public Pokemon getPikachu() {
+	    
+	    Pokemon p = pikachu;
+	    pikachu = new Uncommon(new Random(), "Pikachu", getImage("Pikachu"), PokemonType.ELECTRIC);
 
-		return pikachu;
+		return p;
 	}
 
 	public Pokemon getSteelix() {
+	    
+	    Pokemon p = steelix;
+        steelix = new Uncommon(new Random(), "Steelix", getImage("Steelix"), PokemonType.GROUND);
 
-		return steelix;
+		return p;
 	}
 
 	public Pokemon getExeggutor() {
 
-		return exeggutor;
+	    Pokemon p = exeggutor;
+	    exeggutor = new Uncommon(new Random(), "Exeggutor", getImage("Exeggutor"), PokemonType.GRASS);
+
+		return p;
 	}
 
 	public Pokemon getGyrados() {
 
-		return gyrados;
+	    Pokemon p = gyrados;
+	    gyrados = new Uncommon(new Random(), "Gyrados", getImage("Gyrados"), PokemonType.WATER);
+	    
+		return p;
 	}
 
 	public Pokemon getMew() {
 
-		return mew;
+	    Pokemon p = mew;
+        mew = new Legendary(new Random(), "Mew", getImage("Mew"), PokemonType.PSYCHIC);
+
+		return p;
 	}
 
 	public Pokemon getRandomCommon(TerrainType tt) {

@@ -39,6 +39,8 @@ public abstract class Pokemon implements Serializable {
 	protected int RUN_ADJUST; // fixed constant of run incrementation/decrementation
 	protected int CATCH_ADJUST; // fixed constant of catch incrementation/decerementation
 	protected int APPEARANCE_CHANCE;
+	
+	protected Rarity rarity;
 
 	/*---------------------------------------------------------------------
 	|  Method name:    [Pokemon]
@@ -208,6 +210,7 @@ public abstract class Pokemon implements Serializable {
 	public PokemonType getType() {
 		return type;
 	}
-
+	
+	public abstract Rarity getRarity();
 	public abstract String rarityString();
 }
