@@ -20,6 +20,7 @@ import java.util.Random;
 
 import model.ItemModel.Harmonica;
 import model.ItemModel.PokeBall;
+import model.PokemonModel.Pokemon;
 import view.*;
 
 public class CEAGame extends GameMode {
@@ -34,12 +35,16 @@ public class CEAGame extends GameMode {
 	public CEAGame(Random rand) {
 		super(rand);
 		loadImages();
-		
+
 		trainer.addItem(new Harmonica());
 		trainer.addItem(new Harmonica());
 		
-		// useItemOnPokemon(new Harmonica(), database.getMew().getName());
 		
+		// for testing 
+		for (Pokemon p : database.getAllPokemon())
+			if (!p.getName().toUpperCase().equals("MEW"))
+				trainer.addPokemon(p);
+
 	}
 
 	/*---------------------------------------------------------------------
@@ -49,7 +54,7 @@ public class CEAGame extends GameMode {
 	 *---------------------------------------------------------------------*/
 	@Override
 	public boolean isGameWon() {
-		
+
 		return database.caughtEmAll(trainer);
 	}
 
@@ -63,7 +68,7 @@ public class CEAGame extends GameMode {
 		// TODO add losing conditions
 		if (trainer.getSteps() == 0 || !trainer.getItems().contains(new PokeBall()))
 			return true;
-		
+
 		return false;
 	}
 
@@ -76,9 +81,45 @@ public class CEAGame extends GameMode {
 		map = new CEAMap(r);
 	}
 
+	/*---------------------------------------------------------------------
+	|  Method name:    [startEncounter]
+	|  Purpose:        [This start an encounter]
+	 *---------------------------------------------------------------------*/
 	@Override
-	public void trainerCaughtPokemon() {
+	public void startEncounter() {
+
+		// only uncommon and common pokemon can be encountered
+		// and only not in secrety secret land
+		if (trainer.getPoint().x >= Map.HEIGHT && trainer.getPoint().y >= Map.WIDTH) {
+			int rand = r.nextInt(5);
+			if (rand == 4)
+				encounteredPokemon = database.getRandomUncommon(map.getCurrentTerrain());
+			else
+				encounteredPokemon = database.getRandomCommon(map.getCurrentTerrain());
+
+			battleMessage = "You've encountered a " + encounteredPokemon.getName() + "!";
+
+			inBattle = true;
+			encounter.startEncounter(encounteredPokemon);
+			map.pauseBGMusic();
+		}
+	}
+
+	@Override
+	public void trainerCaughtPokemon(Pokemon p) {
 		// nothing hurr
+	}
+
+	public void startLegEncounter() {
+
+		battleMessage =
+				"You've encountered MEW!!\n AHHHHHHhhHHHhHhH.\n" + "Can you catch it??!!?!";
+
+		inBattle = true;
+		encounteredPokemon = database.getMew();
+		encounter.startEncounter(encounteredPokemon);
+		map.pauseBGMusic();
+
 	}
 
 }
