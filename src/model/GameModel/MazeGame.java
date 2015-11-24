@@ -37,7 +37,7 @@ public class MazeGame extends GameMode {
 	public MazeGame(Random rand) {
 		super(rand);
 		loadImages();
-		
+
 		// for testing
 		trainer.addItem(new BasicStepPotion());
 		trainer.addItem(new Teleporter());
@@ -73,10 +73,9 @@ public class MazeGame extends GameMode {
 
 		if (trainer.getSteps() == 0)
 			return true;
-		
+
 		return false;
 	}
-	
 
 	/*---------------------------------------------------------------------
 	 |  Method name:    [createMap]
@@ -89,6 +88,19 @@ public class MazeGame extends GameMode {
 
 	@Override
 	public void trainerCaughtPokemon(Pokemon p) {
-		trainer.increaseSteps(10);
+		switch (p.getRarity()) {
+		case COMMON:
+			trainer.increaseSteps(5);
+			break;
+		case UNCOMMON:
+			trainer.increaseSteps(10);
+			break;
+		case LEGENDARY:
+			trainer.increaseSteps(20);
+			break;
+		default:
+			break;
+		}
+
 	}
 }
