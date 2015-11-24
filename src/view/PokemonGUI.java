@@ -256,11 +256,8 @@ public class PokemonGUI {
         pokedex.addActionListener(new PokedexCreator());
         
         // make the buttons pretty
-       // save.setOpaque(true);
         save.setBackground(new Color(102, 178, 255));
-       // use.setOpaque(true);
         use.setBackground(new Color(51, 255, 153));
-      //  forfeit.setOpaque(true);
         forfeit.setBackground(new Color(255, 51, 51));
         pokedex.setBackground(new Color(181,74,247));
         
@@ -727,8 +724,7 @@ public class PokemonGUI {
             
             steps.setValue(mode.getTrainer().getSteps());
             steps.setString((mode.getTrainer().getSteps()) + " steps remaining");
-        }
-        
+        }     
      }
 
     /*---------------------------------------------------------------------
@@ -758,30 +754,37 @@ public class PokemonGUI {
         }
     }
 
+    /*---------------------------------------------------------------------
+    |  Method name:    [PokedexCreator]
+    |  Purpose:        [Shows the Pokedex when selected]
+    *---------------------------------------------------------------------*/
     private class PokedexCreator implements ActionListener {
 
         @Override
         public void actionPerformed(ActionEvent e) {
 
             dex = new Pokedex(mode.getTrainer());
-            mapView.setVisible(false);
+            mapView.setVisible(false); // hide the map
             dex.addWindowListener(new PokedexCloser());
         }   
     }
     
+    /*---------------------------------------------------------------------
+    |  Class name:     [PokedexCloser]
+    |  Purpose:        [Closing function of Pokedex frame]
+    *---------------------------------------------------------------------*/
     private class PokedexCloser implements WindowListener {
 
         @Override
         public void windowOpened(WindowEvent e) {
-            // TODO Auto-generated method stub
             
         }
 
         @Override
         public void windowClosing(WindowEvent e) {
 
-            dex.dispose();
-            mapView.setVisible(true);
+            dex.dispose(); // dispose of the Pokedex
+            mapView.setVisible(true); // show the map again
         }
 
         @Override
@@ -1024,7 +1027,6 @@ public class PokemonGUI {
                 if (mode.gameAlert()) {
                     
                     JOptionPane.showMessageDialog(null, mode.getNotification(), "HEY TRAINER PERSON!", JOptionPane.INFORMATION_MESSAGE);
-
                 }
             }
         }
