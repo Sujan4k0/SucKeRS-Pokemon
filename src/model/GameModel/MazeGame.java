@@ -83,7 +83,7 @@ public class MazeGame extends GameMode {
 	 *---------------------------------------------------------------------*/
 	@Override
 	public void createMap() {
-		map = new MazeMap(r);
+		map = new MazeMap(new Random());
 	}
 
 	@Override
@@ -103,4 +103,29 @@ public class MazeGame extends GameMode {
 		}
 
 	}
+
+	@Override
+	public void startEncounter() {
+
+		int rand = r.nextInt(10);
+
+		if (encounteredPokemon == null) {
+			if (rand == 9)
+				encounteredPokemon = database.getMew();
+			else {
+				rand = r.nextInt(5);
+				if (rand == 4)
+					encounteredPokemon = database.getRandomUncommon(map.getCurrentTerrain());
+				else
+					encounteredPokemon = database.getRandomCommon(map.getCurrentTerrain());
+			}
+		}
+		battleMessage = "You've encountered a " + encounteredPokemon.getName() + "!";
+
+		inBattle = true;
+		encounter.startEncounter(encounteredPokemon);
+		map.pauseBGMusic();
+
+	}
+
 }

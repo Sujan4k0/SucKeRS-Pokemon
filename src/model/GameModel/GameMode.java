@@ -249,8 +249,7 @@ public abstract class GameMode implements Serializable {
 					alertMessage =
 							"You picked up a *fudging* " + pickedUp.getName() + "!!!!!!! YESSSSSS";
 
-				}
-				else if (trainer.getPoint().equals(new Point(1, 7)) 
+				} else if (trainer.getPoint().equals(new Point(1, 7))
 						&& this.getClass().equals(CEAGame.class)) {
 					((CEAGame) this).startLegEncounter();
 				}
@@ -275,12 +274,16 @@ public abstract class GameMode implements Serializable {
 	public boolean isGameActive() {
 		if (isGameWon()) {
 			endMessage = "You Won!!!!!!!!";
+			map.stopBGMusic();
 			return false;
 		} else if (isGameLost()) {
 			endMessage = "You LOSTTTTT >:(";
+			map.stopBGMusic();
 			return false;
-		} else if (forfeited)
+		} else if (forfeited) {
+			map.stopBGMusic();
 			return false;
+		}
 
 		return true;
 	}
@@ -334,27 +337,7 @@ public abstract class GameMode implements Serializable {
 	|  Method name:    [startEncounter]
 	|  Purpose:        [This start an encounter]
 	 *---------------------------------------------------------------------*/
-	public void startEncounter() {
-
-		int rand = r.nextInt(10);
-		System.out.println("Map class = " + map.getClass().getName());
-		if (rand == 9)
-			encounteredPokemon = database.getMew();
-		else {
-			rand = r.nextInt(5);
-			if (rand == 4)
-				encounteredPokemon = database.getRandomUncommon(map.getCurrentTerrain());
-			else
-				encounteredPokemon = database.getRandomCommon(map.getCurrentTerrain());
-		}
-
-		battleMessage = "You've encountered a " + encounteredPokemon.getName() + "!";
-
-		inBattle = true;
-		encounter.startEncounter(encounteredPokemon);
-		map.pauseBGMusic();
-
-	}
+	public abstract void startEncounter();
 
 	public void setEncounteredPokemon(Pokemon p) {
 		encounteredPokemon = p;
@@ -377,7 +360,7 @@ public abstract class GameMode implements Serializable {
 		// to tell the EncounterPanel if the Trainer should be animated
 		// at the end of the method
 		boolean doAnimation = true;
-		
+
 		PokemonResponse pr = encounteredPokemon.respond(action);
 
 		if (moveCount == 10) {
@@ -477,6 +460,10 @@ public abstract class GameMode implements Serializable {
 		useItem(i);
 	}
 
+	public PokemonDatabase getDatabase() {
+		return database;
+	}
+
 	public void loadImages() {
 		map.load();
 		database.loadAllPokemon();
@@ -503,6 +490,7 @@ public abstract class GameMode implements Serializable {
 
 	private void endEncounter() {
 
+		encounteredPokemon = null;
 		moveCount = 0; // reset moveCount
 		inBattle = false;
 		encounter.stopEncounter();
@@ -539,20 +527,15 @@ public abstract class GameMode implements Serializable {
 		@Override
 		public void keyPressed(KeyEvent e) {
 
-			// if the game is not won or lost or forfeited, move the trainer
-			if (!inBattle && !forfeited && !isGameWon() && !isGameLost()) {
+			// if the game active and not in battle, move trainer
+			if (!inBattle && isGameActive()) {
 				// set sprite direction and try to move trainer
 				moveTrainer(e.getKeyCode());
 			}
 
-			if (!isGameActive())
-				map.stopBGMusic();
-
-			// map.update(trainer); // does anything the map needs to check ever
-			// key press
-
-			if (database.caughtAllExceptLeg(trainer) && map.getClass().equals(CEAMap.class))
-				((CEAMap) map).lastPartCheck(trainer);
+			if (map.getClass().equals(CEAMap.class)) {
+				((CEAMap)map).lastPartCheck(trainer);
+			}
 
 		}
 

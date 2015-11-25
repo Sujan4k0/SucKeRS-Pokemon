@@ -9,7 +9,9 @@ import java.awt.image.BufferedImage;
 import java.util.Random;
 
 import model.GameModel.*;
+import model.ItemModel.BasicStepPotion;
 import model.ItemModel.Harmonica;
+import model.ItemModel.Item;
 import model.ItemModel.PokeBall;
 import model.ItemModel.Teleporter;
 import model.PokemonModel.Common;
@@ -17,6 +19,7 @@ import model.PokemonModel.Legendary;
 import model.PokemonModel.Pokemon;
 import model.PokemonModel.PokemonResponse;
 import model.PokemonModel.PokemonType;
+import model.PokemonModel.Rarity;
 import model.TrainerModel.TrainerAction;
 
 import org.junit.Test;
@@ -25,6 +28,7 @@ import com.sun.glass.events.KeyEvent;
 
 import view.CEAMap;
 import view.GraphicsManager;
+import view.Map;
 import view.MazeMap;
 import view.PokemonDatabase;
 
@@ -35,19 +39,19 @@ public class GameModelTests {
 		public int nextInt(int i) {
 			return Integer.MAX_VALUE / 2;
 		}
-	}, "testMon1", new Image[0], PokemonType.WATER); 
-	
+	}, "testMon1", new Image[0], PokemonType.WATER);
+
 	private static Pokemon impossiblePM2 = new Legendary(new Random() {
 		@Override
 		public int nextInt(int i) {
 			return Integer.MAX_VALUE / 2;
 		}
-	}, "testMon1", new Image[0], PokemonType.WATER); 
+	}, "testMon3", new Image[0], PokemonType.WATER);
 
 	private static Pokemon alwaysPM = new Common(new Random() {
 		@Override
 		public int nextInt(int i) {
-			return -1;
+			return -100;
 		}
 	}, "testMon2", new Image[0], PokemonType.WATER);
 
@@ -58,7 +62,7 @@ public class GameModelTests {
 			for (int j = 0; j < 11; j++)
 				obstacles[i][j] = Obstacle.ROCK_1;
 
-		new MazeGenerator(new Random(),new Point(5, 1), obstacles).generateMaze();
+		new MazeGenerator(new Random(), new Point(5, 1), obstacles).generateMaze();
 
 		// maze obstacles should only have 1 null on the left most 
 		// and also right most sides of the map
@@ -144,10 +148,8 @@ public class GameModelTests {
 		CEAGame cea = new CEAGame(new Random());
 		// CEAGame should not be won
 		assertFalse(cea.isGameWon());
-		PokemonDatabase pokemon = new PokemonDatabase();
-		// add all Pokemon to Trainer
-		for (Pokemon p : pokemon.getAllPokemon())
-			cea.getTrainer().addPokemon(p);
+		// add mew to trainer
+		cea.getTrainer().addPokemon(cea.getDatabase().getMew());
 		// now game should be won
 		assertTrue(cea.isGameWon());
 	}
@@ -185,7 +187,102 @@ public class GameModelTests {
 	@Test
 	public void cEAGameTrainerCaughtPokemonTest() {
 		// just make sure method doesn't throw exception
-		new CEAGame(new Random()).trainerCaughtPokemon();
+		new CEAGame(new Random()).trainerCaughtPokemon(impossiblePM);
+	}
+
+	@Test
+	public void cEAGameStartEncounterTest() {
+		CEAGame g = new CEAGame(new Random() {
+			@Override
+			public int nextInt(int i) {
+				return 4;
+			}
+		});
+
+		g.startEncounter(); // plainy land
+
+		assertEquals(g.getEncounteredPokemon().getName(), "STEELIX");
+	}
+
+	@Test
+	public void cEAGameStartEncounterTest2() {
+		CEAGame g = new CEAGame(new Random() {
+			@Override
+			public int nextInt(int i) {
+				return 4;
+			}
+		});
+
+		g.getTrainer().setPoint(new Point(Map.HEIGHT * 3 - 3, Map.WIDTH * 2 - 3));
+
+		g.startEncounter(); // icey land
+
+		assertEquals(g.getEncounteredPokemon().getName(), "PIKACHU");
+	}
+
+	@Test
+	public void cEAGameStartEncounterTest3() {
+		CEAGame g = new CEAGame(new Random() {
+			@Override
+			public int nextInt(int i) {
+				return 4;
+			}
+		});
+
+		g.getTrainer().setPoint(new Point(Map.HEIGHT - 3, Map.WIDTH * 2 - 3));
+
+		g.startEncounter(); // cavey land
+
+		assertEquals(g.getEncounteredPokemon().getName(), "EXEGGUTOR");
+	}
+
+	@Test
+	public void cEAGameStartEncounterTest4() {
+		CEAGame g = new CEAGame(new Random() {
+			@Override
+			public int nextInt(int i) {
+				return 4;
+			}
+		});
+
+		g.getTrainer().setPoint(new Point(Map.HEIGHT * 2 - 3, Map.WIDTH * 3 - 3));
+
+		g.startEncounter(); // deserty land
+
+		assertEquals(g.getEncounteredPokemon().getName(), "GYRADOS");
+	}
+
+	@Test
+	public void cEAGameStartLegEncounterTest() {
+		CEAGame g = new CEAGame(new Random() {
+			@Override
+			public int nextInt(int i) {
+				return 4;
+			}
+		});
+
+		g.startLegEncounter();
+
+		assertEquals(g.getEncounteredPokemon().getName(), "MEW");
+	}
+
+	@Test
+	public void cEAGameLastPartTest() {
+		CEAGame g = new CEAGame(new Random());
+		for (Pokemon p : g.getDatabase().getAllPokemon())
+			if (!p.getName().equals("MEW"))
+				g.getTrainer().addPokemon(p);
+
+		((CEAMap) g.getMap()).lastPartCheck(g.getTrainer());
+		assertTrue(g.getTrainer().getItemQuantities().get("Teleporter") > 0);
+		assertTrue(((CEAMap) g.getMap()).inLastPart());
+	}
+
+	@Test
+	public void cEAGameLegSpotTest() {
+		CEAGame g = new CEAGame(new Random());
+		g.getTrainer().setPoint(new Point(2, 7));
+		g.moveTrainer(KeyEvent.VK_UP);
 	}
 
 	@Test
@@ -238,8 +335,15 @@ public class GameModelTests {
 		// should increase steps by 10
 		MazeGame maze = new MazeGame(new Random());
 		int steps = maze.getTrainer().getSteps();
-		maze.trainerCaughtPokemon();
+		PokemonDatabase db = new PokemonDatabase();
+		maze.trainerCaughtPokemon(db.getCyndaquil());
+		assertEquals(steps + 5, maze.getTrainer().getSteps());
+		steps = maze.getTrainer().getSteps();
+		maze.trainerCaughtPokemon(db.getGyrados());
 		assertEquals(steps + 10, maze.getTrainer().getSteps());
+		steps = maze.getTrainer().getSteps();
+		maze.trainerCaughtPokemon(db.getMew());
+		assertEquals(steps + 20, maze.getTrainer().getSteps());
 
 	}
 
@@ -268,34 +372,69 @@ public class GameModelTests {
 		g.moveTrainer(KeyEvent.VK_LEFT);
 		Point end = new Point(g.getTrainer().getPoint());
 		assertEquals(start, new Point(end.x, end.y + 1));
-		
+
 		g = new CEAGame(r);
 		start = new Point(g.getTrainer().getPoint());
 		g.moveTrainer(KeyEvent.VK_RIGHT);
 		end = new Point(g.getTrainer().getPoint());
 		assertEquals(start, new Point(end.x, end.y - 1));
-		
+
 		g = new CEAGame(r);
 		start = new Point(g.getTrainer().getPoint());
 		g.moveTrainer(KeyEvent.VK_UP);
 		end = new Point(g.getTrainer().getPoint());
 		assertEquals(start, new Point(end.x + 1, end.y));
-		
+
 		g = new CEAGame(r);
 		start = new Point(g.getTrainer().getPoint());
 		g.moveTrainer(KeyEvent.VK_DOWN);
 		end = new Point(g.getTrainer().getPoint());
 		assertEquals(start, new Point(end.x - 1, end.y));
 
-		
+	}
 
-		//if trainer can't move this shouldn't throw exception
-		g.moveTrainer(KeyEvent.VK_LEFT);
-		g.moveTrainer(KeyEvent.VK_LEFT);
-		g.moveTrainer(KeyEvent.VK_LEFT);
-		g.moveTrainer(KeyEvent.VK_LEFT);
-		g.moveTrainer(KeyEvent.VK_LEFT);
-		g.moveTrainer(KeyEvent.VK_LEFT);
+	@Test
+	public void mazeGametartEncounterTest() {
+		GameMode g = new MazeGame(new Random() {
+			@Override
+			public int nextInt(int i) {
+				return 9;
+			}
+		});
+
+		g.startEncounter();
+
+		assertEquals(g.getEncounteredPokemon().getRarity(), Rarity.LEGENDARY);
+
+	}
+
+	@Test
+	public void mazeGameStartEncounterTest2() {
+		GameMode g = new MazeGame(new Random() {
+			@Override
+			public int nextInt(int i) {
+				return 4;
+			}
+		});
+
+		g.startEncounter();
+
+		assertEquals(g.getEncounteredPokemon().getRarity(), Rarity.UNCOMMON);
+
+	}
+
+	@Test
+	public void mazeGameStartEncounterTest3() {
+		GameMode g = new MazeGame(new Random() {
+			@Override
+			public int nextInt(int i) {
+				return 0;
+			}
+		});
+
+		g.startEncounter();
+
+		assertEquals(g.getEncounteredPokemon().getRarity(), Rarity.COMMON);
 
 	}
 
@@ -341,7 +480,7 @@ public class GameModelTests {
 
 		assertEquals(g.getEndMessage(), "yo");
 	}
-	
+
 	@Test
 	public void gameModeDoTrainerActionTest() {
 		GameMode g = new CEAGame(new Random() {
@@ -354,12 +493,29 @@ public class GameModelTests {
 		impossiblePM2.setState(PokemonResponse.RUN_AWAY);
 		g.setEncounteredPokemon(impossiblePM2);
 		g.startEncounter();
-		// resets battle message (FOR NOW MUAHAHAAHA)
-		g.getBattleMessage();
+		assertTrue(g.trainerInBattle());
 		// throw bait
 		g.doTrainerAction(TrainerAction.THROW_BAIT);
 		// pokemon should still have run away state
 		assertEquals(impossiblePM2.getState(), PokemonResponse.RUN_AWAY);
+	}
+
+	@Test
+	public void gameModePokemonRunAwayTest() {
+		GameMode g = new CEAGame(new Random());
+		Pokemon alwaysPM2 = new Common(new Random() {
+			@Override
+			public int nextInt(int i) {
+				return -100;
+			}
+		}, "testMon2", new Image[0], PokemonType.WATER);
+		alwaysPM2.setState(PokemonResponse.RUN_AWAY);
+		g.setEncounteredPokemon(alwaysPM2);
+		g.startEncounter();
+		g.doTrainerAction(TrainerAction.THROW_ROCK);
+		// battle msg should be updated
+		//assertFalse(g.trainerInBattle());
+		assertTrue(g.getBattleMessage().toUpperCase().contains("RAN AWAY"));
 	}
 
 	@Test
@@ -369,23 +525,39 @@ public class GameModelTests {
 		int balls = g.getTrainer().getItemQuantities().get("PokeBall");
 		// set the encountered pokemon to something impossible to catch
 		g.setEncounteredPokemon(impossiblePM);
-		g.getEncounterPanel().startEncounter(impossiblePM);
+		g.startEncounter();
 		// use a ball
 		g.doTrainerAction(TrainerAction.THROW_BALL);
 		//should have decremented balls by 1
 		assertEquals(balls, g.getTrainer().getItemQuantities().get("PokeBall") + 1);
+
+	}
+
+	@Test
+	public void gameModeDoTrainerActionThrowBallTest2() {
+		GameMode g = new MazeGame(new Random());
+		// should start off with more than 0 balls so this is fine
+		int balls = g.getTrainer().getItemQuantities().get("PokeBall");
+		// set the encountered pokemon to something impossible to catch
+		g.setEncounteredPokemon(impossiblePM);
+		g.startEncounter();
 		//use all balls
-		for (int i = 0; i < balls - 1; i++)
+		for (int i = 0; i < balls; i++)
 			g.useItem(new PokeBall());
 		//try to throw another ball
 		g.doTrainerAction(TrainerAction.THROW_BALL);
 		//battle message should be updated
 		assertTrue(g.getBattleMessage().toUpperCase().contains("NO POKEBALLS LEFT"));
+		
+	}
 
+	@Test
+	public void gameModeDoTrainerActionThrowBallTest3() {
+		GameMode g = new MazeGame(new Random());
 		//catch the pokemon
 		g.getTrainer().addItem(new PokeBall());
 		g.setEncounteredPokemon(alwaysPM);
-		g.getEncounterPanel().startEncounter(alwaysPM);
+		g.startEncounter();
 		g.doTrainerAction(TrainerAction.THROW_BALL);
 		//battle msg should be updated
 		assertTrue(g.getBattleMessage().toUpperCase()
@@ -399,7 +571,7 @@ public class GameModelTests {
 		GameMode g = new MazeGame(new Random());
 		// set the encountered pokemon to something impossible to run
 		g.setEncounteredPokemon(impossiblePM);
-		g.getEncounterPanel().startEncounter(impossiblePM);
+		g.startEncounter();
 		// run away
 		g.doTrainerAction(TrainerAction.RUN_AWAY);
 		// battle msg should be updated
@@ -412,7 +584,7 @@ public class GameModelTests {
 		GameMode g = new MazeGame(new Random());
 		// set the encountered pokemon to something impossible to run
 		g.setEncounteredPokemon(impossiblePM);
-		g.getEncounterPanel().startEncounter(impossiblePM);
+		g.startEncounter();
 		// throw bait
 		g.doTrainerAction(TrainerAction.THROW_BAIT);
 		// battle msg should be updated
@@ -425,12 +597,11 @@ public class GameModelTests {
 		GameMode g = new MazeGame(new Random());
 		// set the encountered pokemon to something impossible to run
 		g.setEncounteredPokemon(impossiblePM);
-		g.getEncounterPanel().startEncounter(impossiblePM);
+		g.startEncounter();
 		// throw rock
 		g.doTrainerAction(TrainerAction.THROW_ROCK);
 		// battle msg should be updated
 		assertTrue(g.getBattleMessage().toUpperCase().contains("ROCK"));
-
 	}
 
 	@Test
@@ -440,19 +611,47 @@ public class GameModelTests {
 		Teleporter tele = new Teleporter();
 		g.getTrainer().addItem(tele);
 		g.getTrainer().addItem(new Harmonica());
-		
+
 		// use the harmonica
 		String pName = new PokemonDatabase().getDiglett().getName();
 		assertFalse(g.getMap().getBGMusicFilePath().toUpperCase().contains(pName.toUpperCase()));
 		g.useItemOnPokemon(new Harmonica(), pName);
 		assertTrue(g.getMap().getBGMusicFilePath().toUpperCase().contains(pName.toUpperCase()));
-		
+
 		// use the teleporter
 		assertFalse(tele.isSet());
 		g.useItem(tele);
 		assertTrue(tele.isSet());
 		assertTrue(g.getTrainer().getPoint().equals(tele.getTeleportPoint()));
-		
+
+	}
+
+	@Test
+	public void gameModeMoveCountTest() {
+		GameMode g = new CEAGame(new Random());
+		int balls = g.getTrainer().getItemQuantities().get("PokeBall");
+
+		g.startEncounter();
+
+		for (int i = 0; i < balls; i++)
+			g.getTrainer().useItem(new PokeBall());
+
+		for (int i = 0; i < 11; i++)
+			g.doTrainerAction(TrainerAction.THROW_BALL);
+
+		assertTrue(g.getEncounteredPokemon() == null);
+	}
+
+	@Test
+	public void gameModePickUpItemTest() {
+		GameMode g = new CEAGame(new Random());
+		Item[][] items = g.getMap().getItemTiles();
+		items[g.getTrainer().getPoint().x][g.getTrainer().getPoint().y + 1] = new BasicStepPotion();
+		g.moveTrainer(KeyEvent.VK_RIGHT);
+		assertTrue(g.getTrainer().getItems().contains(new BasicStepPotion()));
+		assertTrue(g.gameAlert());
+		assertTrue(g.getNotification().length() > 0);
+		assertTrue(g.getNotification().equals(""));
 	}
 
 }

@@ -155,44 +155,44 @@ public class CEAMap extends Map {
 		}
 		//tree clusters
 		//top left item tree		
-		obstacleTiles[Map.HEIGHT+1][Map.WIDTH+3]= Obstacle.TREE_PALM;
-		obstacleTiles[Map.HEIGHT+1][Map.WIDTH+4]= Obstacle.TREE_PALM;
-		obstacleTiles[Map.HEIGHT+1][Map.WIDTH+5]= Obstacle.TREE_PALM;
-		obstacleTiles[Map.HEIGHT+2][Map.WIDTH+5]= Obstacle.TREE_PALM;
-		obstacleTiles[Map.HEIGHT+3][Map.WIDTH+3]= Obstacle.TREE_PALM;
-		obstacleTiles[Map.HEIGHT+3][Map.WIDTH+4]= Obstacle.TREE_PALM;
-		obstacleTiles[Map.HEIGHT+3][Map.WIDTH+5]= Obstacle.TREE_PALM;
-		
+		obstacleTiles[Map.HEIGHT + 1][Map.WIDTH + 3] = Obstacle.TREE_PALM;
+		obstacleTiles[Map.HEIGHT + 1][Map.WIDTH + 4] = Obstacle.TREE_PALM;
+		obstacleTiles[Map.HEIGHT + 1][Map.WIDTH + 5] = Obstacle.TREE_PALM;
+		obstacleTiles[Map.HEIGHT + 2][Map.WIDTH + 5] = Obstacle.TREE_PALM;
+		obstacleTiles[Map.HEIGHT + 3][Map.WIDTH + 3] = Obstacle.TREE_PALM;
+		obstacleTiles[Map.HEIGHT + 3][Map.WIDTH + 4] = Obstacle.TREE_PALM;
+		obstacleTiles[Map.HEIGHT + 3][Map.WIDTH + 5] = Obstacle.TREE_PALM;
+
 		//bottom left solid tree
-		obstacleTiles[Map.HEIGHT*2-4][Map.WIDTH+3]= Obstacle.TREE_PALM;
-		obstacleTiles[Map.HEIGHT*2-4][Map.WIDTH+4]= Obstacle.TREE_PALM;
-		obstacleTiles[Map.HEIGHT*2-4][Map.WIDTH+5]= Obstacle.TREE_PALM;
-		obstacleTiles[Map.HEIGHT*2-3][Map.WIDTH+3]= Obstacle.TREE_PALM;
-		obstacleTiles[Map.HEIGHT*2-3][Map.WIDTH+4]= Obstacle.TREE_PALM;
-		obstacleTiles[Map.HEIGHT*2-3][Map.WIDTH+5]= Obstacle.TREE_PALM;		
-		obstacleTiles[Map.HEIGHT*2-2][Map.WIDTH+3]= Obstacle.TREE_PALM;
-		obstacleTiles[Map.HEIGHT*2-2][Map.WIDTH+4]= Obstacle.TREE_PALM;
-		obstacleTiles[Map.HEIGHT*2-2][Map.WIDTH+5]= Obstacle.TREE_PALM;
-		
+		obstacleTiles[Map.HEIGHT * 2 - 4][Map.WIDTH + 3] = Obstacle.TREE_PALM;
+		obstacleTiles[Map.HEIGHT * 2 - 4][Map.WIDTH + 4] = Obstacle.TREE_PALM;
+		obstacleTiles[Map.HEIGHT * 2 - 4][Map.WIDTH + 5] = Obstacle.TREE_PALM;
+		obstacleTiles[Map.HEIGHT * 2 - 3][Map.WIDTH + 3] = Obstacle.TREE_PALM;
+		obstacleTiles[Map.HEIGHT * 2 - 3][Map.WIDTH + 4] = Obstacle.TREE_PALM;
+		obstacleTiles[Map.HEIGHT * 2 - 3][Map.WIDTH + 5] = Obstacle.TREE_PALM;
+		obstacleTiles[Map.HEIGHT * 2 - 2][Map.WIDTH + 3] = Obstacle.TREE_PALM;
+		obstacleTiles[Map.HEIGHT * 2 - 2][Map.WIDTH + 4] = Obstacle.TREE_PALM;
+		obstacleTiles[Map.HEIGHT * 2 - 2][Map.WIDTH + 5] = Obstacle.TREE_PALM;
+
 		//top right solid tree
-		obstacleTiles[Map.HEIGHT+1][Map.WIDTH*2-5]= Obstacle.TREE_PALM;
-		obstacleTiles[Map.HEIGHT+1][Map.WIDTH*2-4]= Obstacle.TREE_PALM;
-		obstacleTiles[Map.HEIGHT+1][Map.WIDTH*2-3]= Obstacle.TREE_PALM;
-		obstacleTiles[Map.HEIGHT+2][Map.WIDTH*2-5]= Obstacle.TREE_PALM;
-		obstacleTiles[Map.HEIGHT+2][Map.WIDTH*2-4]= Obstacle.TREE_PALM;
-		obstacleTiles[Map.HEIGHT+2][Map.WIDTH*2-3]= Obstacle.TREE_PALM;		
-		obstacleTiles[Map.HEIGHT+3][Map.WIDTH*2-5]= Obstacle.TREE_PALM;
-		obstacleTiles[Map.HEIGHT+3][Map.WIDTH*2-4]= Obstacle.TREE_PALM;
-		obstacleTiles[Map.HEIGHT+3][Map.WIDTH*2-3]= Obstacle.TREE_PALM;
-		
+		obstacleTiles[Map.HEIGHT + 1][Map.WIDTH * 2 - 5] = Obstacle.TREE_PALM;
+		obstacleTiles[Map.HEIGHT + 1][Map.WIDTH * 2 - 4] = Obstacle.TREE_PALM;
+		obstacleTiles[Map.HEIGHT + 1][Map.WIDTH * 2 - 3] = Obstacle.TREE_PALM;
+		obstacleTiles[Map.HEIGHT + 2][Map.WIDTH * 2 - 5] = Obstacle.TREE_PALM;
+		obstacleTiles[Map.HEIGHT + 2][Map.WIDTH * 2 - 4] = Obstacle.TREE_PALM;
+		obstacleTiles[Map.HEIGHT + 2][Map.WIDTH * 2 - 3] = Obstacle.TREE_PALM;
+		obstacleTiles[Map.HEIGHT + 3][Map.WIDTH * 2 - 5] = Obstacle.TREE_PALM;
+		obstacleTiles[Map.HEIGHT + 3][Map.WIDTH * 2 - 4] = Obstacle.TREE_PALM;
+		obstacleTiles[Map.HEIGHT + 3][Map.WIDTH * 2 - 3] = Obstacle.TREE_PALM;
+
 		//bottom right item tree
-		obstacleTiles[Map.HEIGHT*2-4][Map.WIDTH*2-5]= Obstacle.TREE_PALM;
-		obstacleTiles[Map.HEIGHT*2-4][Map.WIDTH*2-4]= Obstacle.TREE_PALM;
-		obstacleTiles[Map.HEIGHT*2-4][Map.WIDTH*2-3]= Obstacle.TREE_PALM;
-		obstacleTiles[Map.HEIGHT*2-3][Map.WIDTH*2-5]= Obstacle.TREE_PALM;
-		obstacleTiles[Map.HEIGHT*2-2][Map.WIDTH*2-5]= Obstacle.TREE_PALM;
-		obstacleTiles[Map.HEIGHT*2-2][Map.WIDTH*2-4]= Obstacle.TREE_PALM;
-		obstacleTiles[Map.HEIGHT*2-2][Map.WIDTH*2-3]= Obstacle.TREE_PALM;
+		obstacleTiles[Map.HEIGHT * 2 - 4][Map.WIDTH * 2 - 5] = Obstacle.TREE_PALM;
+		obstacleTiles[Map.HEIGHT * 2 - 4][Map.WIDTH * 2 - 4] = Obstacle.TREE_PALM;
+		obstacleTiles[Map.HEIGHT * 2 - 4][Map.WIDTH * 2 - 3] = Obstacle.TREE_PALM;
+		obstacleTiles[Map.HEIGHT * 2 - 3][Map.WIDTH * 2 - 5] = Obstacle.TREE_PALM;
+		obstacleTiles[Map.HEIGHT * 2 - 2][Map.WIDTH * 2 - 5] = Obstacle.TREE_PALM;
+		obstacleTiles[Map.HEIGHT * 2 - 2][Map.WIDTH * 2 - 4] = Obstacle.TREE_PALM;
+		obstacleTiles[Map.HEIGHT * 2 - 2][Map.WIDTH * 2 - 3] = Obstacle.TREE_PALM;
 	}
 
 	private void makeIceyLand() {
@@ -220,35 +220,37 @@ public class CEAMap extends Map {
 			groundTiles[Map.HEIGHT * 2][i] = grassy;
 		}
 		//left outer wall
-		for (int i=(Map.HEIGHT*2+2); i<=(Map.HEIGHT*3-3);i++){
-			obstacleTiles[i][Map.WIDTH+3]=Obstacle.TREE_SNOWY;
+		for (int i = (Map.HEIGHT * 2 + 2); i <= (Map.HEIGHT * 3 - 3); i++) {
+			obstacleTiles[i][Map.WIDTH + 3] = Obstacle.TREE_SNOWY;
 		}
 		//right outer wall
-		for (int i=(Map.HEIGHT*2+2); i<=(Map.HEIGHT*3-3);i++){
-			obstacleTiles[i][Map.WIDTH*2-4]=Obstacle.TREE_SNOWY;
+		for (int i = (Map.HEIGHT * 2 + 2); i <= (Map.HEIGHT * 3 - 3); i++) {
+			obstacleTiles[i][Map.WIDTH * 2 - 4] = Obstacle.TREE_SNOWY;
 		}
 		//top wall
-		for (int i=(Map.WIDTH+4); i<Map.WIDTH*2-4;i++){
-			obstacleTiles[Map.HEIGHT*2+2][i]=Obstacle.TREE_SNOWY;
+		for (int i = (Map.WIDTH + 4); i < Map.WIDTH * 2 - 4; i++) {
+			obstacleTiles[Map.HEIGHT * 2 + 2][i] = Obstacle.TREE_SNOWY;
 		}
 		//outer bottom
-		for (int i=(Map.WIDTH+4); i<Map.WIDTH*2-4;i++){
-			if(i==Map.WIDTH+7)i++;
-			obstacleTiles[Map.HEIGHT*3-3][i]=Obstacle.TREE_SNOWY;
+		for (int i = (Map.WIDTH + 4); i < Map.WIDTH * 2 - 4; i++) {
+			if (i == Map.WIDTH + 7)
+				i++;
+			obstacleTiles[Map.HEIGHT * 3 - 3][i] = Obstacle.TREE_SNOWY;
 		}
 		//inner top
-		for (int i=(Map.WIDTH+5); i<Map.WIDTH+10;i++){
-			if(i==Map.WIDTH+7)i++;
-			obstacleTiles[Map.HEIGHT*2+4][i]=Obstacle.TREE_SNOWY;
+		for (int i = (Map.WIDTH + 5); i < Map.WIDTH + 10; i++) {
+			if (i == Map.WIDTH + 7)
+				i++;
+			obstacleTiles[Map.HEIGHT * 2 + 4][i] = Obstacle.TREE_SNOWY;
 		}
 		//inner bottom
-		for (int i=(Map.WIDTH+5); i<Map.WIDTH+10;i++){
-			obstacleTiles[Map.HEIGHT*2+6][i]=Obstacle.TREE_SNOWY;
+		for (int i = (Map.WIDTH + 5); i < Map.WIDTH + 10; i++) {
+			obstacleTiles[Map.HEIGHT * 2 + 6][i] = Obstacle.TREE_SNOWY;
 		}
 		//inner left
-		obstacleTiles[Map.HEIGHT*2+5][Map.WIDTH+5]=Obstacle.TREE_SNOWY;
+		obstacleTiles[Map.HEIGHT * 2 + 5][Map.WIDTH + 5] = Obstacle.TREE_SNOWY;
 		//inner right
-		obstacleTiles[Map.HEIGHT*2+5][Map.WIDTH+9]=Obstacle.TREE_SNOWY;
+		obstacleTiles[Map.HEIGHT * 2 + 5][Map.WIDTH + 9] = Obstacle.TREE_SNOWY;
 	}
 
 	private void makePlainyLand() {
@@ -306,56 +308,50 @@ public class CEAMap extends Map {
 			groundTiles[i][Map.WIDTH * 2] = grassy;
 		}
 
-		/* generate 5 randomly placed cacti in left half
-		for (int i = 0; i < 5; i++) {
-			int x = (int) (Math.random() * (Map.HEIGHT - 4)) + 2 + Map.HEIGHT;
-			int y = (int) (Math.random() * (Map.WIDTH / 2 - 4)) + 2 + 2 * Map.WIDTH;
-
-			if (obstacleTiles[x][y] == null)
-				obstacleTiles[x][y] = obstToUse;
-			else
-				i--;
-		}
-		// generate 5 randomly placed cacti in right half
-		for (int i = 0; i < 5; i++) {
-			int x = (int) (Math.random() * (Map.HEIGHT - 4)) + 2 + Map.HEIGHT;
-			int y = (int) (Math.random() * (Map.WIDTH / 2 - 4)) + 2 + 2 * Map.WIDTH + Map.WIDTH / 2;
-
-			if (obstacleTiles[x][y] == null)
-				obstacleTiles[x][y] = obstToUse;
-			else
-				i--;
-		}
-		*/
+		/*
+		 * generate 5 randomly placed cacti in left half for (int i = 0; i < 5;
+		 * i++) { int x = (int) (Math.random() * (Map.HEIGHT - 4)) + 2 +
+		 * Map.HEIGHT; int y = (int) (Math.random() * (Map.WIDTH / 2 - 4)) + 2 +
+		 * 2 * Map.WIDTH;
+		 * 
+		 * if (obstacleTiles[x][y] == null) obstacleTiles[x][y] = obstToUse;
+		 * else i--; } // generate 5 randomly placed cacti in right half for
+		 * (int i = 0; i < 5; i++) { int x = (int) (Math.random() * (Map.HEIGHT
+		 * - 4)) + 2 + Map.HEIGHT; int y = (int) (Math.random() * (Map.WIDTH / 2
+		 * - 4)) + 2 + 2 * Map.WIDTH + Map.WIDTH / 2;
+		 * 
+		 * if (obstacleTiles[x][y] == null) obstacleTiles[x][y] = obstToUse;
+		 * else i--; }
+		 */
 		//left wall
-		for (int i = Map.HEIGHT+1; i<Map.HEIGHT*2-1; i++){
-			if (i==Map.HEIGHT+5)i++;
-			obstacleTiles[i][Map.WIDTH*2+3]=Obstacle.CACTUS_1;
+		for (int i = Map.HEIGHT + 1; i < Map.HEIGHT * 2 - 1; i++) {
+			if (i == Map.HEIGHT + 5)
+				i++;
+			obstacleTiles[i][Map.WIDTH * 2 + 3] = Obstacle.CACTUS_1;
 		}
 		//top center wall
-		for (int i = Map.WIDTH*2+4; i<Map.WIDTH*3-3; i++){
-			obstacleTiles[Map.HEIGHT+4][i]=Obstacle.CACTUS_1;
+		for (int i = Map.WIDTH * 2 + 4; i < Map.WIDTH * 3 - 3; i++) {
+			obstacleTiles[Map.HEIGHT + 4][i] = Obstacle.CACTUS_1;
 		}
-		
+
 		//bottom center wall
-		for (int i = Map.WIDTH*2+4; i<Map.WIDTH*3-3; i++){
-			obstacleTiles[Map.HEIGHT+6][i]=Obstacle.CACTUS_1;
+		for (int i = Map.WIDTH * 2 + 4; i < Map.WIDTH * 3 - 3; i++) {
+			obstacleTiles[Map.HEIGHT + 6][i] = Obstacle.CACTUS_1;
 		}
 		//bottom inner wall
-		for (int i = Map.WIDTH*2+5; i<Map.WIDTH*3-3; i++){
-			obstacleTiles[Map.HEIGHT+8][i]=Obstacle.CACTUS_1;
-		} 
+		for (int i = Map.WIDTH * 2 + 5; i < Map.WIDTH * 3 - 3; i++) {
+			obstacleTiles[Map.HEIGHT + 8][i] = Obstacle.CACTUS_1;
+		}
 		//top inner wall
-		for (int i = Map.WIDTH*2+5; i<Map.WIDTH*3-3; i++){
-			obstacleTiles[Map.HEIGHT+2][i]=Obstacle.CACTUS_1;
-		} 
+		for (int i = Map.WIDTH * 2 + 5; i < Map.WIDTH * 3 - 3; i++) {
+			obstacleTiles[Map.HEIGHT + 2][i] = Obstacle.CACTUS_1;
+		}
 		//top side wall
-		obstacleTiles[Map.HEIGHT+3][Map.WIDTH*3-3]=Obstacle.CACTUS_1;
-		
+		obstacleTiles[Map.HEIGHT + 3][Map.WIDTH * 3 - 3] = Obstacle.CACTUS_1;
+
 		//bottom side wall
-		obstacleTiles[Map.HEIGHT*2-2][Map.WIDTH*3-3]=Obstacle.CACTUS_1;
-		
-		
+		obstacleTiles[Map.HEIGHT * 2 - 2][Map.WIDTH * 3 - 3] = Obstacle.CACTUS_1;
+
 	}
 
 	private void makeCaveyLand() {
@@ -373,36 +369,38 @@ public class CEAMap extends Map {
 			obstacleTiles[Map.HEIGHT - 1][i] = null;
 			groundTiles[Map.HEIGHT - 1][i] = grassy;
 		}
-		
+
 		//bottom wall
-		for (int i=Map.WIDTH+2; i<Map.WIDTH*2-2;i++){
-			obstacleTiles[Map.HEIGHT-3][i]=Obstacle.ROCK_1;
+		for (int i = Map.WIDTH + 2; i < Map.WIDTH * 2 - 2; i++) {
+			obstacleTiles[Map.HEIGHT - 3][i] = Obstacle.ROCK_1;
 		}
 		//top wall
-		for (int i=Map.WIDTH+2; i<Map.WIDTH*2-2;i++){
-			if (i==Map.WIDTH+7)i++;
-			obstacleTiles[2][i]=Obstacle.ROCK_1;
+		for (int i = Map.WIDTH + 2; i < Map.WIDTH * 2 - 2; i++) {
+			if (i == Map.WIDTH + 7)
+				i++;
+			obstacleTiles[2][i] = Obstacle.ROCK_1;
 		}
 		//inner horizontal
-		for (int i=Map.WIDTH+4; i<Map.WIDTH*2-4;i++){
-			if (i==Map.WIDTH+7)i++;
-			obstacleTiles[Map.HEIGHT-6][i]=Obstacle.ROCK_1;
+		for (int i = Map.WIDTH + 4; i < Map.WIDTH * 2 - 4; i++) {
+			if (i == Map.WIDTH + 7)
+				i++;
+			obstacleTiles[Map.HEIGHT - 6][i] = Obstacle.ROCK_1;
 		}
 		//inner left
-		for (int i = 3; i<7;i++){
-			obstacleTiles[i][Map.WIDTH+6]=Obstacle.ROCK_1;
+		for (int i = 3; i < 7; i++) {
+			obstacleTiles[i][Map.WIDTH + 6] = Obstacle.ROCK_1;
 		}
 		//inner right
-		for (int i = 3; i<7;i++){
-			obstacleTiles[i][Map.WIDTH+8]=Obstacle.ROCK_1;
+		for (int i = 3; i < 7; i++) {
+			obstacleTiles[i][Map.WIDTH + 8] = Obstacle.ROCK_1;
 		}
 		//outer left
-		for (int i = 3; i<Map.HEIGHT-2;i++){
-			obstacleTiles[i][Map.WIDTH+2]=Obstacle.ROCK_1;
+		for (int i = 3; i < Map.HEIGHT - 2; i++) {
+			obstacleTiles[i][Map.WIDTH + 2] = Obstacle.ROCK_1;
 		}
 		//outer right
-		for (int i = 3; i<Map.HEIGHT-2;i++){
-			obstacleTiles[i][Map.WIDTH*2-3]=Obstacle.ROCK_1;
+		for (int i = 3; i < Map.HEIGHT - 2; i++) {
+			obstacleTiles[i][Map.WIDTH * 2 - 3] = Obstacle.ROCK_1;
 		}
 	}
 
@@ -429,16 +427,15 @@ public class CEAMap extends Map {
 			}
 		}
 	}
-	
+
 	public void lastPartCheck(Trainer t) {
 		if (!inLastPart) {
-			inLastPart = true; // time for secrety secret time
-			Teleporter tele = new Teleporter(); // create teleporter to go to secret
-			tele.setPoint(new Point(Map.HEIGHT - 2, Map.WIDTH / 2)); // set point
-			t.addItem(tele); // add Teleporter to Trainer's inventory
-			setStartOffsets(0, 0);
-			movementTimer.stop();
-			movementTimer = new Timer(movementTimer.getDelay(), new MovementTimerListener());
+			if (new PokemonDatabase().caughtAllExceptLeg(t)) {
+				inLastPart = true; // time for secrety secret time
+				Teleporter tele = new Teleporter(); // create teleporter to go to secret
+				tele.setPoint(new Point(Map.HEIGHT - 2, Map.WIDTH / 2)); // set point
+				t.addItem(tele); // add Teleporter to Trainer's inventory
+			}
 		}
 	}
 
@@ -446,31 +443,36 @@ public class CEAMap extends Map {
 	public void initializeItems() {
 		itemTiles = new Item[h][w];
 		//Start area items
-		itemTiles[Map.HEIGHT+5][6]=new Harmonica();
-		itemTiles[Map.HEIGHT+1][Map.WIDTH-2]=new BasicStepPotion();
-		itemTiles[Map.HEIGHT*2-2][Map.WIDTH-2]=new BasicStepPotion();
+		itemTiles[Map.HEIGHT + 5][6] = new Harmonica();
+		itemTiles[Map.HEIGHT + 1][Map.WIDTH - 2] = new BasicStepPotion();
+		itemTiles[Map.HEIGHT * 2 - 2][Map.WIDTH - 2] = new BasicStepPotion();
 		//Grass area items
-		itemTiles[Map.HEIGHT+5][Map.WIDTH+7]=new Harmonica();
-		itemTiles[Map.HEIGHT+2][Map.WIDTH+3]=new SuperStepPotion();
-		itemTiles[Map.HEIGHT*2-3][Map.WIDTH*2-4]=new BasicStepPotion();
+		itemTiles[Map.HEIGHT + 5][Map.WIDTH + 7] = new Harmonica();
+		itemTiles[Map.HEIGHT + 2][Map.WIDTH + 3] = new SuperStepPotion();
+		itemTiles[Map.HEIGHT * 2 - 3][Map.WIDTH * 2 - 4] = new BasicStepPotion();
 		//Ice area items
-		itemTiles[Map.HEIGHT*3-2][Map.WIDTH*2-2]=new BasicStepPotion();
-		itemTiles[Map.HEIGHT*3-4][Map.WIDTH*2-8]=new Harmonica();
-		itemTiles[Map.HEIGHT*3-6][Map.WIDTH*2-8]=new Teleporter();
+		itemTiles[Map.HEIGHT * 3 - 2][Map.WIDTH * 2 - 2] = new BasicStepPotion();
+		itemTiles[Map.HEIGHT * 3 - 4][Map.WIDTH * 2 - 8] = new Harmonica();
+		itemTiles[Map.HEIGHT * 3 - 6][Map.WIDTH * 2 - 8] = new Teleporter();
 		//desert area items
-		itemTiles[Map.HEIGHT+3][Map.WIDTH*3-5]=new HyperStepPotion();
-		itemTiles[Map.HEIGHT*2-2][Map.WIDTH*3-5]=new HyperStepPotion();
-		itemTiles[Map.HEIGHT+5][Map.WIDTH*3-3]=new Harmonica();
-		itemTiles[Map.HEIGHT*2-2][Map.WIDTH*2+2]=new BasicStepPotion();
+		itemTiles[Map.HEIGHT + 3][Map.WIDTH * 3 - 5] = new HyperStepPotion();
+		itemTiles[Map.HEIGHT * 2 - 2][Map.WIDTH * 3 - 5] = new HyperStepPotion();
+		itemTiles[Map.HEIGHT + 5][Map.WIDTH * 3 - 3] = new Harmonica();
+		itemTiles[Map.HEIGHT * 2 - 2][Map.WIDTH * 2 + 2] = new BasicStepPotion();
 		//cave area items
-		itemTiles[3][Map.WIDTH+4]=new BasicStepPotion();
-		itemTiles[3][Map.WIDTH+9]=new SuperStepPotion();
-		itemTiles[6][Map.WIDTH+7]=new Harmonica();
+		itemTiles[3][Map.WIDTH + 4] = new BasicStepPotion();
+		itemTiles[3][Map.WIDTH + 9] = new SuperStepPotion();
+		itemTiles[6][Map.WIDTH + 7] = new Harmonica();
 		//Secret area items
-		itemTiles[2][1]=new Harmonica();
-		itemTiles[Map.HEIGHT-2][1]=new Harmonica();
-		itemTiles[2][Map.WIDTH-2]=new Harmonica();
-		itemTiles[Map.HEIGHT-2][Map.WIDTH-2]=new Harmonica();
+		itemTiles[2][1] = new Harmonica();
+		itemTiles[Map.HEIGHT - 2][1] = new Harmonica();
+		itemTiles[2][Map.WIDTH - 2] = new Harmonica();
+		itemTiles[Map.HEIGHT - 2][Map.WIDTH - 2] = new Harmonica();
+	}
+
+	public boolean inLastPart() {
+		// TODO Auto-generated method stub
+		return inLastPart;
 	}
 
 }

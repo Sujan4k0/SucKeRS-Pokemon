@@ -56,13 +56,13 @@ public abstract class Map extends JPanel implements Serializable {
 	// to hold the Ground and Obstacle Tiles to draw
 	Ground[][] groundTiles;
 	Obstacle[][] obstacleTiles;
-	
+
 	// to holds Items for the Trainer to pick up :D
 	Item[][] itemTiles;
 
 	// the tile sets for Ground and Obstacle
 	transient Image groundTileSet, obstacleTileSet, itemImage;
-	
+
 	transient Image mewImage;
 
 	// the Point the trainer is visually at
@@ -93,7 +93,7 @@ public abstract class Map extends JPanel implements Serializable {
 
 	// the direction the trainer sprite currently is facing
 	TrainerDirection dir = TrainerDirection.RIGHT;
-	
+
 	// the direction the trainer sprite is currently drawn as
 	TrainerDirection drawnDir = TrainerDirection.RIGHT;
 
@@ -117,7 +117,7 @@ public abstract class Map extends JPanel implements Serializable {
 
 		// create the Map and fill the Tile arrays (Ground and Obstacle)
 		createMap();
-		
+
 		// add the Items for the Trainer wewt
 		initializeItems();
 
@@ -144,7 +144,7 @@ public abstract class Map extends JPanel implements Serializable {
 		drawMap(g);
 
 	}
-	
+
 	/*---------------------------------------------------------------------
 	 |  Method name:    [getGroundTiles]
 	 |  Purpose:  	    [Getter for groundTiles[][]]
@@ -173,6 +173,7 @@ public abstract class Map extends JPanel implements Serializable {
 	public Item[][] getItemTiles() {
 		return itemTiles;
 	}
+
 	/*---------------------------------------------------------------------
 	 |  Method name:    [drawMap]
 	 |  Purpose:  	    [Draws the Ground, Obstacle, and Trainer]
@@ -193,14 +194,14 @@ public abstract class Map extends JPanel implements Serializable {
 				if (obstacleTiles[i][j] != null)
 					GraphicsManager.drawTile(g, obstacleTiles[i][j], obstacleTileSet, x, y);
 				if (itemTiles[i][j] != null)
-					g.drawImage(itemImage, x + Tile.SIZE/4, y + Tile.SIZE/4, null);
+					g.drawImage(itemImage, x + Tile.SIZE / 4, y + Tile.SIZE / 4, null);
 			}
 
 		}
-		
+
 		// draw mew if necessary
-				if (trainerPoint.x < Map.HEIGHT && trainerPoint.y < Map.WIDTH)
-					g.drawImage(mewImage, 7 * Tile.SIZE, 1 * Tile.SIZE, null);
+		if (trainerPoint.x < Map.HEIGHT && trainerPoint.y < Map.WIDTH)
+			g.drawImage(mewImage, 7 * Tile.SIZE, 1 * Tile.SIZE, null);
 
 		// draw trainer sprite
 		GraphicsManager.drawSprite(g, drawnDir, trainerSheet, (trainerPoint.y % WIDTH) * Tile.SIZE
@@ -443,7 +444,8 @@ public abstract class Map extends JPanel implements Serializable {
 			groundTileSet = ImageIO.read(new File("./images/SucKeRS_PokemonTileSet.png"));
 			obstacleTileSet = ImageIO.read(new File("./images/SucKeRS_PokemonObstacleTileSet.png"));
 			itemImage = ImageIO.read(new File("./images/Dream_Safari_Ball_Sprite.png"));
-			itemImage = itemImage.getScaledInstance(Tile.SIZE/2, Tile.SIZE/2, Image.SCALE_SMOOTH);
+			itemImage =
+					itemImage.getScaledInstance(Tile.SIZE / 2, Tile.SIZE / 2, Image.SCALE_SMOOTH);
 			mewImage = ImageIO.read(new File("./images/mew_sprite.png"));
 		} catch (IOException e) {
 			// TODO Auto-generated catch block
@@ -492,9 +494,10 @@ public abstract class Map extends JPanel implements Serializable {
 	public boolean trainerSteppingOnItem() {
 		if (itemTiles[trainerPoint.x][trainerPoint.y] != null)
 			return true;
-		else return false;
+		else
+			return false;
 	}
-	
+
 	public Item getItemAtCurrentLocation() {
 		Item i = itemTiles[trainerPoint.x][trainerPoint.y];
 		itemTiles[trainerPoint.x][trainerPoint.y] = null;
