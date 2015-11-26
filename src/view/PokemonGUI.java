@@ -1,7 +1,7 @@
 /*=========================================================================== 
  | Assignment: FINAL PROJECT: [PokemonGUI] 
  | 
- | Authors:    [Sujan Patel  (sujan4k0@email.arizona.edu)] 
+ | Authors:    [Sujan Patel  (sujan4k0@email.arizona.edu)]  
  |             [Keith Smith  (browningsmith@email.arizona.edu)]
  |             [Ryan Kaye    (rkaye@email.arizona.edu)]
  |             [Sarina White (sarinarw@email.arizona.edu)]
