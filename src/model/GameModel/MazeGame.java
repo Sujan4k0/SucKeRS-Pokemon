@@ -120,11 +120,8 @@ public class MazeGame extends GameMode {
 					encounteredPokemon = database.getRandomCommon(map.getCurrentTerrain());
 			}
 		}
-		battleMessage = "You've encountered a " + encounteredPokemon.getName() + "!";
 
-		inBattle = true;
-		encounter.startEncounter(encounteredPokemon);
-		map.pauseBGMusic();
+		super.startEncounter();
 
 	}
 

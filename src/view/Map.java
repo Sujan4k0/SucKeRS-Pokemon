@@ -142,7 +142,14 @@ public abstract class Map extends JPanel implements Serializable {
 	public void paintComponent(Graphics g) {
 
 		drawMap(g);
+		drawTrainer(g);
 
+	}
+
+	private void drawTrainer(Graphics g) {
+		// draw trainer sprite
+		GraphicsManager.drawSprite(g, drawnDir, trainerSheet, (trainerPoint.y % WIDTH) * Tile.SIZE
+				- yOffset, (trainerPoint.x % HEIGHT) * Tile.SIZE - xOffset);
 	}
 
 	/*---------------------------------------------------------------------
@@ -198,10 +205,6 @@ public abstract class Map extends JPanel implements Serializable {
 			}
 
 		}
-
-		// draw mew if necessary
-		if (trainerPoint.x < Map.HEIGHT && trainerPoint.y < Map.WIDTH)
-			g.drawImage(mewImage, 7 * Tile.SIZE, 1 * Tile.SIZE, null);
 
 		// draw trainer sprite
 		GraphicsManager.drawSprite(g, drawnDir, trainerSheet, (trainerPoint.y % WIDTH) * Tile.SIZE

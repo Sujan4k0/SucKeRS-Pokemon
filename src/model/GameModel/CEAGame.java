@@ -21,12 +21,17 @@ import java.util.Random;
 
 import model.ItemModel.Harmonica;
 import model.ItemModel.PokeBall;
+import model.ItemModel.Teleporter;
 import model.PokemonModel.Pokemon;
+import model.PokemonModel.PokemonResponse;
+import model.TrainerModel.Trainer;
 import view.*;
 
 public class CEAGame extends GameMode {
 
 	private static final long serialVersionUID = 1L;
+
+	boolean inLastPart = false; // if player should be in last part of game
 
 	/*---------------------------------------------------------------------
 	 |  Method name:    [CEAGame]
@@ -122,11 +127,8 @@ public class CEAGame extends GameMode {
 					encounteredPokemon = database.getRandomCommon(map.getCurrentTerrain());
 			}
 		}
-		battleMessage = "You've encountered a " + encounteredPokemon.getName() + "!";
 
-		inBattle = true;
-		encounter.startEncounter(encounteredPokemon);
-		map.pauseBGMusic();
+		super.startEncounter();
 
 	}
 
@@ -135,15 +137,37 @@ public class CEAGame extends GameMode {
 		// nothing hurr
 	}
 
+	@Override
+	public void endEncounter() {
+		super.endEncounter();
+		lastPartCheck(trainer);
+	}
+
+	public void lastPartCheck(Trainer t) {
+		if (!inLastPart) {
+			if (new PokemonDatabase().caughtAllExceptLeg(t)) {
+				inLastPart = true; // time for secrety secret time
+				Teleporter tele = new Teleporter(); // create teleporter to go to secret
+				tele.setPoint(new Point(Map.HEIGHT - 2, Map.WIDTH / 2)); // set point
+				t.addItem(tele); // add Teleporter to Trainer's inventory
+			}
+		}
+	}
+
 	public void startLegEncounter() {
 
 		battleMessage = "You've encountered MEW!!\n AHHHHHHhhHHHhHhH.\n" + "Can you catch it?!?!";
 
 		inBattle = true;
 		encounteredPokemon = database.getMew();
-		encounter.startEncounter(encounteredPokemon);
+		encounter.startEncounter(encounteredPokemon, map.getCurrentTerrain());
 		map.pauseBGMusic();
 
+	}
+
+	public boolean inLastPart() {
+		// TODO Auto-generated method stub
+		return inLastPart;
 	}
 
 }

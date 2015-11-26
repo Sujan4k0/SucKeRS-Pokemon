@@ -254,7 +254,7 @@ public abstract class GameMode implements Serializable {
 					((CEAGame) this).startLegEncounter();
 				}
 				// else try to start an encounter
-				else if (r.nextInt(15) == 14)
+				else if (r.nextInt(1) == 0)
 					startEncounter();
 
 				// encounters/items
@@ -337,7 +337,16 @@ public abstract class GameMode implements Serializable {
 	|  Method name:    [startEncounter]
 	|  Purpose:        [This start an encounter]
 	 *---------------------------------------------------------------------*/
-	public abstract void startEncounter();
+	public void startEncounter() {
+		if (encounteredPokemon != null) {
+			battleMessage = "You've encountered a " + encounteredPokemon.getName() + "!";
+
+			inBattle = true;
+			encounteredPokemon.setState(PokemonResponse.STAND_GROUND);
+			encounter.startEncounter(encounteredPokemon, map.getCurrentTerrain());
+			map.pauseBGMusic();
+		}
+	}
 
 	public void setEncounteredPokemon(Pokemon p) {
 		encounteredPokemon = p;
@@ -374,7 +383,7 @@ public abstract class GameMode implements Serializable {
 		else if (!encounter.isAnimating() && inBattle) {
 			moveCount++; // increase moves used
 			if (pr == PokemonResponse.RUN_AWAY) {
-				battleMessage = "Pokemon ran away!";
+				battleMessage = pName + " ran away!";
 				endEncounter();
 
 			} else {
@@ -424,7 +433,7 @@ public abstract class GameMode implements Serializable {
 				// the Trainer ran away, update battleMessage, end the encounter
 				// and the Trainer should not be animated
 				case RUN_AWAY:
-					battleMessage = "You ran away! U little bitch... -.-";
+					battleMessage = "You ran away! God dammit D:<";
 					doAnimation = false;
 					endEncounter();
 					break;
@@ -488,12 +497,11 @@ public abstract class GameMode implements Serializable {
 
 	}
 
-	private void endEncounter() {
-
+	public void endEncounter() {
+		encounter.endEncounter();
 		encounteredPokemon = null;
 		moveCount = 0; // reset moveCount
 		inBattle = false;
-		encounter.stopEncounter();
 		map.restartBGMusic();
 	}
 
@@ -531,10 +539,6 @@ public abstract class GameMode implements Serializable {
 			if (!inBattle && isGameActive()) {
 				// set sprite direction and try to move trainer
 				moveTrainer(e.getKeyCode());
-			}
-
-			if (map.getClass().equals(CEAMap.class)) {
-				((CEAMap)map).lastPartCheck(trainer);
 			}
 
 		}

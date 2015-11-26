@@ -17,6 +17,7 @@
  *===========================================================================*/
 package view;
 
+import java.awt.Graphics;
 import java.awt.Point;
 import java.util.Random;
 
@@ -24,6 +25,7 @@ import javax.swing.Timer;
 
 import model.GameModel.Ground;
 import model.GameModel.Obstacle;
+import model.GameModel.Tile;
 import model.ItemModel.*;
 import model.TrainerModel.Trainer;
 
@@ -32,8 +34,6 @@ public class CEAMap extends Map {
 	private static final long serialVersionUID = 1L;
 
 	Ground grassy, deserty, icey, cavey, plainy, secrety1, secrety2;
-
-	boolean inLastPart = false; // if player should be in last part of map
 
 	// entire CEAMap is 3 by 3 Maps combined
 	public static int WIDTH = (Map.WIDTH * 3), HEIGHT = (Map.HEIGHT * 3);
@@ -354,6 +354,20 @@ public class CEAMap extends Map {
 
 	}
 
+	@Override
+	public void paintComponent(Graphics g) {
+		super.paintComponent(g);
+		drawMew(g);
+	}
+
+	public void drawMew(Graphics g) {
+
+		// draw mew if necessary
+		if (trainerPoint.x < Map.HEIGHT && trainerPoint.y < Map.WIDTH)
+			g.drawImage(mewImage, 7 * Tile.SIZE, 1 * Tile.SIZE, null);
+
+	}
+
 	private void makeCaveyLand() {
 
 		for (int i = 0; i < Map.HEIGHT; i++) {
@@ -428,17 +442,6 @@ public class CEAMap extends Map {
 		}
 	}
 
-	public void lastPartCheck(Trainer t) {
-		if (!inLastPart) {
-			if (new PokemonDatabase().caughtAllExceptLeg(t)) {
-				inLastPart = true; // time for secrety secret time
-				Teleporter tele = new Teleporter(); // create teleporter to go to secret
-				tele.setPoint(new Point(Map.HEIGHT - 2, Map.WIDTH / 2)); // set point
-				t.addItem(tele); // add Teleporter to Trainer's inventory
-			}
-		}
-	}
-
 	@Override
 	public void initializeItems() {
 		itemTiles = new Item[h][w];
@@ -468,11 +471,6 @@ public class CEAMap extends Map {
 		itemTiles[Map.HEIGHT - 2][1] = new Harmonica();
 		itemTiles[2][Map.WIDTH - 2] = new Harmonica();
 		itemTiles[Map.HEIGHT - 2][Map.WIDTH - 2] = new Harmonica();
-	}
-
-	public boolean inLastPart() {
-		// TODO Auto-generated method stub
-		return inLastPart;
 	}
 
 }
