@@ -39,9 +39,15 @@ public abstract class GameMode implements Serializable {
 
 	private static final long serialVersionUID = 1L;
 
+	// min number of steps before an encounter
+	private static final int MIN_STEPS = 4;
+
+	// current number of steps trainer has taken
+	int currSteps = 0;
+
 	Trainer trainer;
-	Map map; // the visual map of this game
-	EncounterPanel encounter;
+	Map map; // the visual map
+	EncounterPanel encounter; // the visual encounter 
 	int moveCount = 0; // moves during encounter
 	Random r; // used for random encounters/items
 
@@ -82,6 +88,11 @@ public abstract class GameMode implements Serializable {
 		// set focusable so that the KeyListener works
 		map.setFocusable(true);
 
+	}
+
+	public void mute() {
+		map.mute();
+		encounter.mute();
 	}
 
 	/*---------------------------------------------------------------------
@@ -161,12 +172,16 @@ public abstract class GameMode implements Serializable {
 	 *---------------------------------------------------------------------*/
 	public abstract boolean isGameLost();
 
+	public void moveTrainer(int kc) {
+		moveTrainer(kc, true);
+	}
+
 	/*---------------------------------------------------------------------
 	 |  Method name:    [moveTrainer]
 	 |  Purpose:  	    [To change trainer sprite and then attempt to move the trainer]
 	 |  Parameters:  	[int: direction in which trainer is trying to move from KeyEvent]
 	 *---------------------------------------------------------------------*/
-	public void moveTrainer(int kc) {
+	public void moveTrainer(int kc, boolean animate) {
 		if (!map.isAnimating()) {
 
 			int dx = 0, dy = 0;
@@ -224,17 +239,21 @@ public abstract class GameMode implements Serializable {
 			// and check for random encounter and stuff
 			if (trainerCanMove(kc)) {
 
+				currSteps++; // increment steps
+
 				// change trainer object point
 				trainer.getPoint().translate(dx, dy);
 
 				// set trainer's sprite location in map to trainer's current loc
 				map.setTrainerPoint(trainer.getPoint());
 
-				// animate the movement
-				map.startTrainerMovement();
-
-				// play walking sound
-				map.playWalkingSound();
+				if (animate) {
+					// animate the movement
+					map.startTrainerMovement();
+					// play walking sound
+					map.playWalkingSound();
+				} else
+					map.setStartOffsets(0, 0);
 
 				setEncounterBG(map.getGroundTiles()[trainer.getPoint().x][trainer.getPoint().y]
 						.getTerrainType());
@@ -254,8 +273,10 @@ public abstract class GameMode implements Serializable {
 					((CEAGame) this).startLegEncounter();
 				}
 				// else try to start an encounter
-				else if (r.nextInt(1) == 0)
+				else if (currSteps >= MIN_STEPS && r.nextInt(10) == 9) {
+					currSteps = 0;
 					startEncounter();
+				}
 
 				// encounters/items
 			} else
@@ -333,17 +354,21 @@ public abstract class GameMode implements Serializable {
 		map.stopBGMusic();
 	}
 
+	public void startEncounter() {
+		startEncounter(true);
+	}
+
 	/*---------------------------------------------------------------------
 	|  Method name:    [startEncounter]
 	|  Purpose:        [This start an encounter]
 	 *---------------------------------------------------------------------*/
-	public void startEncounter() {
+	public void startEncounter(boolean animate) {
 		if (encounteredPokemon != null) {
 			battleMessage = "You've encountered a " + encounteredPokemon.getName() + "!";
 
 			inBattle = true;
 			encounteredPokemon.setState(PokemonResponse.STAND_GROUND);
-			encounter.startEncounter(encounteredPokemon, map.getCurrentTerrain());
+			encounter.startEncounter(encounteredPokemon, map.getCurrentTerrain(), animate);
 			map.pauseBGMusic();
 		}
 	}
@@ -362,6 +387,10 @@ public abstract class GameMode implements Serializable {
 	}
 
 	public void doTrainerAction(TrainerAction action) {
+		doTrainerAction(action, true);
+	}
+
+	public void doTrainerAction(TrainerAction action, boolean animate) {
 
 		// get the name of the encountered Pokemon
 		String pName = encounteredPokemon.getName();
@@ -453,7 +482,7 @@ public abstract class GameMode implements Serializable {
 
 				// if the Trainer should be animated,
 				// tell the EncounterPanel to animate the Trainer
-				if (doAnimation)
+				if (doAnimation && animate)
 					encounter.animateTrainer(action, pr);
 			}
 		}

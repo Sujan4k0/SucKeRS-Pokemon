@@ -51,6 +51,12 @@ public class CEAGame extends GameMode {
 		 */
 
 	}
+	
+	public CEAGame(Random rand, boolean muteGame) {
+		this(rand);
+		if (muteGame)
+			mute();
+	}
 
 	/*---------------------------------------------------------------------
 	 |  Method name:    [isGameWon]
@@ -97,7 +103,7 @@ public class CEAGame extends GameMode {
 	|  Purpose:        [This start an encounter]
 	 *---------------------------------------------------------------------*/
 	@Override
-	public void startEncounter() {
+	public void startEncounter(boolean animate) {
 
 		if (encounteredPokemon == null) {
 			// only uncommon and common pokemon can be encountered
@@ -128,7 +134,7 @@ public class CEAGame extends GameMode {
 			}
 		}
 
-		super.startEncounter();
+		super.startEncounter(animate);
 
 	}
 
@@ -140,16 +146,16 @@ public class CEAGame extends GameMode {
 	@Override
 	public void endEncounter() {
 		super.endEncounter();
-		lastPartCheck(trainer);
+		lastPartCheck();
 	}
 
-	public void lastPartCheck(Trainer t) {
+	public void lastPartCheck() {
 		if (!inLastPart) {
-			if (new PokemonDatabase().caughtAllExceptLeg(t)) {
+			if (new PokemonDatabase().caughtAllExceptLeg(trainer)) {
 				inLastPart = true; // time for secrety secret time
 				Teleporter tele = new Teleporter(); // create teleporter to go to secret
 				tele.setPoint(new Point(Map.HEIGHT - 2, Map.WIDTH / 2)); // set point
-				t.addItem(tele); // add Teleporter to Trainer's inventory
+				trainer.addItem(tele); // add Teleporter to Trainer's inventory
 			}
 		}
 	}

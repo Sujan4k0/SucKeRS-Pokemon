@@ -42,6 +42,12 @@ public class MazeGame extends GameMode {
 		trainer.addItem(new BasicStepPotion());
 		trainer.addItem(new Teleporter());
 	}
+	
+	public MazeGame(Random rand, boolean muteGame) {
+		this(rand);
+		if (muteGame)
+			mute();
+	}
 
 	/*---------------------------------------------------------------------
 	 |  Method name:    [isGameWon]
@@ -105,7 +111,7 @@ public class MazeGame extends GameMode {
 	}
 
 	@Override
-	public void startEncounter() {
+	public void startEncounter(boolean animate) {
 
 		int rand = r.nextInt(10);
 
@@ -121,7 +127,7 @@ public class MazeGame extends GameMode {
 			}
 		}
 
-		super.startEncounter();
+		super.startEncounter(animate);
 
 	}
 

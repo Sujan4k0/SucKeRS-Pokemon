@@ -74,6 +74,8 @@ public abstract class Map extends JPanel implements Serializable {
 	// if the trainer movement is being animated
 	boolean animating = false;
 
+	boolean muted = false;
+
 	// offsets for trainer animation
 	int xOffset = 0, yOffset = 0;
 
@@ -391,6 +393,9 @@ public abstract class Map extends JPanel implements Serializable {
 				moveAmount = MOVE;
 
 			if (tic < Math.abs(Tile.SIZE / moveAmount)) {
+				
+				if (tic % 8 == 0)
+					walk = !walk;
 
 				// determine which direction to move in
 				switch (dir) {
@@ -434,7 +439,6 @@ public abstract class Map extends JPanel implements Serializable {
 				drawnDir = dir;
 				tic = 0;
 				animating = false;
-				walk = !walk;
 			}
 			repaint();
 		}
@@ -468,25 +472,31 @@ public abstract class Map extends JPanel implements Serializable {
 	}
 
 	public void startNewBGMusic() {
-		bgPlayer.loopSound(bgPath);
+		if (!muted)
+			bgPlayer.loopSound(bgPath);
 	}
 
 	public void restartBGMusic() {
-		bgPlayer.restartSound();
+		if (!muted)
+			bgPlayer.restartSound();
 	}
 
 	public void pauseBGMusic() {
-		bgPlayer.pauseSound();
+		if (!muted)
+			bgPlayer.pauseSound();
 	}
 
 	public void stopBGMusic() {
-		bgPlayer.stopSound();
+		if (!muted)
+			bgPlayer.stopSound();
 	}
 
 	public void changeBGMusic(String songFilePath) {
-		stopBGMusic();
+		if (!muted)
+			stopBGMusic();
 		bgPath = songFilePath;
-		startNewBGMusic();
+		if (!muted)
+			startNewBGMusic();
 
 	}
 
@@ -505,5 +515,11 @@ public abstract class Map extends JPanel implements Serializable {
 		Item i = itemTiles[trainerPoint.x][trainerPoint.y];
 		itemTiles[trainerPoint.x][trainerPoint.y] = null;
 		return i;
+	}
+
+	public void mute() {
+		stopBGMusic();
+
+		muted = true;
 	}
 }

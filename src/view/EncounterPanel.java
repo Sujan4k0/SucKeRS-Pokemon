@@ -63,6 +63,8 @@ public class EncounterPanel extends JPanel implements Serializable {
 	AffineTransform rotation;
 
 	boolean flashing = false;
+	
+	boolean muted = false;
 
 	// the current image of the trainer during an encounter
 	// and BG image
@@ -201,6 +203,10 @@ public class EncounterPanel extends JPanel implements Serializable {
 	}
 
 	public void startEncounter(Pokemon p, TerrainType tt) {
+		startEncounter(p, tt, true);
+	}
+
+	public void startEncounter(Pokemon p, TerrainType tt, boolean animate) {
 
 		int songInt;
 
@@ -216,10 +222,11 @@ public class EncounterPanel extends JPanel implements Serializable {
 
 		String str = "./sounds/Pokemon_BattleMusic_" + songInt + ".wav";
 
-		if (new File("./sounds/Pokemon_BattleMusic_" + songInt + ".wav").isFile())
-			bgPlayer.loopSound(str);
-		else
-			System.out.println("Battle music file not found");
+		if (!muted)
+			if (new File("./sounds/Pokemon_BattleMusic_" + songInt + ".wav").isFile())
+				bgPlayer.loopSound(str);
+			else
+				System.out.println("Battle music file not found");
 
 		if (bgImages.length > 1)
 			animatedBGTimer.start();
@@ -236,7 +243,8 @@ public class EncounterPanel extends JPanel implements Serializable {
 		pokemonX = this.getWidth() - pokemonSize;
 		pokemonY = this.getHeight() / 15;
 
-		introAnimationTimer.start();
+		if (animate)
+			introAnimationTimer.start();
 
 		repaint();
 
@@ -274,8 +282,8 @@ public class EncounterPanel extends JPanel implements Serializable {
 
 			actionAnimationTimer.start();
 		}
-
-		playBattleSound(ta, pr); //Play a sound effect
+		if (!muted)
+			playBattleSound(ta, pr); //Play a sound effect
 	}
 
 	public boolean isAnimating() {
@@ -444,6 +452,12 @@ public class EncounterPanel extends JPanel implements Serializable {
 				sfxPlayer.playSound("sounds/battlesfx/PokeballMisses.wav"); //Play the missed sound effect
 			}
 		}
+	}
+
+	public void mute() {
+		muted = true;
+		bgPlayer.stopSound();
+		sfxPlayer.stopSound();
 	}
 
 	private class BGAnimationListener implements ActionListener {

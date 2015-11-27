@@ -11,7 +11,7 @@ import javafx.util.Duration;
 public class SoundPlayer implements Serializable {
 
 	private static final long serialVersionUID = 1L;
-	
+
 	transient MediaPlayer mediaPlayer;
 
 	public SoundPlayer() {
@@ -19,7 +19,7 @@ public class SoundPlayer implements Serializable {
 	}
 
 	public void playSound(String filePath) {
-		
+
 		File file = new File(filePath);
 		Media med = new Media(file.toURI().toString());
 
@@ -39,7 +39,8 @@ public class SoundPlayer implements Serializable {
 	}
 
 	public void stopSound() {
-		mediaPlayer.stop();
+		if (mediaPlayer != null)
+			mediaPlayer.stop();
 	}
 
 	public void loopSound(String filePath) {
@@ -55,11 +56,11 @@ public class SoundPlayer implements Serializable {
 
 		mediaPlayer.play();
 	}
-	
+
 	public void pauseSound() {
 		mediaPlayer.pause();
 	}
-	
+
 	public void restartSound() {
 		mediaPlayer.play();
 	}
