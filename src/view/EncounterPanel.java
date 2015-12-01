@@ -54,16 +54,17 @@ public class EncounterPanel extends JPanel implements Serializable {
 
 	// Timer for animations and flashing/wiggle when caught pokemon
 	Timer actionAnimationTimer, introAnimationTimer, flashTimer;
-	Timer wiggleTimer;
+	Timer wiggleTimer, pmWiggleTimer;
 
 	// tics and such for the timers
-	int wiggleTic = -3, trainerTic = 1, bgNum = 0;
+	int pmWiggleTic = -3, wiggleTic = -3, trainerTic = 1, bgNum = 0;
 
 	// the rotation of the ball during wiggle time
-	AffineTransform rotation;
+	AffineTransform rotation = new AffineTransform();
+	AffineTransform pmRotation = new AffineTransform();
 
 	boolean flashing = false;
-	
+
 	boolean muted = false;
 
 	// the current image of the trainer during an encounter
@@ -116,6 +117,7 @@ public class EncounterPanel extends JPanel implements Serializable {
 		System.out.println("Ending Encounter on Panel");
 		actionAnimationTimer.stop();
 		wiggleTimer.stop();
+		pmWiggleTimer.stop();
 		flashTimer.stop();
 		bgPlayer.stopSound();
 	}
@@ -148,8 +150,17 @@ public class EncounterPanel extends JPanel implements Serializable {
 						encounteredPokemon.getSprite()[0].getScaledInstance(pokemonSize,
 								pokemonSize, Image.SCALE_SMOOTH);
 				// draw pokemon
-				g2.drawImage(smaller, pokemonX + pokemonOffset, pokemonY, null);
+				/*
+				 * g2.drawImage(smaller, pokemonX + pokemonOffset, pokemonY,
+				 * null);
+				 */
 				System.out.println("drawing pokemon");
+				if ((int) pmRotation.getTranslateX() != pokemonX + pokemonOffset) {
+					pmRotation = new AffineTransform();
+					pmRotation.translate(pokemonX + pokemonOffset, pokemonY);
+				}
+				g2.drawImage(smaller, pmRotation, null);
+				// g2.drawImage(itemImage, itemLoc.x, itemLoc.y, 75, 75, null);
 			}
 
 			/*
@@ -174,10 +185,7 @@ public class EncounterPanel extends JPanel implements Serializable {
 
 			// draw object being used
 			if (itemImage != null) {
-				if (rotation == null) {
-					rotation = new AffineTransform();
-					rotation.translate(itemLoc.x, itemLoc.y);
-				} else if ((int) rotation.getTranslateX() != itemLoc.x) {
+				if ((int) rotation.getTranslateX() != itemLoc.x) {
 					rotation = new AffineTransform();
 					rotation.translate(itemLoc.x, itemLoc.y);
 				}
@@ -212,6 +220,7 @@ public class EncounterPanel extends JPanel implements Serializable {
 
 		actionAnimationTimer.stop();
 		wiggleTimer.stop();
+		pmWiggleTimer.stop();
 		flashTimer.stop();
 		itemImage = null;
 
@@ -428,6 +437,20 @@ public class EncounterPanel extends JPanel implements Serializable {
 				wiggleTic = -3;
 			}
 		};
+		pmWiggleTimer = new Timer(50, new PokemonWiggleListener()) {
+			@Override
+			public void start() {
+				super.start();
+				animating = true;
+			}
+
+			@Override
+			public void stop() {
+				super.stop();
+				animating = false;
+				pmWiggleTic = -3;
+			}
+		};
 	}
 
 	/*---------------------------------------------------------------------
@@ -500,6 +523,26 @@ public class EncounterPanel extends JPanel implements Serializable {
 
 	}
 
+	private class PokemonWiggleListener implements ActionListener {
+
+		@Override
+		public void actionPerformed(ActionEvent e) {
+			pmRotation = new AffineTransform();
+			pmRotation.translate(itemLoc.x, itemLoc.y);
+			if (pmWiggleTic <= 0) {
+				pmRotation.rotate(pmWiggleTic * Math.PI / 15);
+			} else if (pmWiggleTic <= 3) {
+				pmRotation.rotate(-pmWiggleTic * Math.PI / 15);
+			} else {
+				pmWiggleTimer.stop();
+			}
+			
+			pmWiggleTic++;
+			repaint();
+		}
+
+	}
+
 	private class TrainerAnimationListener implements ActionListener {
 
 		@Override
@@ -514,7 +557,8 @@ public class EncounterPanel extends JPanel implements Serializable {
 					if (trainerTic > trainerImages.length + 4 && !flashing) {
 						flashTimer.start();
 					}
-				}
+				} else
+					pmWiggleTimer.start();
 
 				if (trainerTic >= trainerImages.length)
 					trainerEncounterImage = trainerImages[trainerImages.length - 1];

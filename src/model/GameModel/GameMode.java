@@ -273,7 +273,7 @@ public abstract class GameMode implements Serializable {
 					((CEAGame) this).startLegEncounter();
 				}
 				// else try to start an encounter
-				else if (currSteps >= MIN_STEPS && r.nextInt(10) == 9) {
+				else if (currSteps >= MIN_STEPS && r.nextInt(8) == 7) {
 					currSteps = 0;
 					startEncounter();
 				}
@@ -462,7 +462,7 @@ public abstract class GameMode implements Serializable {
 				// the Trainer ran away, update battleMessage, end the encounter
 				// and the Trainer should not be animated
 				case RUN_AWAY:
-					battleMessage = "You ran away! God dammit D:<";
+					battleMessage = "You ran away! Gosh darn little fudgecake bitch ass shit";
 					doAnimation = false;
 					endEncounter();
 					break;
