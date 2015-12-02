@@ -117,8 +117,6 @@ public abstract class Pokemon implements Serializable {
 
 			// check if the pokemon runs based on the current percentage and decider
 			if (decider <= runPercentage) {
-				System.out
-						.println("Running away. Decider = " + decider + "RunP = " + runPercentage);
 				pokemonState = PokemonResponse.RUN_AWAY;
 			}
 			

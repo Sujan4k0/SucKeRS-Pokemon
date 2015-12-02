@@ -114,7 +114,7 @@ public class EncounterPanel extends JPanel implements Serializable {
 	}
 
 	public void endEncounter() {
-		System.out.println("Ending Encounter on Panel");
+		// System.out.println("Ending Encounter on Panel");
 		actionAnimationTimer.stop();
 		wiggleTimer.stop();
 		pmWiggleTimer.stop();
@@ -129,7 +129,7 @@ public class EncounterPanel extends JPanel implements Serializable {
 		if (!flashing) {
 			if (pokemonX < -250) {
 				pokemonX = this.getWidth() - pokemonSize;
-				System.out.println("pokemonX now = " + pokemonX);
+				// System.out.println("pokemonX now = " + pokemonX);
 				pokemonY = this.getHeight() / 15;
 			}
 
@@ -154,7 +154,7 @@ public class EncounterPanel extends JPanel implements Serializable {
 				 * g2.drawImage(smaller, pokemonX + pokemonOffset, pokemonY,
 				 * null);
 				 */
-				System.out.println("drawing pokemon");
+				// System.out.println("drawing pokemon");
 				if ((int) pmRotation.getTranslateX() != pokemonX + pokemonOffset) {
 					pmRotation = new AffineTransform();
 					pmRotation.translate(pokemonX + pokemonOffset, pokemonY);
@@ -240,7 +240,7 @@ public class EncounterPanel extends JPanel implements Serializable {
 		if (bgImages.length > 1)
 			animatedBGTimer.start();
 
-		System.out.println("starting encounter on panel");
+		// System.out.println("starting encounter on panel");
 		trainerEncounterImage = trainerImages[0];
 		encounteredPokemon = p;
 
