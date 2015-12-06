@@ -519,7 +519,10 @@ public abstract class GameMode implements Serializable {
 
 		if (trainer.getItemQuantities().get(i.getName()) > 0 && i.getName().equals("Teleporter")) {
 			trainer.useItem(i);
-			map.setTrainerPoint(trainer.getPoint());
+			if (!trainer.getPoint().equals(map.getTrainerPoint())) {
+				map.setTrainerPoint(trainer.getPoint());
+				map.setTeleporterPoint(null);
+			} else map.setTeleporterPoint(trainer.getPoint());
 			map.repaint();
 		} else
 			trainer.useItem(i);
