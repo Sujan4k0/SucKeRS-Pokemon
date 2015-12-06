@@ -21,13 +21,14 @@ import java.awt.Color;
 import java.awt.FlowLayout;
 import java.awt.Font;
 import java.awt.GridLayout;
+import java.awt.Toolkit;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.awt.event.KeyEvent;
 import java.awt.event.KeyListener;
 import java.awt.event.WindowEvent;
 import java.awt.event.WindowListener;
-import java.awt.image.BufferedImage;
+import java.awt.Image;
 import java.io.File;
 import java.io.FileInputStream;
 import java.io.FileOutputStream;
@@ -68,24 +69,6 @@ public class PokemonGUI {
     private boolean battleJustEnded;
     private Pokedex dex;
 
-    public static void main(String[] args) {
-
-        try {
-            // Set cross-platform Java L&F (also called "Metal")
-            UIManager.setLookAndFeel("javax.swing.plaf.nimbus.NimbusLookAndFeel");
-        } catch (UnsupportedLookAndFeelException e) {
-            // handle exception
-        } catch (ClassNotFoundException e) {
-            // handle exception
-        } catch (InstantiationException e) {
-            // handle exception
-        } catch (IllegalAccessException e) {
-            // handle exception
-        }
-
-        new PokemonGUI();
-    }
-
     /*---------------------------------------------------------------------
     |  Method name:    [PokemonGUI]
     |  Purpose:        [Constructor]
@@ -114,11 +97,11 @@ public class PokemonGUI {
         startScreen.setSize(600, 300);
         startScreen.setTitle("Pokemon");
         startScreen.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
-
+        
         // JPanel set up to show the "Pokemon" logo on the frame
         JPanel logoHeader = new JPanel();
         logoHeader.setBackground(Color.BLACK);
-        BufferedImage logo = null;
+        Image logo = null;
         try {
             logo = ImageIO.read(new File("./images/PokemonLogo.png"));
         } catch (IOException e) {
@@ -216,7 +199,7 @@ public class PokemonGUI {
         JPanel trainerDisplay = new JPanel(new BorderLayout());
         trainerDisplay.setBackground(Color.BLACK);
         JLabel trainerLabel = new JLabel();
-        BufferedImage trainerFancy = null;
+        Image trainerFancy = null;
         try {
             trainerFancy = ImageIO.read(new File("./images/GenericTrainerTest.png"));
             trainerLabel = new JLabel(new ImageIcon(trainerFancy));
@@ -312,7 +295,7 @@ public class PokemonGUI {
         header.setForeground(Color.WHITE);
         ballImage.add(header, BorderLayout.NORTH);
         ballImage.setBorder(BorderFactory.createLineBorder(new Color(233, 41, 41), 10));
-        BufferedImage greatBall = null;
+        Image greatBall = null;
         try {
             greatBall = ImageIO.read(new File("./images/Pokeball.png"));
             JLabel ballLabel = new JLabel(new ImageIcon(greatBall));
