@@ -63,10 +63,11 @@ public abstract class Map extends JPanel implements Serializable {
 	// the tile sets for Ground and Obstacle
 	transient Image groundTileSet, obstacleTileSet, itemImage;
 
-	transient Image mewImage;
+	transient Image mewImage, teleporterImage;
 
 	// the Point the trainer is visually at
-	Point trainerPoint;
+	// also teleporter
+	Point trainerPoint, teleporterPoint;
 
 	// timer to animate trainer movement
 	Timer movementTimer;
@@ -183,6 +184,16 @@ public abstract class Map extends JPanel implements Serializable {
 		return itemTiles;
 	}
 
+	public void setTeleporterPoint(Point p) {
+		if (p == null)
+			teleporterPoint = null;
+		else teleporterPoint = new Point(p);
+	}
+
+	public Point getTeleporterPoint() {
+		return teleporterPoint;
+	}
+
 	/*---------------------------------------------------------------------
 	 |  Method name:    [drawMap]
 	 |  Purpose:  	    [Draws the Ground, Obstacle, and Trainer]
@@ -206,6 +217,16 @@ public abstract class Map extends JPanel implements Serializable {
 					g.drawImage(itemImage, x + Tile.SIZE / 4, y + Tile.SIZE / 4, null);
 			}
 
+		}
+
+		// draw teleporter loc if necessary
+		if (teleporterPoint != null) {
+			if (teleporterPoint.x >= startX && teleporterPoint.x < startX + Map.HEIGHT) {
+				if (teleporterPoint.y >= startY && teleporterPoint.y < startY + Map.WIDTH) {
+					g.drawImage(teleporterImage, (teleporterPoint.y % WIDTH) * Tile.SIZE,
+							(teleporterPoint.x % HEIGHT) * Tile.SIZE, null);
+				}
+			}
 		}
 
 		// draw trainer sprite
@@ -393,7 +414,7 @@ public abstract class Map extends JPanel implements Serializable {
 				moveAmount = MOVE;
 
 			if (tic < Math.abs(Tile.SIZE / moveAmount)) {
-				
+
 				if (tic % 8 == 0)
 					walk = !walk;
 
@@ -454,6 +475,7 @@ public abstract class Map extends JPanel implements Serializable {
 			itemImage =
 					itemImage.getScaledInstance(Tile.SIZE / 2, Tile.SIZE / 2, Image.SCALE_SMOOTH);
 			mewImage = ImageIO.read(new File("./images/mew_sprite.png"));
+			teleporterImage = ImageIO.read(new File("./images/teleporter.png"));
 		} catch (IOException e) {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
