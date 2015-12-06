@@ -480,11 +480,11 @@ public abstract class GameMode implements Serializable {
 
 				}
 
-				// if the Trainer should be animated,
-				// tell the EncounterPanel to animate the Trainer
-				if (doAnimation && animate)
-					encounter.animateTrainer(action, pr);
 			}
+			// if the Trainer should be animated,
+			// tell the EncounterPanel to animate the Trainer
+			if (doAnimation && animate)
+				encounter.animateTrainer(action, pr);
 		}
 
 	}
@@ -522,7 +522,8 @@ public abstract class GameMode implements Serializable {
 			if (!trainer.getPoint().equals(map.getTrainerPoint())) {
 				map.setTrainerPoint(trainer.getPoint());
 				map.setTeleporterPoint(null);
-			} else map.setTeleporterPoint(trainer.getPoint());
+			} else
+				map.setTeleporterPoint(trainer.getPoint());
 			map.repaint();
 		} else
 			trainer.useItem(i);
