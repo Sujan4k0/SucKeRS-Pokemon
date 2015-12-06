@@ -13,9 +13,8 @@
  | 
  | Description: This class implements the pokemon trainer of the game. The
  | trainer keeps track of its location, inventory of items and captured
- | pokemon, number of pokeballs left, number of steps left, whether or not
- | the trainer is fatigued, and the last action the trainer used during a 
- | battle
+ | pokemon, number of pokeballs left, number of steps left, and the last
+ | action the trainer used during a battle
  *===========================================================================*/
 
 package model.TrainerModel;
@@ -38,7 +37,6 @@ public class Trainer implements Serializable {
 	private HashMap<String, Integer> itemQuantities; //trainer's inventory of items
 	private List<Item> items;
 	private List<Pokemon> capturedPokemon; //trainer's collection of pokemon
-	private boolean fatigued;
 	private Point trainerPosition;
 
 	/*-----------------------------------------------------------------------------
@@ -54,7 +52,6 @@ public class Trainer implements Serializable {
 		items = new ArrayList<Item>();
 		itemQuantities = new HashMap<String, Integer>();
 		capturedPokemon = new ArrayList<Pokemon>();
-		fatigued = false;
 		trainerPosition = null;
 		for (int i = 0; i < 30; i++) {
 			addItem(new PokeBall());
@@ -75,7 +72,6 @@ public class Trainer implements Serializable {
 		items = new ArrayList<Item>();
 		itemQuantities = new HashMap<String, Integer>();
 		capturedPokemon = new ArrayList<Pokemon>();
-		fatigued = false;
 		trainerPosition = null;
 		for (int i = 0; i < p; i++) {
 			addItem(new PokeBall());
@@ -149,7 +145,7 @@ public class Trainer implements Serializable {
 	 |  Parameters:     [an Item i]
 	 *---------------------------------------------------------------------*/
 	public void useItem(Item i) {
-		
+
 		if (i.getName() == "Teleporter") {
 			//find the teleporter for the arraylist of items
 			//because we need the point associated with it
@@ -161,11 +157,11 @@ public class Trainer implements Serializable {
 					break;
 				}
 			}
-			
+
 			if (t == null) 
 				return;
 			else if (t.isSet()) {
-				
+
 				//Teleport animation
 				trainerPosition =
 						new Point((int) t.getTeleportPoint().getX(), (int) t.getTeleportPoint()
@@ -175,35 +171,27 @@ public class Trainer implements Serializable {
 				//update observers for inventory
 			} else {
 				t.setPoint(trainerPosition);
-				
+
 				return;
 			}
-		} else
+		} else 
+			if (items.contains(i)) {
 
-		if (items.contains(i)) {
-			if (i.getName().equals("Fatigue Potion")) {
-				if (isFatigued()) {
-					setFatigued(false);
+				if (i.getName().equals("Basic Step Potion")
+						|| i.getName().equals("Super Step Potion")
+						|| i.getName().equals("Hyper Step Potion")) {
+					this.steps += ((StepPotion) i).getStepBonus();
 					//update observers for inventory
+				} else if (i.getName().equals("PokeBall")) {
+				} else if (i.getName().equals("Harmonica")) {
 
-				} else {
-					return;
 				}
-			} else if (i.getName().equals("Basic Step Potion")
-					|| i.getName().equals("Super Step Potion")
-					|| i.getName().equals("Hyper Step Potion")) {
-				this.steps += ((StepPotion) i).getStepBonus();
-				//update observers for inventory
-			} else if (i.getName().equals("PokeBall")) {
-			} else if (i.getName().equals("Harmonica")) {
 
+				items.remove(i);
+				itemQuantities.put(i.getName(), (itemQuantities.get(i.getName()) - 1));
+
+			} else {
 			}
-
-			items.remove(i);
-			itemQuantities.put(i.getName(), (itemQuantities.get(i.getName()) - 1));
-
-		} else {
-		}
 	}
 
 	/*---------------------------------------------------------------------
@@ -231,30 +219,6 @@ public class Trainer implements Serializable {
 	}
 
 	/*---------------------------------------------------------------------
-	 |  Method name:    [isFatigued]
-	 |  Purpose:  	    [Returns whether the trainer is fatigued]
-	 |  Parameters:     [none]
-	 |  Returns:  	    [boolean: whether the trainer is fatigued]
-	 *---------------------------------------------------------------------*/
-
-	public boolean isFatigued() {
-
-		return fatigued;
-	}
-
-	/*-----------------------------------------------------------------------------
-	 |  Method name:    [setFatigued]
-	 |  Purpose:  	    [Changes whether or not the trainer is fatigued]
-	 |  Parameters:     [boolean v, true to set trainer to fatigued and vice versa]
-	 |  Returns:  	    [none]
-	 *-----------------------------------------------------------------------------*/
-
-	public void setFatigued(boolean v) {
-
-		fatigued = v;
-	}
-
-	/*---------------------------------------------------------------------
 	 |  Method name:    [getSteps]
 	 |  Purpose:  	    [Returns number of steps the trainer has left]
 	 |  Parameters:     [none]
@@ -268,29 +232,25 @@ public class Trainer implements Serializable {
 
 	/*---------------------------------------------------------------------
 	 |  Method name:    [decreaseSteps]
-	 |  Purpose:  	    [Decreases steps by either 1, or 2 if trainer is fatigued]
+	 |  Purpose:  	    [Decreases steps by either 1]
 	 |  Parameters:     [none]
 	 |  Returns:  	    [none]
 	 *---------------------------------------------------------------------*/
 
 	public void decreaseSteps() {
-
-		if (isFatigued())
-			steps -= 2;
-		else
 			steps -= 1;
 
 	}
-	
+
 	/*---------------------------------------------------------------------
 	 |  Method name:    [increaseSteps]
 	 |  Purpose:  	    [Increase steps by int 's']
 	 |  Parameters:     [int 's']
 	 |  Returns:  	    [none]
 	 *---------------------------------------------------------------------*/
-	
+
 	public void increaseSteps(int s) {
-		
+
 		steps += s;
 	}
 }
