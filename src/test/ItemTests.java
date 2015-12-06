@@ -104,31 +104,7 @@ public class ItemTests {
 		//assertTrue(brock.getItemQuantities().get(teleporter.getName())==0);
 
 	}
-	/*---------------------------------------------------------------------
-	 |  Method name:    [testFatiguePotion]
-	 |  Purpose:  	    [Test the functionality of Fatigue potions
-	 *---------------------------------------------------------------------*/
-	@Test
-	public void testFatiguePotion(){
-		Trainer misty = new Trainer();
-		Item fPotion = new FatiguePotion();
 
-		misty.addItem(fPotion);
-		assertTrue(misty.getItems().contains(fPotion));
-		assertTrue(misty.getItemQuantities().get(fPotion.getName())==1);
-
-		misty.useItem(fPotion);
-		assertTrue(misty.getItems().contains(fPotion));
-		assertTrue(misty.getItemQuantities().get(fPotion.getName())==1);
-		assertTrue(!misty.isFatigued());
-
-		misty.setFatigued(true);
-
-		misty.useItem(fPotion);
-		assertTrue(!misty.isFatigued());
-		assertFalse(misty.getItems().contains(fPotion));
-		assertTrue(misty.getItemQuantities().get(fPotion.getName())==0);
-	}
 
 	/*---------------------------------------------------------------------
 	 |  Method name:    [testPokeBalls]
@@ -174,14 +150,12 @@ public class ItemTests {
 	@Test
 	public void testItem(){
 		PokeBall pb = new PokeBall();
-		FatiguePotion fp = new FatiguePotion();
 		assertTrue(Item.getItemByName("pokeball").getName().equals(new PokeBall().getName()));
 		assertTrue(Item.getItemByName("hyper step potion").getName().equals(new HyperStepPotion().getName()));
 		assertTrue(Item.getItemByName("super step potion").getName().equals(new SuperStepPotion().getName()));
 		assertTrue(Item.getItemByName("basic step potion").getName().equals(new BasicStepPotion().getName()));
 		assertTrue(Item.getItemByName("teleporter").getName().equals(new Teleporter().getName()));
 		assertTrue(Item.getItemByName("harmonica").getName().equals(new Harmonica().getName()));
-		assertTrue(Item.getItemByName("fatigue Potion").getName().equals(new FatiguePotion().getName()));
 		assertTrue(Item.getItemByName("not an item")== null);
 		
 		assertTrue(new PokeBall().compareTo(new PokeBall()) == 0);
