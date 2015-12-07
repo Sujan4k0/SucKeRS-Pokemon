@@ -201,7 +201,8 @@ public class CEAGame extends GameMode {
 	 *---------------------------------------------------------------------*/
 	public void startLegEncounter() {
 
-		battleMessage = "You've encountered MEW!!\n AHHHHHHhhHHHhHhH.\n" + "Can you catch it?!?!";
+		battleMessage =
+				"You've encountered JERE-MEW-CER!!\n AHHHHHHhhHHHhHhH.\n" + "Can you catch it?!?!";
 
 		inBattle = true;
 		encounteredPokemon = database.getMew();
