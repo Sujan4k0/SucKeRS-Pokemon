@@ -47,6 +47,9 @@ public class EncounterPanel extends JPanel implements Serializable {
 	// Location to draw the pokemon
 	int pokemonX, pokemonY;
 
+	// scale of trainer image when running
+	double runScale = 1.0;
+
 	// currently encountered Pokemon to draw to jpanel
 	Pokemon encounteredPokemon;
 
@@ -54,7 +57,7 @@ public class EncounterPanel extends JPanel implements Serializable {
 
 	// Timer for animations and flashing/wiggle when caught pokemon
 	Timer actionAnimationTimer, introAnimationTimer, flashTimer;
-	Timer wiggleTimer, pmWiggleTimer;
+	Timer wiggleTimer, pmWiggleTimer, runAwayTimer;
 
 	// tics and such for the timers
 	int pmWiggleTic = -3, wiggleTic = -3, trainerTic = 1, bgNum = 0;
@@ -143,6 +146,7 @@ public class EncounterPanel extends JPanel implements Serializable {
 		wiggleTimer.stop();
 		pmWiggleTimer.stop();
 		flashTimer.stop();
+		runAwayTimer.stop();
 		bgPlayer.stopSound();
 	}
 
@@ -159,7 +163,6 @@ public class EncounterPanel extends JPanel implements Serializable {
 		if (!flashing) {
 			if (pokemonX < -250) {
 				pokemonX = this.getWidth() - pokemonSize;
-				// System.out.println("pokemonX now = " + pokemonX);
 				pokemonY = this.getHeight() / 15;
 			}
 
@@ -179,34 +182,12 @@ public class EncounterPanel extends JPanel implements Serializable {
 				Image smaller =
 						encounteredPokemon.getSprite()[0].getScaledInstance(pokemonSize,
 								pokemonSize, Image.SCALE_SMOOTH);
-				// draw pokemon
-				/*
-				 * g2.drawImage(smaller, pokemonX + pokemonOffset, pokemonY,
-				 * null);
-				 */
-				// System.out.println("drawing pokemon");
 				if ((int) pmRotation.getTranslateX() != pokemonX + pokemonOffset) {
 					pmRotation = new AffineTransform();
 					pmRotation.translate(pokemonX + pokemonOffset, pokemonY);
 				}
 				g2.drawImage(smaller, pmRotation, null);
-				// g2.drawImage(itemImage, itemLoc.x, itemLoc.y, 75, 75, null);
 			}
-
-			/*
-			 * draw pokemon stats g2.setColor(Color.WHITE); g2.setFont(new Font(
-			 * "Comic Sans", Font.CENTER_BASELINE, 30)); FontMetrics fm =
-			 * g2.getFontMetrics(); int strW =
-			 * fm.stringWidth(encounteredPokemon.getName());
-			 * g2.fillRect(this.getWidth() - pokemonSize - 200, this.getHeight()
-			 * / 15 + 100, strW + 25, 40); g2.setColor(Color.BLACK);
-			 * g2.drawString(encounteredPokemon.getName(), this.getWidth() -
-			 * pokemonSize - 190, this.getHeight() / 15 + 125);
-			 */
-			// g2.setColor(Color.blue);
-			// g2.fillRoundRect(this.getWidth() - pokemonSize - 175,
-			// this.getHeight()/15 + 125,
-			// encounteredPokemon.get, 25, 2, 2);*/
 
 			// draw trainer
 			if (trainerEncounterImage != null)
@@ -264,6 +245,8 @@ public class EncounterPanel extends JPanel implements Serializable {
 		wiggleTimer.stop();
 		pmWiggleTimer.stop();
 		flashTimer.stop();
+		runAwayTimer.stop();
+
 		itemImage = null;
 
 		if (tt == TerrainType.MYSTERY)
@@ -312,32 +295,38 @@ public class EncounterPanel extends JPanel implements Serializable {
 		currentResponse = pr;
 		if (!animating) {
 
-			itemLoc =
-					new Point((int) (trainerEncounterImage.getWidth(null) * 0.8), this.getHeight()
-							- (int) (trainerEncounterImage.getHeight(null) * 0.7));
-			animating = true;
+			if (ta == TrainerAction.RUN_AWAY) {
+				runAwayTimer.start();
+			} else {
 
-			pokemonX = this.getWidth() - pokemonSize;
-			pokemonY = this.getHeight() / 15;
+				itemLoc =
+						new Point((int) (trainerEncounterImage.getWidth(null) * 0.8),
+								this.getHeight()
+										- (int) (trainerEncounterImage.getHeight(null) * 0.7));
+				animating = true;
 
-			switch (currentAction) {
-			case THROW_BAIT:
-				itemImage = baitImage;
-				break;
-			case THROW_ROCK:
-				itemImage = rockImage;
-				break;
-			case THROW_BALL:
-				itemImage = ballImage;
-				break;
-			default:
-				break;
+				pokemonX = this.getWidth() - pokemonSize;
+				pokemonY = this.getHeight() / 15;
+
+				switch (currentAction) {
+				case THROW_BAIT:
+					itemImage = baitImage;
+					break;
+				case THROW_ROCK:
+					itemImage = rockImage;
+					break;
+				case THROW_BALL:
+					itemImage = ballImage;
+					break;
+				default:
+					break;
+				}
+
+				if (itemImage != null)
+					itemImage = itemImage.getScaledInstance(60, 60, Image.SCALE_SMOOTH);
+
+				actionAnimationTimer.start();
 			}
-
-			if (itemImage != null)
-				itemImage = itemImage.getScaledInstance(60, 60, Image.SCALE_SMOOTH);
-
-			actionAnimationTimer.start();
 		}
 		if (!muted)
 			playBattleSound(ta, pr); //Play a sound effect
@@ -430,6 +419,7 @@ public class EncounterPanel extends JPanel implements Serializable {
 				super.start();
 				animating = true;
 			}
+
 			@Override
 			public void stop() {
 				super.stop();
@@ -441,7 +431,6 @@ public class EncounterPanel extends JPanel implements Serializable {
 				} else {
 					if (encounteredPokemon != null)
 						if (encounteredPokemon.getState() == PokemonResponse.GET_CAUGHT) {
-							// System.out.println("Setting pkmon to null");
 							encounteredPokemon = null;
 						}
 				}
@@ -516,6 +505,22 @@ public class EncounterPanel extends JPanel implements Serializable {
 				pmWiggleTic = -3;
 			}
 		};
+
+		runAwayTimer = new Timer(50, new RunAwayListener()) {
+			@Override
+			public void start() {
+				super.start();
+				runScale = 1;
+				animating = true;
+			}
+
+			@Override
+			public void stop() {
+				super.stop();
+				runScale = 1;
+				animating = false;
+			}
+		};
 	}
 
 	/*---------------------------------------------------------------------
@@ -580,12 +585,6 @@ public class EncounterPanel extends JPanel implements Serializable {
 		}
 	}
 
-	/*---------------------------------------------------------------------
-	 |  Method name:    []
-	 |  Purpose:  	    []
-	 |  Parameters:     []
-	 |  Return:         []
-	 *---------------------------------------------------------------------*/
 	private class WiggleListener implements ActionListener {
 
 		@Override
@@ -606,12 +605,6 @@ public class EncounterPanel extends JPanel implements Serializable {
 
 	}
 
-	/*---------------------------------------------------------------------
-	 |  Method name:    []
-	 |  Purpose:  	    []
-	 |  Parameters:     []
-	 |  Return:         []
-	 *---------------------------------------------------------------------*/
 	private class PokemonWiggleListener implements ActionListener {
 
 		@Override
@@ -625,14 +618,13 @@ public class EncounterPanel extends JPanel implements Serializable {
 			} else {
 				pmWiggleTimer.stop();
 			}
-			
+
 			pmWiggleTic++;
 			repaint();
 		}
 
 	}
 
-	
 	private class TrainerAnimationListener implements ActionListener {
 
 		@Override
@@ -697,9 +689,30 @@ public class EncounterPanel extends JPanel implements Serializable {
 				pokemonOffset -= 50;
 				repaint();
 			}
-
 		}
 
 	}
 
+	private class RunAwayListener implements ActionListener {
+
+		@Override
+		public void actionPerformed(ActionEvent e) {
+
+			int pastW = trainerImages[0].getWidth(null);
+			int pastH = trainerImages[0].getHeight(null);
+
+			if ((int) (pastH * runScale) <= 0) {
+				runAwayTimer.stop();
+			} else {
+
+				trainerEncounterImage =
+						trainerImages[0].getScaledInstance(pastW, (int) (pastH * runScale),
+								Image.SCALE_SMOOTH);
+				repaint();
+				runScale -= 0.1;
+			}
+
+		}
+
+	}
 }

@@ -160,6 +160,7 @@ public class CEAGame extends GameMode {
 		super.endEncounter();
 		if (inLastPart && !isGameWon()) {
 			resetGame = true;
+			map.stopBGMusic();
 		}
 		else lastPartCheck();
 

@@ -535,7 +535,6 @@ public abstract class GameMode implements Serializable {
 				// and the Trainer should not be animated
 				case RUN_AWAY:
 					battleMessage = "You ran away! Gosh darn little fudgecake bitch ass shit";
-					doAnimation = false;
 					endEncounter();
 					break;
 				// the Trainer threw bait, update the battleMessage
