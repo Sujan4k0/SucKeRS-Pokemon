@@ -1026,7 +1026,6 @@ public class PokemonGUI {
 
             if (!mode.isGameActive()) { // game is over
 
-                soundPlayer.loopSound("./sounds/ending_song.wav"); // play end song
                 endGameDisplay(); // show end game display
             }
 
