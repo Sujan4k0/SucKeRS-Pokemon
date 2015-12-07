@@ -166,8 +166,8 @@ public class CEAGame extends GameMode {
 			if (trainer.getItemQuantities().get("Teleporter") == 0 && inLastPart && !isGameWon()) {
 				resetGame = true;
 				map.stopBGMusic();
-			} else
-				lastPartCheck();
+			}
+		lastPartCheck();
 
 	}
 
@@ -186,7 +186,7 @@ public class CEAGame extends GameMode {
 	 *---------------------------------------------------------------------*/
 	public void lastPartCheck() {
 		if (!inLastPart) {
-			if (new PokemonDatabase().caughtAllExceptLeg(trainer)) {
+			if (database.caughtAllExceptLeg(trainer)) {
 				inLastPart = true; // time for secrety secret time
 				Teleporter tele = new Teleporter(); // create teleporter to go to secret
 				tele.setPoint(new Point(Map.HEIGHT - 2, Map.WIDTH / 2)); // set point
