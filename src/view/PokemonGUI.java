@@ -986,6 +986,21 @@ public class PokemonGUI {
                     }
 
             }
+            
+            else if (teleportMessageShown && catchEmAll) {
+                
+                if (((CEAGame) mode).resetGame()) { 
+                
+                    teleportMessageShown = false;
+                    
+                    JOptionPane.showMessageDialog(null, "Mew kicked your tiny ass and took all your cute ass Pokemon man. You gotta start over, here are some new boots.");                    
+                    
+                    mode = new CEAGame(new Random());
+                    mapView.dispose();
+                    mapFrame();
+                }
+                
+            }
                                 
                 mapView.revalidate();
             }
