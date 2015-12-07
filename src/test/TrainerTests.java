@@ -49,17 +49,6 @@ public class TrainerTests {
 	}
 	
 	@Test
-	public void testFatiguedSteps() {
-		
-		Trainer sujan = new Trainer();
-		assertEquals(sujan.getSteps(),500);
-		sujan.decreaseSteps();
-		assertEquals(sujan.getSteps(),498);
-	}
-	
-
-	
-	@Test
 	public void testBasicStepPotion() {
 		
 		Trainer aang = new Trainer();
@@ -147,10 +136,4 @@ public class TrainerTests {
 		assertTrue(misty.getItemQuantities().get(tp.getName()) == 0);		//Verify that misty no longer has a teleporter
 		assertEquals(misty.getPoint(), new Point(5,10));					//Verify that misty transported to original position
 	}
-	
-	/*@Test
-	public void test() {
-		fail("Not yet implemented");
-	}*/
-
 }
