@@ -211,7 +211,7 @@ public class PokemonGUI {
         }
 
         // steps progress bar
-        steps = new JProgressBar(0, mode.getTrainer().getSteps());
+        steps = new JProgressBar(0, 500);
         steps.setValue(mode.getTrainer().getSteps()); // will need to replace this with steps
         steps.setStringPainted(true);
         steps.setString((mode.getTrainer().getSteps()) + " steps remaining");
