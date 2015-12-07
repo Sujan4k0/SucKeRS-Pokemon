@@ -66,8 +66,8 @@ public class PokemonGUI {
     private SoundPlayer soundPlayer; // sound stuff
     private JTextArea battleMessages; // messages to appear on GUI during battle
     private boolean battleJustEnded;
-    private Pokedex dex; // pokedex display
-    private boolean teleportMessageShown; // message for end-game condition
+    private Pokedex dex;
+    private boolean teleportMessageShown;
 
     /*---------------------------------------------------------------------
     |  Method name:    [PokemonGUI]
@@ -522,6 +522,16 @@ public class PokemonGUI {
                         mode.getMap().setFocusable(true);
                         save = true; // we've loaded from a save
                         
+                        if (((CEAGame) mode).inLastPart()) {
+                            
+                            teleportMessageShown = true;
+                        }
+                        
+                        else {
+                            
+                            teleportMessageShown = false;
+                        }
+                        
                     } catch (Exception e1) { // indicate that the save doesn't work (should never happen)
                         
                         JOptionPane.showMessageDialog(null, "The save is corrupted, please start a new game");
@@ -743,7 +753,6 @@ public class PokemonGUI {
         public void actionPerformed(ActionEvent e) {
 
             mode.forfeitGame(); // notify mode that the game is over
-            teleportMessageShown = false;
             endGameDisplay(); // show the end game stats
         }
     }
