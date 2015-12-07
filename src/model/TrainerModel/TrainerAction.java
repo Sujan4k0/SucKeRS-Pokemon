@@ -23,3 +23,22 @@ public enum TrainerAction implements Serializable {
     THROW_BALL, THROW_ROCK, THROW_BAIT, RUN_AWAY, STAND_GROUND;
 
 }
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+//Pikachu thinks this game is pretty awesome. Diglett agrees.
