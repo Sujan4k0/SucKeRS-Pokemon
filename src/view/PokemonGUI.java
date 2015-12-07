@@ -67,6 +67,7 @@ public class PokemonGUI {
     private JTextArea battleMessages;
     private boolean battleJustEnded;
     private Pokedex dex;
+    private boolean teleportMessageShown;
 
     /*---------------------------------------------------------------------
     |  Method name:    [PokemonGUI]
@@ -76,6 +77,7 @@ public class PokemonGUI {
 
         maze = false;
         catchEmAll = false;
+        teleportMessageShown = false;
         soundPlayer = new SoundPlayer();
         startFrame();
     }
@@ -645,7 +647,7 @@ public class PokemonGUI {
 
         @Override
         public void actionPerformed(ActionEvent e) {
-
+            
             // get the String of the item selected in the JComboBox
             String item = trainerItems.getSelectedItem().toString();
             
@@ -691,11 +693,20 @@ public class PokemonGUI {
                 
                 if (use.isForPokemon()) { // item is usable on a pokemon
                     
-                    String pokemon = trainerPokemon.getSelectedItem().toString();
-                    pokemon = pokemon.substring(0, pokemon.indexOf(' ')); // no Pokemon name have space, can just take index
-                    updateItemsList(); // reflect on GUI that item was used
+                    if (mode.getTrainer().getPokemon().isEmpty()) {
+                        
+                        JOptionPane.showMessageDialog(null, "Brah, what are you trying to do? You have no goddamn Pokemon!"); 
+                    }
                     
-                    mode.useItemOnPokemon(use, pokemon);
+                    else {
+                        
+                        String pokemon = trainerPokemon.getSelectedItem().toString();
+                        pokemon = pokemon.substring(0, pokemon.indexOf(' ')); // no Pokemon name have space, can just take index
+                        updateItemsList(); // reflect on GUI that item was used
+                        
+                        mode.useItemOnPokemon(use, pokemon);
+                    
+                    }
                 }
                 
                 else { // item is only usable on trainer, show error
@@ -960,6 +971,17 @@ public class PokemonGUI {
                 
                 updatePokemonList();
                 updateItemsList();
+                
+            if (!teleportMessageShown && catchEmAll) {
+                
+                    if (((CEAGame) mode).inLastPart()) {
+                      
+                        teleportMessageShown = true;
+                        JOptionPane.showMessageDialog(null, "You've caught all the Pokemon dude. And holy shit, there's a teleporter in your inventory. Shaka brah!");  
+                    
+                    }
+
+            }
                                 
                 mapView.revalidate();
             }

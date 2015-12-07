@@ -52,6 +52,12 @@ public class CEAGame extends GameMode {
 
 	}
 	
+	/*---------------------------------------------------------------------
+	 |  Method name:    []
+	 |  Purpose:  	    []
+	 |  Parameters:     []
+	 |  Return:         []
+	 *---------------------------------------------------------------------*/
 	public CEAGame(Random rand, boolean muteGame) {
 		this(rand);
 		if (muteGame)
@@ -138,17 +144,35 @@ public class CEAGame extends GameMode {
 
 	}
 
+	/*---------------------------------------------------------------------
+	 |  Method name:    []
+	 |  Purpose:  	    []
+	 |  Parameters:     []
+	 |  Return:         []
+	 *---------------------------------------------------------------------*/
 	@Override
 	public void trainerCaughtPokemon(Pokemon p) {
 		// nothing hurr
 	}
 
+	/*---------------------------------------------------------------------
+	 |  Method name:    []
+	 |  Purpose:  	    []
+	 |  Parameters:     []
+	 |  Return:         []
+	 *---------------------------------------------------------------------*/
 	@Override
 	public void endEncounter() {
 		super.endEncounter();
 		lastPartCheck();
 	}
 
+	/*---------------------------------------------------------------------
+	 |  Method name:    []
+	 |  Purpose:  	    []
+	 |  Parameters:     []
+	 |  Return:         []
+	 *---------------------------------------------------------------------*/
 	public void lastPartCheck() {
 		if (!inLastPart) {
 			if (new PokemonDatabase().caughtAllExceptLeg(trainer)) {
@@ -160,6 +184,12 @@ public class CEAGame extends GameMode {
 		}
 	}
 
+	/*---------------------------------------------------------------------
+	 |  Method name:    []
+	 |  Purpose:  	    []
+	 |  Parameters:     []
+	 |  Return:         []
+	 *---------------------------------------------------------------------*/
 	public void startLegEncounter() {
 
 		battleMessage = "You've encountered MEW!!\n AHHHHHHhhHHHhHhH.\n" + "Can you catch it?!?!";
@@ -171,6 +201,12 @@ public class CEAGame extends GameMode {
 
 	}
 
+	/*---------------------------------------------------------------------
+	 |  Method name:    []
+	 |  Purpose:  	    []
+	 |  Parameters:     []
+	 |  Return:         []
+	 *---------------------------------------------------------------------*/
 	public boolean inLastPart() {
 		// TODO Auto-generated method stub
 		return inLastPart;
