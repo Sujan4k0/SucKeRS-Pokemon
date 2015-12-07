@@ -46,10 +46,6 @@ public class CEAGame extends GameMode {
 		trainer.addItem(new Harmonica());
 		trainer.addItem(new Harmonica());
 
-		for (Pokemon p : database.getAllPokemon())
-			if (!p.getName().equals("MEW"))
-				trainer.addPokemon(p);
-
 	}
 
 	/*---------------------------------------------------------------------
