@@ -95,6 +95,12 @@ public abstract class GameMode implements Serializable {
 
 	}
 
+	/*---------------------------------------------------------------------
+	 |  Method name:    []
+	 |  Purpose:  	    []
+	 |  Parameters:     []
+	 |  Return:         []
+	 *---------------------------------------------------------------------*/
 	public void mute() {
 		map.mute();
 		encounter.mute();
@@ -111,6 +117,12 @@ public abstract class GameMode implements Serializable {
 
 	}
 
+	/*---------------------------------------------------------------------
+	 |  Method name:    []
+	 |  Purpose:  	    []
+	 |  Parameters:     []
+	 |  Return:         []
+	 *---------------------------------------------------------------------*/
 	public Trainer getTrainer() {
 
 		return trainer;
@@ -177,6 +189,12 @@ public abstract class GameMode implements Serializable {
 	 *---------------------------------------------------------------------*/
 	public abstract boolean isGameLost();
 
+	/*---------------------------------------------------------------------
+	 |  Method name:    []
+	 |  Purpose:  	    []
+	 |  Parameters:     []
+	 |  Return:         []
+	 *---------------------------------------------------------------------*/
 	public void moveTrainer(int kc) {
 		moveTrainer(kc, true);
 	}
@@ -314,12 +332,24 @@ public abstract class GameMode implements Serializable {
 		return true;
 	}
 
+	/*---------------------------------------------------------------------
+	 |  Method name:    []
+	 |  Purpose:  	    []
+	 |  Parameters:     []
+	 |  Return:         []
+	 *---------------------------------------------------------------------*/
 	public boolean gameAlert() {
 		if (alertMessage.length() > 0)
 			return true;
 		return false;
 	}
 
+	/*---------------------------------------------------------------------
+	 |  Method name:    []
+	 |  Purpose:  	    []
+	 |  Parameters:     []
+	 |  Return:         []
+	 *---------------------------------------------------------------------*/
 	public String getNotification() {
 
 		String x = alertMessage;
@@ -345,6 +375,12 @@ public abstract class GameMode implements Serializable {
 		return endMessage;
 	}
 
+	/*---------------------------------------------------------------------
+	 |  Method name:    []
+	 |  Purpose:  	    []
+	 |  Parameters:     []
+	 |  Return:         []
+	 *---------------------------------------------------------------------*/
 	public String getBattleMessage() {
 		return battleMessage;
 	}
@@ -359,6 +395,12 @@ public abstract class GameMode implements Serializable {
 		map.stopBGMusic();
 	}
 
+	/*---------------------------------------------------------------------
+	 |  Method name:    []
+	 |  Purpose:  	    []
+	 |  Parameters:     []
+	 |  Return:         []
+	 *---------------------------------------------------------------------*/
 	public void startEncounter() {
 		startEncounter(true);
 	}
@@ -378,23 +420,53 @@ public abstract class GameMode implements Serializable {
 		}
 	}
 
+	/*---------------------------------------------------------------------
+	 |  Method name:    []
+	 |  Purpose:  	    []
+	 |  Parameters:     []
+	 |  Return:         []
+	 *---------------------------------------------------------------------*/
 	public void setEncounteredPokemon(Pokemon p) {
 		encounteredPokemon = p;
 	}
 
+	/*---------------------------------------------------------------------
+	 |  Method name:    []
+	 |  Purpose:  	    []
+	 |  Parameters:     []
+	 |  Return:         []
+	 *---------------------------------------------------------------------*/
 	public Pokemon getEncounteredPokemon() {
 		return encounteredPokemon;
 	}
 
+	/*---------------------------------------------------------------------
+	 |  Method name:    []
+	 |  Purpose:  	    []
+	 |  Parameters:     []
+	 |  Return:         []
+	 *---------------------------------------------------------------------*/
 	protected void setEncounterBG(TerrainType tt) {
 		encounter.setBGImages(tt);
 
 	}
 
+	/*---------------------------------------------------------------------
+	 |  Method name:    []
+	 |  Purpose:  	    []
+	 |  Parameters:     []
+	 |  Return:         []
+	 *---------------------------------------------------------------------*/
 	public void doTrainerAction(TrainerAction action) {
 		doTrainerAction(action, true);
 	}
 
+	/*---------------------------------------------------------------------
+	 |  Method name:    []
+	 |  Purpose:  	    []
+	 |  Parameters:     []
+	 |  Return:         []
+	 *---------------------------------------------------------------------*/
 	public void doTrainerAction(TrainerAction action, boolean animate) {
 
 		// get the name of the encountered Pokemon
@@ -494,6 +566,12 @@ public abstract class GameMode implements Serializable {
 
 	}
 
+	/*---------------------------------------------------------------------
+	 |  Method name:    []
+	 |  Purpose:  	    []
+	 |  Parameters:     []
+	 |  Return:         []
+	 *---------------------------------------------------------------------*/
 	public void useItemOnPokemon(Item i, String pName) {
 
 		if (i.getName().equals("Harmonica") && trainer.getItems().contains(new Harmonica())) {
@@ -503,10 +581,22 @@ public abstract class GameMode implements Serializable {
 		useItem(i);
 	}
 
+	/*---------------------------------------------------------------------
+	 |  Method name:    []
+	 |  Purpose:  	    []
+	 |  Parameters:     []
+	 |  Return:         []
+	 *---------------------------------------------------------------------*/
 	public PokemonDatabase getDatabase() {
 		return database;
 	}
 
+	/*---------------------------------------------------------------------
+	 |  Method name:    []
+	 |  Purpose:  	    []
+	 |  Parameters:     []
+	 |  Return:         []
+	 *---------------------------------------------------------------------*/
 	public void loadImages() {
 		map.load();
 		database.loadAllPokemon();
@@ -514,12 +604,24 @@ public abstract class GameMode implements Serializable {
 		assignListeners();
 	}
 
+	/*---------------------------------------------------------------------
+	 |  Method name:    []
+	 |  Purpose:  	    []
+	 |  Parameters:     []
+	 |  Return:         []
+	 *---------------------------------------------------------------------*/
 	private void assignListeners() {
 		// add KeyListener to this Map so that the user can move the trainer
 		// and other button-y things
 		map.addKeyListener(new OurKeyListener());
 	}
 
+	/*---------------------------------------------------------------------
+	 |  Method name:    []
+	 |  Purpose:  	    []
+	 |  Parameters:     []
+	 |  Return:         []
+	 *---------------------------------------------------------------------*/
 	public void useItem(Item i) {
 
 		if (trainer.getItemQuantities().get(i.getName()) > 0 && i.getName().equals("Teleporter")) {
@@ -535,6 +637,12 @@ public abstract class GameMode implements Serializable {
 
 	}
 
+	/*---------------------------------------------------------------------
+	 |  Method name:    []
+	 |  Purpose:  	    []
+	 |  Parameters:     []
+	 |  Return:         []
+	 *---------------------------------------------------------------------*/
 	public void endEncounter() {
 		encounter.endEncounter();
 		encounteredPokemon = null;
@@ -543,14 +651,32 @@ public abstract class GameMode implements Serializable {
 		map.restartBGMusic();
 	}
 
+	/*---------------------------------------------------------------------
+	 |  Method name:    []
+	 |  Purpose:  	    []
+	 |  Parameters:     []
+	 |  Return:         []
+	 *---------------------------------------------------------------------*/
 	public boolean trainerInBattle() {
 		return inBattle;
 	}
 
+	/*---------------------------------------------------------------------
+	 |  Method name:    []
+	 |  Purpose:  	    []
+	 |  Parameters:     []
+	 |  Return:         []
+	 *---------------------------------------------------------------------*/
 	public EncounterPanel getEncounterPanel() {
 		return encounter;
 	}
 
+	/*---------------------------------------------------------------------
+	 |  Method name:    []
+	 |  Purpose:  	    []
+	 |  Parameters:     []
+	 |  Return:         []
+	 *---------------------------------------------------------------------*/
 	public abstract void trainerCaughtPokemon(Pokemon p);
 
 	// TODO THIS WILL BE MOVED TO MAP

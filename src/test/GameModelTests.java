@@ -548,6 +548,7 @@ public class GameModelTests {
 	@Test
 	public void gameModeDoTrainerActionThrowBallTest3() {
 		GameMode g = new MazeGame(new Random(), true);
+		int prevSize = g.getTrainer().getPokemon().size();
 		//catch the pokemon
 		g.getTrainer().addItem(new PokeBall());
 		g.setEncounteredPokemon(alwaysPM);
@@ -557,7 +558,7 @@ public class GameModelTests {
 		assertTrue(g.getBattleMessage().toUpperCase()
 				.contains("CAUGHT " + alwaysPM.getName().toUpperCase()));
 		//1 pokemon should be in Trainer's list of mons
-		assertTrue(g.getTrainer().getPokemon().size() == 1);
+		assertTrue(g.getTrainer().getPokemon().size() == (prevSize + 1));
 	}
 
 	@Test

@@ -4,7 +4,7 @@ public class PokeBall extends Item{
 
 	public PokeBall(){
 		super.setName("PokeBall");
-		super.setForPokemon(true);
+		super.setForPokemon(false);
 		super.setForTrainer(false);
 	}
 }

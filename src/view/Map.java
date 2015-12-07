@@ -134,6 +134,12 @@ public abstract class Map extends JPanel implements Serializable {
 
 	}
 
+	/*---------------------------------------------------------------------
+	 |  Method name:    []
+	 |  Purpose:  	    []
+	 |  Parameters:     []
+	 |  Return:         []
+	 *---------------------------------------------------------------------*/
 	public abstract void initializeItems();
 
 	/*---------------------------------------------------------------------
@@ -149,6 +155,12 @@ public abstract class Map extends JPanel implements Serializable {
 
 	}
 
+	/*---------------------------------------------------------------------
+	 |  Method name:    []
+	 |  Purpose:  	    []
+	 |  Parameters:     []
+	 |  Return:         []
+	 *---------------------------------------------------------------------*/
 	private void drawTrainer(Graphics g) {
 		// draw trainer sprite
 		GraphicsManager.drawSprite(g, drawnDir, trainerSheet, (trainerPoint.y % WIDTH) * Tile.SIZE
@@ -184,12 +196,24 @@ public abstract class Map extends JPanel implements Serializable {
 		return itemTiles;
 	}
 
+	/*---------------------------------------------------------------------
+	 |  Method name:    []
+	 |  Purpose:  	    []
+	 |  Parameters:     []
+	 |  Return:         []
+	 *---------------------------------------------------------------------*/
 	public void setTeleporterPoint(Point p) {
 		if (p == null)
 			teleporterPoint = null;
 		else teleporterPoint = new Point(p);
 	}
 
+	/*---------------------------------------------------------------------
+	 |  Method name:    []
+	 |  Purpose:  	    []
+	 |  Parameters:     []
+	 |  Return:         []
+	 *---------------------------------------------------------------------*/
 	public Point getTeleporterPoint() {
 		return teleporterPoint;
 	}
@@ -235,6 +259,12 @@ public abstract class Map extends JPanel implements Serializable {
 
 	}
 
+	/*---------------------------------------------------------------------
+	 |  Method name:    []
+	 |  Purpose:  	    []
+	 |  Parameters:     []
+	 |  Return:         []
+	 *---------------------------------------------------------------------*/
 	public void checkMapPlacement() {
 		if (trainerPoint.x >= startX)
 			moveDown();
@@ -377,21 +407,45 @@ public abstract class Map extends JPanel implements Serializable {
 		return trainerSheet;
 	}
 
+	/*---------------------------------------------------------------------
+	 |  Method name:    []
+	 |  Purpose:  	    []
+	 |  Parameters:     []
+	 |  Return:         []
+	 *---------------------------------------------------------------------*/
 	public TerrainType getCurrentTerrain() {
 		// TODO Auto-generated method stub
 		return groundTiles[trainerPoint.x][trainerPoint.y].getTerrainType();
 	}
-
+	
+	/*---------------------------------------------------------------------
+	 |  Method name:    []
+	 |  Purpose:  	    []
+	 |  Parameters:     []
+	 |  Return:         []
+	 *---------------------------------------------------------------------*/
 	public boolean isAnimating() {
 		return animating;
 	}
 
+	/*---------------------------------------------------------------------
+	 |  Method name:    []
+	 |  Purpose:  	    []
+	 |  Parameters:     []
+	 |  Return:         []
+	 *---------------------------------------------------------------------*/
 	public void setStartOffsets(int x, int y) {
 		xOffset = x;
 		yOffset = y;
 		movementTimer.stop();
 	}
 
+	/*---------------------------------------------------------------------
+	 |  Method name:    []
+	 |  Purpose:  	    []
+	 |  Parameters:     []
+	 |  Return:         []
+	 *---------------------------------------------------------------------*/
 	public void startTrainerMovement() {
 		movementTimer.start();
 	}
@@ -466,6 +520,12 @@ public abstract class Map extends JPanel implements Serializable {
 
 	}
 
+	/*---------------------------------------------------------------------
+	 |  Method name:    []
+	 |  Purpose:  	    []
+	 |  Parameters:     []
+	 |  Return:         []
+	 *---------------------------------------------------------------------*/
 	public void load() {
 		try {
 			trainerSheet = ImageIO.read(new File("./images/SucKeRS_TrainerSpriteSheet_Test.png"));
@@ -488,31 +548,67 @@ public abstract class Map extends JPanel implements Serializable {
 
 	}
 
+	/*---------------------------------------------------------------------
+	 |  Method name:    []
+	 |  Purpose:  	    []
+	 |  Parameters:     []
+	 |  Return:         []
+	 *---------------------------------------------------------------------*/
 	public void playWalkingSound() {
 		// play sounds effect of walking on this tile
 		sfxPlayer.playSound(getGroundTiles()[trainerPoint.x][trainerPoint.y].getSoundFilePath());
 	}
 
+	/*---------------------------------------------------------------------
+	 |  Method name:    []
+	 |  Purpose:  	    []
+	 |  Parameters:     []
+	 |  Return:         []
+	 *---------------------------------------------------------------------*/
 	public void startNewBGMusic() {
 		if (!muted)
 			bgPlayer.loopSound(bgPath);
 	}
 
+	/*---------------------------------------------------------------------
+	 |  Method name:    []
+	 |  Purpose:  	    []
+	 |  Parameters:     []
+	 |  Return:         []
+	 *---------------------------------------------------------------------*/
 	public void restartBGMusic() {
 		if (!muted)
 			bgPlayer.restartSound();
 	}
 
+	/*---------------------------------------------------------------------
+	 |  Method name:    []
+	 |  Purpose:  	    []
+	 |  Parameters:     []
+	 |  Return:         []
+	 *---------------------------------------------------------------------*/
 	public void pauseBGMusic() {
 		if (!muted)
 			bgPlayer.pauseSound();
 	}
 
+	/*---------------------------------------------------------------------
+	 |  Method name:    []
+	 |  Purpose:  	    []
+	 |  Parameters:     []
+	 |  Return:         []
+	 *---------------------------------------------------------------------*/
 	public void stopBGMusic() {
 		if (!muted)
 			bgPlayer.stopSound();
 	}
 
+	/*---------------------------------------------------------------------
+	 |  Method name:    []
+	 |  Purpose:  	    []
+	 |  Parameters:     []
+	 |  Return:         []
+	 *---------------------------------------------------------------------*/
 	public void changeBGMusic(String songFilePath) {
 		if (!muted)
 			stopBGMusic();
@@ -521,11 +617,23 @@ public abstract class Map extends JPanel implements Serializable {
 			startNewBGMusic();
 
 	}
-
+	
+	/*---------------------------------------------------------------------
+	 |  Method name:    []
+	 |  Purpose:  	    []
+	 |  Parameters:     []
+	 |  Return:         []
+	 *---------------------------------------------------------------------*/
 	public String getBGMusicFilePath() {
 		return bgPath;
 	}
 
+	/*---------------------------------------------------------------------
+	 |  Method name:    []
+	 |  Purpose:  	    []
+	 |  Parameters:     []
+	 |  Return:         []
+	 *---------------------------------------------------------------------*/
 	public boolean trainerSteppingOnItem() {
 		if (itemTiles[trainerPoint.x][trainerPoint.y] != null)
 			return true;
@@ -533,12 +641,24 @@ public abstract class Map extends JPanel implements Serializable {
 			return false;
 	}
 
+	/*---------------------------------------------------------------------
+	 |  Method name:    []
+	 |  Purpose:  	    []
+	 |  Parameters:     []
+	 |  Return:         []
+	 *---------------------------------------------------------------------*/
 	public Item getItemAtCurrentLocation() {
 		Item i = itemTiles[trainerPoint.x][trainerPoint.y];
 		itemTiles[trainerPoint.x][trainerPoint.y] = null;
 		return i;
 	}
 
+	/*---------------------------------------------------------------------
+	 |  Method name:    []
+	 |  Purpose:  	    []
+	 |  Parameters:     []
+	 |  Return:         []
+	 *---------------------------------------------------------------------*/
 	public void mute() {
 		stopBGMusic();
 

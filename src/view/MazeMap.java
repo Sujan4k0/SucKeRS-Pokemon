@@ -110,6 +110,12 @@ public class MazeMap extends Map {
 		}
 	}
 
+	/*---------------------------------------------------------------------
+	 |  Method name:    []
+	 |  Purpose:  	    []
+	 |  Parameters:     []
+	 |  Return:         []
+	 *---------------------------------------------------------------------*/
 	@Override
 	public void initializeItems() {
 		itemTiles = new Item[h][w];
