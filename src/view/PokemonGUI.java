@@ -68,6 +68,7 @@ public class PokemonGUI {
     private JTextArea battleMessages;
     private boolean battleJustEnded;
     private Pokedex dex;
+    private boolean teleportMessageShown;
 
     /*---------------------------------------------------------------------
     |  Method name:    [PokemonGUI]
@@ -77,6 +78,7 @@ public class PokemonGUI {
 
         maze = false;
         catchEmAll = false;
+        teleportMessageShown = false;
         soundPlayer = new SoundPlayer();
         startFrame();
     }
@@ -970,6 +972,17 @@ public class PokemonGUI {
                 
                 updatePokemonList();
                 updateItemsList();
+                
+            if (!teleportMessageShown && catchEmAll) {
+                
+                    if (((CEAGame) mode).inLastPart()) {
+                      
+                        teleportMessageShown = true;
+                        JOptionPane.showMessageDialog(null, "You've caught all the Pokemon dude. And holy shit, there's a teleporter in your inventory. Shaka brah!");  
+                    
+                    }
+
+            }
                                 
                 mapView.revalidate();
             }
