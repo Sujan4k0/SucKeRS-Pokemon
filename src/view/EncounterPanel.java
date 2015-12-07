@@ -430,7 +430,6 @@ public class EncounterPanel extends JPanel implements Serializable {
 				super.start();
 				animating = true;
 			}
-
 			@Override
 			public void stop() {
 				super.stop();
@@ -442,7 +441,7 @@ public class EncounterPanel extends JPanel implements Serializable {
 				} else {
 					if (encounteredPokemon != null)
 						if (encounteredPokemon.getState() == PokemonResponse.GET_CAUGHT) {
-							System.out.println("Setting pkmon to null");
+							// System.out.println("Setting pkmon to null");
 							encounteredPokemon = null;
 						}
 				}

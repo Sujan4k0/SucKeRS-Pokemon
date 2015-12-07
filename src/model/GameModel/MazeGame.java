@@ -43,6 +43,12 @@ public class MazeGame extends GameMode {
 		trainer.addItem(new Teleporter());
 	}
 	
+	/*---------------------------------------------------------------------
+	 |  Method name:    []
+	 |  Purpose:  	    []
+	 |  Parameters:     []
+	 |  Return:         []
+	 *---------------------------------------------------------------------*/
 	public MazeGame(Random rand, boolean muteGame) {
 		this(rand);
 		if (muteGame)
@@ -92,6 +98,12 @@ public class MazeGame extends GameMode {
 		map = new MazeMap(new Random());
 	}
 
+	/*---------------------------------------------------------------------
+	 |  Method name:    []
+	 |  Purpose:  	    []
+	 |  Parameters:     []
+	 |  Return:         []
+	 *---------------------------------------------------------------------*/
 	@Override
 	public void trainerCaughtPokemon(Pokemon p) {
 		switch (p.getRarity()) {
@@ -110,6 +122,12 @@ public class MazeGame extends GameMode {
 
 	}
 
+	/*---------------------------------------------------------------------
+	 |  Method name:    []
+	 |  Purpose:  	    []
+	 |  Parameters:     []
+	 |  Return:         []
+	 *---------------------------------------------------------------------*/
 	@Override
 	public void startEncounter(boolean animate) {
 

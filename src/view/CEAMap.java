@@ -85,29 +85,6 @@ public class CEAMap extends Map {
 		makeCaveyLand();
 		makeSuperySecretyLand();
 
-		// grassy land = bush
-		// cave = rocks
-		// ice = ice blocks
-		// desert = cactus
-		// rocky enclosure with entrance
-		// zig-zag rocky paths?
-
-		// first area is all teleport land YO
-		// obstacles[0][0] to height - 1, width - 1
-
-		// grassy land
-		// circly enclosure 
-		// obstacleTiles[Map.HEIGHT][Map.WIDTH]
-
-		// desert land
-		// randomly placed cactus :D
-
-		// ice land
-		// look at pic
-
-		// teleport land
-		// alternating 0 1 tiles
-
 		// starts the game in the plain area
 		setTrainerPoint(new Point(Map.HEIGHT + Map.HEIGHT / 2, 2));
 		moveDown();
@@ -117,6 +94,12 @@ public class CEAMap extends Map {
 
 	}
 
+	/*---------------------------------------------------------------------
+	 |  Method name:    []
+	 |  Purpose:  	    []
+	 |  Parameters:     []
+	 |  Return:         []
+	 *---------------------------------------------------------------------*/
 	private void makeGrassyLand() {
 		for (int i = Map.HEIGHT; i < 2 * Map.HEIGHT; i++) {
 			for (int j = Map.WIDTH; j < 2 * Map.WIDTH; j++) {
@@ -195,6 +178,12 @@ public class CEAMap extends Map {
 		obstacleTiles[Map.HEIGHT * 2 - 2][Map.WIDTH * 2 - 3] = Obstacle.TREE_PALM;
 	}
 
+	/*---------------------------------------------------------------------
+	 |  Method name:    []
+	 |  Purpose:  	    []
+	 |  Parameters:     []
+	 |  Return:         []
+	 *---------------------------------------------------------------------*/
 	private void makeIceyLand() {
 
 		int minH = Map.HEIGHT * 2;
@@ -253,6 +242,12 @@ public class CEAMap extends Map {
 		obstacleTiles[Map.HEIGHT * 2 + 5][Map.WIDTH + 9] = Obstacle.TREE_SNOWY;
 	}
 
+	/*---------------------------------------------------------------------
+	 |  Method name:    []
+	 |  Purpose:  	    []
+	 |  Parameters:     []
+	 |  Return:         []
+	 *---------------------------------------------------------------------*/
 	private void makePlainyLand() {
 
 		for (int i = Map.HEIGHT; i < 2 * Map.HEIGHT; i++) {
@@ -289,6 +284,12 @@ public class CEAMap extends Map {
 
 	}
 
+	/*---------------------------------------------------------------------
+	 |  Method name:    []
+	 |  Purpose:  	    []
+	 |  Parameters:     []
+	 |  Return:         []
+	 *---------------------------------------------------------------------*/
 	private void makeDesertyLand() {
 
 		Obstacle obstToUse = Obstacle.CACTUS_2;
@@ -354,12 +355,24 @@ public class CEAMap extends Map {
 
 	}
 
+	/*---------------------------------------------------------------------
+	 |  Method name:    []
+	 |  Purpose:  	    []
+	 |  Parameters:     []
+	 |  Return:         []
+	 *---------------------------------------------------------------------*/
 	@Override
 	public void paintComponent(Graphics g) {
 		super.paintComponent(g);
 		drawMew(g);
 	}
 
+	/*---------------------------------------------------------------------
+	 |  Method name:    []
+	 |  Purpose:  	    []
+	 |  Parameters:     []
+	 |  Return:         []
+	 *---------------------------------------------------------------------*/
 	public void drawMew(Graphics g) {
 
 		// draw mew if necessary
@@ -368,6 +381,12 @@ public class CEAMap extends Map {
 
 	}
 
+	/*---------------------------------------------------------------------
+	 |  Method name:    []
+	 |  Purpose:  	    []
+	 |  Parameters:     []
+	 |  Return:         []
+	 *---------------------------------------------------------------------*/
 	private void makeCaveyLand() {
 
 		for (int i = 0; i < Map.HEIGHT; i++) {
@@ -418,6 +437,12 @@ public class CEAMap extends Map {
 		}
 	}
 
+	/*---------------------------------------------------------------------
+	 |  Method name:    []
+	 |  Purpose:  	    []
+	 |  Parameters:     []
+	 |  Return:         []
+	 *---------------------------------------------------------------------*/
 	private void makeSuperySecretyLand() {
 		for (int i = 0; i < Map.HEIGHT; i++) {
 			for (int j = 0; j < Map.WIDTH - 1; j++) {
@@ -442,6 +467,12 @@ public class CEAMap extends Map {
 		}
 	}
 
+	/*---------------------------------------------------------------------
+	 |  Method name:    []
+	 |  Purpose:  	    []
+	 |  Parameters:     []
+	 |  Return:         []
+	 *---------------------------------------------------------------------*/
 	@Override
 	public void initializeItems() {
 		itemTiles = new Item[h][w];

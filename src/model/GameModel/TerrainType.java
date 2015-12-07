@@ -36,6 +36,12 @@ public enum TerrainType {
 		setSoundFilePaths(BASEDIR + s1, BASEDIR + s2);
 	}
 	
+	/*---------------------------------------------------------------------
+	 |  Method name:    []
+	 |  Purpose:  	    []
+	 |  Parameters:     []
+	 |  Return:         []
+	 *---------------------------------------------------------------------*/
 	public void setSoundFilePaths(String s1, String s2) {
 		sfxFilePath1 = s1;
 		sfxFilePath2 = s2;
@@ -51,6 +57,12 @@ public enum TerrainType {
 		return sfxFilePath1;
 	}
 	
+	/*---------------------------------------------------------------------
+	 |  Method name:    []
+	 |  Purpose:  	    []
+	 |  Parameters:     []
+	 |  Return:         []
+	 *---------------------------------------------------------------------*/
 	public String getSound2() {
 		return sfxFilePath2;
 	}
