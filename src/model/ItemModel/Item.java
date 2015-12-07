@@ -100,8 +100,6 @@ public abstract class Item implements Comparable<Item>, Serializable {
 			return new PokeBall();
 		case "HYPER STEP POTION":
 			return new HyperStepPotion();
-		case "FATIGUE POTION":
-			return new FatiguePotion();
 		case "HARMONICA":
 			return new Harmonica();
 		case "SUPER STEP POTION":

@@ -161,8 +161,6 @@ public class ItemTests {
 		assertTrue(new PokeBall().compareTo(new PokeBall()) == 0);
 		assertFalse(pb.equals("not an item"));
 		assertFalse(pb.isForTrainer());
-		assertTrue(fp.isForTrainer());
-		assertFalse(fp.isForPokemon());
 		assertTrue(pb.isForPokemon());
 	}
 

@@ -53,30 +53,11 @@ public class TrainerTests {
 		
 		Trainer sujan = new Trainer();
 		assertEquals(sujan.getSteps(),500);
-		sujan.setFatigued(true);
 		sujan.decreaseSteps();
 		assertEquals(sujan.getSteps(),498);
 	}
 	
-	@Test
-	public void testFatiguedPotion() {
-		
-		Trainer ryan = new Trainer();
-		Item fp = new FatiguePotion();
-		ryan.addItem(fp);
-		assertTrue(ryan.getItems().contains(fp));
-		
-		ryan.setFatigued(false);
-		ryan.useItem(fp);
-		assertFalse(ryan.isFatigued());
-		assertTrue(ryan.getItems().contains(fp));
-		
-		ryan.setFatigued(true);
-		assertTrue(ryan.isFatigued());
-		ryan.useItem(fp);
-		assertFalse(ryan.isFatigued());
-		assertFalse(ryan.getItems().contains(fp));
-	}
+
 	
 	@Test
 	public void testBasicStepPotion() {

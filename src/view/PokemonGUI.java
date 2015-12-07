@@ -42,7 +42,6 @@ import javax.imageio.ImageIO;
 import javax.swing.*;
 import javax.swing.border.BevelBorder;
 
-import javafx.scene.control.ProgressBar;
 import model.GameModel.CEAGame;
 import model.GameModel.GameMode;
 import model.GameModel.MazeGame;

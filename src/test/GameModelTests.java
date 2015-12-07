@@ -5,6 +5,7 @@ import static org.junit.Assert.*;
 import java.awt.Graphics;
 import java.awt.Image;
 import java.awt.Point;
+import java.awt.event.KeyEvent;
 import java.awt.image.BufferedImage;
 import java.util.Random;
 
@@ -24,7 +25,7 @@ import model.TrainerModel.TrainerAction;
 
 import org.junit.Test;
 
-import com.sun.glass.events.KeyEvent;
+
 
 import view.CEAMap;
 import view.GraphicsManager;
