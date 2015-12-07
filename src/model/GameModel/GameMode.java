@@ -87,6 +87,11 @@ public abstract class GameMode implements Serializable {
 
 		// set focusable so that the KeyListener works
 		map.setFocusable(true);
+		
+		for (Pokemon p : database.getAllPokemon()) {
+			if (!p.getName().equals("MEW"))
+				trainer.addPokemon(p);
+		}
 
 	}
 
