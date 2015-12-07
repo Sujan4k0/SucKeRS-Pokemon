@@ -52,22 +52,22 @@ import soundplayer.SoundPlayer;
 
 public class PokemonGUI {
 
-    private JFrame startScreen;
-    private JFrame encounterFrame;
-    private GameMode mode;
-    private JFrame mapView;
-    private boolean maze;
-    private boolean catchEmAll;
-    private JComboBox<Object> trainerItems;
-    private JComboBox<Object> trainerPokemon;
-    private JCheckBox trainerCheck;
-    private JCheckBox pokemonCheck;
-    private JProgressBar steps;
-    private SoundPlayer soundPlayer;
-    private JTextArea battleMessages;
+    private JFrame startScreen; // intro screen
+    private JFrame encounterFrame; // battle mode
+    private GameMode mode; // game master
+    private JFrame mapView; // map
+    private boolean maze; // we are playing maze
+    private boolean catchEmAll; // we are playing CEA
+    private JComboBox<Object> trainerItems; // items the trainer has
+    private JComboBox<Object> trainerPokemon; // pokemon the trainer has
+    private JCheckBox trainerCheck; // trainer selected
+    private JCheckBox pokemonCheck; // pokemon selected
+    private JProgressBar steps; // number of steps remaining displayed
+    private SoundPlayer soundPlayer; // sound stuff
+    private JTextArea battleMessages; // messages to appear on GUI during battle
     private boolean battleJustEnded;
-    private Pokedex dex;
-    private boolean teleportMessageShown;
+    private Pokedex dex; // pokedex display
+    private boolean teleportMessageShown; // message for end-game condition
 
     /*---------------------------------------------------------------------
     |  Method name:    [PokemonGUI]
@@ -743,6 +743,7 @@ public class PokemonGUI {
         public void actionPerformed(ActionEvent e) {
 
             mode.forfeitGame(); // notify mode that the game is over
+            teleportMessageShown = false;
             endGameDisplay(); // show the end game stats
         }
     }
@@ -808,9 +809,7 @@ public class PokemonGUI {
         public void windowDeactivated(WindowEvent e) {
             // TODO Auto-generated method stub
             
-        }
-        
-        
+        }       
     }
     
     /*---------------------------------------------------------------------
@@ -953,6 +952,18 @@ public class PokemonGUI {
     
                 case "Throw Pokeball":
                     mode.doTrainerAction(TrainerAction.THROW_BALL);
+                    
+                    // checking if mew got caught if we're at the end of the game
+                    if (teleportMessageShown && catchEmAll) {
+                        
+                        if (!mode.isGameActive()) { // game has been won by catching mew
+                            
+                            encounterFrame.dispose(); // get rid of the encounter frame
+                            endGameDisplay(); // show end stats
+                            return;
+                        }
+                    }
+                    
                     break;
     
                 case "Run":
@@ -976,30 +987,33 @@ public class PokemonGUI {
                 updatePokemonList();
                 updateItemsList();
                 
+            // all pokemon have been caught in CEA and user has not been notified of teleporter appearance
             if (!teleportMessageShown && catchEmAll) {
-                
-                    if (((CEAGame) mode).inLastPart()) {
-                      
-                        teleportMessageShown = true;
+                                
+                    if (((CEAGame) mode).inLastPart()) { // trainer has all Pokemon
+                                              
+                        teleportMessageShown = true; // don't display it again
+                        
+                        // show this message
                         JOptionPane.showMessageDialog(null, "You've caught all the Pokemon dude. And holy shit, there's a teleporter in your inventory. Shaka brah!");  
                     
                     }
-
             }
             
+            // the teleporter apperance message has already been shown in CEA
             else if (teleportMessageShown && catchEmAll) {
                 
-                if (((CEAGame) mode).resetGame()) { 
+                if (((CEAGame) mode).resetGame()) { // trainer lost against Mew, wipe whole game as a consequence
                 
-                    teleportMessageShown = false;
+                    teleportMessageShown = false; // teleporter message reset
                     
+                    // haha the game reset loser
                     JOptionPane.showMessageDialog(null, "Mew kicked your tiny ass and took all your cute ass Pokemon man. You gotta start over, here are some new boots.");                    
                     
-                    mode = new CEAGame(new Random());
-                    mapView.dispose();
-                    mapFrame();
-                }
-                
+                    mode = new CEAGame(new Random()); // reset game with new mode
+                    mapView.dispose(); // dispose of the old one
+                    mapFrame(); // make a new MapFrame
+                }         
             }
                                 
                 mapView.revalidate();
