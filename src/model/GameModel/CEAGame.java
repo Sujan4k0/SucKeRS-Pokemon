@@ -46,11 +46,6 @@ public class CEAGame extends GameMode {
 		trainer.addItem(new Harmonica());
 		trainer.addItem(new Harmonica());
 
-		/*
-		 * for testing teleportation for (Pokemon p : database.getAllPokemon())
-		 * if (!p.getName().toUpperCase().equals("MEW")) trainer.addPokemon(p);
-		 */
-
 	}
 
 	/*---------------------------------------------------------------------
@@ -157,10 +152,8 @@ public class CEAGame extends GameMode {
 	}
 
 	/*---------------------------------------------------------------------
-	 |  Method name:    []
-	 |  Purpose:  	    []
-	 |  Parameters:     []
-	 |  Return:         []
+	 |  Method name:    [endEncounter]
+	 |  Purpose:  	    [Stuff that happens when an encounter ends]
 	 *---------------------------------------------------------------------*/
 	@Override
 	public void endEncounter() {
@@ -173,20 +166,17 @@ public class CEAGame extends GameMode {
 	}
 	
 	/*---------------------------------------------------------------------
-	 |  Method name:    []
-	 |  Purpose:  	    []
-	 |  Parameters:     []
-	 |  Return:         []
+	 |  Method name:    [resetGame]
+	 |  Purpose:  	    [Getter for resetGame]
+	 |  Returns:
 	 *---------------------------------------------------------------------*/
 	public boolean resetGame() {
 		return resetGame;
 	}
 
 	/*---------------------------------------------------------------------
-	 |  Method name:    []
-	 |  Purpose:  	    []
-	 |  Parameters:     []
-	 |  Return:         []
+	 |  Method name:    [lastPartCheck]
+	 |  Purpose:  	    [Checks if the trainer is in the last part of a CEAGame]
 	 *---------------------------------------------------------------------*/
 	public void lastPartCheck() {
 		if (!inLastPart) {
@@ -200,10 +190,8 @@ public class CEAGame extends GameMode {
 	}
 
 	/*---------------------------------------------------------------------
-	 |  Method name:    []
-	 |  Purpose:  	    []
-	 |  Parameters:     []
-	 |  Return:         []
+	 |  Method name:    [startLegEncounter]
+	 |  Purpose:  	    [Starts an encounter with a legendary pokemon]
 	 *---------------------------------------------------------------------*/
 	public void startLegEncounter() {
 
@@ -217,10 +205,9 @@ public class CEAGame extends GameMode {
 	}
 
 	/*---------------------------------------------------------------------
-	 |  Method name:    []
-	 |  Purpose:  	    []
-	 |  Parameters:     []
-	 |  Return:         []
+	 |  Method name:    [inLastPart]
+	 |  Purpose:  	    [Getter for inLastPart]
+	 |  Return:         [boolean: inLastPart]
 	 *---------------------------------------------------------------------*/
 	public boolean inLastPart() {
 		// TODO Auto-generated method stub
