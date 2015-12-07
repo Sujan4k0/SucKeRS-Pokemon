@@ -32,6 +32,7 @@ public class CEAGame extends GameMode {
 	private static final long serialVersionUID = 1L;
 
 	boolean inLastPart = false; // if player should be in last part of game
+	boolean resetGame = false; // if game needs to be reset after Mew encounter
 
 	/*---------------------------------------------------------------------
 	 |  Method name:    [CEAGame]
@@ -51,7 +52,7 @@ public class CEAGame extends GameMode {
 		 */
 
 	}
-	
+
 	/*---------------------------------------------------------------------
 	 |  Method name:    []
 	 |  Purpose:  	    []
@@ -164,7 +165,21 @@ public class CEAGame extends GameMode {
 	@Override
 	public void endEncounter() {
 		super.endEncounter();
-		lastPartCheck();
+		if (inLastPart && !isGameWon()) {
+			resetGame = true;
+		}
+		else lastPartCheck();
+
+	}
+	
+	/*---------------------------------------------------------------------
+	 |  Method name:    []
+	 |  Purpose:  	    []
+	 |  Parameters:     []
+	 |  Return:         []
+	 *---------------------------------------------------------------------*/
+	public boolean resetGame() {
+		return resetGame;
 	}
 
 	/*---------------------------------------------------------------------
