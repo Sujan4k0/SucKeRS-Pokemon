@@ -24,8 +24,11 @@ import java.util.Random;
 import model.GameModel.Ground;
 import model.GameModel.MazeGenerator;
 import model.GameModel.Obstacle;
+import model.ItemModel.BasicStepPotion;
 import model.ItemModel.Harmonica;
 import model.ItemModel.Item;
+import model.ItemModel.SuperStepPotion;
+import model.ItemModel.Teleporter;
 
 public class MazeMap extends Map {
 
@@ -62,19 +65,48 @@ public class MazeMap extends Map {
 		groundTiles = new Ground[h][w];
 		obstacleTiles = new Obstacle[h][w];
 
+		int randGround = r.nextInt(4);
+		Ground ground, endGround;
+		Obstacle obst;
+
+		switch (randGround) {
+
+		case 1:
+			ground = Ground.SAND_2;
+			obst = Obstacle.CACTUS_2;
+			endGround = Ground.GRASS_2;
+			break;
+		case 2:
+			ground = Ground.FOREST_1;
+			obst = Obstacle.TREE_1;
+			endGround = Ground.ICE_1;
+			break;
+		case 3:
+			ground = Ground.ICE_2;
+			obst = Obstacle.TREE_SNOWY;
+			endGround = Ground.SAND_2;
+			break;
+		default:
+			ground = Ground.CAVE_1;
+			obst = Obstacle.ROCK_1;
+			endGround = Ground.BINARY_1;
+			break;
+
+		}
+
 		// Fill groundTiles[][] with Ground
 		for (int i = 0; i < h; i++) {
 			for (int j = 0; j < w; j++) {
 
 				// fills all ground with just these cave tiles
-				groundTiles[i][j] = Ground.CAVE_1;
+				groundTiles[i][j] = ground;
 			}
 		}
 
 		// Fill obstacleTiles[][] with Obstacles
 		for (int i = 0; i < h; i++) {
 			for (int j = 0; j < w; j++) {
-				obstacleTiles[i][j] = Obstacle.ROCK_1;
+				obstacleTiles[i][j] = obst;
 			}
 		}
 
@@ -106,7 +138,7 @@ public class MazeMap extends Map {
 		// this is the exit: shown by an ice tiles
 		for (int i = 0; i < h; i++) {
 			if (obstacleTiles[i][w - 1] == null)
-				groundTiles[i][w - 1] = Ground.ICE_1;
+				groundTiles[i][w - 1] = endGround;
 		}
 	}
 
@@ -121,16 +153,56 @@ public class MazeMap extends Map {
 		itemTiles = new Item[h][w];
 
 		int count = 0;
-		while (count < 52) {
-			
+
+		// place 3 harmonicas
+		while (count < 3) {
+
 			// avoid entrance and exit
 			int randX = r.nextInt(obstacleTiles.length - 2) + 1;
 			int randY = r.nextInt(obstacleTiles[0].length - 2) + 1;
-			
+
 			if (obstacleTiles[randX][randY] == null) {
 				itemTiles[randX][randY] = new Harmonica();
 				count++;
-			} 
+			}
+		}
+
+		count = 0;
+
+		// place 3 basic step potions
+		while (count < 3) {
+
+			// avoid entrance and exit
+			int randX = r.nextInt(obstacleTiles.length - 2) + 1;
+			int randY = r.nextInt(obstacleTiles[0].length - 2) + 1;
+
+			if (obstacleTiles[randX][randY] == null) {
+				itemTiles[randX][randY] = new BasicStepPotion();
+				count++;
+			}
+		}
+
+		count = 0;
+
+		// place 1 super step potion
+		while (count < 1) {
+
+			// avoid entrance and exit
+			int randX = r.nextInt(obstacleTiles.length - 2) + 1;
+			int randY = r.nextInt(obstacleTiles[0].length - 2) + 1;
+
+			if (obstacleTiles[randX][randY] == null) {
+				itemTiles[randX][randY] = new SuperStepPotion();
+				count++;
+			}
+		}
+
+		// place 1 teleporter right at entrance
+		for (int i = 0; i < obstacleTiles.length; i++) {
+			if (obstacleTiles[i][0] == null) {
+				itemTiles[i][1] = new Teleporter();
+				break;
+			}
 		}
 
 	}

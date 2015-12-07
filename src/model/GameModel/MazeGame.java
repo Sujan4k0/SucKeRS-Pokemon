@@ -37,10 +37,6 @@ public class MazeGame extends GameMode {
 	public MazeGame(Random rand) {
 		super(rand);
 		loadImages();
-
-		// for testing
-		trainer.addItem(new BasicStepPotion());
-		trainer.addItem(new Teleporter());
 	}
 	
 	/*---------------------------------------------------------------------
