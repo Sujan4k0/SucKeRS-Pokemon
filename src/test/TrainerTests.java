@@ -49,17 +49,6 @@ public class TrainerTests {
 	}
 	
 	@Test
-	public void testFatiguedSteps() {
-		
-		Trainer sujan = new Trainer();
-		assertEquals(sujan.getSteps(),500);
-		sujan.decreaseSteps();
-		assertEquals(sujan.getSteps(),498);
-	}
-	
-
-	
-	@Test
 	public void testBasicStepPotion() {
 		
 		Trainer aang = new Trainer();
