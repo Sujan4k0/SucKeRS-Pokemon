@@ -45,10 +45,12 @@ public class CEAGame extends GameMode {
 
 		trainer.addItem(new Harmonica());
 		trainer.addItem(new Harmonica());
-
-		for (Pokemon p : database.getAllPokemon())
-			if (!p.getName().equals("MEW"))
-				trainer.addPokemon(p);
+		
+//      hard coding for all pokemon to be there are the start for testing,
+//		please comment again if used before committing
+//		for (Pokemon p : database.getAllPokemon())
+//			if (!p.getName().equals("MEW"))
+//				trainer.addPokemon(p);
 
 	}
 
