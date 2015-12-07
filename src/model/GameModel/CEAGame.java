@@ -46,6 +46,10 @@ public class CEAGame extends GameMode {
 		trainer.addItem(new Harmonica());
 		trainer.addItem(new Harmonica());
 
+		for (Pokemon p : database.getAllPokemon())
+			if (!p.getName().equals("MEW"))
+				trainer.addPokemon(p);
+
 	}
 
 	/*---------------------------------------------------------------------
@@ -158,14 +162,15 @@ public class CEAGame extends GameMode {
 	@Override
 	public void endEncounter() {
 		super.endEncounter();
-		if (trainer.getItemQuantities().get("Teleporter") == 0 && inLastPart && !isGameWon()) {
-			resetGame = true;
-			map.stopBGMusic();
-		}
-		else lastPartCheck();
+		if (trainer.getItemQuantities().containsKey("Teleporter"))
+			if (trainer.getItemQuantities().get("Teleporter") == 0 && inLastPart && !isGameWon()) {
+				resetGame = true;
+				map.stopBGMusic();
+			} else
+				lastPartCheck();
 
 	}
-	
+
 	/*---------------------------------------------------------------------
 	 |  Method name:    [resetGame]
 	 |  Purpose:  	    [Getter for resetGame]
