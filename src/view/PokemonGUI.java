@@ -838,7 +838,11 @@ public class PokemonGUI {
                 saveState(); // save the game
             }
             
-            System.exit(0);     
+            if (reply == JOptionPane.NO_OPTION) {
+            
+                System.exit(0);     
+            
+            }
         }
 
         @Override
