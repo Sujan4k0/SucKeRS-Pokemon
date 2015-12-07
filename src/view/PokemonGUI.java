@@ -635,7 +635,7 @@ public class PokemonGUI {
                 JTextArea info = new JTextArea();
                 info.append("So you've chosen the maze? Daunting.\n"
                         + "So obviously, you gotta make it to the end of the maze. \n"
-                        + "The end is denoted by an weird tile, but wait...\n"
+                        + "The end is denoted by a weird tile, but wait...\n"
                         + "you're a bit tired and only have 500 steps left in you.\n"
                         + "Catching some loyal Pokemon may help push you along the way.\n"
                         + "There are also some goodies throughout the maze that may\n" + "help you get out of here!");
