@@ -158,7 +158,7 @@ public class CEAGame extends GameMode {
 	@Override
 	public void endEncounter() {
 		super.endEncounter();
-		if (inLastPart && !isGameWon()) {
+		if (trainer.getItemQuantities().get("Teleporter") == 0 && inLastPart && !isGameWon()) {
 			resetGame = true;
 			map.stopBGMusic();
 		}
