@@ -487,7 +487,7 @@ public class CEAMap extends Map {
 		//Ice area items
 		itemTiles[Map.HEIGHT * 3 - 2][Map.WIDTH * 2 - 2] = new BasicStepPotion();
 		itemTiles[Map.HEIGHT * 3 - 4][Map.WIDTH * 2 - 8] = new Harmonica();
-		itemTiles[Map.HEIGHT * 3 - 6][Map.WIDTH * 2 - 8] = new Teleporter();
+		itemTiles[Map.HEIGHT * 3 - 6][Map.WIDTH * 2 - 8] = new BasicStepPotion();
 		//desert area items
 		itemTiles[Map.HEIGHT + 3][Map.WIDTH * 3 - 5] = new HyperStepPotion();
 		itemTiles[Map.HEIGHT * 2 - 2][Map.WIDTH * 3 - 5] = new HyperStepPotion();
