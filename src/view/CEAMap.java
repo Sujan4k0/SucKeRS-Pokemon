@@ -309,21 +309,6 @@ public class CEAMap extends Map {
 			groundTiles[i][Map.WIDTH * 2] = grassy;
 		}
 
-		/*
-		 * generate 5 randomly placed cacti in left half for (int i = 0; i < 5;
-		 * i++) { int x = (int) (Math.random() * (Map.HEIGHT - 4)) + 2 +
-		 * Map.HEIGHT; int y = (int) (Math.random() * (Map.WIDTH / 2 - 4)) + 2 +
-		 * 2 * Map.WIDTH;
-		 * 
-		 * if (obstacleTiles[x][y] == null) obstacleTiles[x][y] = obstToUse;
-		 * else i--; } // generate 5 randomly placed cacti in right half for
-		 * (int i = 0; i < 5; i++) { int x = (int) (Math.random() * (Map.HEIGHT
-		 * - 4)) + 2 + Map.HEIGHT; int y = (int) (Math.random() * (Map.WIDTH / 2
-		 * - 4)) + 2 + 2 * Map.WIDTH + Map.WIDTH / 2;
-		 * 
-		 * if (obstacleTiles[x][y] == null) obstacleTiles[x][y] = obstToUse;
-		 * else i--; }
-		 */
 		//left wall
 		for (int i = Map.HEIGHT + 1; i < Map.HEIGHT * 2 - 1; i++) {
 			if (i == Map.HEIGHT + 5)
@@ -446,23 +431,11 @@ public class CEAMap extends Map {
 	private void makeSuperySecretyLand() {
 		for (int i = 0; i < Map.HEIGHT; i++) {
 			for (int j = 0; j < Map.WIDTH; j++) {
-				if (i % 2 == 0) {
-					groundTiles[i][j] = secrety1;
-					if (i == 0 || j == 0 || j == Map.WIDTH - 1 || i == Map.HEIGHT - 1)
-						obstacleTiles[i][j] = Obstacle.ROCK_3;// placeholder
-					j++;
-					groundTiles[i][j] = secrety2;
-					if (i == 0 || j == 0 || j == Map.WIDTH - 1 || i == Map.HEIGHT - 1)
-						obstacleTiles[i][j] = Obstacle.ROCK_3;// placeholder
-				} else {
-					groundTiles[i][j] = secrety2;
-					if (i == 0 || j == 0 || j == Map.WIDTH - 1 || i == Map.HEIGHT - 1)
-						obstacleTiles[i][j] = Obstacle.ROCK_3;// placeholder
-					j++;
-					groundTiles[i][j] = secrety1;
-					if (i == 0 || j == 0 || j == Map.WIDTH - 1 || i == Map.HEIGHT - 1)
-						obstacleTiles[i][j] = Obstacle.ROCK_3;// placeholder
-				}
+				groundTiles[i][j] = secrety1;
+				if (i == Map.HEIGHT - 1|| j == Map.WIDTH - 1 || j == 0
+						|| i == 0)
+					obstacleTiles[i][j] = Obstacle.ROCK_3;
+
 			}
 		}
 	}
