@@ -953,6 +953,17 @@ public class PokemonGUI {
     
                 case "Throw Pokeball":
                     mode.doTrainerAction(TrainerAction.THROW_BALL);
+                    
+                    if (teleportMessageShown && catchEmAll) {
+                        
+                        if (!mode.isGameActive()) {
+                            
+                            encounterFrame.dispose();
+                            endGameDisplay();
+                            return;
+                        }
+                    }
+                    
                     break;
     
                 case "Run":
