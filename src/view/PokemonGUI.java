@@ -646,7 +646,7 @@ public class PokemonGUI {
 
         @Override
         public void actionPerformed(ActionEvent e) {
-
+            
             // get the String of the item selected in the JComboBox
             String item = trainerItems.getSelectedItem().toString();
             
@@ -692,11 +692,20 @@ public class PokemonGUI {
                 
                 if (use.isForPokemon()) { // item is usable on a pokemon
                     
-                    String pokemon = trainerPokemon.getSelectedItem().toString();
-                    pokemon = pokemon.substring(0, pokemon.indexOf(' ')); // no Pokemon name have space, can just take index
-                    updateItemsList(); // reflect on GUI that item was used
+                    if (mode.getTrainer().getPokemon().isEmpty()) {
+                        
+                        JOptionPane.showMessageDialog(null, "Brah, what are you trying to do? You have no goddamn Pokemon!"); 
+                    }
                     
-                    mode.useItemOnPokemon(use, pokemon);
+                    else {
+                        
+                        String pokemon = trainerPokemon.getSelectedItem().toString();
+                        pokemon = pokemon.substring(0, pokemon.indexOf(' ')); // no Pokemon name have space, can just take index
+                        updateItemsList(); // reflect on GUI that item was used
+                        
+                        mode.useItemOnPokemon(use, pokemon);
+                    
+                    }
                 }
                 
                 else { // item is only usable on trainer, show error
