@@ -92,6 +92,12 @@ public class EncounterPanel extends JPanel implements Serializable {
 	// timer for animated encounter BGs
 	Timer animatedBGTimer;
 
+	/*---------------------------------------------------------------------
+	 |  Method name:    []
+	 |  Purpose:  	    []
+	 |  Parameters:     []
+	 |  Return:         []
+	 *---------------------------------------------------------------------*/
 	public EncounterPanel() {
 
 		load();
@@ -103,16 +109,34 @@ public class EncounterPanel extends JPanel implements Serializable {
 
 	}
 
+	/*---------------------------------------------------------------------
+	 |  Method name:    []
+	 |  Purpose:  	    []
+	 |  Parameters:     []
+	 |  Return:         []
+	 *---------------------------------------------------------------------*/
 	public void paintComponent(Graphics g) {
 
 		drawEncounter(g);
 
 	}
 
+	/*---------------------------------------------------------------------
+	 |  Method name:    []
+	 |  Purpose:  	    []
+	 |  Parameters:     []
+	 |  Return:         []
+	 *---------------------------------------------------------------------*/
 	public Pokemon getEncounteredPokemon() {
 		return encounteredPokemon;
 	}
 
+	/*---------------------------------------------------------------------
+	 |  Method name:    []
+	 |  Purpose:  	    []
+	 |  Parameters:     []
+	 |  Return:         []
+	 *---------------------------------------------------------------------*/
 	public void endEncounter() {
 		// System.out.println("Ending Encounter on Panel");
 		actionAnimationTimer.stop();
@@ -122,6 +146,12 @@ public class EncounterPanel extends JPanel implements Serializable {
 		bgPlayer.stopSound();
 	}
 
+	/*---------------------------------------------------------------------
+	 |  Method name:    []
+	 |  Purpose:  	    []
+	 |  Parameters:     []
+	 |  Return:         []
+	 *---------------------------------------------------------------------*/
 	public void drawEncounter(Graphics g) {
 
 		Graphics2D g2 = (Graphics2D) g;
@@ -210,10 +240,22 @@ public class EncounterPanel extends JPanel implements Serializable {
 		return bigTrainerSheet;
 	}
 
+	/*---------------------------------------------------------------------
+	 |  Method name:    []
+	 |  Purpose:  	    []
+	 |  Parameters:     []
+	 |  Return:         []
+	 *---------------------------------------------------------------------*/
 	public void startEncounter(Pokemon p, TerrainType tt) {
 		startEncounter(p, tt, true);
 	}
 
+	/*---------------------------------------------------------------------
+	 |  Method name:    []
+	 |  Purpose:  	    []
+	 |  Parameters:     []
+	 |  Return:         []
+	 *---------------------------------------------------------------------*/
 	public void startEncounter(Pokemon p, TerrainType tt, boolean animate) {
 
 		int songInt;
@@ -259,6 +301,12 @@ public class EncounterPanel extends JPanel implements Serializable {
 
 	}
 
+	/*---------------------------------------------------------------------
+	 |  Method name:    []
+	 |  Purpose:  	    []
+	 |  Parameters:     []
+	 |  Return:         []
+	 *---------------------------------------------------------------------*/
 	public void animateTrainer(TrainerAction ta, PokemonResponse pr) {
 		currentAction = ta;
 		currentResponse = pr;
@@ -295,10 +343,22 @@ public class EncounterPanel extends JPanel implements Serializable {
 			playBattleSound(ta, pr); //Play a sound effect
 	}
 
+	/*---------------------------------------------------------------------
+	 |  Method name:    []
+	 |  Purpose:  	    []
+	 |  Parameters:     []
+	 |  Return:         []
+	 *---------------------------------------------------------------------*/
 	public boolean isAnimating() {
 		return animating;
 	}
 
+	/*---------------------------------------------------------------------
+	 |  Method name:    []
+	 |  Purpose:  	    []
+	 |  Parameters:     []
+	 |  Return:         []
+	 *---------------------------------------------------------------------*/
 	public void setBGImages(TerrainType tt) {
 		Image[] imgs;
 		if (tt.name().toUpperCase().equals("MYSTERY")) {
@@ -340,6 +400,12 @@ public class EncounterPanel extends JPanel implements Serializable {
 
 	}
 
+	/*---------------------------------------------------------------------
+	 |  Method name:    []
+	 |  Purpose:  	    []
+	 |  Parameters:     []
+	 |  Return:         []
+	 *---------------------------------------------------------------------*/
 	@SuppressWarnings("serial")
 	public void load() {
 		try {
@@ -477,12 +543,24 @@ public class EncounterPanel extends JPanel implements Serializable {
 		}
 	}
 
+	/*---------------------------------------------------------------------
+	 |  Method name:    []
+	 |  Purpose:  	    []
+	 |  Parameters:     []
+	 |  Return:         []
+	 *---------------------------------------------------------------------*/
 	public void mute() {
 		muted = true;
 		bgPlayer.stopSound();
 		sfxPlayer.stopSound();
 	}
 
+	/*---------------------------------------------------------------------
+	 |  Method name:    []
+	 |  Purpose:  	    []
+	 |  Parameters:     []
+	 |  Return:         []
+	 *---------------------------------------------------------------------*/
 	private class BGAnimationListener implements ActionListener {
 
 		@Override
@@ -503,6 +581,12 @@ public class EncounterPanel extends JPanel implements Serializable {
 		}
 	}
 
+	/*---------------------------------------------------------------------
+	 |  Method name:    []
+	 |  Purpose:  	    []
+	 |  Parameters:     []
+	 |  Return:         []
+	 *---------------------------------------------------------------------*/
 	private class WiggleListener implements ActionListener {
 
 		@Override
@@ -523,6 +607,12 @@ public class EncounterPanel extends JPanel implements Serializable {
 
 	}
 
+	/*---------------------------------------------------------------------
+	 |  Method name:    []
+	 |  Purpose:  	    []
+	 |  Parameters:     []
+	 |  Return:         []
+	 *---------------------------------------------------------------------*/
 	private class PokemonWiggleListener implements ActionListener {
 
 		@Override
@@ -543,6 +633,7 @@ public class EncounterPanel extends JPanel implements Serializable {
 
 	}
 
+	
 	private class TrainerAnimationListener implements ActionListener {
 
 		@Override
