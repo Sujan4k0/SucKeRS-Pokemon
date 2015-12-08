@@ -844,6 +844,7 @@ public class PokemonGUI {
             if (reply == JOptionPane.YES_OPTION) { // yes was selected
 
                 saveState(); // save the game
+                System.exit(0);
             }
             
             if (reply == JOptionPane.NO_OPTION) {
